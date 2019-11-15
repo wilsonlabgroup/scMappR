@@ -140,7 +140,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   }
   if(length(grep("-", rownames(signature_matrix))) / length(rownames(signature_matrix)) > 0.75 ) {  
     warning("More than 50 genes contian '-', and the signature matrix is considered internal")
-    load(paste0(rda_path,"/bioMart_ortholog_human_mouse.RData"))
+    load(paste0(rda_path,"/bioMart_ortholog_human_mouse.rda"))
     # data(bioMart_ortholog_human_mouse)    
     RN_2 <- get_gene_symbol(signature_matrix)
     
