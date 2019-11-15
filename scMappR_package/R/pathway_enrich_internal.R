@@ -59,19 +59,20 @@ pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_g
   # Pathway enrichment 
   ordered_back_all <- gProfileR::gprofiler(DEG_Names, species_bulk, ordered_query = T, min_set_size = 3, max_set_size = 2000, src_filter = c("GO:BP", "REAC", "KEGG"),custom_bg = background_genes, correction_method = "fdr", min_isect_size = 3, hier_filtering = "moderate")
   ordered_back_all_tf <- gProfileR::gprofiler(DEG_Names, species_bulk, ordered_query = T, min_set_size = 3, max_set_size = 5000, src_filter = c("TF"),custom_bg = background_genes, correction_method = "fdr", min_isect_size = 3, hier_filtering = "moderate")
-  save(ordered_back_all, file = "output_directory/Bulk_pathway_enrichment.RData")
-  save(ordered_back_all_tf, file = "output_directory/Bulk_TF_enrichment.RData")
+  save(ordered_back_all, file = paste0(output_directory,"/Bulk_pathway_enrichment.RData")
+  save(ordered_back_all_tf, file = paste0(output_directory,"/Bulk_TF_enrichment.RData")
   #plotting paths
-  pdf(file = "Bulk_pathway_enrichment.pdf")
+  pdf(file = paste0(output_directory,"/Bulk_pathway_enrichment.pdf"))
   bulk_bp <- plotBP(ordered_back_all)
   print(bulk_bp)
   dev.off()
   
   #plotting TFs
-  pdf(file = "Bulk_TF_enrichment.pdf")
+  pdf(file = paste0(output_directory,"/Bulk_TF_enrichment.pdf"))
   bulk_bp <- make_TF_barplot(ordered_back_all_tf, top_tf = 10)
   print(bulk_bp)
   dev.off()
+
   
   save(ordered_back_all, file = paste0(output_directory, "/",plot_names,"_bulk_pathways.RData"))
   save(ordered_back_all_tf, file = paste0(output_directory, "/",plot_names,"_bulk_transcription_factors.RData"))
