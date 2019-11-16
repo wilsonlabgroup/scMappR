@@ -6,7 +6,7 @@ Dustin Sokolowski
 < Describe what this package does >
 
 ## Installation
-1. Devtools (Development Version)
+1. Github (Development Version)
 
 2. CRAN (Stable Release)
 
