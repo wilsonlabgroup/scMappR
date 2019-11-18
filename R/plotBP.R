@@ -14,10 +14,19 @@
 #' 
 #' @return \code{plotBP} A barplot of the number of "top_bp" pathways, ranked by -log10(Pfdr). \cr
 #' 
+#'  @import matrixStats
+#' @import DeconRNASeq
+#' @import S4Vectors
+#' @import ggplot2
+#' @import gplots
+#' @import graphics
+#' @import Seurat
+#' @import GSVA
+#' @import stats
+#' @import utils
 #'
 #' @examples 
 #' \notrun {
-#' library(gProfileR)
 #' # load in signature matrices
 #' load("~/scMappR/data/Preoptic_region_example.rda")
 #' # data(Preoptic_region_example)

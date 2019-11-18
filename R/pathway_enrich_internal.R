@@ -13,10 +13,21 @@
 #' @param background A list of background genes to test against.
 #' @param output_directory Path to the directory where files will be saved.
 #' @param plot_names Names of output.
+#' @param number_genes Number of genes to if there are many many DEGs
 #' 
 #' 
 #' @return \code{pathway_enrich_internal} Plots and pathway enrichment of bulk DE and STVs. \cr
 #' 
+#' @import matrixStats
+#' @import DeconRNASeq
+#' @import S4Vectors
+#' @import ggplot2
+#' @import gplots
+#' @import graphics
+#' @import Seurat
+#' @import GSVA
+#' @import stats
+#' @import utils
 #'
 #' @examples 
 #' \notrun {
@@ -34,7 +45,7 @@
 #' }
 #' @export
 #' 
-pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_genes, output_directory, plot_names) {
+pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_genes, output_directory, plot_names, number_genes) {
   # Internal: Pathway analysis od DEGs and STVs for each cell-type. Returns RData objects of differential analysis as well as plots of the top bulk pathways.
   # It is a wrapper for making barplots, bulk pathway analysis, and gProfiler_STV
   # Args:
@@ -46,7 +57,6 @@ pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_g
   # plot_names = names of output
   # Returns:
   # plots and pathway enrichment of bulk DE and STVs.
-  library(gProfileR)
   print("Reordering DEGs from bulk dataset.", quote = F)
   DEG_Names <- rownames(DEGs)[order(DEGs$padj)]
   if(theSpecies == "human") species_bulk <- "hsapiens"
@@ -75,7 +85,7 @@ pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_g
   save(ordered_back_all_tf, file = paste0(output_directory, "/",plot_names,"_bulk_transcription_factors.RData"))
   
   print("Compelting pathway analysis of STVs.", quote = F)
-  paths <- gProfiler_STV(scMappR_vals,species =  theSpecies, background = background_genes) # re-rodered pathway analysis
+  paths <- gProfiler_STV(scMappR_vals,species =  theSpecies, background = background_genes, gene_cut = number_genes) # re-rodered pathway analysis
   
   biological_pathways <- paths$BP # Biological pathways
   transcription_factors <- paths$TF # Transcription factors

@@ -21,7 +21,16 @@
 #'
 #' @return \code{single_gene_preferences} A gene-set enrichment table of individual cell-type enrichment. \cr
 #'
-#'
+#' @import matrixStats
+#' @import DeconRNASeq
+#' @import S4Vectors
+#' @import ggplot2
+#' @import gplots
+#' @import graphics
+#' @import Seurat
+#' @import GSVA
+#' @import stats
+#' @import utils
 #'
 #' @examples 
 #' 
@@ -67,7 +76,7 @@ single_gene_preferences <- function(hg_short, hg_full, study_name, outDir = outp
     ba <- length(unique(fP[[cell]])) # cell-type marker not gene lsit
     bb <-  uni - ba # background without that cell-type
     m <- matrix(c(aa, ba, ab, bb), nrow = 2) # fisher's test
-    ftest <- fisher.test(m)
+    ftest <- stats::fisher.test(m)
     p <- ftest$p.value
     OR <- ftest$estimate
     nSP <- names(sP)[cell]
@@ -79,7 +88,7 @@ single_gene_preferences <- function(hg_short, hg_full, study_name, outDir = outp
   pref <- as.data.frame(pref)
   write.table(pref, file = paste0(outDir, "/",study_name, "cell_preferences.tsv"), quote = F, row.names = F, col.names = T, sep = "\t")
   pref <- read.table(file = paste0(outDir, "/",study_name, "cell_preferences.tsv"), as.is=T,header=T, sep = "\t")
-  pref$pFDR <- p.adjust(pref$p_val, "fdr")
+  pref$pFDR <- stats::p.adjust(pref$p_val, "fdr")
   write.table(pref, file = paste0(outDir, "/",study_name, "cell_preferences.tsv"), quote = F, row.names = F, col.names = T, sep = "\t")
   
   return(pref)

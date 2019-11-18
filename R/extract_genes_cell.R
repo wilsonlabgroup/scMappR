@@ -18,6 +18,16 @@
 #'
 #' @return \code{extract_genes_cell} A list of genes above the threshold for each sample. \cr
 #'
+#' @import matrixStats
+#' @import DeconRNASeq
+#' @import S4Vectors
+#' @import ggplot2
+#' @import gplots
+#' @import graphics
+#' @import Seurat
+#' @import GSVA
+#' @import stats
+#' @import utils
 #'
 #' @examples
 #' 

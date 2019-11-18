@@ -19,6 +19,16 @@
 #'
 #' @return \code{cellmarker_enrich} Gene set enrichment of cell-types on your inputted gene list. \cr
 #'
+#' @import matrixStats
+#' @import DeconRNASeq
+#' @import S4Vectors
+#' @import ggplot2
+#' @import gplots
+#' @import graphics
+#' @import Seurat
+#' @import GSVA
+#' @import stats
+#' @import utils
 #'
 #' @examples 
 #' \notrun {
@@ -73,7 +83,7 @@ cellmarker_enrich <- function(gene_list, p_thresh, gmt = "cellmarker_list.Rdata"
     # make a 2x2 fisher's matrix
     rownames(tbt) <- c("Exposure_yes", "Exposure_no")
     colnames(tbt) <- c("outcome_yes", "outcome_no")
-    f_out <- fisher.test(tbt, B = 1e9, alternative = "greater") # fishers exact test for over-representation
+    f_out <- stats::fisher.test(tbt, B = 1e9, alternative = "greater") # fishers exact test for over-representation
     p <- f_out$p.value
     OR <- f_out$estimate[[1]]
     if(p < 0.05 & OR < 1) {
@@ -92,8 +102,8 @@ cellmarker_enrich <- function(gene_list, p_thresh, gmt = "cellmarker_list.Rdata"
   df_theRows <- as.data.frame(theRows)
   # convert cell-type enrichment matrix 
   df_theRows$p <- toNum(df_theRows$p)
-  fdr <- p.adjust(df_theRows$p, "fdr")
-  bonf <- p.adjust(df_theRows$p, "bonferroni")
+  fdr <- stats::p.adjust(df_theRows$p, "fdr")
+  bonf <- stats::p.adjust(df_theRows$p, "bonferroni")
   df_theRows$fdr <- fdr
   df_theRows$bonf <- bonf
   df_theRows$intersect_size <- toNum(df_theRows$intersect_size)

@@ -14,10 +14,19 @@
 #' 
 #' @return \code{make_TF_barplot} A barplot of the number of "top_tf" tf names (not motifs), ranked by -log10(Pfdr). \cr
 #' 
+#' @import matrixStats
+#' @import DeconRNASeq
+#' @import S4Vectors
+#' @import ggplot2
+#' @import gplots
+#' @import graphics
+#' @import Seurat
+#' @import GSVA
+#' @import stats
+#' @import utils
 #'
 #' @examples 
 #' \notrun {
-#' library(gProfileR)
 #' # load in signature matrices
 #' load("~/scMappR/data/Preoptic_region_example.rda")
 #' # data(Preoptic_region_example)

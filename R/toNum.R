@@ -10,6 +10,16 @@
 #'
 #' @return \code{toNum} Returns a numeric vector. \cr
 #'
+#' @import matrixStats
+#' @import DeconRNASeq
+#' @import S4Vectors
+#' @import ggplot2
+#' @import gplots
+#' @import graphics
+#' @import Seurat
+#' @import GSVA
+#' @import stats
+#' @import utils
 #'
 #' @examples
 #' 

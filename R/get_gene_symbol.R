@@ -14,6 +14,16 @@
 #'
 #' @return \code{seurat_to_generes} A list containing the gene-symbols only as well as if the species is mouse or human. \cr
 #'
+#' @import matrixStats
+#' @import DeconRNASeq
+#' @import S4Vectors
+#' @import ggplot2
+#' @import gplots
+#' @import graphics
+#' @import Seurat
+#' @import GSVA
+#' @import stats
+#' @import utils
 #'
 #' @examples
 #'  
@@ -64,9 +74,3 @@ get_gene_symbol <- function(wilcoxon_rank_mat_t) {
   return(list(rowname = RN_2, species = theSpecies))
 }
 
-
-#'  # load signature
-#' load("~/scMappR/data/Preoptic_region_example.rda")
-#' #data(Preoptic_region_example)
-#' symbols <- get_gene_symbol(OddsRatioSignature)
- 

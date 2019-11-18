@@ -18,7 +18,16 @@
 #'
 #' @return \code{coEnrich} Enrichment of cell-types that are expressed by the same genes, from 2-5 sets of cell-types. \cr
 #'
-#'
+#' @import matrixStats
+#' @import DeconRNASeq
+#' @import S4Vectors
+#' @import ggplot2
+#' @import gplots
+#' @import graphics
+#' @import Seurat
+#' @import GSVA
+#' @import stats
+#' @import utils
 #'
 #' @examples 
 #' 
@@ -56,7 +65,7 @@ coEnrich <- function(sig, gene_list_heatmap, background_heatmap, study_name, out
   for(y in 2:l) {
     # for combinations of 2-# enriched cell types (max= 5)
     if(y < l) {
-      comps <- combn(sig$cell_type, y)
+      comps <- utils::combn(sig$cell_type, y)
       # find combinations of cell-types
       co_up <- function(x) return(length(x[x>=1])==y)
       #score genes significantly enriched in both cell types = 1
@@ -69,15 +78,19 @@ coEnrich <- function(sig, gene_list_heatmap, background_heatmap, study_name, out
         geneList_comb1 <- geneList_comb[,which(colnames(geneList_comb) %in% thecomps)] # extract cell-types to be cenriched
         background_comb <- background_heatmap$geneHeat # take tissue signature matrix
         colnames(background_comb) <- toupper(colnames(background_comb))
-        background_comb1 <- background_comb[-which(rownames(background_comb) %in% rownames(geneList_comb)), which(colnames(background_comb) %in% thecomps)] # remove enriched CT
-        bin_aa <-apply(geneList_comb1,1,co_up) # see who is co-enriched in gene list
+        
+        inter <- (rownames(background_heatmap), rownames(geneList_comb))
+        
+        background_comb1 <- background_comb[!(rownames(background_comb) %in% inter), which(colnames(background_comb) %in% thecomps)] # remove enriched CT
+  
+        bin_aa <- apply(geneList_comb1,1,co_up) # see who is co-enriched in gene list
         name_in <- names(bin_aa)[bin_aa == T]
         aa <- sum(bin_aa) # number of co-enriched genes in list
         ab <- nrow(geneList_comb1) - aa # number non-co-enriched genes not in list
         ba <- sum(apply(background_comb1,1,co_up)) # number of co-enriched not in list
         bb <- nrow(background_comb1) - ba # number of non-coenriched genes not in list
         m <- matrix(c(aa, ba, ab, bb), nrow = 2) # fishers exact test
-        fisherTest <- fisher.test(m)
+        fisherTest <- stats::fisher.test(m)
         OR <- fisherTest$estimate
         p <- fisherTest$p.value
         name <- paste0(thecomps,collapse=":" )
@@ -94,15 +107,18 @@ coEnrich <- function(sig, gene_list_heatmap, background_heatmap, study_name, out
       geneList_comb1 <- geneList_comb[,thecomps]
       background_comb <- background_heatmap$geneHeat
       colnames(background_comb) <- toupper(colnames(background_comb))
-      background_comb1 <- background_comb[-which(rownames(background_comb) %in% rownames(geneList_comb)), thecomps]
-      bin_aa <-apply(geneList_comb1,1,co_up)
+      
+      inter <- (rownames(background_heatmap), rownames(geneList_comb))
+      background_comb1 <- background_comb[!(rownames(background_comb) %in% inter), which(colnames(background_comb) %in% thecomps)] # remove enriched CT
+      
+      bin_aa <- apply(geneList_comb1,1,co_up)
       name_in <- names(bin_aa)[bin_aa == T]
       aa <- sum(bin_aa)
       ab <- nrow(geneList_comb1) - aa
       ba <- sum(apply(background_comb1,1,co_up))
       bb <- nrow(background_comb1) - ba
       m <- matrix(c(aa, ba, ab, bb), nrow = 2)
-      fisherTest <- fisher.test(m)
+      fisherTest <- stats::fisher.test(m)
       OR <- fisherTest$estimate
       p <- fisherTest$p.value
       name <- paste0(thecomps,collapse=":" )

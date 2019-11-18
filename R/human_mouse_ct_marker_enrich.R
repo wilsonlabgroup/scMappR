@@ -16,6 +16,16 @@
 #'
 #' @return \code{human_mouse_ct_marker_enrich} list: The top cell-type for each cell-type markers list, as well as a matrix the top 5 most likely cell-type makers for each gene list (with OR and P-val) \cr
 #'
+#' @import matrixStats
+#' @import DeconRNASeq
+#' @import S4Vectors
+#' @import ggplot2
+#' @import gplots
+#' @import graphics
+#' @import Seurat
+#' @import GSVA
+#' @import stats
+#' @import utils
 #'
 #' @examples 
 #' \notrun {
@@ -31,7 +41,7 @@
 #'  # Assuming mouse_cell_markers.rda is in you "~/scMappR/data" directory
 #'  gmt1 <- "~/scMappR/data/mouse_cell_markers.rda"
 #'  gmt <- gmt_panglao
-#'  enriched <- cellmarker_enrich(genes, 0.05, gmt = gmt)
+#'  enriched <- human_mouse_ct_marker_enrich(gene_lists = genes, theSpecies = "mouse", cell_marker_path = "", naming_preference = "brain")
 #'  }
 #' @export
 #' 
@@ -50,19 +60,6 @@ human_mouse_ct_marker_enrich <- function(gene_lists, theSpecies = "human",cell_m
   # MarkerSets: the gene set enrichment for each cell-type (to see what was the second/third most significant etc)
   # cellTypes: The top cell-type for each marker
   
-  marker_path <- list.files(cell_marker_path)
-  File <- grep("cell_markers.rda", cell_marker_path)
-  if(length(File) > cell_marker_path) {
-    print(paste0("Cell-marker files are present in ", cell_marker_path, " running locally."))
-  } else {
-    warning(paste0("Could not find cell-marker files in ", cell_marker_path, " trying to download."))
-    
-    ## Download
-    downloaded <- try("DOWNLOAD FUN")
-    if(class(downloaded) == "try-error") {
-      stop("Could not automatically downloaded cell_marers data. Please download it from Wilson Lab website and put in directory that you set 'marker_path' too.")
-    }
-  }
 
   topGenes <- gene_lists
   marker_sets <- list()
@@ -84,7 +81,24 @@ human_mouse_ct_marker_enrich <- function(gene_lists, theSpecies = "human",cell_m
       # Load in the cell-marker enrich stuff and switch names to fit cell-marker enrich
       #
       
-      load(paste0(cell_marker_path,"/mouse_cell_markers.rda"))
+      thefiles <- list.files(path = cell_marker_path, "cell_markers.rda")
+      
+      
+      if(length(thefiles) == 0) {
+        warning(paste0("Cell-marker databases are not present in ", cell_marker_path, " downloading and loading data."))
+        #
+        datafile <- "mouse_cell_markers.rda"
+        metafile <- paste0(datafile)
+        url <- paste0("https://github.com/DustinSokolowski/scMappR_Data/blob/master/", 
+                      metafile, "?raw=true")
+        destfile <- file.path(tempdir(), metafile)
+        downloader::download(url, destfile = destfile, mode = "wb")
+        load(destfile)
+        #
+      } else {
+        load(paste0(cell_marker_path,"/mouse_cell_markers.rda"))
+      }
+
       outCellMarker <- cellmarker_enrich(topGenes[[i]], 0.05,gmt_cellmarker, fixed_length = 15000)
       # get the cell type from 'cellmarkers' dataset
       if(class(outCellMarker$name) == "factor") {
@@ -104,8 +118,24 @@ human_mouse_ct_marker_enrich <- function(gene_lists, theSpecies = "human",cell_m
       marker_list <- list(CellMarker = outCellMarker, Panglao = outPanglao, Ontology = outGOMouse)
       # concatenate all of the CT markers from the appropriate dataset
       if(naming_preference != -9) {
-        load(paste0(cell_marker_path,"/cell_preferences_categorized.rda"))
-        #data(cell_preferences_categorized)
+        
+        
+        if(length(thefiles) == 0) {
+          warning(paste0("Cell-marker preferences are not present in ", cell_marker_path, " downloading and loading data."))
+          #
+          datafile <- "cell_preferences_categorized.rda"
+          metafile <- paste0(datafile)
+          url <- paste0("https://github.com/DustinSokolowski/scMappR_Data/blob/master/", 
+                        metafile, "?raw=true")
+          destfile <- file.path(tempdir(), metafile)
+          downloader::download(url, destfile = destfile, mode = "wb")
+          load(destfile)
+        } else {
+          
+          load(paste0(cell_marker_path,"/cell_preferences_categorized.rda"))
+        }
+        
+        
         
         # if they have the prefered tissue or cell-type to pick from
         # prioritize those
@@ -155,8 +185,23 @@ human_mouse_ct_marker_enrich <- function(gene_lists, theSpecies = "human",cell_m
     if(theSpecies == "human") {
       # this section is exactly the same as in mouse but generated for human
       # cell-marker lists
-      load(paste0(cell_marker_path,"/human_cell_markers.rda"))
+      thefiles <- list.files(path = cell_marker_path, "cell_markers.rda")
       
+      
+      if(length(thefiles) == 0) {
+        warning(paste0("Cell-marker databases are not present in ", cell_marker_path, " downloading and loading data."))
+        #
+        datafile <- "human_cell_markers.rda"
+        metafile <- paste0(datafile)
+        url <- paste0("https://github.com/DustinSokolowski/scMappR_Data/blob/master/", 
+                      metafile, "?raw=true")
+        destfile <- file.path(tempdir(), metafile)
+        downloader::download(url, destfile = destfile, mode = "wb")
+        load(destfile)
+        #
+      } else {
+        load(paste0(cell_marker_path,"/human_cell_markers.rda"))
+      }      
       outCellMarker <- cellmarker_enrich(topGenes[[i]], 0.05, gmt_cellmarker, fixed_length = 15000)
       if(class(outCellMarker$name) == "factor") {
         outCellMarker$name <- tochr(outCellMarker$name)
@@ -171,8 +216,21 @@ human_mouse_ct_marker_enrich <- function(gene_lists, theSpecies = "human",cell_m
       }
       if(naming_preference != -9) {
         
-        load(paste0(cell_marker_path,"/cell_preferences_categorized.rda"))
-        #data(cell_preferences_categorized)
+        if(length(thefiles) == 0) {
+          warning(paste0("Cell-marker preferences are not present in ", cell_marker_path, " downloading and loading data."))
+          #
+          datafile <- "cell_preferences_categorized.rda"
+          metafile <- paste0(datafile)
+          url <- paste0("https://github.com/DustinSokolowski/scMappR_Data/blob/master/", 
+                        metafile, "?raw=true")
+          destfile <- file.path(tempdir(), metafile)
+          downloader::download(url, destfile = destfile, mode = "wb")
+          load(destfile)
+        } else {
+          
+          load(paste0(cell_marker_path,"/cell_preferences_categorized.rda"))
+        }
+        
         
         
         mypref <- cell_preference_final[[naming_preference]]

@@ -11,9 +11,20 @@
 #' @param STV_matrix Matrix of scMappR Transformed Values from the deconvolute_and_contextualize functions.
 #' @param species Human, mouse, or a charcter that is compatible with gProfileR.
 #' @param background A list of background genes to test against.
+#' @param gene_cut The top number of genes in pathway analysis.
 #' 
 #' @return \code{gProfiler_STV} A List of significantly enriched pathways and TFs (correction_method = FDR, hier_sorting = moderate), for every cell-type. \cr
 #' 
+#' @import matrixStats
+#' @import DeconRNASeq
+#' @import S4Vectors
+#' @import ggplot2
+#' @import gplots
+#' @import graphics
+#' @import Seurat
+#' @import GSVA
+#' @import stats
+#' @import utils
 #'
 #' @examples 
 #' \notrun {
@@ -34,7 +45,7 @@
 
 
 
-gProfiler_STV <- function(STV_matrix, species = theSpecies, background = background_genes) {
+gProfiler_STV <- function(STV_matrix, species , background , gene_cut ) {
   
   # Args: 
   # STV_matrix: matrix of scMappR Transformed Values from the deconvolute_and_contextualize functions
@@ -60,7 +71,7 @@ gProfiler_STV <- function(STV_matrix, species = theSpecies, background = backgro
     theSpecies <- species
     
   }
-  gProfiler_internal <- function(x, theSpecies1 = theSpecies, background_genes = background) {
+  gProfiler_internal <- function(x, theSpecies1 = theSpecies, background_genes = background, cutgenes = gene_cut) {
     #Internal -- This function takes a signle STV and computes gProfiler BP and TF enrichment with the list re-ordered for each cell-type
     # Args:
     # X: a numeric index giving the cell-type in the STV matrix
@@ -71,7 +82,13 @@ gProfiler_STV <- function(STV_matrix, species = theSpecies, background = backgro
     
     
     print(paste0("Re-ordering by absolute value of STVs on cell-type ", colnames(STV_matrix)[x]))
-    STV_matrix1 <- rownames(STV_matrix)[order(abs(STV_matrix[,x]), decreasing = T)]
+    STV_matrix1 <- STV_matrix[order(abs(STV_matrix[,x]), decreasing = T) ,]
+    
+    STV_matrix1 <- rownames(STV_matrix1)[abs(STV_matrix1[,x]) > 1e-10]
+    if(cutgenes != -9) {
+      print(paste0("Taking the top ", cutgenes, " genes for pathway analysis."), quote = F)
+      STV_matrix1 <- STV_matrix1[1:cutgenes]
+    }
     ordered_back_all <- gProfileR::gprofiler(STV_matrix1, theSpecies1, ordered_query = T, min_set_size = 3, max_set_size = 2000, src_filter = c("GO:BP", "REAC", "KEGG"),custom_bg = background_genes, correction_method = "fdr", min_isect_size = 3, hier_filtering = "moderate")
     ordered_back_all_tf <- gProfileR::gprofiler(STV_matrix1, theSpecies1, ordered_query = T, min_set_size = 3, max_set_size = 5000, src_filter = c("TF"),custom_bg = background_genes, correction_method = "fdr", min_isect_size = 3, hier_filtering = "moderate")
     return(list(BPs = ordered_back_all, TFs = ordered_back_all_tf))

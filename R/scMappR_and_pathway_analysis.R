@@ -25,29 +25,38 @@
 #' @param WIFI Whether you have stable WIFI (T/F).
 #' @param up_and_downregulated Whether you are additionally splitting up/downregulated genes (T/F).
 #' @param gene_label_size The size of the gene label on the plot.
-#' 
+#' @param number_genes The number of genes to cut-off for pathway analysis (good with many DEGs)
 #' 
 #' @return \code{scMappR_and_pathway_analysis} A directory with: STVs in RData file, Cell Type proportions (RData file), cell-type proportions leave one out (RData file), heatmap of STVs (all), heatmap of STVs (within signature), heatmap of signature (all), heatmap of signature (overlapping with DEG_list), Pathway enrichment for DEG list(all), RData file and Biological Processes, Pathway enrichment of STVs for each cell-type, RData file and biological processes. \cr
 #' 
+#' @import matrixStats
+#' @import DeconRNASeq
+#' @import S4Vectors
+#' @import ggplot2
+#' @import gplots
+#' @import graphics
+#' @import Seurat
+#' @import GSVA
+#' @import stats
+#' @import utils
 #'
 #' @examples 
 #' \notrun {
 #' 
 #' load("~/scMappR/data/PBMC_scMappR_and_pathway_analysis_example.rda")
+#' # data(PBMC_scMappR_and_pathway_analysis)
 #' case_grep <- "_female"
 #' control_grep <- "_male"
 #' max_proportion_change <- 10
 #' print_plots <- FALSE
 #' theSpecies <- "human"
-#' norm <- deconvolute_and_contextualize(bulk_normalized, odds_ratio_in, bulk_DE_cors, case_grep = case_grep, control_grep = control_grep, max_proportion_change = max_proportion_change, print_plots = print_plots, theSpecies = theSpecies)
-#' background = rownames(bulk_normalized)
-#' dir.create("test_path")
-#' pathway_enrich_internal(bulk_DE_cors, "human", norm$scMappR_transformed_values, background, "test_path", "test_figs")
+#' toOut <- scMappR_and_pathway_analysis(bulk_normalized, odds_ratio_in, bulk_DE_cors, case_grep = case_grep, control_grep = control_grep, rda_path = "", max_proportion_change = 10, print_plots = T, plot_names = "tst1", theSpecies = "human", output_directory = "tester", sig_matrix_size = 3000, up_and_downregulated = F, internet = F)
+#' 
 #' }
 #' 
 #' @export
 #' 
-scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list, case_grep, control_grep, rda_path = "", max_proportion_change = -9, print_plots=T, plot_names="scMappR",theSpecies = "human", output_directory = "scMappR_analysis",sig_matrix_size = 3000, drop_unkown_celltype = TRUE, internet = TRUE, up_and_downregulated = FALSE, gene_label_size = 0.4) {
+scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list, case_grep, control_grep, rda_path = "", max_proportion_change = -9, print_plots=T, plot_names="scMappR",theSpecies = "human", output_directory = "scMappR_analysis",sig_matrix_size = 3000, drop_unkown_celltype = TRUE, internet = TRUE, up_and_downregulated = FALSE, gene_label_size = 0.4, number_genes = -9) {
   
   
   
@@ -103,7 +112,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   # RData file and biological processes
   
   # load in the count matrix
-  library(gplots)
+
   
   theSpecies <- tolower(theSpecies)
   if(class(count_file) == "character") {
@@ -148,7 +157,25 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     if(internal_species != theSpecies) {
       warning(paste0("the species from the signature matrix, ", internal_species, ", does not equal the initially inputted species, ", theSpecies, ". Converting gene symbols of 1-1 orthologs"))
       RN <- rownames(signature_matrix) # gene symbols
-      load(paste0(rda_path,"/bioMart_ortholog_human_mouse.RData"))
+
+      thefiles <- list.files(path = cell_marker_path, "bioMart_ortholog_human_mouse.rda")
+      
+      
+      if(length(thefiles) == 0) {
+        warning(paste0("Cell-marker databases are not present in ", rda_path, " downloading and loading data."))
+        #
+        datafile <- "bioMart_ortholog_human_mouse.rda"
+        metafile <- paste0(datafile)
+        url <- paste0("https://github.com/DustinSokolowski/scMappR_Data/blob/master/", 
+                      metafile, "?raw=true")
+        destfile <- file.path(tempdir(), metafile)
+        downloader::download(url, destfile = destfile, mode = "wb")
+        load(destfile)
+        #
+      } else {
+        load(paste0(rda_path,"/bioMart_ortholog_human_mouse.rda"))
+      }      
+      
       # data(bioMart_ortholog_human_mouse) 
       
       rownames(bioMart_orthologs) <- bioMart_orthologs[,internal_species]
@@ -202,11 +229,11 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     # generating the heatmaps for STVs and signature matrix odds ratios that overlap with one another
     
     pdf(paste0(output_directory, "/", plot_names,"_STVs_signature_genes_heatmap.pdf"))
-    heatmap.2(as.matrix(scMappR_vals[celltype_preferred_degs,]), Rowv = T, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+    gplots::heatmap.2(as.matrix(scMappR_vals[celltype_preferred_degs,]), Rowv = T, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
     dev.off()
     
     pdf(paste0(output_directory, "/",plot_names,"_signature_matrix_DEGs_heatmap.pdf"))
-    heatmap.2(as.matrix(signature_mat[celltype_preferred_degs,]), Rowv = T, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+    gplots::heatmap.2(as.matrix(signature_mat[celltype_preferred_degs,]), Rowv = T, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
     dev.off()
     
   }
@@ -214,8 +241,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     warning("There is not a reported stable internet (WIFI = FALSE) and therefore pathway analysis with g:Prof")
     return("Done!")
   }
-  library(gProfileR)
-  up_and_down_together <- pathway_enrich_internal(  DEGs, theSpecies, scMappR_vals, background_genes, output_directory, plot_names)
+  up_and_down_together <- pathway_enrich_internal(  DEGs, theSpecies, scMappR_vals, background_genes, output_directory, plot_names, number_genes)
   if(up_and_downregulated == TRUE)  {
     print("Splitting genes by up- and down-regulated and then repeating analysis", quote = F)
     rownames(DEGs) <- DEGs$gene_name
@@ -231,9 +257,9 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     upSTVs <- scMappR_vals[upGenes,]
     DownSTVs <- scMappR_vals[downGenes,]
     print("Pathway analysis of upregulated genes")
-    up_only <- pathway_enrich_internal(  upDEGs, theSpecies, upSTVs, background_genes, upDir, plot_names)
+    up_only <- pathway_enrich_internal(  upDEGs, theSpecies, upSTVs, background_genes, upDir, plot_names, number_genes )
     print("Pathway analysis of downregulated genes")
-    down_only <- pathway_enrich_internal(  downDEGs, theSpecies, DownSTVs, background_genes, downDir, plot_names)    
+    down_only <- pathway_enrich_internal(  downDEGs, theSpecies, DownSTVs, background_genes, downDir, plot_names, number_genes)    
   }
   
   return(list(STVs = STVs, paths = up_and_down_together$biological_pathways, TFs = up_and_down_together$transcription_factors))

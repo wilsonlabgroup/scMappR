@@ -18,6 +18,16 @@
 #' 
 #' @return \code{process_from_count} A processed & integrated Seurat object that has been scaled and clustered. It can be returned as an internal object or also stored as an RData object if neccesary. \cr
 #'
+#' @import matrixStats
+#' @import DeconRNASeq
+#' @import S4Vectors
+#' @import ggplot2
+#' @import gplots
+#' @import graphics
+#' @import Seurat
+#' @import GSVA
+#' @import stats
+#' @import utils
 #'
 #' @examples 
 #' 
@@ -46,7 +56,6 @@ process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = 
   # A processed & integrated Seurat object that has been scaled and clustered. It can be returned as an internal object or 
   # also stored as an RData object if neccesary.
   
-  library("Seurat") # load scMappR and sctransform R packages
   SRA_in <- countmat_list
   
   shrt <- names(SRA_in)
@@ -109,7 +118,7 @@ process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = 
     
     ## Remove cells with >2 standard deviations of MT contamination given the dataset.
     mean <- mean(pbmc$percent.mt.adj)
-    x<- sd(pbmc$percent.mt.adj)
+    x<- stats::sd(pbmc$percent.mt.adj)
     toremove <- mean + (2*x)
     if(toremove > 0){
       pbmc <- pbmc[,which(pbmc$percent.mt.adj < toremove)]
@@ -146,7 +155,7 @@ process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = 
     immune.anchors <- Seurat::FindIntegrationAnchors(object.list = object.list, anchor.features = object.features, normalization.method = "SCT")
     immune.combined <- Seurat::IntegrateData(anchorset = immune.anchors, dims = 1:20, normalization.method = "SCT")
     
-    DefaultAssay(immune.combined) <- "integrated"
+    Seurat::DefaultAssay(immune.combined) <- "integrated"
     pbmc <- immune.combined
   }
   
@@ -161,7 +170,7 @@ process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = 
     # Save the seurat object before scaling
     save(pbmc, file = paste0(name, "_custom.Rdata"))
   }
-  pbmc <- try(ScaleData(object = pbmc)) # scale data
+  pbmc <- try(Seurat::ScaleData(object = pbmc)) # scale data
   if(class(pbmc) == "try-error") {
     stop("Data scaling did not finish, this can often be due to a memory error (as of November 2019). 
         the Seurat object up to this point has been saved.

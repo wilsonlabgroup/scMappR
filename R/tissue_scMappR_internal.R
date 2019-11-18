@@ -20,12 +20,22 @@
 #'
 #' @return \code{tissue_scMappR_internal} A list containing the entire signature matrix, the matrix subsetted for your genes, enrichment of each cell-type, and co-enrichment. \cr
 #'
+#' @import matrixStats
+#' @import DeconRNASeq
+#' @import S4Vectors
+#' @import ggplot2
+#' @import gplots
+#' @import graphics
+#' @import Seurat
+#' @import GSVA
+#' @import stats
+#' @import utils
 #'
 #' @examples 
 #' \notrun {
 #' 
 #' # load in signature matrices
-#' load("data/Preoptic_region_example.rda")
+#' load("~/scMappR/data/Preoptic_region_example.rda")
 #' # data(Preoptic_region_example)
 #' Signature <- POA_Rank_signature
 #'  rowname <- get_gene_symbol(Signature)
@@ -65,10 +75,49 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
     warning("Generating heatmap of Raw P-values, the lower the heat the more significant. Would reccomend switching to ranks insteads (-log10(Pval) * sign(Fold-Change))")
   }
   if(clust == "p_val") {
-    load(paste0(rda_path, "/Signature_matrices_pVal.rda"))
+    
+    thefiles <- list.files(path = rda_path, "Signature_matrices_Pval.rda")
+    
+    
+    if(length(thefiles) == 0) {
+      warning(paste0("Cell-marker databases are not present in ", rda_path, " downloading and loading data."))
+      #
+      datafile <- "Signature_matrices_Pval.rda"
+      metafile <- paste0(datafile)
+      url <- paste0("https://github.com/DustinSokolowski/scMappR_Data/blob/master/", 
+                    metafile, "?raw=true")
+      destfile <- file.path(tempdir(), metafile)
+      downloader::download(url, destfile = destfile, mode = "wb")
+      load(destfile)
+      #
+    } else {
+      load(paste0(rda_path,"/Signature_matrices_Pval.rda"))
+    }
+    
     scMappR_list <- RankValueSignature
   } else {
-    load(paste0(rda_path, "/Signature_matrices_OR.rda"))
+    
+    thefiles <- list.files(path = rda_path, "Signature_matrices_OR.rda")
+    
+    
+    if(length(thefiles) == 0) {
+      
+      warning(paste0("Cell-marker databases are not present in ", rda_path, " downloading and loading data."))
+      #
+      datafile <- "Signature_matrices_OR.rda"
+      metafile <- paste0(datafile)
+      url <- paste0("https://github.com/DustinSokolowski/scMappR_Data/blob/master/", 
+                    metafile, "?raw=true")
+      destfile <- file.path(tempdir(), metafile)
+      downloader::download(url, destfile = destfile, mode = "wb")
+      load(destfile)
+      #
+    } else {
+      load(paste0(rda_path,"/Signature_matrices_OR.rda"))
+    }
+    
+    
+    
     scMappR_list <- OddsRatioSignature
   }
   hm <- names(scMappR_list) # get all the available pvalue signautres
@@ -93,7 +142,25 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
       warning(paste0("Species in signature matrix, ",RN_2$species, " is not the same as the inputted gene species ", species,"."))
       warning(paste0( "converting gene symbols in background from ",RN_2$species, " to ", species))
       
-      load("C:/Users/Dustin Sokolowski/Documents/scMappR/bioMart_ortholog_human_mouse.RData")
+      thefiles <- list.files(path = rda_path, "ortholog_human_mouse.rda")
+      
+      if(length(thefiles) == 0) {
+        warning(paste0("Cell-marker preferences are not present in ", rda_path, " downloading and loading data."))
+        #
+        datafile <- "bioMart_ortholog_human_mouse.rda"
+        metafile <- paste0(datafile)
+        url <- paste0("https://github.com/DustinSokolowski/scMappR_Data/blob/master/", 
+                      metafile, "?raw=true")
+        destfile <- file.path(tempdir(), metafile)
+        downloader::download(url, destfile = destfile, mode = "wb")
+        load(destfile)
+      } else {
+        
+        load(paste0(rda_path,"/bioMart_ortholog_human_mouse.rda"))
+      }
+      
+      
+      
       rownames(bioMart_orthologs) <- bioMart_orthologs[,RN_2$species]
       RN <- rownames(wilcoxon_rank_mat_t)
       
