@@ -21,7 +21,7 @@ Authors@R:
            role = c("aut"))
 	person(given = "Helen",
            family = "Zhu",
-           role = c("cre"))
+           role = c("aut"))
 	person(given = "Mark",
            family = "Palmert",
            role = c("aut"))
