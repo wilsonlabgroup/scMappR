@@ -4,12 +4,8 @@
 \alias{human_mouse_ct_marker_enrich}
 \title{Consensus cell-type naming (Fisher's Exact)}
 \usage{
-human_mouse_ct_marker_enrich(
-  gene_lists,
-  theSpecies = "human",
-  cell_marker_path = "~/scMappR/data",
-  naming_preference = -9
-)
+human_mouse_ct_marker_enrich(gene_lists, theSpecies = "human",
+  cell_marker_path = "~/scMappR/data", naming_preference = -9)
 }
 \arguments{
 \item{gene_lists}{A named list of vectors containing cell-type markers (mouse or human gene-symbols) which will be named as a cell-type via the fish'er sexact test method.}
@@ -45,6 +41,6 @@ Signature <- POA_Rank_signature
  # Assuming mouse_cell_markers.rda is in you "~/scMappR/data" directory
  gmt1 <- "~/scMappR/data/mouse_cell_markers.rda"
  gmt <- gmt_panglao
- enriched <- cellmarker_enrich(genes, 0.05, gmt = gmt)
+ enriched <- human_mouse_ct_marker_enrich(gene_lists = genes, theSpecies = "mouse", cell_marker_path = "", naming_preference = "brain")
  }
 }

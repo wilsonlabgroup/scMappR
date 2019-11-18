@@ -4,14 +4,8 @@
 \alias{pathway_enrich_internal}
 \title{Pathway enrichment for STV's and bulk gene list}
 \usage{
-pathway_enrich_internal(
-  DEGs,
-  theSpecies,
-  scMappR_vals,
-  background_genes,
-  output_directory,
-  plot_names
-)
+pathway_enrich_internal(DEGs, theSpecies, scMappR_vals, background_genes,
+  output_directory, plot_names, number_genes)
 }
 \arguments{
 \item{DEGs}{Differentially expressed genes (gene_name, padj, log2fc).}
@@ -19,6 +13,8 @@ pathway_enrich_internal(
 \item{output_directory}{Path to the directory where files will be saved.}
 
 \item{plot_names}{Names of output.}
+
+\item{number_genes}{Number of genes to if there are many many DEGs}
 
 \item{species}{Human, mouse, or a charcter that is compatible with gProfileR.}
 

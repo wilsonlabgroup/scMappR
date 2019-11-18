@@ -4,7 +4,7 @@
 \alias{gProfiler_STV}
 \title{Pathway enrichment for STV's}
 \usage{
-gProfiler_STV(STV_matrix, species = theSpecies, background = background_genes)
+gProfiler_STV(STV_matrix, species, background, gene_cut)
 }
 \arguments{
 \item{STV_matrix}{Matrix of scMappR Transformed Values from the deconvolute_and_contextualize functions.}
@@ -12,6 +12,8 @@ gProfiler_STV(STV_matrix, species = theSpecies, background = background_genes)
 \item{species}{Human, mouse, or a charcter that is compatible with gProfileR.}
 
 \item{background}{A list of background genes to test against.}
+
+\item{gene_cut}{The top number of genes in pathway analysis.}
 }
 \value{
 \code{gProfiler_STV} A List of significantly enriched pathways and TFs (correction_method = FDR, hier_sorting = moderate), for every cell-type. \cr

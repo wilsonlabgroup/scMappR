@@ -4,24 +4,13 @@
 \alias{scMappR_and_pathway_analysis}
 \title{Generate STV, visualize, and enrich.}
 \usage{
-scMappR_and_pathway_analysis(
-  count_file,
-  signature_matrix,
-  DEG_list,
-  case_grep,
-  control_grep,
-  rda_path = "",
-  max_proportion_change = -9,
-  print_plots = T,
-  plot_names = "scMappR",
-  theSpecies = "human",
-  output_directory = "scMappR_analysis",
-  sig_matrix_size = 3000,
-  drop_unkown_celltype = TRUE,
-  internet = TRUE,
-  up_and_downregulated = FALSE,
-  gene_label_size = 0.4
-)
+scMappR_and_pathway_analysis(count_file, signature_matrix, DEG_list,
+  case_grep, control_grep, rda_path = "", max_proportion_change = -9,
+  print_plots = T, plot_names = "scMappR", theSpecies = "human",
+  output_directory = "scMappR_analysis", sig_matrix_size = 3000,
+  drop_unkown_celltype = TRUE, internet = TRUE,
+  up_and_downregulated = FALSE, gene_label_size = 0.4,
+  number_genes = -9)
 }
 \arguments{
 \item{count_file}{Normalized RNA-seq count matrix where rows are gene symbols and columns are individuals. Either the object tself of the path of a TSV file}
@@ -52,6 +41,8 @@ scMappR_and_pathway_analysis(
 
 \item{gene_label_size}{The size of the gene label on the plot.}
 
+\item{number_genes}{The number of genes to cut-off for pathway analysis (good with many DEGs)}
+
 \item{WIFI}{Whether you have stable WIFI (T/F).}
 }
 \value{
@@ -70,15 +61,14 @@ This function is a wrapper for deconvolute_and_contextualize, as well as pathway
 \\notrun {
 
 load("~/scMappR/data/PBMC_scMappR_and_pathway_analysis_example.rda")
+# data(PBMC_scMappR_and_pathway_analysis)
 case_grep <- "_female"
 control_grep <- "_male"
 max_proportion_change <- 10
 print_plots <- FALSE
 theSpecies <- "human"
-norm <- deconvolute_and_contextualize(bulk_normalized, odds_ratio_in, bulk_DE_cors, case_grep = case_grep, control_grep = control_grep, max_proportion_change = max_proportion_change, print_plots = print_plots, theSpecies = theSpecies)
-background = rownames(bulk_normalized)
-dir.create("test_path")
-pathway_enrich_internal(bulk_DE_cors, "human", norm$scMappR_transformed_values, background, "test_path", "test_figs")
+toOut <- scMappR_and_pathway_analysis(bulk_normalized, odds_ratio_in, bulk_DE_cors, case_grep = case_grep, control_grep = control_grep, rda_path = "", max_proportion_change = 10, print_plots = T, plot_names = "tst1", theSpecies = "human", output_directory = "tester", sig_matrix_size = 3000, up_and_downregulated = F, internet = F)
+
 }
 
 }

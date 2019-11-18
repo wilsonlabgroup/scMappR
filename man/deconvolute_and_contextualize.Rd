@@ -4,22 +4,11 @@
 \alias{deconvolute_and_contextualize}
 \title{Generate scMappR Transformed Values (STVs)}
 \usage{
-deconvolute_and_contextualize(
-  count_file,
-  signature_matrix,
-  DEG_list,
-  case_grep,
-  control_grep,
-  max_proportion_change = -9,
-  print_plots = T,
-  plot_names = "scMappR",
-  theSpecies = "human",
-  make_scale = F,
-  FC_coef = T,
-  sig_matrix_size = 3000,
-  sig_distort = 1,
-  drop_unkown_celltype = TRUE
-)
+deconvolute_and_contextualize(count_file, signature_matrix, DEG_list,
+  case_grep, control_grep, max_proportion_change = -9, print_plots = T,
+  plot_names = "scMappR", theSpecies = "human", make_scale = F,
+  FC_coef = T, sig_matrix_size = 3000, sig_distort = 1,
+  drop_unkown_celltype = TRUE)
 }
 \arguments{
 \item{count_file}{Normalized RNA-seq count matrix where rows are gene symbols and columns are individuals. Either the object tself of the path of a TSV file}

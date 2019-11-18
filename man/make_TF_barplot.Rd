@@ -23,7 +23,6 @@ enriched P-values before plotting the rank of their P-values
 }
 \examples{
 \\notrun {
-library(gProfileR)
 # load in signature matrices
 load("~/scMappR/data/Preoptic_region_example.rda")
 # data(Preoptic_region_example)

@@ -4,14 +4,8 @@
 \alias{generes_to_heatmap}
 \title{Generate signature matrix}
 \usage{
-generes_to_heatmap(
-  generes,
-  species = "human",
-  naming_preference = -9,
-  rda_path = "~/scMappR/data",
-  make_names = T,
-  internal = FALSE
-)
+generes_to_heatmap(generes, species = "human", naming_preference = -9,
+  rda_path = "~/scMappR/data", make_names = T, internal = FALSE)
 }
 \arguments{
 \item{generes}{A list of cell-tpe markers with fold-changes and P-vlaues (FindMarkers output in Seurat)}

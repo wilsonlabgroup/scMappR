@@ -13,6 +13,8 @@ plotBP(ordered_back_all, top_bp = 10)
 }
 \value{
 \code{plotBP} A barplot of the number of "top_bp" pathways, ranked by -log10(Pfdr). \cr
+
+ @import matrixStats
 }
 \description{
 Make a barplot of the top biological factors enriched by g:ProfileR
@@ -23,7 +25,6 @@ enriched P-values before plotting the rank of their P-values#'
 }
 \examples{
 \\notrun {
-library(gProfileR)
 # load in signature matrices
 load("~/scMappR/data/Preoptic_region_example.rda")
 # data(Preoptic_region_example)

@@ -4,16 +4,8 @@
 \alias{tissue_scMappR_internal}
 \title{Gene List Visualization and Enrichment (Internal)}
 \usage{
-tissue_scMappR_internal(
-  gene_list,
-  species,
-  output_directory,
-  tissue,
-  rda_path,
-  cluster = "Pval",
-  genecex = 0.01,
-  raw_pval = FALSE
-)
+tissue_scMappR_internal(gene_list, species, output_directory, tissue,
+  rda_path, cluster = "Pval", genecex = 0.01, raw_pval = FALSE)
 }
 \arguments{
 \item{gene_list}{A list of gene symbols, mouse or human.}
@@ -45,7 +37,7 @@ of those cell-types.
 \\notrun {
 
 # load in signature matrices
-load("data/Preoptic_region_example.rda")
+load("~/scMappR/data/Preoptic_region_example.rda")
 # data(Preoptic_region_example)
 Signature <- POA_Rank_signature
  rowname <- get_gene_symbol(Signature)
