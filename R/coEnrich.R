@@ -79,7 +79,7 @@ coEnrich <- function(sig, gene_list_heatmap, background_heatmap, study_name, out
         background_comb <- background_heatmap$geneHeat # take tissue signature matrix
         colnames(background_comb) <- toupper(colnames(background_comb))
         
-        inter <- (rownames(background_heatmap), rownames(geneList_comb))
+        inter <- intersect(rownames(background_heatmap), rownames(geneList_comb))
         
         background_comb1 <- background_comb[!(rownames(background_comb) %in% inter), which(colnames(background_comb) %in% thecomps)] # remove enriched CT
   
@@ -108,7 +108,7 @@ coEnrich <- function(sig, gene_list_heatmap, background_heatmap, study_name, out
       background_comb <- background_heatmap$geneHeat
       colnames(background_comb) <- toupper(colnames(background_comb))
       
-      inter <- (rownames(background_heatmap), rownames(geneList_comb))
+      inter <- intersect(rownames(background_heatmap), rownames(geneList_comb))
       background_comb1 <- background_comb[!(rownames(background_comb) %in% inter), which(colnames(background_comb) %in% thecomps)] # remove enriched CT
       
       bin_aa <- apply(geneList_comb1,1,co_up)
