@@ -1,4 +1,4 @@
-# scMappR
+# Single Cell MappeR (scMappR)
 
 Dustin Sokolowski
 
