@@ -225,6 +225,8 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   
   if(length(celltype_preferred_degs) == 0) {
     warning("No DEGs are in the signature matrix and therefore these heatmaps will not be generated")
+    print("No DEGs are in the signature matrix and therefore these heatmaps will not be generated", quote = F)
+    return(list(STVs = STVs))
   } else {
     
     # generating the heatmaps for STVs and signature matrix odds ratios that overlap with one another
