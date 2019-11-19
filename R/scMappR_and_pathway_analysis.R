@@ -223,10 +223,12 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   
   celltype_preferred_degs <- intersect(rownames(scMappR_vals), rownames(signature_matrix)) # intersect DEGs and Genes in signature matrix
   
-  if(length(celltype_preferred_degs) == 0) {
-    warning("No DEGs are in the signature matrix and therefore these heatmaps will not be generated")
-    print("No DEGs are in the signature matrix and therefore these heatmaps will not be generated", quote = F)
+  if(length(celltype_preferred_degs) < 3) {
+    warning("Fewer than 3 genes are both De and in the signature matrix. Therefore, these heatmaps will not be generated. Furthermore, there is insufficient re-ranking of genes for different pathway analyses to be neccesary. Therefore, here, STVs are more representative of a scaling factor for each cell-type.")
+    print("Fewer than 3 genes are both De and in the signature matrix. Therefore, these heatmaps will not be generated. Furthermore, there is insufficient re-ranking of genes for different pathway analyses to be neccesary. Therefore, here, STVs are more representative of a scaling factor for each cell-type.", quote = F)
+    
     return(list(STVs = STVs))
+
   } else {
     
     # generating the heatmaps for STVs and signature matrix odds ratios that overlap with one another
