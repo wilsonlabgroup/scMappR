@@ -31,6 +31,7 @@
 #' @import GSVA
 #' @import stats
 #' @import utils
+#' @import downloader
 #'
 #' @examples 
 #' 
