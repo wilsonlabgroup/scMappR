@@ -4,8 +4,12 @@
 \alias{human_mouse_ct_marker_enrich}
 \title{Consensus cell-type naming (Fisher's Exact)}
 \usage{
-human_mouse_ct_marker_enrich(gene_lists, theSpecies = "human",
-  cell_marker_path = "~/scMappR/data", naming_preference = -9)
+human_mouse_ct_marker_enrich(
+  gene_lists,
+  theSpecies = "human",
+  cell_marker_path = "~/scMappR/data",
+  naming_preference = -9
+)
 }
 \arguments{
 \item{gene_lists}{A named list of vectors containing cell-type markers (mouse or human gene-symbols) which will be named as a cell-type via the fish'er sexact test method.}

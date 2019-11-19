@@ -4,11 +4,19 @@
 \alias{heatmap_generation}
 \title{Generate Heatmap}
 \usage{
-heatmap_generation(genesIn, comp, cex = 0.8,
-  rd_path = "~/scMappR/data", cellTypes = "ALL", pVal = 0.01,
-  isPval = TRUE, isMax = F, isBackground = F,
+heatmap_generation(
+  genesIn,
+  comp,
+  cex = 0.8,
+  rd_path = "~/scMappR/data",
+  cellTypes = "ALL",
+  pVal = 0.01,
+  isPval = TRUE,
+  isMax = F,
+  isBackground = F,
   reference = "C:/Users/Dustin Sokolowski/Desktop/romanov_wilcoxon_test_2.RData",
-  which_species = "human")
+  which_species = "human"
+)
 }
 \arguments{
 \item{genesIn}{A list of gene symbols (all caps) to have their cell type enrichment}
@@ -21,7 +29,7 @@ heatmap_generation(genesIn, comp, cex = 0.8,
 
 \item{pVal}{The level of association a gene has within a cell type (passed to extract_genes_cell)}
 
-\item{isMax}{If you are taking the single best CT marker (T/F) -- TRUE not reccomended}
+\item{isMax}{only take the top most DEG for each cell-type (T/F) -- TRUE not reccomended}
 
 \item{isBackground}{If the heatmap is from the entire signature matrix or just the inputted gene list (T/F). isBackground == TRUE is used for internal.}
 
@@ -30,8 +38,6 @@ heatmap_generation(genesIn, comp, cex = 0.8,
 \item{Cex}{the size of the genes in the column label for the heatmap}
 
 \item{isPvalue}{If the signature matrix is raw p-value (T/F) -- TRUE not reccomended}
-
-\item{isMax}{only take the top most DEG for each cell-type (T/F) -- TRUE not reccomended}
 
 \item{refence}{Path to signature matrix or the signature matrix itself.}
 }

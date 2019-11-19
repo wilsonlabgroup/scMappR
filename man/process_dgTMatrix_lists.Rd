@@ -4,9 +4,17 @@
 \alias{process_dgTMatrix_lists}
 \title{Count Matrix To Signature Matrix}
 \usage{
-process_dgTMatrix_lists(dgTMatrix_list, name, species_name,
-  naming_preference, rda_path = "", panglao_set = FALSE,
-  haveUMAP = FALSE, saveSCObject = FALSE, internal = F)
+process_dgTMatrix_lists(
+  dgTMatrix_list,
+  name,
+  species_name,
+  naming_preference,
+  rda_path = "",
+  panglao_set = FALSE,
+  haveUMAP = FALSE,
+  saveSCObject = FALSE,
+  internal = F
+)
 }
 \arguments{
 \item{dgTMatrix_list}{A list of matrices in the class of dgTMatrix object -- sparce object -- compatible with Seurat rownames should be of the same species for each.}
