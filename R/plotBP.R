@@ -14,7 +14,7 @@
 #' 
 #' @return \code{plotBP} A barplot of the number of "top_bp" pathways, ranked by -log10(Pfdr). \cr
 #' 
-#'  @import matrixStats
+#' @import matrixStats
 #' @import DeconRNASeq
 #' @import S4Vectors
 #' @import ggplot2
@@ -24,6 +24,7 @@
 #' @import GSVA
 #' @import stats
 #' @import utils
+#' @import downloader
 #'
 #' @examples 
 #' \notrun {
