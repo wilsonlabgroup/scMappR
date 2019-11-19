@@ -10,12 +10,14 @@ Dustin Sokolowski
 1. Github (Development Version)
 
 devtools::install_github("DustinSokolowski/scMappR")
+
 library(scMappR)
 
 2. CRAN (Stable Release)
 
 ## Data Download
 Link to data used in scMappR: https://github.com/DustinSokolowski/scMappR_Data
+
 Currently, to run scMappR locally, please download all .rda files in this data download repository. In many of the functions, the "rda_path" argument can be changed to wherever you would like to download these files to. It however assumes "~/scMappR/data".
 
 Internally, if these functions do not detect these rda files, they will temporarily download them with the downloader R package; however, these rda files must already be downloaded to use the examples that are not automatically run.
