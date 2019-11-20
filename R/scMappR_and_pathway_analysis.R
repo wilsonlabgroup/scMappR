@@ -208,7 +208,11 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   
   signature_mat <- STVs$processed_signature_matrix # processed_signaure_matrix
   save(signature_mat, file = paste0(output_directory, "/",plot_names, "_leaveOneOut_gene_proportions.RData"))
-  
+  if(nrow(DEG_list) == 1) {
+    warning("You only have 1 DEG, no heatmaps can be made. Returning STV")
+    print("You only have 1 DEG, no heatmaps can be made. Returning STV",quote = F)
+    return(scMappR_vals)
+    }
   myheatcol <- grDevices::colorRampPalette(c("lightblue", "white", "orange"))(256)
   
   # generate heatmaps for DEGs
