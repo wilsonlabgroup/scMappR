@@ -185,7 +185,7 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
     background_heatmap <- heatmap_generation(background_genes, comp = paste0(outDir, "/", study_names[i],"_background"), reference = study_ref, isBackground = TRUE, cex = genecex, which_species = species, isPval = raw_pval)  
     # get the heatmap of all of the genes in the signature matrix
 
-    print(length(intersect(genes, rownames(study_ref))))
+    print(length(intersect(genes, rownames(study_ref)))
     
     gene_list_heatmap <- heatmap_generation(gene_list, comp = paste0(outDir, "/", study_names[i],"_genelist"), reference = study_ref, cex = genecex, which_species = species, isPval = raw_pval)
     
