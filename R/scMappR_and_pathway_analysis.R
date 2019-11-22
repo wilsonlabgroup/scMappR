@@ -159,7 +159,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
       warning(paste0("the species from the signature matrix, ", internal_species, ", does not equal the initially inputted species, ", theSpecies, ". Converting gene symbols of 1-1 orthologs"))
       RN <- rownames(signature_matrix) # gene symbols
 
-      thefiles <- list.files(path = cell_marker_path, "bioMart_ortholog_human_mouse.rda")
+      thefiles <- list.files(path = rda_path, "bioMart_ortholog_human_mouse.rda")
       
       
       if(length(thefiles) == 0) {
