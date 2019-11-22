@@ -186,7 +186,14 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
     # get the heatmap of all of the genes in the signature matrix
 
     print(length(intersect(gene_list, rownames(study_ref))))
-    
+    theL <- length(intersect(gene_list, rownames(study_ref)))
+    if(theL < 3) {
+      print(paste0("Your gene list contains fewer than 3 overlapping genes with ",study_names[i],". Therefore no heatmap was saved and enrichment cannot be done."), quote = F)
+      print(paste0("Subsetted CT marker preferences of these genes are saved in ",paste0(outDir, "/", study_names[i],"_genelist")), quote = F)
+      subsetted_genes <- study_ref[gene_list,]
+      save(subsetted_genes, file = paste0(outDir, "/", study_names[i],"_subsetted.RData"))
+     }
+      
     gene_list_heatmap <- heatmap_generation(gene_list, comp = paste0(outDir, "/", study_names[i],"_genelist"), reference = study_ref, cex = genecex, which_species = species, isPval = raw_pval)
     
     # get the heatmap of genes overlapping with the signature matrix and the inputted gene list
