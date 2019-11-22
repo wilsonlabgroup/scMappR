@@ -184,7 +184,7 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
     background_genes <- rownames(study_ref)
     background_heatmap <- heatmap_generation(background_genes, comp = paste0(outDir, "/", study_names[i],"_background"), reference = study_ref, isBackground = TRUE, cex = genecex, which_species = species, isPval = raw_pval)  
     # get the heatmap of all of the genes in the signature matrix
-
+    print("Number of DEGs that are cell-type markers in current signature matrix: ", quote =F)
     print(length(intersect(gene_list, rownames(study_ref))))
     theL <- length(intersect(gene_list, rownames(study_ref)))
     if(theL < 3) {
