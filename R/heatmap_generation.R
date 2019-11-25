@@ -177,6 +177,9 @@ heatmap_generation <- function(genesIn, comp, cex = 0.8, rd_path = "~/scMappR/da
     save(preferences, file = paste0(comp,"_preferences.RData"))
     } else {
       warning("toSave = F and scMappR is not allowed to print files or plots in your directories. For full functionality of the package, set to true.")
+      geneHeat <- wilcoxon_rank_mat_t[whichGenesInter,]
+      preferences <- extract_genes_cell(geneHeat, cellTypes = cellTypes, val = pVal, isMax = isMax, isPvalue = isPval)
+      
     }
     
   } 
