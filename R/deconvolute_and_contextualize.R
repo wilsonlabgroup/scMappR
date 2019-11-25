@@ -50,6 +50,7 @@
 #' @import stats
 #' @import utils
 #' @import downloader
+#' @import pcaMethods
 #'
 #' @examples 
 #' \notrun {
