@@ -74,7 +74,13 @@ tissue_scMappR_custom <- function(gene_list, signature_matrix ,output_directory,
   
   outDir <- paste0(output_directory)
   study_names <- outDir
-  dir.create(outDir)
+  if(toSave == TRUE) {
+    dir.create(outDir)
+  } else {
+    warning("toSave == FALSE and therefore a directory cannot be made. Switching toSave = TRUE is reccomended.")
+    print("toSave == FALSE and therefore a directory cannot be made. Switching toSave = TRUE is reccomended.", quote = F)
+    
+  }
   single_cell_studies <- list()
   i=1 # makes the gene set enrichment syntax compatible with heatmap_generation_internal
   background = signature_matrix

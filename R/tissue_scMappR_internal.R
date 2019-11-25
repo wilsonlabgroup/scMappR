@@ -131,7 +131,13 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
   hm_tissue <- grep(toupper(tissue), toupper(hm))
   input_studies <- hm[hm_tissue]
   study_names <- input_studies
-  dir.create(outDir)
+  if(toSave == TRUE) {
+    dir.create(outDir)
+  } else {
+    warning("toSave == FALSE and therefore a directory cannot be made. Switching toSave = TRUE is reccomended.")
+    print("toSave == FALSE and therefore a directory cannot be made. Switching toSave = TRUE is reccomended.", quote = F)
+    
+  }
   single_cell_studies <- list()
   for(i in 1:length(study_names)) {
     

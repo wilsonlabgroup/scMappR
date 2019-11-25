@@ -206,8 +206,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     print("toSave == FALSE therefore files cannot be saved. Switching toSave = TRUE is strongly reccomended. Returning STVs and no pathway analysis.", quote = F)
     return(STVs)    
   }
-  dir.create(output_directory)
-  
+
   scMappR_vals <- STVs$scMappR_transformed_values # scMappR values
   print(scMappR_vals)
   save(scMappR_vals, file = paste0(output_directory, "/",plot_names, "_STVs.RData"))
