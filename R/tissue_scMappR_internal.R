@@ -198,7 +198,7 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
       print(paste0("Subsetted CT marker preferences of these genes are saved in ",paste0(outDir, "/", study_names[i],"_genelist")), quote = F)
       print(intersect(gene_list, rownames(study_ref)))
       subsetted_genes <- study_ref[intersect(gene_list, rownames(study_ref)),]
-      if(toSave=TRUE) {
+      if(toSave==TRUE) {
       save(subsetted_genes, file = paste0(outDir, "/", study_names[i],"_subsetted.RData"))
       } else {
         warning("Cannot save preferences of subsetted genes as toSave = FALSE")
