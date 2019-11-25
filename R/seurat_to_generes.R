@@ -36,7 +36,9 @@
 #' cellnames <- gsva_cellIdentify(tst1, "mouse", "brain", "~/scMappR/data")
 #' generes <- seurat_to_generes(tst1)
 #' 
+NULL
 #' @export
+#' @rdname seurat_to_generes
 
 
 seurat_to_generes <- function(pbmc){

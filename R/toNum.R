@@ -30,8 +30,9 @@
 #'  # convert to character
 #'  num <- toNum(fact)
 #'  
+NULL
+#' @rdname toNum
 #' @export
-
 
 toNum <- function(x) {
   # this function checks if your vector is not a numeric and will then convert it to a numeric

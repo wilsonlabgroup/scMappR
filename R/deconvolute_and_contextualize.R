@@ -55,6 +55,9 @@
 #' \notrun {
 #' load("~/scMappR/data/PBMC_scMappR_and_pathway_analysis_example.rda")
 #' #data(PBMC_scMappR)
+#' bulk_DE_cors <- PBMC_example$bulk_DE_cors
+#' bulk_normalized <- PBMC_example$bulk_normalized
+#' odds_ratio_in <- PBMC_example$odds_ratio_in
 #' case_grep <- "_female"
 #' control_grep <- "_male"
 #' max_proportion_change <- 10
@@ -64,6 +67,9 @@
 #' norm <- deconvolute_and_contextualize(bulk_normalized, odds_ratio_in, bulk_DE_cors, case_grep = case_grep, control_grep = control_grep,
 #'                                      max_proportion_change = max_proportion_change, print_plots = print_plots, theSpecies = theSpecies)
 #'  }
+#' @export
+NULL
+#' @rdname deconvolute_and_contextualize
 #' @export
 #' 
 deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list, case_grep, control_grep, max_proportion_change = -9, print_plots=T, plot_names="scMappR",theSpecies = "human", make_scale = F, FC_coef = T, sig_matrix_size = 3000, sig_distort = 1, drop_unkown_celltype = TRUE) {

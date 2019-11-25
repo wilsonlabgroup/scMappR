@@ -28,7 +28,7 @@
 #' @import downloader
 #'
 #' @examples 
-#' 
+#' \notrun {
 #' 
 #' load("~/scMappR/data/cell_process_example.rda")
 #' #data(cell_process_example)
@@ -36,7 +36,10 @@
 #' tst1 <- process_from_count(toProcess, "testProcess")
 #' cellnames <- gsva_cellIdentify(tst1, "mouse", "brain", "~/scMappR/data")
 #' 
+#' }
 #'  
+NULL
+#' @rdname gsva_cellIdentify
 #' @export
 #' 
 gsva_cellIdentify <- function(pbmc, theSpecies, naming_preference, rda_path = "") {
@@ -68,8 +71,18 @@ gsva_cellIdentify <- function(pbmc, theSpecies, naming_preference, rda_path = ""
       downloader::download(url, destfile = destfile, mode = "wb")
       load(destfile)
       #
+      gmt_both <- gmt_list$gmt_both
+      gmt_cellmarker <- gmt_list$gmt_cellmarker
+      gmt_gobp <- gmt_list$gmt_gobp
+      gmt_panglao <- gmt_list$gmt_panglao
+      gmt_subtype <- gmt_list$gmt_subtype
     } else {
       load(paste0(rda_path,"/human_cell_markers.rda"))
+      gmt_both <- gmt_list$gmt_both
+      gmt_cellmarker <- gmt_list$gmt_cellmarker
+      gmt_gobp <- gmt_list$gmt_gobp
+      gmt_panglao <- gmt_list$gmt_panglao
+      gmt_subtype <- gmt_list$gmt_subtype
     }
   } else {
     if(length(thefiles) == 0) {
@@ -82,9 +95,19 @@ gsva_cellIdentify <- function(pbmc, theSpecies, naming_preference, rda_path = ""
       destfile <- file.path(tempdir(), metafile)
       downloader::download(url, destfile = destfile, mode = "wb")
       load(destfile)
+      gmt_both <- gmt_list$gmt_both
+      gmt_cellmarker <- gmt_list$gmt_cellmarker
+      gmt_gobp <- gmt_list$gmt_gobp
+      gmt_panglao <- gmt_list$gmt_panglao
+      gmt_subtype <- gmt_list$gmt_subtype
       #
     } else{
     load(paste0(rda_path,"/mouse_cell_markers.rda"))
+      gmt_both <- gmt_list$gmt_both
+      gmt_cellmarker <- gmt_list$gmt_cellmarker
+      gmt_gobp <- gmt_list$gmt_gobp
+      gmt_panglao <- gmt_list$gmt_panglao
+      gmt_subtype <- gmt_list$gmt_subtype
     }
   }
   gmt <- gmt_both

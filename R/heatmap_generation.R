@@ -39,7 +39,10 @@
 #' @examples
 #' 
 #' # load in signature matrices
-#' load("data/Preoptic_region_example.rda")
+#' load("~/scMappR/data/Preoptic_region_example.rda")
+#' POA_generes <- POA_example$POA_generes
+#' POA_OR_signature <- POA_example$POA_OR_signature
+#' POA_Rank_signature <- POA_example$POA_Rank_signature
 #' # data(Preoptic_region_example)
 #' Signature <- POA_Rank_signature
 #'  rowname <- get_gene_symbol(Signature)
@@ -47,8 +50,10 @@
 #'  genes <- rownames(Signature)[1:100]
 #'  heatmap_test <- heatmap_generation(genesIn = genes, "scMappR_test", reference = Signature, which_species = "mouse")
 #'  
+NULL
+#' @rdname heatmap_generation
 #' @export
-
+#' 
 heatmap_generation <- function(genesIn, comp, cex = 0.8, rd_path = "~/scMappR/data", cellTypes = "ALL", pVal = 0.01, isPval=TRUE, isMax =F,  isBackground = F,reference = "C:/Users/Dustin Sokolowski/Desktop/romanov_wilcoxon_test_2.RData",  which_species = "human") {
   # This function takes an inputted signature matrix as well as a list of genes and overlaps them. Then, if there is overlap, it prints a heatmap or barplot (depending on the number of overlapping genes)
   # Then, for every cell-type, genes considered over-represented are saved in a list

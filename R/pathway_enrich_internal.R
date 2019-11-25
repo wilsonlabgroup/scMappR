@@ -34,6 +34,9 @@
 #' \notrun {
 #' 
 #' load("~/scMappR/data/PBMC_scMappR_and_pathway_analysis_example.rda")
+#' bulk_DE_cors <- PBMC_example$bulk_DE_cors
+#' bulk_normalized <- PBMC_example$bulk_normalized
+#' odds_ratio_in <- PBMC_example$odds_ratio_in
 #' case_grep <- "_female"
 #' control_grep <- "_male"
 #' max_proportion_change <- 10
@@ -44,6 +47,8 @@
 #' dir.create("test_path")
 #' pathway_enrich_internal(bulk_DE_cors, "human", norm$scMappR_transformed_values, background, "test_path", "test_figs")
 #' }
+NULL
+#' @rdname pathway_enrich_internal
 #' @export
 #' 
 pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_genes, output_directory, plot_names, number_genes) {

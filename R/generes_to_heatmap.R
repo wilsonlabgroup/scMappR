@@ -35,8 +35,12 @@
 #'  # load generes object
 #' load("~/scMappR/data/Preoptic_region_example.rda")
 #' #data(Preoptic_region_example)
+#'  POA_generes <- POA_example$POA_generes
+#'  POA_OR_signature <- POA_example$POA_OR_signature
+#'  POA_Rank_signature <- POA_example$POA_Rank_signature
 #' signature <- generes_to_heatmap(POA_generes,species = -9, make_names = F)
-#' 
+NULL
+#' @rdname generes_to_heatmap
 #' @export
 
 generes_to_heatmap <- function(generes,  

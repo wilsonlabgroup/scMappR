@@ -35,7 +35,10 @@
 #' \notrun {
 #' 
 #' # load in signature matrices
-#' load("data/Preoptic_region_example.rda")
+#' load("~/scMappR/data/Preoptic_region_example.rda")
+#' POA_generes <- POA_example$POA_generes
+#' POA_OR_signature <- POA_example$POA_OR_signature
+#' POA_Rank_signature <- POA_example$POA_Rank_signature
 #' # data(Preoptic_region_example)
 #' Signature <- POA_Rank_signature
 #'  rowname <- get_gene_symbol(Signature)
@@ -43,10 +46,15 @@
 #'  genes <- rownames(Signature)[1:100]
 #'  
 #'  # Assuming mouse_cell_markers.rda is in you "~/Documents/scMappR/data" directory
-#'  gmt1 <- "~/Documents/scMappR/data/mouse_cell_markers.rda"
+#'  gmt1 <- "~/scMappR/data/mouse_cell_markers.rda"
+#'  load(gmt1)
+#'  gmt_panglao <- gmt_list$gmt_panglao
 #'  gmt <- gmt_panglao
 #'  enriched <- cellmarker_enrich(genes, 0.05, gmt = gmt)
 #'  }
+#'  
+NULL
+#' @rdname cellmarker_enrich
 #' @export
 #' 
 cellmarker_enrich <- function(gene_list, p_thresh, gmt = "cellmarker_list.Rdata", fixed_length = 13000, min_genes = 5, max_genes = 3000, isect_size = 3) {

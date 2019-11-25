@@ -31,17 +31,19 @@
 #' @import downloader
 #'
 #' @examples 
-#' 
+#' \notrun {
 #' 
 #' # load in signature matrices
 #'  load("data/Preoptic_region_example.rda")
+#'  POA_generes <- POA_example$POA_generes
+#'  POA_OR_signature <- POA_example$POA_OR_signature
+#'  POA_Rank_signature <- POA_example$POA_Rank_signature
 #' # data(Preoptic_region_example)
 #'  Signature <- POA_Rank_signature
 #'  genes <- rownames(Signature)[1:200]
 #'  heatmap_test <- tissue_scMappR_custom( genes, signature_matrix = Signature,output_directory =  "scMappR_test")
-#'  
+#'  }
 NULL
-
 #' @rdname coEnrich
 #' @export
 #' 

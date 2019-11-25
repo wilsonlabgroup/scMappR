@@ -30,6 +30,9 @@
 #' \notrun {
 #' # load in signature matrices
 #' load("~/scMappR/data/Preoptic_region_example.rda")
+#'  POA_generes <- POA_example$POA_generes
+#'  POA_OR_signature <- POA_example$POA_OR_signature
+#'  POA_Rank_signature <- POA_example$POA_Rank_signature
 #' # data(Preoptic_region_example)
 #' Signature <- as.data.frame(POA_Rank_signature)
 #' rowname <- get_gene_symbol(Signature)
@@ -40,6 +43,8 @@
 #' bp <- plotBP(BP)
 #' tf <- make_TF_barplot(TF)
 #'  }
+NULL
+#' @rdname make_TF_barplot
 #' @export
 #' 
 make_TF_barplot <- function(ordered_back_all_tf, top_tf = 5) {

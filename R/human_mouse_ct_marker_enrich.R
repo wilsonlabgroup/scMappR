@@ -33,6 +33,9 @@
 #' 
 #' # load in signature matrices
 #' load("~/scMappR/data/Preoptic_region_example.rda")
+#' POA_generes <- POA_example$POA_generes
+#' POA_OR_signature <- POA_example$POA_OR_signature
+#' POA_Rank_signature <- POA_example$POA_Rank_signature
 #' # data(Preoptic_region_example)
 #' Signature <- POA_Rank_signature
 #'  rowname <- get_gene_symbol(Signature)
@@ -41,9 +44,12 @@
 #'  
 #'  # Assuming mouse_cell_markers.rda is in you "~/scMappR/data" directory
 #'  gmt1 <- "~/scMappR/data/mouse_cell_markers.rda"
-#'  gmt <- gmt_panglao
+#'  load(gmt1)
+#'  gmt <- gmt_list$gmt_panglao
 #'  enriched <- human_mouse_ct_marker_enrich(gene_lists = genes, theSpecies = "mouse", cell_marker_path = "", naming_preference = "brain")
 #'  }
+NULL
+#' @rdname human_mouse_ct_marker_enrich
 #' @export
 #' 
 human_mouse_ct_marker_enrich <- function(gene_lists, theSpecies = "human",cell_marker_path = "~/scMappR/data", naming_preference = -9) {
@@ -96,8 +102,18 @@ human_mouse_ct_marker_enrich <- function(gene_lists, theSpecies = "human",cell_m
         downloader::download(url, destfile = destfile, mode = "wb")
         load(destfile)
         #
+        gmt_both <- gmt_list$gmt_both
+        gmt_cellmarker <- gmt_list$gmt_cellmarker
+        gmt_gobp <- gmt_list$gmt_gobp
+        gmt_panglao <- gmt_list$gmt_panglao
+        gmt_subtype <- gmt_list$gmt_subtype
       } else {
         load(paste0(cell_marker_path,"/mouse_cell_markers.rda"))
+        gmt_both <- gmt_list$gmt_both
+        gmt_cellmarker <- gmt_list$gmt_cellmarker
+        gmt_gobp <- gmt_list$gmt_gobp
+        gmt_panglao <- gmt_list$gmt_panglao
+        gmt_subtype <- gmt_list$gmt_subtype
       }
 
       outCellMarker <- cellmarker_enrich(topGenes[[i]], 0.05,gmt_cellmarker, fixed_length = 15000)
@@ -200,8 +216,18 @@ human_mouse_ct_marker_enrich <- function(gene_lists, theSpecies = "human",cell_m
         downloader::download(url, destfile = destfile, mode = "wb")
         load(destfile)
         #
+        gmt_both <- gmt_list$gmt_both
+        gmt_cellmarker <- gmt_list$gmt_cellmarker
+        gmt_gobp <- gmt_list$gmt_gobp
+        gmt_panglao <- gmt_list$gmt_panglao
+        gmt_subtype <- gmt_list$gmt_subtype
       } else {
         load(paste0(cell_marker_path,"/human_cell_markers.rda"))
+        gmt_both <- gmt_list$gmt_both
+        gmt_cellmarker <- gmt_list$gmt_cellmarker
+        gmt_gobp <- gmt_list$gmt_gobp
+        gmt_panglao <- gmt_list$gmt_panglao
+        gmt_subtype <- gmt_list$gmt_subtype
       }      
       outCellMarker <- cellmarker_enrich(topGenes[[i]], 0.05, gmt_cellmarker, fixed_length = 15000)
       if(class(outCellMarker$name) == "factor") {

@@ -40,6 +40,8 @@
 #' # data(cell_process_example)
 #' toProcess <- list(example = sm)
 #' tst1 <- process_dgTMatrix_lists(toProcess, "testProcess", -9, "eye",rda_path = "~/scMappR/data", TRUE)
+NULL
+#' @rdname process_dgTMatrix_lists
 #' @export
 #' 
 
@@ -90,6 +92,7 @@ process_dgTMatrix_lists <- function(dgTMatrix_list, name, species_name, naming_p
   save(generes, file = paste0(name, "_generes.Rdata"))
   save(wilcoxon_rank_mat_t, file= paste0(name, "_pval_heatmap.Rdata"))
   save(wilcoxon_rank_mat_or, file= paste0(name, "_or_heatmap.Rdata"))
-  return(wilcoxon_rank_mat_t)
+  l <- list(wilcoxon_rank_mat_t = wilcoxon_rank_mat_t, wilcoxon_rank_mat_or = wilcoxon_rank_mat_or,generes=generes)
+  return(l)
 }
 

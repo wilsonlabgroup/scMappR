@@ -46,6 +46,10 @@
 #' 
 #' load("~/scMappR/data/PBMC_scMappR_and_pathway_analysis_example.rda")
 #' # data(PBMC_scMappR_and_pathway_analysis)
+#' bulk_DE_cors <- PBMC_example$bulk_DE_cors
+#' bulk_normalized <- PBMC_example$bulk_normalized
+#' odds_ratio_in <- PBMC_example$odds_ratio_in
+
 #' case_grep <- "_female"
 #' control_grep <- "_male"
 #' max_proportion_change <- 10

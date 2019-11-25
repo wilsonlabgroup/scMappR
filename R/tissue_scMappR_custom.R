@@ -35,6 +35,9 @@
 #' 
 #' # load in signature matrices
 #' load("data/Preoptic_region_example.rda")
+#' POA_generes <- POA_example$POA_generes
+#' POA_OR_signature <- POA_example$POA_OR_signature
+#' POA_Rank_signature <- POA_example$POA_Rank_signature
 #' # data(Preoptic_region_example)
 #' Signature <- POA_Rank_signature
 #'  rowname <- get_gene_symbol(Signature)
@@ -45,6 +48,8 @@
 #'  # rda_path1 = "~/Documents/scMappR/data"
 #'  internal <- tissue_scMappR_custom(genes,Signature,output_directory = "scMappR_Test_custom")
 #'  }
+NULL
+#' @rdname tissue_scMappR_custom
 #' @export
 #' 
 tissue_scMappR_custom <- function(gene_list, signature_matrix ,output_directory, gene_cutoff = 1, is_pvalue = TRUE) {
