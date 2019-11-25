@@ -206,7 +206,7 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
       next
      }
       
-    gene_list_heatmap <- heatmap_generation(gene_list, comp = paste0(outDir, "/", study_names[i],"_genelist"), reference = study_ref, cex = genecex, which_species = species, isPval = raw_pval)
+    gene_list_heatmap <- heatmap_generation(gene_list, comp = paste0(outDir, "/", study_names[i],"_genelist"), reference = study_ref, cex = genecex, which_species = species, isPval = raw_pval, toSave = toSave)
     
     # get the heatmap of genes overlapping with the signature matrix and the inputted gene list
     if(class(gene_list_heatmap) == "character") {
