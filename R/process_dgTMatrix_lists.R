@@ -19,7 +19,8 @@
 #' @param have_umap Save the umaps -- only use if the package is downloaded with pip.
 #' @param saveSCobject Save the seurat object as an RData object (T/F).
 #' @param internal Was this used as part of the internal processing of panglao datasets (T/F).
-#' 
+#' @param toSave Allow scMappR to write files in the current directory (T/F)
+#'
 #' @return \code{process_from_count} A processed & integrated Seurat object that has been scaled and clustered. It can be returned as an internal object or also stored as an RData object if neccesary. \cr
 #'
 #' @import matrixStats
@@ -45,7 +46,7 @@ NULL
 #' @export
 #' 
 
-process_dgTMatrix_lists <- function(dgTMatrix_list, name, species_name, naming_preference,rda_path="",  panglao_set = FALSE ,haveUMAP = FALSE, saveSCObject = FALSE, internal = F) {
+process_dgTMatrix_lists <- function(dgTMatrix_list, name, species_name, naming_preference,rda_path="",  panglao_set = FALSE ,haveUMAP = FALSE, saveSCObject = FALSE, internal = F, toSave = FALSE) {
   
   # This function is a one line wrapper to process count matrices into a signature matrix
   # It combines process from count, two methods of identifying cell-type identitt (gsva and fisher's test)
@@ -74,13 +75,20 @@ process_dgTMatrix_lists <- function(dgTMatrix_list, name, species_name, naming_p
     species_name <- spec$species
   } 
   
-  pbmc <- process_from_count(countmat_list = dgTMatrix_list, name = name, theSpecies = species_name, panglao_set = panglao_set, haveUmap = haveUMAP, saveALL  = saveSCObject)
+  pbmc <- process_from_count(countmat_list = dgTMatrix_list, name = name, theSpecies = species_name, panglao_set = panglao_set, haveUmap = haveUMAP, saveALL  = saveSCObject, toSave=toSave)
   # process from the count matrices to the Seurat object -- see process_from_count for details
   print(class(pbmc))
   #print(head(pbmc))
-  gsva_cellIdentity_out <- gsva_cellIdentify(pbmc, theSpecies = species_name, naming_preference = naming_preference, rda_path = rda_path)
+  gsva_cellIdentity_out <- gsva_cellIdentify(pbmc, theSpecies = species_name, naming_preference = naming_preference, rda_path = rda_path, toSave=toSave)
   # identify cell-type identify using the gsva method
-  save(gsva_cellIdentity_out, file = paste0(name, "gsva_cellname.Rdata"))
+  if(toSave == TRUE) {
+    save(gsva_cellIdentity_out, file = paste0(name, "gsva_cellname.Rdata"))
+      
+  } else {
+    warning("toSave == FALSE therefore files cannot be saved. Switching toSave = TRUE is strongly reccomended.")
+    print("toSave == FALSE therefore files cannot be saved. Switching toSave = TRUE is strongly reccomended.", quote = FALSE)
+    
+  }
   generes <- seurat_to_generes(pbmc = pbmc)
   # identify cell-type marker for every cluster identified
   gene_out <- generes_to_heatmap(generes, species = species_name, naming_preference = naming_preference, internal = internal, rda_path = rda_path)
@@ -89,10 +97,19 @@ process_dgTMatrix_lists <- function(dgTMatrix_list, name, species_name, naming_p
   wilcoxon_rank_mat_or <- gene_out$OR
   names(generes) <- colnames(wilcoxon_rank_mat_t) <- colnames(wilcoxon_rank_mat_or) <- gene_out$cellname
   # save cell-type markers and signature matrices
-  save(generes, file = paste0(name, "_generes.Rdata"))
-  save(wilcoxon_rank_mat_t, file= paste0(name, "_pval_heatmap.Rdata"))
-  save(wilcoxon_rank_mat_or, file= paste0(name, "_or_heatmap.Rdata"))
-  l <- list(wilcoxon_rank_mat_t = wilcoxon_rank_mat_t, wilcoxon_rank_mat_or = wilcoxon_rank_mat_or,generes=generes)
+  if(toSave == TRUE) {
+    save(generes, file = paste0(name, "_generes.Rdata"))
+    save(wilcoxon_rank_mat_t, file= paste0(name, "_pval_heatmap.Rdata"))
+    save(wilcoxon_rank_mat_or, file= paste0(name, "_or_heatmap.Rdata"))
+    l <- list(wilcoxon_rank_mat_t = wilcoxon_rank_mat_t, wilcoxon_rank_mat_or = wilcoxon_rank_mat_or,generes=generes)
+  } else {
+    warning("toSave == FALSE therefore files cannot be saved. Switching toSave = TRUE is strongly reccomended.")
+    print("toSave == FALSE therefore files cannot be saved. Switching toSave = TRUE is strongly reccomended.", quote = FALSE)
+    
+    l <- list(wilcoxon_rank_mat_t = wilcoxon_rank_mat_t, wilcoxon_rank_mat_or = wilcoxon_rank_mat_or,generes=generes)
+    
+  }
+  
   return(l)
 }
 

@@ -41,7 +41,7 @@ NULL
 #' @rdname process_from_count
 #' @export
 #' 
-process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = FALSE, saveALL = FALSE, panglao_set = F) {
+process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = FALSE, saveALL = FALSE, panglao_set = F, toSave = FALSE) {
   # This function takes a list of count matrices and returns a seurat object of the count matrices integrated using Seurat V3 and the interation anchors
   # Different options are used for if the function is internal for PanglaoDB dataset reprocessing or being used for a custom set of count matrices.
   # For larger scRNA-seq datasets (~20k + cells), it is likely that this function will be required to run on an hpc.
@@ -169,7 +169,7 @@ process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = 
   }
   pbmc <- Seurat::FindNeighbors(object = pbmc, dims = 1:20, verbose = FALSE)
   pbmc <- Seurat::FindClusters(object = pbmc, verbose = FALSE)
-  if(saveALL == TRUE) {
+  if(saveALL == TRUE & toSave == TRUE) {
     # Save the seurat object before scaling
     save(pbmc, file = paste0(name, "_custom.Rdata"))
   }
@@ -181,9 +181,11 @@ process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = 
          from the scMappR github if you can't get it to work by chaging memory options" )
     
   }
-  if(saveALL == TRUE) {
+  if(saveALL == TRUE & toSave == TRUE) {
     
     save(pbmc, file = paste0(name, "_custom.Rdata"))
+  } else {
+    warning("toSave == FALSE therefore files cannot be saved. Switching toSave = TRUE is strongly reccomended.")
   }
   return(pbmc)
 }

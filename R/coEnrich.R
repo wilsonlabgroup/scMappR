@@ -14,7 +14,7 @@
 #' @param background_heatmap  Signature matrix of background matrix in heatmap and cell-type preferences -- output of heatmap generation.
 #' @param study_name Name of the outputted table.
 #' @param output_directory Name of the directory this table will be printed in.
-#' 
+#' @param toSave Allow scMappR to write files in the current directory (T/F)
 #'
 #' @return \code{coEnrich} Enrichment of cell-types that are expressed by the same genes, from 2-5 sets of cell-types. \cr
 #'
@@ -47,7 +47,7 @@ NULL
 #' @rdname coEnrich
 #' @export
 #' 
-coEnrich <- function(sig, gene_list_heatmap, background_heatmap, study_name, outDir = output_directory) {
+coEnrich <- function(sig, gene_list_heatmap, background_heatmap, study_name, outDir = output_directory, toSave = FALSE) {
   # Internal
   # this function takes significantly enriched cell-types from the single CT enrich before testing to see
   # if the genes driving their enrichment are overlapping
@@ -130,10 +130,14 @@ coEnrich <- function(sig, gene_list_heatmap, background_heatmap, study_name, out
     }
   }
   colnames(multi_comps) <- c("cell_types", "p_val", "OR", "genes")
-  write.table(multi_comps, file = paste0(outDir, "/",study_name, "cell_co_preferences.tsv"), quote = F, row.names = F, col.names = T, sep = "\t")
-  multi_comps <- read.table(file = paste0(outDir, "/",study_name, "cell_co_preferences.tsv"), as.is=T,header=T, sep = "\t")
+  multi_comps$p_val <- toNum(multi_comps$p_val)
   multi_comps$pFDR <- p.adjust(multi_comps$p_val, "fdr")
+  if(toSave == TRUE) {
   write.table(multi_comps, file = paste0(outDir, "/",study_name, "cell_co_preferences.tsv"), quote = F, row.names = F, col.names = T, sep = "\t")
+  } else {
+    warning("You are not allowing scMappR to save files. We strongly reccomend you switch toSave = TRUE")
+  }
+  
   return(multi_comps)
 }
 

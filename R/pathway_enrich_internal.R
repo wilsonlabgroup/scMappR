@@ -14,7 +14,7 @@
 #' @param output_directory Path to the directory where files will be saved.
 #' @param plot_names Names of output.
 #' @param number_genes Number of genes to if there are many many DEGs
-#' 
+#' @param toSave Allow scMappR to write files in the current directory (T/F)
 #' 
 #' @return \code{pathway_enrich_internal} Plots and pathway enrichment of bulk DE and STVs. \cr
 #' 
@@ -51,7 +51,7 @@ NULL
 #' @rdname pathway_enrich_internal
 #' @export
 #' 
-pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_genes, output_directory, plot_names, number_genes) {
+pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_genes, output_directory, plot_names, number_genes, toSave = FALSE) {
   # Internal: Pathway analysis od DEGs and STVs for each cell-type. Returns RData objects of differential analysis as well as plots of the top bulk pathways.
   # It is a wrapper for making barplots, bulk pathway analysis, and gProfiler_STV
   # Args:
@@ -63,6 +63,11 @@ pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_g
   # plot_names = names of output
   # Returns:
   # plots and pathway enrichment of bulk DE and STVs.
+  
+  if(toSave == FALSE) {
+    stop("toSave = FALSE and therefore scMappR is not allowed to print pathways. For this function to work, please set toSave = TRUE")
+  }
+  
   print("Reordering DEGs from bulk dataset.", quote = F)
   DEG_Names <- rownames(DEGs)[order(DEGs$padj)]
   if(theSpecies == "human") species_bulk <- "hsapiens"
@@ -72,6 +77,7 @@ pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_g
   # Pathway enrichment 
   ordered_back_all <- gProfileR::gprofiler(DEG_Names, species_bulk, ordered_query = T, min_set_size = 3, max_set_size = 2000, src_filter = c("GO:BP", "REAC", "KEGG"),custom_bg = background_genes, correction_method = "fdr", min_isect_size = 3, hier_filtering = "moderate")
   ordered_back_all_tf <- gProfileR::gprofiler(DEG_Names, species_bulk, ordered_query = T, min_set_size = 3, max_set_size = 5000, src_filter = c("TF"),custom_bg = background_genes, correction_method = "fdr", min_isect_size = 3, hier_filtering = "moderate")
+
   save(ordered_back_all, file = paste0(output_directory,"/Bulk_pathway_enrichment.RData"))
   save(ordered_back_all_tf, file = paste0(output_directory,"/Bulk_TF_enrichment.RData"))
   #plotting paths

@@ -26,6 +26,7 @@
 #' @param up_and_downregulated Whether you are additionally splitting up/downregulated genes (T/F).
 #' @param gene_label_size The size of the gene label on the plot.
 #' @param number_genes The number of genes to cut-off for pathway analysis (good with many DEGs)
+#' @param toSave Allow scMappR to write files in the current directory (T/F)
 #' 
 #' @return \code{scMappR_and_pathway_analysis} A directory with: STVs in RData file, Cell Type proportions (RData file), cell-type proportions leave one out (RData file), heatmap of STVs (all), heatmap of STVs (within signature), heatmap of signature (all), heatmap of signature (overlapping with DEG_list), Pathway enrichment for DEG list(all), RData file and Biological Processes, Pathway enrichment of STVs for each cell-type, RData file and biological processes. \cr
 #' 
@@ -59,9 +60,11 @@
 #' 
 #' }
 #' 
+NULL
+#' @rdname scMappR_and_pathway_analysis
 #' @export
 #' 
-scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list, case_grep, control_grep, rda_path = "", max_proportion_change = -9, print_plots=T, plot_names="scMappR",theSpecies = "human", output_directory = "scMappR_analysis",sig_matrix_size = 3000, drop_unkown_celltype = TRUE, internet = TRUE, up_and_downregulated = FALSE, gene_label_size = 0.4, number_genes = -9) {
+scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list, case_grep, control_grep, rda_path = "", max_proportion_change = -9, print_plots=T, plot_names="scMappR",theSpecies = "human", output_directory = "scMappR_analysis",sig_matrix_size = 3000, drop_unkown_celltype = TRUE, internet = TRUE, up_and_downregulated = FALSE, gene_label_size = 0.4, number_genes = -9, toSave=FALSE) {
   
   
   
@@ -198,6 +201,11 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   STVs <- deconvolute_and_contextualize(count_file, signature_matrix, DEG_list, case_grep , control_grep, max_proportion_change = max_proportion_change, print_plots = print_plots, plot_names = plot_names, theSpecies = theSpecies, sig_matrix_size = sig_matrix_size, drop_unkown_celltype = drop_unkown_celltype)
   
   print(paste0("Making scMappR output directory named", output_directory, "."))
+  if(toSave == FALSE) {
+    warning("toSave == FALSE therefore files cannot be saved. Switching toSave = TRUE is strongly reccomended. Returning STVs and no pathway analysis.")
+    print("toSave == FALSE therefore files cannot be saved. Switching toSave = TRUE is strongly reccomended. Returning STVs and no pathway analysis.", quote = F)
+    return(STVs)    
+  }
   dir.create(output_directory)
   
   scMappR_vals <- STVs$scMappR_transformed_values # scMappR values
@@ -254,7 +262,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     warning("There is not a reported stable internet (WIFI = FALSE) and therefore pathway analysis with g:Prof")
     return("Done!")
   }
-  up_and_down_together <- pathway_enrich_internal(  DEGs, theSpecies, scMappR_vals, background_genes, output_directory, plot_names, number_genes)
+  up_and_down_together <- pathway_enrich_internal(  DEGs, theSpecies, scMappR_vals, background_genes, output_directory, plot_names, number_genes, toSave=TRUE)
   if(up_and_downregulated == TRUE)  {
     print("Splitting genes by up- and down-regulated and then repeating analysis", quote = F)
     rownames(DEGs) <- DEGs$gene_name
@@ -270,9 +278,9 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     upSTVs <- scMappR_vals[upGenes,]
     DownSTVs <- scMappR_vals[downGenes,]
     print("Pathway analysis of upregulated genes")
-    up_only <- pathway_enrich_internal(  upDEGs, theSpecies, upSTVs, background_genes, upDir, plot_names, number_genes )
+    up_only <- pathway_enrich_internal(  upDEGs, theSpecies, upSTVs, background_genes, upDir, plot_names, number_genes, toSave=TRUE)
     print("Pathway analysis of downregulated genes")
-    down_only <- pathway_enrich_internal(  downDEGs, theSpecies, DownSTVs, background_genes, downDir, plot_names, number_genes)    
+    down_only <- pathway_enrich_internal(  downDEGs, theSpecies, DownSTVs, background_genes, downDir, plot_names, number_genes, toSave=TRUE)    
   }
   
   return(list(STVs = STVs, paths = up_and_down_together$biological_pathways, TFs = up_and_down_together$transcription_factors))

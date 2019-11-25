@@ -20,7 +20,7 @@
 #' @param isBackground If the heatmap is from the entire signature matrix or just the inputted gene list (T/F). isBackground == TRUE is used for internal.
 #' @param refence Path to signature matrix or the signature matrix itself.
 #' @param which_species Species of gene symbols -- "human" or "mouse" 
-
+#' @param toSave Allow scMappR to write files in the current directory (T/F)
 #'
 #' @return \code{heatmap_generation} A heatmap/barplot of p-value or odds-ratio of cell-type specific genes intersecting with the gene list. A list of genes that do/don't intersect with the signature matrix as well as a list of which cell-type these over-represented genes live in. \cr
 #'
@@ -54,7 +54,7 @@ NULL
 #' @rdname heatmap_generation
 #' @export
 #' 
-heatmap_generation <- function(genesIn, comp, cex = 0.8, rd_path = "~/scMappR/data", cellTypes = "ALL", pVal = 0.01, isPval=TRUE, isMax =F,  isBackground = F,reference = "C:/Users/Dustin Sokolowski/Desktop/romanov_wilcoxon_test_2.RData",  which_species = "human") {
+heatmap_generation <- function(genesIn, comp, cex = 0.8, rd_path = "~/scMappR/data", cellTypes = "ALL", pVal = 0.01, isPval=TRUE, isMax =F,  isBackground = F,reference = "C:/Users/Dustin Sokolowski/Desktop/romanov_wilcoxon_test_2.RData",  which_species = "human", toSave = FALSE) {
   # This function takes an inputted signature matrix as well as a list of genes and overlaps them. Then, if there is overlap, it prints a heatmap or barplot (depending on the number of overlapping genes)
   # Then, for every cell-type, genes considered over-represented are saved in a list
   
@@ -154,21 +154,31 @@ heatmap_generation <- function(genesIn, comp, cex = 0.8, rd_path = "~/scMappR/da
   }
   if(length(whichGenesInter) == 1) { # if only 1 gene is
     print("One input gene is preferentially expressed")
+    if(toSave == TRUE) {
     pdf(paste0(comp,"_barplot.pdf"))
     graphics::barplot(wilcoxon_rank_mat_t[whichGenesInter,], las = 2, main = rownames(wilcoxon_rank_mat_t)[whichGenesInter])
     dev.off()
+    } else {
+      warning("toSave = F and threfore plots are not allowed to be saved. I would reccomend allowing it to be true.")
+    }
     return("No_downstream_analysis")
   }
   if(length(whichGenesInter) > 1) { # if > 1 genes are
     print("at least one input gene is preferentially expressed")
     # make the heatmap
+    if(toSave == TRUE) {
     myheatcol <- colorRampPalette(c("lightblue", "white", "orange"))(256)
     pdf(paste0(comp,"_heatmap.pdf"))
     gplots::heatmap.2(wilcoxon_rank_mat_t[whichGenesInter,], Rowv = T, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
     dev.off()
     geneHeat <- wilcoxon_rank_mat_t[whichGenesInter,]
     preferences <- extract_genes_cell(geneHeat, cellTypes = cellTypes, val = pVal, isMax = isMax, isPvalue = isPval)
+
     save(preferences, file = paste0(comp,"_preferences.RData"))
+    } else {
+      warning("toSave = F and scMappR is not allowed to print files or plots in your directories. For full functionality of the package, set to true.")
+    }
+    
   } 
   
   

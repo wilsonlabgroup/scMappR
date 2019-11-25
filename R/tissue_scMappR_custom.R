@@ -15,7 +15,8 @@
 #' @param output_directory Directory made containing outputs
 #' @param gene_cutoff value cutoff (generally rank := log10(Padj)) for a gene to be considered a marker
 #' @param is_pvalue If signature matrix is p-value before rank is applied (not recommended ) (T/F)
-#' 
+#' @param toSave Allow scMappR to write files in the current directory (T/F)
+#'
 #' @return \code{tissue_scMappR_custom} A list containing the entire signature matrix, the matrix subsetted for your genes, enrichment of each cell-type, and co-enrichment. \cr
 #'
 #' @import matrixStats
@@ -79,9 +80,9 @@ tissue_scMappR_custom <- function(gene_list, signature_matrix ,output_directory,
   background = signature_matrix
   background_genes <- rownames(signature_matrix)
   
-  background_heatmap <- heatmap_generation(background_genes, comp = paste0(outDir, "/", study_names,"_background"), reference = background, isBackground = TRUE, pVal = gene_cutoff, isPval = is_pvalue)  
+  background_heatmap <- heatmap_generation(background_genes, comp = paste0(outDir, "/", study_names,"_background"), reference = background, isBackground = TRUE, pVal = gene_cutoff, isPval = is_pvalue, toSave = toSave)  
   # heatmap generation of the entire signature matrix
-  gene_list_heatmap <- heatmap_generation(gene_list, comp = paste0(outDir, "/", study_names,"_genelist"), reference = background, pVal = gene_cutoff, isPval = is_pvalue)
+  gene_list_heatmap <- heatmap_generation(gene_list, comp = paste0(outDir, "/", study_names,"_genelist"), reference = background, pVal = gene_cutoff, isPval = is_pvalue, toSave = toSave)
   if(class(gene_list_heatmap) == "character") {
     warning("0 or 1 input genes were cell-type specific. No downstream analysis available.")
     warning("With 0 genes being cell-type specific, I would make sure that they are the same gene symbols.")
@@ -89,7 +90,7 @@ tissue_scMappR_custom <- function(gene_list, signature_matrix ,output_directory,
   }
   # heatmap generation of the background matrix as well as getting preferred genes based on your cutoff, p-value or otherwise
   print(gene_list_heatmap)
-  singleCTpreferences <- single_gene_preferences(gene_list_heatmap, background_heatmap, study_names, outDir = output_directory)
+  singleCTpreferences <- single_gene_preferences(gene_list_heatmap, background_heatmap, study_names, outDir = output_directory, toSave = toSave)
   # cell-type preferences for indidual cell-types
   sig <- singleCTpreferences[singleCTpreferences$pFDR < 0.05,]
   sig <- sig[sig$Odds_Ratio > 1,]
@@ -104,7 +105,7 @@ tissue_scMappR_custom <- function(gene_list, signature_matrix ,output_directory,
   } else {
     sig <- sig[order(sig$pFDR),]
     
-    coCTpreferences <- coEnrich(sig, gene_list_heatmap, background_heatmap, study_names[i], outDir = output_directory)
+    coCTpreferences <- coEnrich(sig, gene_list_heatmap, background_heatmap, study_names[i], outDir = output_directory, toSave = toSave)
     # test to see if the same genes are responsible for the enrichment of multiple cell-types
     output <- list(background_heatmap = background_heatmap, gene_list_heatmap = gene_list_heatmap, single_celltype_preferences = singleCTpreferences, group_celtype_preference = coCTpreferences)
     

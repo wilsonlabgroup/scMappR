@@ -17,6 +17,7 @@
 #' @param genecex The size of the gene names of the rows in the heatmap.
 #' @param raw_pval  If the inputed signature matrix are raw (untransformed) Pvalues -- reccomended to generate rank first.
 #' @param rda_path Path to the rda file containing all of the signature matrices.
+#' @param toSave Allow scMappR to write files in the current directory (T/F)
 #'
 #' @return \code{tissue_scMappR_internal} A list containing the entire signature matrix, the matrix subsetted for your genes, enrichment of each cell-type, and co-enrichment. \cr
 #'
@@ -54,7 +55,7 @@ NULL
 #' @rdname tissue_scMappR_internal
 #' @export
 #' 
-tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,rda_path, cluster = "Pval", genecex = 0.01, raw_pval = FALSE) {
+tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,rda_path, cluster = "Pval", genecex = 0.01, raw_pval = FALSE, toSave = FALSE) {
   
   # This function takes a list of genes and a tissue available in 'get_tissues' function and generates heatmaps of cell-type preferences
   # it then completes cell-type enrichment of each individual cell-type, then, if more than two cell-types are signficiantly enriched, co-enrichemnt 
@@ -187,7 +188,7 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
     }
     study_ref <- wilcoxon_rank_mat_t
     background_genes <- rownames(study_ref)
-    background_heatmap <- heatmap_generation(background_genes, comp = paste0(outDir, "/", study_names[i],"_background"), reference = study_ref, isBackground = TRUE, cex = genecex, which_species = species, isPval = raw_pval)  
+    background_heatmap <- heatmap_generation(background_genes, comp = paste0(outDir, "/", study_names[i],"_background"), reference = study_ref, isBackground = TRUE, cex = genecex, which_species = species, isPval = raw_pval, toSave=toSave)  
     # get the heatmap of all of the genes in the signature matrix
     print("Number of DEGs that are cell-type markers in current signature matrix: ", quote =F)
     print(length(intersect(gene_list, rownames(study_ref))))
@@ -197,7 +198,11 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
       print(paste0("Subsetted CT marker preferences of these genes are saved in ",paste0(outDir, "/", study_names[i],"_genelist")), quote = F)
       print(intersect(gene_list, rownames(study_ref)))
       subsetted_genes <- study_ref[intersect(gene_list, rownames(study_ref)),]
+      if(toSave=TRUE) {
       save(subsetted_genes, file = paste0(outDir, "/", study_names[i],"_subsetted.RData"))
+      } else {
+        warning("Cannot save preferences of subsetted genes as toSave = FALSE")
+      }
       next
      }
       
@@ -210,7 +215,7 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
       single_cell_studies[[i]] <- gene_list_heatmap
       next
     }
-    singleCTpreferences <- single_gene_preferences(gene_list_heatmap, background_heatmap, study_names[i], outDir = output_directory)
+    singleCTpreferences <- single_gene_preferences(gene_list_heatmap, background_heatmap, study_names[i], outDir = output_directory, toSave = toSave)
     # interrogate the enrichment of every cell-type within the signature matrix
     sig <- singleCTpreferences[singleCTpreferences$pFDR < 0.05,]
     sig <- sig[sig$Odds_Ratio > 1,]
@@ -224,7 +229,7 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
       next
     }
     sig <- sig[order(sig$pFDR),]
-    coCTpreferences <- coEnrich(sig, gene_list_heatmap, background_heatmap, study_names[i], outDir = output_directory)
+    coCTpreferences <- coEnrich(sig, gene_list_heatmap, background_heatmap, study_names[i], outDir = output_directory, toSave = toSave)
     # complete co-enrichment of up to 5 cell-types
     output <- list(background_heatmap = background_heatmap, gene_list_heatmap = gene_list_heatmap, single_celltype_preferences = singleCTpreferences, group_celtype_preference = coCTpreferences)
     
