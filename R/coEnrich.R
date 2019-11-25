@@ -130,6 +130,7 @@ coEnrich <- function(sig, gene_list_heatmap, background_heatmap, study_name, out
     }
   }
   colnames(multi_comps) <- c("cell_types", "p_val", "OR", "genes")
+  multi_comps <- as.data.frame(multi_comps)
   multi_comps$p_val <- toNum(multi_comps$p_val)
   multi_comps$pFDR <- p.adjust(multi_comps$p_val, "fdr")
   if(toSave == TRUE) {
