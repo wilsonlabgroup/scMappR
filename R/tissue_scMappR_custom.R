@@ -93,6 +93,7 @@ tissue_scMappR_custom <- function(gene_list, signature_matrix ,output_directory,
   singleCTpreferences <- single_gene_preferences(gene_list_heatmap, background_heatmap, study_names, outDir = output_directory, toSave = toSave)
   # cell-type preferences for indidual cell-types
   sig <- singleCTpreferences[singleCTpreferences$pFDR < 0.05,]
+  sig$Odds_Ratio <- toNum(sig$Odds_Ratio)
   sig <- sig[sig$Odds_Ratio > 1,]
   
   if(nrow(sig) <2 ) {

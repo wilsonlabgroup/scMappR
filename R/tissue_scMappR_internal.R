@@ -218,6 +218,7 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
     singleCTpreferences <- single_gene_preferences(gene_list_heatmap, background_heatmap, study_names[i], outDir = output_directory, toSave = toSave)
     # interrogate the enrichment of every cell-type within the signature matrix
     sig <- singleCTpreferences[singleCTpreferences$pFDR < 0.05,]
+    sig$Odds_Ratio <- toNum(sig$Odds_Ratio)
     sig <- sig[sig$Odds_Ratio > 1,]
     
     if(nrow(sig) <2 ) { 
