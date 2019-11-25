@@ -35,7 +35,7 @@
 #' @param sig_matrix_size Number of genes in signature matrix for cell-type deconvolution.
 #' @param sig_distort Exponential change of odds ratios. Strongly not reccomended and will produce warnings if changed from default.
 #' @param drop_unkown_celltype Whether or not to remove "unknown" cell-types from the signature matrix.
-#' 
+#' @param toSave Allow scMappR to write files in the current directory (T/F)
 #' 
 #' @return \code{deconvolute_and_contextualize} ScMappR transformed Values for every gene in every cell-type, cell-type composition with, allgenes included, average gene expression of each cell-type usng leave one out approach for each gene, and the processed signature matrix. Optional: boxplots of estimated CT proportions for each gene using a leave-one-out method \cr
 #' 
@@ -72,7 +72,7 @@ NULL
 #' @rdname deconvolute_and_contextualize
 #' @export
 #' 
-deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list, case_grep, control_grep, max_proportion_change = -9, print_plots=T, plot_names="scMappR",theSpecies = "human", make_scale = F, FC_coef = T, sig_matrix_size = 3000, sig_distort = 1, drop_unkown_celltype = TRUE) {
+deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list, case_grep, control_grep, max_proportion_change = -9, print_plots=T, plot_names="scMappR",theSpecies = "human", make_scale = F, FC_coef = T, sig_matrix_size = 3000, sig_distort = 1, drop_unkown_celltype = TRUE, toSave = FALSE) {
   # This function completes the cell-type contextualization in scMappR -- reranking every DEG based on their fold change, likelihood the gene is in each detected cell type, average cell-type proportion, and ratio of cell-type proportion between case and control.
   # such that if a gene is upregulated, then it is being controlled by control/case, otherwise it is case/control
   # This function expects that the genes within the count file, signature matrix, and DEG_list are have the same logos
@@ -378,7 +378,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   all_reordered <-  vals_out_mat
   comp <- plot_names
   
-  if(print_plots == T) {
+  if(print_plots == T & toSave == TRUE) {
     # If you want to print arplots
     boxplot_values <- function(cmeaned_stacked, names) {
       #Internal: get the values of cell-type proportions with a leave-one-out method and trint in boxplot
