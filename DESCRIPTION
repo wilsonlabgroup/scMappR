@@ -6,7 +6,7 @@ Authors@R:
     person(given = "Dustin",
            family = "Sokolowski",
            role = c("aut", "cre"),
-           email = "djsokolowski95@gmail.com",
+           email = "dustin.sokolowski@sickkids.ca",
 		   comment = c(ORCID = "YOUR-ORCID-ID"))
 Imports: 
 	matrixStats, 
