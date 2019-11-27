@@ -299,7 +299,11 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     
     signature_mat_up <- as.matrix(signature_mat[up_signature,])
     signature_mat_down <- as.matrix(signature_mat[down_signature,])
-
+    scMappR_vals_up1 <- as.matrix(scMappR_vals_up[up_signature,])
+    scMappR_vals_down1 <- as.matrix(scMappR_vals_down[down_signature,])
+    print(rownames(scMappR_vals_down1) == rownames(signature_mat_down))
+    print(rownames(scMappR_vals_up1) == rownames(signature_mat_up))
+    
     # Upregulated DEG Heatmap
     
     pdf(paste0(output_directory, "/",plot_names,"_celltype_specific_preferences_upregulated_DEGs_heatmap.pdf"))
@@ -307,23 +311,20 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     print(pl)
     dev.off()
     
-    scMappR_vals_up <- as.matrix(scMappR_vals_up[up_signature,])
     pdf(paste0(output_directory, "/", plot_names,"celltype_specific_STVs_upregulated_heatmap.pdf"))
-    pl <- gplots::heatmap.2(scMappR_vals_up[rev(colnames(pl$carpet)),pl$colInd],Colv=F, Rowv = F, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
-    print(pl)
+    gplots::heatmap.2(scMappR_vals_up1[rev(colnames(pl$carpet)),pl$colInd],Colv=F, Rowv = F, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
     dev.off()
     
     # Downregulated DEG Heatmap
     
     pdf(paste0(output_directory, "/",plot_names,"_celltype_specific_preferences_downregulated_DEGs_heatmap.pdf"))
-    pl <- gplots::heatmap.2(signature_mat_down, Rowv = T, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
-    print(pl)
+    pl2 <- gplots::heatmap.2(signature_mat_down, Rowv = T, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+    print(pl2)
     dev.off()
     
-    scMappR_vals_down <- as.matrix(scMappR_vals_down[down_signature,])
     
     pdf(paste0(output_directory, "/", plot_names,"celltype_specific_STVs_downregulated_heatmap.pdf"))
-    pl <- gplots::heatmap.2(abs(scMappR_vals_down[rev(colnames(pl$carpet)),pl$colInd]),Colv=F, Rowv = F, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+    gplots::heatmap.2(abs(scMappR_vals_down[rev(colnames(pl2$carpet)),pl2$colInd]),Colv=F, Rowv = F, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
     print(pl)
     dev.off()
     
