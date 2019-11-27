@@ -236,7 +236,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   scMappR_vals <- STVs$scMappR_transformed_values # scMappR values
   T_test_outs <- STVs$ProportionT.test
   print("Writing summary of cell-type proportion changes between case and control." , quote = F)
-  write.table(T_test_outs, file = paste0(output_directory, "/", plot_names, "_cell_proportion_changes_summary.tsv"), quote = F, row.names = F, col.names = T, sep = "\t")
+  write.table(T_test_outs, file = paste0(output_directory, "/", plot_names, "_cell_proportion_changes_summary.tsv"), quote = F, row.names = T, col.names = T, sep = "\t")
   
   print(scMappR_vals)
   save(scMappR_vals, file = paste0(output_directory, "/",plot_names, "_STVs.RData"))
