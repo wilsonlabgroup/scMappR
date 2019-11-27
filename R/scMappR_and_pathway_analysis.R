@@ -268,11 +268,11 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   dev.off()
   
   pdf(paste0(output_directory, "/", plot_names,"_STVs_upregulated_DEGs_heatmap.pdf"))
-  gplots::heatmap.2(abs(scMappR_vals_up), Rowv = T, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+  gplots::heatmap.2(as.matrix(abs(scMappR_vals_up)), Rowv = T, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
   dev.off()
   
   pdf(paste0(output_directory, "/", plot_names,"_STVs_downregulated_DEGs_heatmap.pdf"))
-  gplots::heatmap.2(abs(scMappR_vals_down), Rowv = T, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+  gplots::heatmap.2(as.matrix(abs(scMappR_vals_down)), Rowv = T, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
   dev.off()
   
   pdf(paste0(output_directory, "/",plot_names,"_all_CT_markers_in_background.pdf"))
@@ -307,24 +307,24 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     # Upregulated DEG Heatmap
     
     pdf(paste0(output_directory, "/",plot_names,"_celltype_specific_preferences_upregulated_DEGs_heatmap.pdf"))
-    pl <- gplots::heatmap.2(signature_mat_up, Rowv = T, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+    pl <- gplots::heatmap.2(as.matrix(signature_mat_up), Rowv = T, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
     print(pl)
     dev.off()
     
     pdf(paste0(output_directory, "/", plot_names,"celltype_specific_STVs_upregulated_heatmap.pdf"))
-    gplots::heatmap.2(scMappR_vals_up1[rev(colnames(pl$carpet)),pl$colInd],Colv=F, Rowv = F, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+    gplots::heatmap.2(as.matrix(scMappR_vals_up1[rev(colnames(pl$carpet)),pl$colInd]),Colv=F, Rowv = F, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
     dev.off()
     
     # Downregulated DEG Heatmap
     
     pdf(paste0(output_directory, "/",plot_names,"_celltype_specific_preferences_downregulated_DEGs_heatmap.pdf"))
-    pl2 <- gplots::heatmap.2(signature_mat_down, Rowv = T, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+    pl2 <- gplots::heatmap.2(as.matrix(signature_mat_down), Rowv = T, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
     print(pl2)
     dev.off()
     
     
     pdf(paste0(output_directory, "/", plot_names,"celltype_specific_STVs_downregulated_heatmap.pdf"))
-    gplots::heatmap.2(abs(scMappR_vals_down[rev(colnames(pl2$carpet)),pl2$colInd]),Colv=F, Rowv = F, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+    gplots::heatmap.2(as.matrix(abs(scMappR_vals_down[rev(colnames(pl2$carpet)),pl2$colInd])),Colv=F, Rowv = F, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
     print(pl)
     dev.off()
     
