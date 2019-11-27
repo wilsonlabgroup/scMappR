@@ -265,7 +265,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   pdf(paste0(output_directory,"/",plot_names,"_cell_proportions_heatmap.pdf")) 
   gplots::heatmap.2(as.matrix(STVs$cellType_Proportions), Rowv = T, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
   dev.off()
-  if(nrow(scMappR_vals_up) > 2) {
+  if(nrow(scMappR_vals_up) > 2 & ncol(scMappR_vals_up) > 2) {
     pdf(paste0(output_directory, "/", plot_names,"_STVs_upregulated_DEGs_heatmap.pdf"))
     gplots::heatmap.2(as.matrix(abs(scMappR_vals_up)), Rowv = T, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
     dev.off()
@@ -274,8 +274,8 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     print("There were fewer than two upregulated DEGs, therefore a heatmap could not be made.", quote = F)
     
   }
-  
-  if(nrow(scMappR_vals_down) > 2) {
+  print(dim(scMappR_vals_down))
+  if(nrow(scMappR_vals_down) > 2 & ncol(scMappR_vals_down) > 2) {
   pdf(paste0(output_directory, "/", plot_names,"_STVs_downregulated_DEGs_heatmap.pdf"))
   gplots::heatmap.2(as.matrix(abs(scMappR_vals_down)), Rowv = T, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
   dev.off()
@@ -315,7 +315,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     print(rownames(scMappR_vals_up1) == rownames(signature_mat_up))
     
     # Upregulated DEG Heatmap
-    if(nrow(signature_mat_up) > 2) {
+    if(nrow(signature_mat_up) > 2 & ncol(signature_mat_up) > 2) {
     pdf(paste0(output_directory, "/",plot_names,"_celltype_specific_preferences_upregulated_DEGs_heatmap.pdf"))
     pl <- gplots::heatmap.2(as.matrix(signature_mat_up), Rowv = T, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
     print(pl)
@@ -333,7 +333,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     
     # Downregulated DEG Heatmap
     
-    if(nrow(signature_mat_down) > 2 ) {
+    if(nrow(signature_mat_down) > 2 & ncol(signature_mat_down) > 2) {
     pdf(paste0(output_directory, "/",plot_names,"_celltype_specific_preferences_downregulated_DEGs_heatmap.pdf"))
     pl2 <- gplots::heatmap.2(as.matrix(signature_mat_down), Rowv = T, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
     print(pl2)
