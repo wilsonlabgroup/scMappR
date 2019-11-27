@@ -266,14 +266,25 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   pdf(paste0(output_directory,"/",plot_names,"_cell_proportions_heatmap.pdf")) 
   gplots::heatmap.2(as.matrix(STVs$cellType_Proportions), Rowv = T, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
   dev.off()
+  if(nrow(scMappR_vals_up) > 2) {
+    pdf(paste0(output_directory, "/", plot_names,"_STVs_upregulated_DEGs_heatmap.pdf"))
+    gplots::heatmap.2(as.matrix(abs(scMappR_vals_up)), Rowv = T, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+    dev.off()
+  } else {
+    warning("There were fewer than two upregulated DEGs, therefore a heatmap could not be made.")
+    print("There were fewer than two upregulated DEGs, therefore a heatmap could not be made.", quote = F)
+    
+  }
   
-  pdf(paste0(output_directory, "/", plot_names,"_STVs_upregulated_DEGs_heatmap.pdf"))
-  gplots::heatmap.2(as.matrix(abs(scMappR_vals_up)), Rowv = T, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
-  dev.off()
-  
+  if(nrow(scMappR_vals_down) > 2) {
   pdf(paste0(output_directory, "/", plot_names,"_STVs_downregulated_DEGs_heatmap.pdf"))
   gplots::heatmap.2(as.matrix(abs(scMappR_vals_down)), Rowv = T, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
   dev.off()
+  } else {
+    warning("There were fewer than two downregulated DEGs, therefore a heatmap could not be made.")
+    print("There were fewer than two downregulated DEGs, therefore a heatmap could not be made.", quote = F)
+    
+  }
   
   pdf(paste0(output_directory, "/",plot_names,"_all_CT_markers_in_background.pdf"))
   gplots::heatmap.2(as.matrix(signature_mat), Rowv = T, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
@@ -305,18 +316,25 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     print(rownames(scMappR_vals_up1) == rownames(signature_mat_up))
     
     # Upregulated DEG Heatmap
-    
+    if(nrow(signature_mat_up) > 2) {
     pdf(paste0(output_directory, "/",plot_names,"_celltype_specific_preferences_upregulated_DEGs_heatmap.pdf"))
     pl <- gplots::heatmap.2(as.matrix(signature_mat_up), Rowv = T, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
     print(pl)
     dev.off()
     
+    
     pdf(paste0(output_directory, "/", plot_names,"celltype_specific_STVs_upregulated_heatmap.pdf"))
     gplots::heatmap.2(as.matrix(scMappR_vals_up1[rev(colnames(pl$carpet)),pl$colInd]),Colv=F, Rowv = F, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
     dev.off()
+    } else {
+      warning("There were fewer than two cell-type specific, upregulated DEGs, therefore a heatmap could not be made.")
+      print("There were fewer than two cell-type specific, upregulated DEGs, therefore a heatmap could not be made.", quote = F)
+      
+    }
     
     # Downregulated DEG Heatmap
     
+    if(nrow(signature_mat_down) > 2 ) {
     pdf(paste0(output_directory, "/",plot_names,"_celltype_specific_preferences_downregulated_DEGs_heatmap.pdf"))
     pl2 <- gplots::heatmap.2(as.matrix(signature_mat_down), Rowv = T, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
     print(pl2)
@@ -324,10 +342,14 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     
     
     pdf(paste0(output_directory, "/", plot_names,"celltype_specific_STVs_downregulated_heatmap.pdf"))
-    gplots::heatmap.2(as.matrix(abs(scMappR_vals_down[rev(colnames(pl2$carpet)),pl2$colInd])),Colv=F, Rowv = F, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+    gplots::heatmap.2(as.matrix(abs(scMappR_vals_down1[rev(colnames(pl2$carpet)),pl2$colInd])),Colv=F, Rowv = F, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
     print(pl)
     dev.off()
-    
+    }  else {
+      warning("There were fewer than two cell-type specific, downregulated DEGs, therefore a heatmap could not be made.")
+      print("There were fewer than two cell-type specific, downregulated DEGs, therefore a heatmap could not be made.", quote = F)
+      
+    }
   }
   if(internet == FALSE) {
     warning("There is not a reported stable internet (WIFI = FALSE) and therefore pathway analysis with g:Prof")
