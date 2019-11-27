@@ -200,12 +200,14 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   all_genes_in <- DeconRNASeq::DeconRNASeq(norm_counts_i, wilcox_or_signature, fig = F)
   
   proportions <- all_genes_in$out.all
+  
   rownames(proportions) <- colnames(norm_counts_i)
   
   propmeans <- colMeans(proportions)
   
   # keep cell-type of genes with > 0.1% of the population
   proportions <- proportions[,colMeans(proportions) > 0.001]
+  
   print("your bulk data contains the following cell types")
   print(colnames(proportions), quote = F)
   #convert to correct datatypes for downstream analysis

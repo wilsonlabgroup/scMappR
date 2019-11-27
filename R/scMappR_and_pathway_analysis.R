@@ -204,6 +204,27 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   }  
   STVs <- deconvolute_and_contextualize(count_file, signature_matrix, DEG_list, case_grep , control_grep, max_proportion_change = max_proportion_change, print_plots = print_plots, plot_names = plot_names, theSpecies = theSpecies, sig_matrix_size = sig_matrix_size, drop_unkown_celltype = drop_unkown_celltype, toSave = toSave)
 
+  # Computing t-test for changes in cell-type proportion
+  ttest_decon <- function(x) {
+    # This function takes the cell-type proporitons of cases and controls and completes t-tests to see if there are significant changes.  
+    Cases <- STVs$cellType_Proportions[grep(case_grep, rownames(STVs$cellType_Proportions)),x] # proportion of cell-typeof cases
+    Control <- STVs$cellType_Proportions[grep(control_grep, rownames(STVs$cellType_Proportions)),x] #controls
+    case_control <- t.test(Cases,Control)# t test
+    case_control$p.value # p val
+    case_control$statistic # t stat
+    case_mean <- mean(Cases) # mean cases
+    control_mean <- mean(Control) # mean control
+    theName <- colnames(STVs$cellType_Proportions)[x] # cell-type
+    toReturn <- c(unname(case_control$p.value), unname(case_control$statistic),case_mean, control_mean )
+    return(toReturn)
+  } 
+  stacked <- lapply(1:ncol(STVs$cellType_Proportions), ttest_decon)
+  proportion_T <- do.call("rbind",stacked) # t test of proportions of each cell-type and staack
+  rownames(proportion_T) <- colnames(STVs$cellType_Proportions)
+  colnames(proportion_T) <- c("P.Value", "T.Statistic", "CaseMean", "ControlMean")
+  
+  STVs$ProportionT.test <- proportion_T
+  
   print(paste0("Making scMappR output directory named", output_directory, "."))
   if(toSave == FALSE) {
     warning("toSave == FALSE therefore files cannot be saved. Switching toSave = TRUE is strongly reccomended. Returning STVs and no pathway analysis.")
@@ -211,7 +232,12 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     return(STVs)    
   }
   dir.create(output_directory)
+  
   scMappR_vals <- STVs$scMappR_transformed_values # scMappR values
+  T_test_outs <- STVs$ProportionT.test
+  print("Writing summary of cell-type proportion changes between case and control." , quote = F)
+  write.table(T_test_outs, file = paste0(output_directory, "/", plot_names, "_cell_proportion_changes_summary.tsv"), quote = F, row.names = F, col.names = T, sep = "\t")
+  
   print(scMappR_vals)
   save(scMappR_vals, file = paste0(output_directory, "/",plot_names, "_STVs.RData"))
   
@@ -232,11 +258,24 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   
   # generate heatmaps for DEGs
   cex = gene_label_size
-  pdf(paste0(output_directory, "/", plot_names,"_STVs_all_genes_heatmap.pdf"))
-  gplots::heatmap.2(as.matrix(scMappR_vals), Rowv = T, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+  scMappR_vals <- as.matrix(scMappR_vals)
+  
+  scMappR_vals_up <- scMappR_vals[apply(scMappR_vals,1, sum) > 0,]
+  scMappR_vals_down <- scMappR_vals[apply(scMappR_vals,1, sum) < 0,]
+  
+  pdf(paste0(output_directory,"/",plot_names,"_cell_proportions_heatmap.pdf")) 
+  gplots::heatmap.2(as.matrix(STVs$cellType_Proportions), Rowv = T, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
   dev.off()
   
-  pdf(paste0(output_directory, "/",plot_names,"_signature_matrix_all_genes_heatmap.pdf"))
+  pdf(paste0(output_directory, "/", plot_names,"_STVs_upregulated_DEGs_heatmap.pdf"))
+  gplots::heatmap.2(abs(scMappR_vals_up), Rowv = T, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+  dev.off()
+  
+  pdf(paste0(output_directory, "/", plot_names,"_STVs_downregulated_DEGs_heatmap.pdf"))
+  gplots::heatmap.2(abs(scMappR_vals_down), Rowv = T, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+  dev.off()
+  
+  pdf(paste0(output_directory, "/",plot_names,"_all_CT_markers_in_background.pdf"))
   gplots::heatmap.2(as.matrix(signature_mat), Rowv = T, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
   dev.off()
   
@@ -251,13 +290,41 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   } else {
     
     # generating the heatmaps for STVs and signature matrix odds ratios that overlap with one another
+    up_signature <- intersect(rownames(scMappR_vals_up), celltype_preferred_degs)
+    down_signature <- intersect(rownames(scMappR_vals_down), celltype_preferred_degs)
     
-    pdf(paste0(output_directory, "/", plot_names,"_STVs_signature_genes_heatmap.pdf"))
-    gplots::heatmap.2(as.matrix(scMappR_vals[celltype_preferred_degs,]), Rowv = T, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+
+    
+    
+    
+    signature_mat_up <- as.matrix(signature_mat[up_signature,])
+    signature_mat_down <- as.matrix(signature_mat[down_signature,])
+
+    # Upregulated DEG Heatmap
+    
+    pdf(paste0(output_directory, "/",plot_names,"_celltype_specific_preferences_upregulated_DEGs_heatmap.pdf"))
+    pl <- gplots::heatmap.2(signature_mat_up, Rowv = T, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+    print(pl)
     dev.off()
     
-    pdf(paste0(output_directory, "/",plot_names,"_signature_matrix_DEGs_heatmap.pdf"))
-    gplots::heatmap.2(as.matrix(signature_mat[celltype_preferred_degs,]), Rowv = T, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+    scMappR_vals_up <- as.matrix(scMappR_vals_up[up_signature,])
+    pdf(paste0(output_directory, "/", plot_names,"celltype_specific_STVs_upregulated_heatmap.pdf"))
+    pl <- gplots::heatmap.2(scMappR_vals_up[rev(colnames(pl$carpet)),pl$colInd],Colv=F, Rowv = F, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+    print(pl)
+    dev.off()
+    
+    # Downregulated DEG Heatmap
+    
+    pdf(paste0(output_directory, "/",plot_names,"_celltype_specific_preferences_downregulated_DEGs_heatmap.pdf"))
+    pl <- gplots::heatmap.2(signature_mat_down, Rowv = T, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+    print(pl)
+    dev.off()
+    
+    scMappR_vals_down <- as.matrix(scMappR_vals_down[down_signature,])
+    
+    pdf(paste0(output_directory, "/", plot_names,"celltype_specific_STVs_downregulated_heatmap.pdf"))
+    pl <- gplots::heatmap.2(abs(scMappR_vals_down[rev(colnames(pl$carpet)),pl$colInd]),Colv=F, Rowv = F, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+    print(pl)
     dev.off()
     
   }
