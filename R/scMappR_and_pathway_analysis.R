@@ -258,10 +258,10 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   
   # generate heatmaps for DEGs
   cex = gene_label_size
-  scMappR_vals <- as.matrix(scMappR_vals)
   
-  scMappR_vals_up <- scMappR_vals[apply(scMappR_vals,1, sum) > 0,]
-  scMappR_vals_down <- scMappR_vals[apply(scMappR_vals,1, sum) < 0,]
+  
+  scMappR_vals_up <- as.matrix(scMappR_vals[apply(scMappR_vals,1, sum) > 0,])
+  scMappR_vals_down <- as.matrix(scMappR_vals[apply(scMappR_vals,1, sum) < 0,])
   
   pdf(paste0(output_directory,"/",plot_names,"_cell_proportions_heatmap.pdf")) 
   gplots::heatmap.2(as.matrix(STVs$cellType_Proportions), Rowv = T, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
