@@ -97,6 +97,10 @@ tissue_scMappR_custom <- function(gene_list, signature_matrix ,output_directory 
   # heatmap generation of the background matrix as well as getting preferred genes based on your cutoff, p-value or otherwise
   print(gene_list_heatmap)
   singleCTpreferences <- single_gene_preferences(gene_list_heatmap, background_heatmap, study_names, outDir = output_directory, toSave = toSave)
+  
+  if(toSave == TRUE) {
+    write.table(singleCTpreferences, file = paste0(outDir,"/",outDir, "_celltype_preferences.tsv"), quote=F, row.names = F, col.names = T, sep = "\t")
+  }
   # cell-type preferences for indidual cell-types
   sig <- singleCTpreferences[singleCTpreferences$pFDR < 0.05,]
   sig$Odds_Ratio <- toNum(sig$Odds_Ratio)
