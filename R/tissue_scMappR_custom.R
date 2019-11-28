@@ -118,7 +118,7 @@ tissue_scMappR_custom <- function(gene_list, signature_matrix ,output_directory 
     
     single_cell_studies <- output 
   }
-  names(single_cell_studies) <- study_names
+  names(single_cell_studies) <- c("background_heatmap", "gene_list_heatmap","single_celltype_preferences", "group_celltype_preferences")
   return(single_cell_studies)
 }
 
