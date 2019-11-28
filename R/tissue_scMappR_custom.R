@@ -53,7 +53,7 @@ NULL
 #' @rdname tissue_scMappR_custom
 #' @export
 #' 
-tissue_scMappR_custom <- function(gene_list, signature_matrix ,output_directory, gene_cutoff = 1, is_pvalue = TRUE) {
+tissue_scMappR_custom <- function(gene_list, signature_matrix ,output_directory = "custom_test", toSave = FALSE, gene_cutoff = 1, is_pvalue = TRUE) {
   # This function is roughly the same as tissue_scMappR_internal, however now there is a custom signature matrix.
   # it generates a heatmap of the signature matrixand your inputted gene list as well as single cell-type and 
   # co-celltype enrichment.
