@@ -95,7 +95,6 @@ tissue_scMappR_custom <- function(gene_list, signature_matrix ,output_directory 
     return("0 or 1 input genes were cell-type specific. No downstream analysis available.")
   }
   # heatmap generation of the background matrix as well as getting preferred genes based on your cutoff, p-value or otherwise
-  print(gene_list_heatmap)
   singleCTpreferences <- single_gene_preferences(gene_list_heatmap, background_heatmap, study_names, outDir = output_directory, toSave = toSave)
   
   if(toSave == TRUE) {
