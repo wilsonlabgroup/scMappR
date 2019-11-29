@@ -4,22 +4,11 @@
 \alias{deconvolute_and_contextualize}
 \title{Generate scMappR Transformed Values (STVs)}
 \usage{
-deconvolute_and_contextualize(
-  count_file,
-  signature_matrix,
-  DEG_list,
-  case_grep,
-  control_grep,
-  max_proportion_change = -9,
-  print_plots = T,
-  plot_names = "scMappR",
-  theSpecies = "human",
-  make_scale = F,
-  FC_coef = T,
-  sig_matrix_size = 3000,
-  sig_distort = 1,
-  drop_unkown_celltype = TRUE
-)
+deconvolute_and_contextualize(count_file, signature_matrix, DEG_list,
+  case_grep, control_grep, max_proportion_change = -9, print_plots = T,
+  plot_names = "scMappR", theSpecies = "human", make_scale = F,
+  FC_coef = T, sig_matrix_size = 3000, sig_distort = 1,
+  drop_unkown_celltype = TRUE, toSave = FALSE)
 }
 \arguments{
 \item{count_file}{Normalized RNA-seq count matrix where rows are gene symbols and columns are individuals. Either the object tself of the path of a TSV file}
@@ -47,6 +36,8 @@ deconvolute_and_contextualize(
 \item{sig_distort}{Exponential change of odds ratios. Strongly not reccomended and will produce warnings if changed from default.}
 
 \item{drop_unkown_celltype}{Whether or not to remove "unknown" cell-types from the signature matrix.}
+
+\item{toSave}{Allow scMappR to write files in the current directory (T/F)}
 
 \item{ordered_back_all}{output of the g:ProfileR function}
 
@@ -76,6 +67,9 @@ Once these values are computed, they are returned. If printplots = true, then th
 \\notrun {
 load("~/scMappR/data/PBMC_scMappR_and_pathway_analysis_example.rda")
 #data(PBMC_scMappR)
+bulk_DE_cors <- PBMC_example$bulk_DE_cors
+bulk_normalized <- PBMC_example$bulk_normalized
+odds_ratio_in <- PBMC_example$odds_ratio_in
 case_grep <- "_female"
 control_grep <- "_male"
 max_proportion_change <- 10

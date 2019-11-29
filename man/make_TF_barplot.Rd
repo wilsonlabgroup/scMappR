@@ -25,6 +25,9 @@ enriched P-values before plotting the rank of their P-values
 \\notrun {
 # load in signature matrices
 load("~/scMappR/data/Preoptic_region_example.rda")
+ POA_generes <- POA_example$POA_generes
+ POA_OR_signature <- POA_example$POA_OR_signature
+ POA_Rank_signature <- POA_example$POA_Rank_signature
 # data(Preoptic_region_example)
 Signature <- as.data.frame(POA_Rank_signature)
 rowname <- get_gene_symbol(Signature)

@@ -25,7 +25,7 @@ This function computes the mean expression of every cell-typ before predicting t
 This function inputs a Seurat object and uses the average normalized expression of each gene in each cluster to identify cell-types using the gsva method.
 }
 \examples{
-
+\\notrun {
 
 load("~/scMappR/data/cell_process_example.rda")
 #data(cell_process_example)
@@ -33,5 +33,6 @@ toProcess <- list(example = sm)
 tst1 <- process_from_count(toProcess, "testProcess")
 cellnames <- gsva_cellIdentify(tst1, "mouse", "brain", "~/scMappR/data")
 
+}
  
 }

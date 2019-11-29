@@ -4,21 +4,19 @@
 \alias{single_gene_preferences}
 \title{Single cell-type gene preferences}
 \usage{
-single_gene_preferences(
-  hg_short,
-  hg_full,
-  study_name,
-  outDir = output_directory
-)
+single_gene_preferences(hg_short, hg_full, study_name,
+  outDir = output_directory, toSave = FALSE)
 }
 \arguments{
 \item{hg_short}{A list with two objects: a "preferences" and a "genesIn". preferences is a list of gene symbols over-represented ine ach cell-type and genesIn were all the inputted genes.}
 
 \item{hg_full}{The same as hg_short but fore very gene in the signature matrix.}
 
-\item{study_name}{= name of output table}
+\item{study_name}{name of output table}
 
-\item{outputDir}{= directory where table is outputted}
+\item{toSave}{Allow scMappR to write files in the current directory (T/F)}
+
+\item{outputDir}{directory where table is outputted}
 }
 \value{
 \code{single_gene_preferences} A gene-set enrichment table of individual cell-type enrichment. \cr
@@ -38,6 +36,9 @@ of each cell-type
 
 # load in signature matrices
  load("data/Preoptic_region_example.rda")
+ POA_generes <- POA_example$POA_generes
+ POA_OR_signature <- POA_example$POA_OR_signature
+ POA_Rank_signature <- POA_example$POA_Rank_signature
 # data(Preoptic_region_example)
  Signature <- POA_Rank_signature
  genes <- rownames(Signature)[1:200]

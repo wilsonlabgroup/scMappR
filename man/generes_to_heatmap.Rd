@@ -4,14 +4,8 @@
 \alias{generes_to_heatmap}
 \title{Generate signature matrix}
 \usage{
-generes_to_heatmap(
-  generes,
-  species = "human",
-  naming_preference = -9,
-  rda_path = "~/scMappR/data",
-  make_names = T,
-  internal = FALSE
-)
+generes_to_heatmap(generes, species = "human", naming_preference = -9,
+  rda_path = "~/scMappR/data", make_names = T, internal = FALSE)
 }
 \arguments{
 \item{generes}{A list of cell-tpe markers with fold-changes and P-vlaues (FindMarkers output in Seurat)}
@@ -39,6 +33,8 @@ Take an list of compiled DEGs from different cell types, identify what the cell-
  # load generes object
 load("~/scMappR/data/Preoptic_region_example.rda")
 #data(Preoptic_region_example)
+ POA_generes <- POA_example$POA_generes
+ POA_OR_signature <- POA_example$POA_OR_signature
+ POA_Rank_signature <- POA_example$POA_Rank_signature
 signature <- generes_to_heatmap(POA_generes,species = -9, make_names = F)
-
 }

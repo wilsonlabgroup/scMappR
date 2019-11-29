@@ -4,13 +4,8 @@
 \alias{coEnrich}
 \title{Identify co-expressed cell-types.}
 \usage{
-coEnrich(
-  sig,
-  gene_list_heatmap,
-  background_heatmap,
-  study_name,
-  outDir = output_directory
-)
+coEnrich(sig, gene_list_heatmap, background_heatmap, study_name,
+  outDir = output_directory, toSave = FALSE)
 }
 \arguments{
 \item{sig}{A The number of combinations of significant cell-types to enrich.}
@@ -20,6 +15,8 @@ coEnrich(
 \item{background_heatmap}{Signature matrix of background matrix in heatmap and cell-type preferences -- output of heatmap generation.}
 
 \item{study_name}{Name of the outputted table.}
+
+\item{toSave}{Allow scMappR to write files in the current directory (T/F)}
 
 \item{output_directory}{Name of the directory this table will be printed in.}
 }
@@ -34,13 +31,16 @@ This function takes significantly enriched cell-types from the single CT enrich 
 To save computational time and to not complete this with an incredible number of permutations, scMappR stops at overlapping 5 cell-types.
 }
 \examples{
-
+\\notrun {
 
 # load in signature matrices
  load("data/Preoptic_region_example.rda")
+ POA_generes <- POA_example$POA_generes
+ POA_OR_signature <- POA_example$POA_OR_signature
+ POA_Rank_signature <- POA_example$POA_Rank_signature
 # data(Preoptic_region_example)
  Signature <- POA_Rank_signature
  genes <- rownames(Signature)[1:200]
  heatmap_test <- tissue_scMappR_custom( genes, signature_matrix = Signature,output_directory =  "scMappR_test")
- 
+ }
 }

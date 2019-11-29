@@ -29,6 +29,11 @@ Before completing pathway analysis with g:ProfileR. Enriched pathways are stored
 \\notrun {
 
 load("~/scMappR/data/PBMC_scMappR_and_pathway_analysis_example.rda")
+
+bulk_DE_cors <- PBMC_example$bulk_DE_cors
+bulk_normalized <- PBMC_example$bulk_normalized
+odds_ratio_in <- PBMC_example$odds_ratio_in
+
 case_grep <- "_female"
 control_grep <- "_male"
 max_proportion_change <- 10
@@ -39,4 +44,5 @@ background = rownames(bulk_normalized)
 STVs <- gProfiler_STV(norm$scMappR_transformed_values, theSpecies, background)
 
  }
+ 
 }

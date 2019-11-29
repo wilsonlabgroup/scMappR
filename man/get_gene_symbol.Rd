@@ -25,6 +25,9 @@ It then takes the output of the FindMarkers and puts it in a list, returning it.
  # load signature
 load("~/scMappR/data/Preoptic_region_example.rda")
 #data(Preoptic_region_example)
+POA_generes <- POA_example$POA_generes
+POA_OR_signature <- POA_example$POA_OR_signature
+POA_Rank_signature <- POA_example$POA_Rank_signature
 symbols <- get_gene_symbol(OddsRatioSignature)
 
 }

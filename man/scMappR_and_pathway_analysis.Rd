@@ -4,25 +4,13 @@
 \alias{scMappR_and_pathway_analysis}
 \title{Generate STV, visualize, and enrich.}
 \usage{
-scMappR_and_pathway_analysis(
-  count_file,
-  signature_matrix,
-  DEG_list,
-  case_grep,
-  control_grep,
-  rda_path = "",
-  max_proportion_change = -9,
-  print_plots = T,
-  plot_names = "scMappR",
-  theSpecies = "human",
-  output_directory = "scMappR_analysis",
-  sig_matrix_size = 3000,
-  drop_unkown_celltype = TRUE,
-  internet = TRUE,
-  up_and_downregulated = FALSE,
-  gene_label_size = 0.4,
-  number_genes = -9
-)
+scMappR_and_pathway_analysis(count_file, signature_matrix, DEG_list,
+  case_grep, control_grep, rda_path = "", max_proportion_change = -9,
+  print_plots = T, plot_names = "scMappR", theSpecies = "human",
+  output_directory = "scMappR_analysis", sig_matrix_size = 3000,
+  drop_unkown_celltype = TRUE, internet = TRUE,
+  up_and_downregulated = FALSE, gene_label_size = 0.4,
+  number_genes = -9, toSave = FALSE)
 }
 \arguments{
 \item{count_file}{Normalized RNA-seq count matrix where rows are gene symbols and columns are individuals. Either the object tself of the path of a TSV file}
@@ -55,6 +43,8 @@ scMappR_and_pathway_analysis(
 
 \item{number_genes}{The number of genes to cut-off for pathway analysis (good with many DEGs)}
 
+\item{toSave}{Allow scMappR to write files in the current directory (T/F)}
+
 \item{WIFI}{Whether you have stable WIFI (T/F).}
 }
 \value{
@@ -74,6 +64,9 @@ This function is a wrapper for deconvolute_and_contextualize, as well as pathway
 
 load("~/scMappR/data/PBMC_scMappR_and_pathway_analysis_example.rda")
 # data(PBMC_scMappR_and_pathway_analysis)
+bulk_DE_cors <- PBMC_example$bulk_DE_cors
+bulk_normalized <- PBMC_example$bulk_normalized
+odds_ratio_in <- PBMC_example$odds_ratio_in
 case_grep <- "_female"
 control_grep <- "_male"
 max_proportion_change <- 10

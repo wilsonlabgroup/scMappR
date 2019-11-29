@@ -4,17 +4,10 @@
 \alias{process_dgTMatrix_lists}
 \title{Count Matrix To Signature Matrix}
 \usage{
-process_dgTMatrix_lists(
-  dgTMatrix_list,
-  name,
-  species_name,
-  naming_preference,
-  rda_path = "",
-  panglao_set = FALSE,
-  haveUMAP = FALSE,
-  saveSCObject = FALSE,
-  internal = F
-)
+process_dgTMatrix_lists(dgTMatrix_list, name, species_name,
+  naming_preference, rda_path = "", panglao_set = FALSE,
+  haveUMAP = FALSE, saveSCObject = FALSE, internal = F,
+  toSave = FALSE)
 }
 \arguments{
 \item{dgTMatrix_list}{A list of matrices in the class of dgTMatrix object -- sparce object -- compatible with Seurat rownames should be of the same species for each.}
@@ -26,6 +19,8 @@ process_dgTMatrix_lists(
 \item{panglao_set}{If the inputted matrices are from panglao (i.e. if they're internal).}
 
 \item{internal}{Was this used as part of the internal processing of panglao datasets (T/F).}
+
+\item{toSave}{Allow scMappR to write files in the current directory (T/F)}
 
 \item{species}{Mouse or human symbols, -9 if internal as panglao objects have gene symbol and ensembl strapped together.}
 

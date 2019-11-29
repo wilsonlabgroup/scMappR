@@ -29,13 +29,14 @@
 #' @import utils
 #' @import downloader
 #'
-#' @examples
-#' 
+#' @examples 
+#' \donttest {
 #'  
 #'  # load generes object
-#'  load("data/Preoptic_region_example.rda")
+#'  load("~/scMappR/data/Preoptic_region_example.rda")
 #'  data(Preoptic_region_example)
 #'  topGenes <- topgenes_extract(POA_generes)
+#' }
 #' 
 NULL
 #' @rdname topgenes_extract

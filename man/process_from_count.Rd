@@ -4,14 +4,9 @@
 \alias{process_from_count}
 \title{Count Matrix To Seurat Object}
 \usage{
-process_from_count(
-  countmat_list,
-  name,
-  theSpecies = -9,
-  haveUmap = FALSE,
-  saveALL = FALSE,
-  panglao_set = F
-)
+process_from_count(countmat_list, name, theSpecies = -9,
+  haveUmap = FALSE, saveALL = FALSE, panglao_set = F,
+  toSave = FALSE)
 }
 \arguments{
 \item{countmat_list}{A list of count matrices that will be be integrated using the integration-anchors features they should have the same rownames.}

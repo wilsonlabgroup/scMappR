@@ -4,13 +4,8 @@
 \alias{extract_genes_cell}
 \title{Extract Markers}
 \usage{
-extract_genes_cell(
-  geneHeat,
-  cellTypes = "ALL",
-  val = 1,
-  isMax = F,
-  isPvalue = FALSE
-)
+extract_genes_cell(geneHeat, cellTypes = "ALL", val = 1, isMax = F,
+  isPvalue = FALSE)
 }
 \arguments{
 \item{geneHeat}{The heatmap of ranks from your scRNA-seq dataset with your genes subsetted}
@@ -34,14 +29,15 @@ This function takes a signature matrix and
 extracts cell-type markers above a p-value or fold-change threshold.
 }
 \examples{
+\\notrun {
 
 # load in signature matrices
-load("data/Preoptic_region_example.rda")
+load("~/scMappR/data/Preoptic_region_example.rda")
 # data(Preoptic_region_example)
 Signature <- POA_Rank_signature
  RowName <- get_gene_symbol(Signature)
  rownames(Signature) <-RowName$rowname
  # extract genes with a -log10(Padj > 1)
  Signat <- extract_genes_cell(Signature)
- 
+ }
 }

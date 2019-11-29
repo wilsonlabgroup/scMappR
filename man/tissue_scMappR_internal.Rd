@@ -4,16 +4,9 @@
 \alias{tissue_scMappR_internal}
 \title{Gene List Visualization and Enrichment (Internal)}
 \usage{
-tissue_scMappR_internal(
-  gene_list,
-  species,
-  output_directory,
-  tissue,
-  rda_path,
-  cluster = "Pval",
-  genecex = 0.01,
-  raw_pval = FALSE
-)
+tissue_scMappR_internal(gene_list, species, output_directory, tissue,
+  rda_path, cluster = "Pval", genecex = 0.01, raw_pval = FALSE,
+  toSave = FALSE)
 }
 \arguments{
 \item{gene_list}{A list of gene symbols, mouse or human.}
@@ -29,6 +22,8 @@ tissue_scMappR_internal(
 \item{genecex}{The size of the gene names of the rows in the heatmap.}
 
 \item{raw_pval}{If the inputed signature matrix are raw (untransformed) Pvalues -- reccomended to generate rank first.}
+
+\item{toSave}{Allow scMappR to write files in the current directory (T/F)}
 }
 \value{
 \code{tissue_scMappR_internal} A list containing the entire signature matrix, the matrix subsetted for your genes, enrichment of each cell-type, and co-enrichment. \cr
@@ -46,11 +41,14 @@ of those cell-types.
 
 # load in signature matrices
 load("~/scMappR/data/Preoptic_region_example.rda")
+ POA_generes <- POA_example$POA_generes
+ POA_OR_signature <- POA_example$POA_OR_signature
+ POA_Rank_signature <- POA_example$POA_Rank_signature
+
 # data(Preoptic_region_example)
 Signature <- POA_Rank_signature
  rowname <- get_gene_symbol(Signature)
  rownames(Signature) <- rowname$rowname
- genes <- rownames(Signature)[1:200]
  genes <- rownames(Signature)[1:200]
  # Assuming Signature_matrices_pVal.rda is in you "~/Documents/scMappR/data" directory
  # rda_path1 = "~/Documents/scMappR/data"

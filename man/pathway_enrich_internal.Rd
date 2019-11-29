@@ -4,15 +4,8 @@
 \alias{pathway_enrich_internal}
 \title{Pathway enrichment for STV's and bulk gene list}
 \usage{
-pathway_enrich_internal(
-  DEGs,
-  theSpecies,
-  scMappR_vals,
-  background_genes,
-  output_directory,
-  plot_names,
-  number_genes
-)
+pathway_enrich_internal(DEGs, theSpecies, scMappR_vals, background_genes,
+  output_directory, plot_names, number_genes, toSave = FALSE)
 }
 \arguments{
 \item{DEGs}{Differentially expressed genes (gene_name, padj, log2fc).}
@@ -22,6 +15,8 @@ pathway_enrich_internal(
 \item{plot_names}{Names of output.}
 
 \item{number_genes}{Number of genes to if there are many many DEGs}
+
+\item{toSave}{Allow scMappR to write files in the current directory (T/F)}
 
 \item{species}{Human, mouse, or a charcter that is compatible with gProfileR.}
 
@@ -41,6 +36,9 @@ It is a wrapper for making barplots, bulk pathway analysis, and gProfiler_STV
 \\notrun {
 
 load("~/scMappR/data/PBMC_scMappR_and_pathway_analysis_example.rda")
+bulk_DE_cors <- PBMC_example$bulk_DE_cors
+bulk_normalized <- PBMC_example$bulk_normalized
+odds_ratio_in <- PBMC_example$odds_ratio_in
 case_grep <- "_female"
 control_grep <- "_male"
 max_proportion_change <- 10

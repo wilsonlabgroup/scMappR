@@ -4,12 +4,8 @@
 \alias{human_mouse_ct_marker_enrich}
 \title{Consensus cell-type naming (Fisher's Exact)}
 \usage{
-human_mouse_ct_marker_enrich(
-  gene_lists,
-  theSpecies = "human",
-  cell_marker_path = "~/scMappR/data",
-  naming_preference = -9
-)
+human_mouse_ct_marker_enrich(gene_lists, theSpecies = "human",
+  cell_marker_path = "~/scMappR/data", naming_preference = -9)
 }
 \arguments{
 \item{gene_lists}{A named list of vectors containing cell-type markers (mouse or human gene-symbols) which will be named as a cell-type via the fish'er sexact test method.}
@@ -36,6 +32,9 @@ Generally, this method seems to be biased to cell-types with a greater number of
 
 # load in signature matrices
 load("~/scMappR/data/Preoptic_region_example.rda")
+POA_generes <- POA_example$POA_generes
+POA_OR_signature <- POA_example$POA_OR_signature
+POA_Rank_signature <- POA_example$POA_Rank_signature
 # data(Preoptic_region_example)
 Signature <- POA_Rank_signature
  rowname <- get_gene_symbol(Signature)
@@ -44,7 +43,8 @@ Signature <- POA_Rank_signature
  
  # Assuming mouse_cell_markers.rda is in you "~/scMappR/data" directory
  gmt1 <- "~/scMappR/data/mouse_cell_markers.rda"
- gmt <- gmt_panglao
+ load(gmt1)
+ gmt <- gmt_list$gmt_panglao
  enriched <- human_mouse_ct_marker_enrich(gene_lists = genes, theSpecies = "mouse", cell_marker_path = "", naming_preference = "brain")
  }
 }

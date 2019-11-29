@@ -4,19 +4,11 @@
 \alias{heatmap_generation}
 \title{Generate Heatmap}
 \usage{
-heatmap_generation(
-  genesIn,
-  comp,
-  cex = 0.8,
-  rd_path = "~/scMappR/data",
-  cellTypes = "ALL",
-  pVal = 0.01,
-  isPval = TRUE,
-  isMax = F,
-  isBackground = F,
+heatmap_generation(genesIn, comp, cex = 0.8,
+  rd_path = "~/scMappR/data", cellTypes = "ALL", pVal = 0.01,
+  isPval = TRUE, isMax = F, isBackground = F,
   reference = "C:/Users/Dustin Sokolowski/Desktop/romanov_wilcoxon_test_2.RData",
-  which_species = "human"
-)
+  which_species = "human", toSave = FALSE)
 }
 \arguments{
 \item{genesIn}{A list of gene symbols (all caps) to have their cell type enrichment}
@@ -29,15 +21,19 @@ heatmap_generation(
 
 \item{pVal}{The level of association a gene has within a cell type (passed to extract_genes_cell)}
 
-\item{isMax}{only take the top most DEG for each cell-type (T/F) -- TRUE not reccomended}
+\item{isMax}{If you are taking the single best CT marker (T/F) -- TRUE not reccomended}
 
 \item{isBackground}{If the heatmap is from the entire signature matrix or just the inputted gene list (T/F). isBackground == TRUE is used for internal.}
 
 \item{which_species}{Species of gene symbols -- "human" or "mouse"}
 
+\item{toSave}{Allow scMappR to write files in the current directory (T/F)}
+
 \item{Cex}{the size of the genes in the column label for the heatmap}
 
 \item{isPvalue}{If the signature matrix is raw p-value (T/F) -- TRUE not reccomended}
+
+\item{isMax}{only take the top most DEG for each cell-type (T/F) -- TRUE not reccomended}
 
 \item{refence}{Path to signature matrix or the signature matrix itself.}
 }
@@ -52,7 +48,10 @@ This function takes an inputted signature matrix as well as a list of genes and 
 \examples{
 
 # load in signature matrices
-load("data/Preoptic_region_example.rda")
+load("~/scMappR/data/Preoptic_region_example.rda")
+POA_generes <- POA_example$POA_generes
+POA_OR_signature <- POA_example$POA_OR_signature
+POA_Rank_signature <- POA_example$POA_Rank_signature
 # data(Preoptic_region_example)
 Signature <- POA_Rank_signature
  rowname <- get_gene_symbol(Signature)

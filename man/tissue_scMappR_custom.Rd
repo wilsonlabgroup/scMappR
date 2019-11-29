@@ -4,13 +4,9 @@
 \alias{tissue_scMappR_custom}
 \title{Gene List Visualization and Enrichment with Custom Signature Matrix}
 \usage{
-tissue_scMappR_custom(
-  gene_list,
-  signature_matrix,
-  output_directory,
-  gene_cutoff = 1,
-  is_pvalue = TRUE
-)
+tissue_scMappR_custom(gene_list, signature_matrix,
+  output_directory = "custom_test", toSave = FALSE, gene_cutoff = 1,
+  is_pvalue = TRUE)
 }
 \arguments{
 \item{gene_list}{A list of gene symbols, mouse or human.}
@@ -18,6 +14,8 @@ tissue_scMappR_custom(
 \item{signature_matrix}{precomputed signature matrix with matching gene names.}
 
 \item{output_directory}{Directory made containing outputs}
+
+\item{toSave}{Allow scMappR to write files in the current directory (T/F)}
 
 \item{gene_cutoff}{value cutoff (generally rank := log10(Padj)) for a gene to be considered a marker}
 
@@ -39,6 +37,9 @@ co-celltype enrichment.
 
 # load in signature matrices
 load("data/Preoptic_region_example.rda")
+POA_generes <- POA_example$POA_generes
+POA_OR_signature <- POA_example$POA_OR_signature
+POA_Rank_signature <- POA_example$POA_Rank_signature
 # data(Preoptic_region_example)
 Signature <- POA_Rank_signature
  rowname <- get_gene_symbol(Signature)
