@@ -28,7 +28,7 @@
 #' @import downloader
 #'
 #' @examples 
-#' \notrun {
+#' \donttest {
 #' 
 #' load("~/scMappR/data/cell_process_example.rda")
 #' #data(cell_process_example)
