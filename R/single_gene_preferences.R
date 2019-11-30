@@ -93,7 +93,7 @@ single_gene_preferences <- function(hg_short, hg_full, study_name, outDir = outp
   # build the table and p-adjust 
   pref <- as.data.frame(pref)
   pref$p_val <- toNum(pref$p_val)
-  pref$pFDR <- p.adjust(pref$p_val, "fdr")
+  pref$pFDR <- stats::p.adjust(pref$p_val, "fdr")
   if(toSave == TRUE) {
     write.table(pref, file = paste0(outDir, "/",study_name, "cell_co_preferences.tsv"), quote = F, row.names = F, col.names = T, sep = "\t")
   } else {

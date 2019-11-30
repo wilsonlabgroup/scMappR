@@ -121,7 +121,7 @@ process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = 
     
     ## Remove cells with >2 standard deviations of MT contamination given the dataset.
     mean <- mean(pbmc$percent.mt.adj)
-    x<- stats::sd(pbmc$percent.mt.adj)
+    x<- S4Vectors::sd(pbmc$percent.mt.adj)
     toremove <- mean + (2*x)
     if(toremove > 0){
       pbmc <- pbmc[,which(pbmc$percent.mt.adj < toremove)]

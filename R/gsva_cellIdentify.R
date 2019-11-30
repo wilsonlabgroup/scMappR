@@ -42,7 +42,7 @@ NULL
 #' @rdname gsva_cellIdentify
 #' @export
 #' 
-gsva_cellIdentify <- function(pbmc, theSpecies, naming_preference, rda_path = "") {
+gsva_cellIdentify <- function(pbmc, theSpecies, naming_preference, rda_path = "", toSave = FALSE) {
   # this function inputs a Seurat object and uses the average normalized expression of each gene
   # in each cluster to identify cell-types using the gsva method
   # Args: 

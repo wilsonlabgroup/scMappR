@@ -34,7 +34,7 @@
 #' @import downloader
 #'
 #' @examples 
-#' \notrun {
+#' \donttest {
 #' 
 #' # load in signature matrices
 #' load("~/scMappR/data/Preoptic_region_example.rda")

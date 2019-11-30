@@ -27,7 +27,7 @@
 #' @import downloader
 #'
 #' @examples 
-#' \notrun {
+#' \donttest {
 #' # load in signature matrices
 #' load("~/scMappR/data/Preoptic_region_example.rda")
 #'  POA_generes <- POA_example$POA_generes

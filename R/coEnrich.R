@@ -31,7 +31,7 @@
 #' @import downloader
 #'
 #' @examples 
-#' \notrun {
+#' \donttest {
 #' 
 #' # load in signature matrices
 #'  load("data/Preoptic_region_example.rda")

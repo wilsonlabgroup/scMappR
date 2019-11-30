@@ -31,7 +31,7 @@
 #' @import downloader
 #'
 #' @examples 
-#' \notrun {
+#' \donttest {
 #' 
 #' load("~/scMappR/data/PBMC_scMappR_and_pathway_analysis_example.rda")
 #' bulk_DE_cors <- PBMC_example$bulk_DE_cors
@@ -111,7 +111,7 @@ pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_g
   dir.create(BP_dir)
   for(i in 1:length(biological_pathways)) {
     # printing top 10 pathways for each celltype
-    pdf(file = paste0(BP_dir,"/",plot_names,"_",names(biological_pathways)[i],"_BP.pdf"))
+    grDevices::pdf(file = paste0(BP_dir,"/",plot_names,"_",names(biological_pathways)[i],"_BP.pdf"))
     BP <- plotBP(biological_pathways[[i]], top_bp = 10)
     print(BP)
     dev.off()
@@ -119,7 +119,7 @@ pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_g
   dir.create(TF_dir)
   for(i in 1:length(transcription_factors)) {
     # printing top 10 transcriptionfactors for ech celltype
-    pdf(file = paste0(TF_dir,"/",plot_names,"_",names(transcription_factors)[i],"_TF.pdf"))
+    grDevices::pdf(file = paste0(TF_dir,"/",plot_names,"_",names(transcription_factors)[i],"_TF.pdf"))
     TF  <- make_TF_barplot(transcription_factors[[i]], top_tf = 10)
     print(TF)
     dev.off()

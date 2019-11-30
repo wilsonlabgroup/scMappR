@@ -53,7 +53,7 @@
 #' @import pcaMethods
 #'
 #' @examples 
-#' \notrun {
+#' \donttest {
 #' load("~/scMappR/data/PBMC_scMappR_and_pathway_analysis_example.rda")
 #' #data(PBMC_scMappR)
 #' bulk_DE_cors <- PBMC_example$bulk_DE_cors

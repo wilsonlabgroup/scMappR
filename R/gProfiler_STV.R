@@ -28,7 +28,7 @@
 #' @import downloader
 #'
 #' @examples 
-#' \notrun {
+#' \donttest {
 #' 
 #' load("~/scMappR/data/PBMC_scMappR_and_pathway_analysis_example.rda")
 #' 

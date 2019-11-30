@@ -167,7 +167,7 @@ heatmap_generation <- function(genesIn, comp, cex = 0.8, rd_path = "~/scMappR/da
     print("at least one input gene is preferentially expressed")
     # make the heatmap
     if(toSave == TRUE) {
-    myheatcol <- colorRampPalette(c("lightblue", "white", "orange"))(256)
+    myheatcol <- grDevices::colorRampPalette(c("lightblue", "white", "orange"))(256)
     pdf(paste0(comp,"_heatmap.pdf"))
     gplots::heatmap.2(wilcoxon_rank_mat_t[whichGenesInter,], Rowv = T, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
     dev.off()
