@@ -32,7 +32,7 @@
 #' @import grDevices
 #'
 #' @examples 
-#'\donttest {
+#' \donttest{
 #' # load in signature matrices
 #' data(Preoptic_Area)
 #' POA_generes <- POA_example$POA_generes

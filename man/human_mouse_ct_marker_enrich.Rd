@@ -28,7 +28,7 @@ Then, if naming_preference != -9, it will extract the enriched cell-types within
 Generally, this method seems to be biased to cell-types with a greater number of markers.
 }
 \examples{
-\donttest {
+\donttest{
 
 data(Preoptic_Area)
 POA_generes <- POA_example$POA_generes

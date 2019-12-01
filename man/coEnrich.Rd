@@ -31,7 +31,7 @@ This function takes significantly enriched cell-types from the single CT enrich 
 To save computational time and to not complete this with an incredible number of permutations, scMappR stops at overlapping 5 cell-types.
 }
 \examples{
- \donttest {
+\donttest{
 # load in signature matrices
 data(Preoptic_Area)
 POA_generes <- POA_example$POA_generes

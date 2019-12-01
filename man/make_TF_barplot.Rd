@@ -22,7 +22,7 @@ This function takes a g:ProfleR output and prints the top "top_tfs" most signifi
 enriched P-values before plotting the rank of their P-values
 }
 \examples{
-\donttest {
+\donttest{
 data("Preoptic_Area")
  POA_generes <- POA_example$POA_generes
  POA_OR_signature <- POA_example$POA_OR_signature

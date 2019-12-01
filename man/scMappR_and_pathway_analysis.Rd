@@ -70,7 +70,9 @@ control_grep <- "_male"
 max_proportion_change <- 10
 print_plots <- FALSE
 theSpecies <- "human"
-toOut <- scMappR_and_pathway_analysis(bulk_normalized, odds_ratio_in, bulk_DE_cors, case_grep = case_grep, control_grep = control_grep, rda_path = "", max_proportion_change = 10, print_plots = T, 
-                                       plot_names = "tst1", theSpecies = "human", output_directory = "tester", sig_matrix_size = 3000, up_and_downregulated = F, internet = F)
+toOut <- scMappR_and_pathway_analysis(bulk_normalized, odds_ratio_in, bulk_DE_cors, case_grep = case_grep,
+                                      control_grep = control_grep, rda_path = "", max_proportion_change = 10, print_plots = T, 
+                                       plot_names = "tst1", theSpecies = "human", output_directory = "tester",
+                                       sig_matrix_size = 3000, up_and_downregulated = F, internet = F)
 
 }
