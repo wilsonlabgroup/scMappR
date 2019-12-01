@@ -19,8 +19,8 @@ This function checks if your vector is not a character and will then converts it
 
  
  # vector of factors
- fact <- C("1", "2", "3", "4"))
- # convert to character
- num <- toNum(fact)
+fact <- factor(c("1", "2", "3", "4"))
+# convert to numeric
+num <- toNum(fact)
  
 }

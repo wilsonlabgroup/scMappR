@@ -29,6 +29,7 @@
 #' @import stats
 #' @import utils
 #' @import downloader
+#' @import grDevices
 #'
 #' @examples 
 #' \donttest {
@@ -42,10 +43,13 @@
 #' max_proportion_change <- 10
 #' print_plots <- FALSE
 #' theSpecies <- "human"
-#' norm <- deconvolute_and_contextualize(bulk_normalized, odds_ratio_in, bulk_DE_cors, case_grep = case_grep, control_grep = control_grep, max_proportion_change = max_proportion_change, print_plots = print_plots, theSpecies = theSpecies)
+#' norm <- deconvolute_and_contextualize(bulk_normalized, odds_ratio_in, bulk_DE_cors, case_grep = case_grep,
+#'                                       control_grep = control_grep, max_proportion_change = max_proportion_change,
+#'                                       print_plots = print_plots, theSpecies = theSpecies)
 #' background = rownames(bulk_normalized)
 #' dir.create("test_path")
-#' pathway_enrich_internal(bulk_DE_cors, "human", norm$scMappR_transformed_values, background, "test_path", "test_figs", toSave = TRUE)
+#' pathway_enrich_internal(bulk_DE_cors, "human", norm$scMappR_transformed_values,
+#'                         background, "test_path", "test_figs", toSave = TRUE)
 #' 
 #' }
 NULL
@@ -82,16 +86,16 @@ pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_g
   save(ordered_back_all, file = paste0(output_directory,"/Bulk_pathway_enrichment.RData"))
   save(ordered_back_all_tf, file = paste0(output_directory,"/Bulk_TF_enrichment.RData"))
   #plotting paths
-  pdf(file = paste0(output_directory,"/Bulk_pathway_enrichment.pdf"))
+  grDevices::pdf(file = paste0(output_directory,"/Bulk_pathway_enrichment.pdf"))
   bulk_bp <- plotBP(ordered_back_all)
   print(bulk_bp)
-  dev.off()
+  grDevices::dev.off()
   
   #plotting TFs
-  pdf(file = paste0(output_directory,"/Bulk_TF_enrichment.pdf"))
+  grDevices::pdf(file = paste0(output_directory,"/Bulk_TF_enrichment.pdf"))
   bulk_bp <- make_TF_barplot(ordered_back_all_tf, top_tf = 10)
   print(bulk_bp)
-  dev.off()
+  grDevices::dev.off()
 
   
   save(ordered_back_all, file = paste0(output_directory, "/",plot_names,"_bulk_pathways.RData"))
@@ -115,7 +119,7 @@ pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_g
     grDevices::pdf(file = paste0(BP_dir,"/",plot_names,"_",names(biological_pathways)[i],"_BP.pdf"))
     BP <- plotBP(biological_pathways[[i]], top_bp = 10)
     print(BP)
-    dev.off()
+    grDevices::dev.off()
   }
   dir.create(TF_dir)
   for(i in 1:length(transcription_factors)) {
@@ -123,7 +127,7 @@ pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_g
     grDevices::pdf(file = paste0(TF_dir,"/",plot_names,"_",names(transcription_factors)[i],"_TF.pdf"))
     TF  <- make_TF_barplot(transcription_factors[[i]], top_tf = 10)
     print(TF)
-    dev.off()
+    grDevices::dev.off()
   }
   return(list(BPs = biological_pathways, TFs = transcription_factors))
 }

@@ -25,9 +25,10 @@
 #' @import stats
 #' @import utils
 #' @import downloader
+#' @import grDevices
 #'
 #' @examples 
-#' \notrun {
+#' \donttest {
 #' data("Preoptic_Area")
 #'  POA_generes <- POA_example$POA_generes
 #'  POA_OR_signature <- POA_example$POA_OR_signature
@@ -35,8 +36,10 @@
 #' Signature <- as.data.frame(POA_Rank_signature)
 #' rowname <- get_gene_symbol(Signature)
 #' rownames(Signature) <- rowname$rowname
-#' BP <- gProfileR::gprofiler(rowname$rowname, "mmusculus", src_filter = c("GO:BP", "KEGG", "REAC"), max_set_size = 2000, exclude_iea = T)
-#' TF <- gProfileR::gprofiler(rowname$rowname, "mmusculus", src_filter = c("TF"), max_set_size = 5000, exclude_iea = T)
+#' BP <- gProfileR::gprofiler(rowname$rowname, "mmusculus", src_filter = c("GO:BP", "KEGG", "REAC"), 
+#'                            max_set_size = 2000, exclude_iea = T)
+#' TF <- gProfileR::gprofiler(rowname$rowname, "mmusculus", src_filter = c("TF"),
+#'                           max_set_size = 5000, exclude_iea = T)
 #' bp <- plotBP(BP)
 #' tf <- make_TF_barplot(TF)
 #' 
@@ -59,7 +62,8 @@ plotBP <- function(ordered_back_all, top_bp = 10) {
   if(nrow(ordered_back_all) > top_bp) {
     ordered_back_all <- ordered_back_all[1:top_bp,]
   }
-  
+  term.name <- ordered_back_all$term.name
+  log10 <- ordered_back_all$log10
   # Plot the barplot and set the size of the text of each pathway to fit 
   g <- ggplot2::ggplot(ordered_back_all, ggplot2::aes(x = stats::reorder(term.name, log10), y = log10)) + ggplot2::geom_bar(stat = "identity", fill = "turquoise") + ggplot2::coord_flip() +  ggplot2::labs(y = "-log10(Padj)", x = "Gene Ontology") 
   y <- g + ggplot2::theme(axis.text.x = ggplot2::element_text(face=NULL, color="black", 

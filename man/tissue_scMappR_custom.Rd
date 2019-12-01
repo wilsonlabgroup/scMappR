@@ -33,21 +33,15 @@ it generates a heatmap of the signature matrixand your inputted gene list as wel
 co-celltype enrichment.
 }
 \examples{
-\\notrun {
+
 
 # load in signature matrices
-load("data/Preoptic_region_example.rda")
+data(Preoptic_Area)
 POA_generes <- POA_example$POA_generes
 POA_OR_signature <- POA_example$POA_OR_signature
 POA_Rank_signature <- POA_example$POA_Rank_signature
-# data(Preoptic_region_example)
 Signature <- POA_Rank_signature
- rowname <- get_gene_symbol(Signature)
- rownames(Signature) <- rowname$rowname
- genes <- rownames(Signature)[1:200]
+genes <- rownames(Signature)[1:60]
+heatmap_test <- tissue_scMappR_custom( genes, signature_matrix = Signature,output_directory =  "scMappR_test", toSave = F)
  
- # Assuming Signature_matrices_pVal.rda is in you "~/Documents/scMappR/data" directory
- # rda_path1 = "~/Documents/scMappR/data"
- internal <- tissue_scMappR_custom(genes,Signature,output_directory = "scMappR_Test_custom")
- }
 }

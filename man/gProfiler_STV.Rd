@@ -26,9 +26,9 @@ This function takes a matrix of scMappR_Transformed_Values and a species (Human,
 Before completing pathway analysis with g:ProfileR. Enriched pathways are stored in a list and returned.
 }
 \examples{
-\\notrun {
+\donttest {
 
-load("~/scMappR/data/PBMC_scMappR_and_pathway_analysis_example.rda")
+data(PBMC_scMappR)
 
 bulk_DE_cors <- PBMC_example$bulk_DE_cors
 bulk_normalized <- PBMC_example$bulk_normalized

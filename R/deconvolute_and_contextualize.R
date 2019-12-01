@@ -51,6 +51,7 @@
 #' @import utils
 #' @import downloader
 #' @import pcaMethods
+#' @import grDevices
 #'
 #' @examples 
 #' 
@@ -63,8 +64,10 @@
 #' max_proportion_change <- 10
 #' print_plots <- FALSE
 #' theSpecies <- "human"
-#' norm <- deconvolute_and_contextualize(bulk_normalized, odds_ratio_in, bulk_DE_cors, case_grep = case_grep, control_grep = control_grep,
-#'                                      max_proportion_change = max_proportion_change, print_plots = print_plots, theSpecies = theSpecies, toSave = F)
+#' norm <- deconvolute_and_contextualize(bulk_normalized, odds_ratio_in, bulk_DE_cors,
+#'                                     case_grep = case_grep, control_grep = control_grep,
+#'                                      max_proportion_change = max_proportion_change, print_plots = print_plots, 
+#'                                      theSpecies = theSpecies, toSave = F)
 #'                                      
 NULL
 #' @rdname deconvolute_and_contextualize
@@ -410,20 +413,26 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
       all_stack$proportion <- toNum(all_stack$proportion)
       all_stack$cell_type <- tochr(all_stack$cell_type)
       all_stack$label <- tochr(all_stack$label)
-
-      pdf(paste0("deconvolute_generemove_quantseq_",names,".pdf"))
+      cell_type <- all_stack$cell_type
+      proportion<- all_stack$proportion
+      label <- all_stack$label
+      grDevices::pdf(paste0("deconvolute_generemove_quantseq_",names,".pdf"))
       g <- ggplot2::ggplot(all_stack, ggplot2::aes(factor(cell_type), proportion)) + ggplot2::geom_boxplot()  + ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, hjust = 1, size = 8))
       # generate barplot for every cell-type combined
       plot(g)
-      dev.off()
+      grDevices::dev.off()
       
       for(i in unique(all_stack$cell_type)) {
         cm_one <- all_stack[all_stack$cell_type == i,]
-        pdf(paste0("deconvolute_generemov_quantseq_", i,"_",names,".pdf"))
+        cell_type <- cm_one$cell_type
+        proportion <- cm_one$proportion
+        label <- cm_one$label
         g <- ggplot2::ggplot(cm_one, ggplot2::aes(factor(cell_type), proportion)) + ggplot2::geom_boxplot() + ggplot2::geom_text(ggplot2::aes(label=label),hjust=-0.2) + ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 0, hjust = 1, size = 12))
-        # generate barplot for one cell-type at a time
+        
+        grDevices::pdf(paste0("deconvolute_generemov_quantseq_", i,"_",names,".pdf"))
+                # generate barplot for one cell-type at a time
         plot(g)
-        dev.off()
+        grDevices::dev.off()
         print(i)
       }
       return("Done!")

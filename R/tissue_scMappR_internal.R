@@ -32,6 +32,7 @@
 #' @import stats
 #' @import utils
 #' @import downloader
+#' @import grDevices
 #'
 #' @examples 
 #' \donttest {
@@ -45,7 +46,8 @@
 #' rownames(Signature) <- rowname$rowname
 #' genes <- rownames(Signature)[1:200]
 #' rda_path1 = "~/Documents/scMappR/data"
-#' internal <- tissue_scMappR_internal(genes,"mouse",output_directory = "scMappR_Test", tissue = "hypothalamus",rda_path = rda_path1)
+#' internal <- tissue_scMappR_internal(genes,"mouse", output_directory = "scMappR_Test",
+#'                                     tissue = "hypothalamus",rda_path = rda_path1)
 #' 
 #'  }
 NULL
@@ -68,6 +70,8 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
   # heatmap for signature matrix and matrix intersecting with heatmap
   # RData file containing cell-type preferences
   # tsv files with gene set enrichment for single cell-types and co-enrichment
+  RankValueSignature <- "" # empty for cran
+  OddsRatioSignature <- "" # 
   outDir <- output_directory
   if(cluster == "Pval") {
     clust <- "p_val"

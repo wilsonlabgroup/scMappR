@@ -33,9 +33,9 @@ Internal: Pathway analysis od DEGs and STVs for each cell-type. Returns RData ob
 It is a wrapper for making barplots, bulk pathway analysis, and gProfiler_STV
 }
 \examples{
-\\notrun {
+\donttest {
 
-load("~/scMappR/data/PBMC_scMappR_and_pathway_analysis_example.rda")
+data(PBMC_scMappR)
 bulk_DE_cors <- PBMC_example$bulk_DE_cors
 bulk_normalized <- PBMC_example$bulk_normalized
 odds_ratio_in <- PBMC_example$odds_ratio_in
@@ -47,6 +47,7 @@ theSpecies <- "human"
 norm <- deconvolute_and_contextualize(bulk_normalized, odds_ratio_in, bulk_DE_cors, case_grep = case_grep, control_grep = control_grep, max_proportion_change = max_proportion_change, print_plots = print_plots, theSpecies = theSpecies)
 background = rownames(bulk_normalized)
 dir.create("test_path")
-pathway_enrich_internal(bulk_DE_cors, "human", norm$scMappR_transformed_values, background, "test_path", "test_figs")
+pathway_enrich_internal(bulk_DE_cors, "human", norm$scMappR_transformed_values, background, "test_path", "test_figs", toSave = TRUE)
+
 }
 }

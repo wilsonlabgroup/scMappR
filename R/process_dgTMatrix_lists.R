@@ -34,12 +34,14 @@
 #' @import stats
 #' @import utils
 #' @import downloader
+#' @import grDevices
 #'
 #' @examples 
 #' \donttest{
 #' data(single_cell_process)
 #' toProcess <- list(example = sm)
-#' tst1 <- process_dgTMatrix_lists(toProcess, "testProcess", -9, "eye",rda_path = "~/scMappR/data", TRUE)
+#' tst1 <- process_dgTMatrix_lists(toProcess, "testProcess", -9, 
+#'                                 "eye",rda_path = "~/scMappR/data", TRUE)
 #' }
 NULL
 #' @rdname process_dgTMatrix_lists

@@ -29,6 +29,7 @@
 #' @import stats
 #' @import utils
 #' @import downloader
+#' @import grDevices
 #'
 #' @examples 
 #'  \donttest {
@@ -39,14 +40,15 @@
 #' POA_Rank_signature <- POA_example$POA_Rank_signature
 #' Signature <- POA_Rank_signature
 #' genes <- rownames(Signature)[1:60]
-#' heatmap_test <- tissue_scMappR_custom( genes, signature_matrix = Signature,output_directory =  "scMappR_test", toSave = F)
+#' heatmap_test <- tissue_scMappR_custom( genes, signature_matrix = Signature,
+#' output_directory =  "scMappR_test", toSave = F)
 #' group_preferences <- heatmap_test$group_celltype_preferences
 #' }
 NULL
 #' @rdname coEnrich
 #' @export
 #' 
-coEnrich <- function(sig, gene_list_heatmap, background_heatmap, study_name, outDir = output_directory, toSave = FALSE) {
+coEnrich <- function(sig, gene_list_heatmap, background_heatmap, study_name, outDir, toSave = FALSE) {
   # Internal
   # this function takes significantly enriched cell-types from the single CT enrich before testing to see
   # if the genes driving their enrichment are overlapping

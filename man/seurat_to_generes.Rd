@@ -22,11 +22,9 @@ It then takes the output of the FindMarkers and puts it in a list, returning it.
 \examples{
  
  
-load("~/scMappR/data/cell_process_example.rda")
-#data(cell_process_example)
+data(single_cell_process)
 toProcess <- list(example = sm)
 tst1 <- process_from_count(toProcess, "testProcess")
-cellnames <- gsva_cellIdentify(tst1, "mouse", "brain", "~/scMappR/data")
 generes <- seurat_to_generes(tst1)
 
 }

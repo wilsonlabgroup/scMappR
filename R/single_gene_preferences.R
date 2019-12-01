@@ -32,6 +32,7 @@
 #' @import stats
 #' @import utils
 #' @import downloader
+#' @import grDevices
 #'
 #' @examples 
 #' \donttest {
@@ -43,14 +44,15 @@
 #' POA_Rank_signature <- POA_example$POA_Rank_signature
 #' Signature <- POA_Rank_signature
 #' genes <- rownames(Signature)[1:60]
-#' heatmap_test <- tissue_scMappR_custom( genes, signature_matrix = Signature,output_directory =  "scMappR_test", toSave = F)
+#' heatmap_test <- tissue_scMappR_custom( genes, signature_matrix = Signature,
+#'                                       output_directory =  "scMappR_test", toSave = F)
 #' single_preferences <- heatmap_test$single_celltype_preferences
 #'  }
-NULL
+NUL
 #' @rdname single_gene_preferences
 #' @export
 #' 
-single_gene_preferences <- function(hg_short, hg_full, study_name, outDir = output_directory, toSave = FALSE) {
+single_gene_preferences <- function(hg_short, hg_full, study_name, outDir, toSave = FALSE) {
   
   # Internal function as part of tissue_scMappR_internal()
   # This function takes genes preferentially expressed within your gene list, each cell-type

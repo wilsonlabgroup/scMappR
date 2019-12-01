@@ -25,6 +25,7 @@
 #' @import stats
 #' @import utils
 #' @import downloader
+#' @import grDevices
 #'
 #' @examples 
 #' \donttest {
@@ -35,8 +36,10 @@
 #' Signature <- as.data.frame(POA_Rank_signature)
 #' rowname <- get_gene_symbol(Signature)
 #' rownames(Signature) <- rowname$rowname
-#' BP <- gProfileR::gprofiler(rowname$rowname, "mmusculus", src_filter = c("GO:BP", "KEGG", "REAC"), max_set_size = 2000, exclude_iea = T)
-#' TF <- gProfileR::gprofiler(rowname$rowname, "mmusculus", src_filter = c("TF"), max_set_size = 5000, exclude_iea = T)
+#' BP <- gProfileR::gprofiler(rowname$rowname, "mmusculus", src_filter = c("GO:BP", "KEGG", "REAC"), 
+#'                            max_set_size = 2000, exclude_iea = T)
+#' TF <- gProfileR::gprofiler(rowname$rowname, "mmusculus", src_filter = c("TF"),
+#'                           max_set_size = 5000, exclude_iea = T)
 #' bp <- plotBP(BP)
 #' tf <- make_TF_barplot(TF)
 #'  }
@@ -64,6 +67,8 @@ make_TF_barplot <- function(ordered_back_all_tf, top_tf = 5) {
   }
   ndup_1_10$log10 <- -1*log10(ndup_1_10$p.value) # make ranks
   # ggplot barplot
+  log10 <- ndup_1_10$log10
+  tf <- ndup_1_10$tf
   g <- ggplot2::ggplot(ndup_1_10, ggplot2::aes(x = stats::reorder(tf, log10), y = log10)) + ggplot2::geom_bar(stat = "identity", fill = "mediumpurple") + ggplot2::coord_flip() +  ggplot2::labs(y = "-log10(Padj)", x = "TF Motif") 
   y <- g + ggplot2::theme(axis.text.x = ggplot2::element_text(face=NULL, color="black", 
                                             size=12, angle=35),

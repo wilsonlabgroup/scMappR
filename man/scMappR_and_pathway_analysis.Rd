@@ -60,10 +60,8 @@ Then, if you have WIFI, it will complete g:ProfilR of the reordered STVs as well
 This function is a wrapper for deconvolute_and_contextualize, as well as pathway_enrich_internal.
 }
 \examples{
-\\notrun {
 
-load("~/scMappR/data/PBMC_scMappR_and_pathway_analysis_example.rda")
-# data(PBMC_scMappR_and_pathway_analysis)
+data(PBMC_scMappR)
 bulk_DE_cors <- PBMC_example$bulk_DE_cors
 bulk_normalized <- PBMC_example$bulk_normalized
 odds_ratio_in <- PBMC_example$odds_ratio_in
@@ -74,6 +72,5 @@ print_plots <- FALSE
 theSpecies <- "human"
 toOut <- scMappR_and_pathway_analysis(bulk_normalized, odds_ratio_in, bulk_DE_cors, case_grep = case_grep, control_grep = control_grep, rda_path = "", max_proportion_change = 10, print_plots = T, plot_names = "tst1", theSpecies = "human", output_directory = "tester", sig_matrix_size = 3000, up_and_downregulated = F, internet = F)
 
-}
 
 }

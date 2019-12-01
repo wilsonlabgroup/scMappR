@@ -27,6 +27,7 @@
 #' @import stats
 #' @import utils
 #' @import downloader
+#' @import grDevices
 #'
 #' @examples 
 #' \donttest {
@@ -40,7 +41,8 @@
 #' rowname <- get_gene_symbol(Signature)
 #' rownames(Signature) <- rowname$rowname
 #' genes <- rownames(Signature)[1:100]
-#' enriched <- human_mouse_ct_marker_enrich(gene_lists = genes, theSpecies = "mouse", cell_marker_path = "", naming_preference = "brain")
+#' enriched <- human_mouse_ct_marker_enrich(gene_lists = genes, theSpecies = "mouse", 
+#'                                          cell_marker_path = "", naming_preference = "brain")
 #'  }
 NULL
 #' @rdname human_mouse_ct_marker_enrich
@@ -61,7 +63,9 @@ human_mouse_ct_marker_enrich <- function(gene_lists, theSpecies = "human",cell_m
   # MarkerSets: the gene set enrichment for each cell-type (to see what was the second/third most significant etc)
   # cellTypes: The top cell-type for each marker
   
-
+  gmt_list <- "" # for CRAN dependencies
+  cell_preference_final <- "" # for CRAN dependencies
+  
   topGenes <- gene_lists
   marker_sets <- list()
   

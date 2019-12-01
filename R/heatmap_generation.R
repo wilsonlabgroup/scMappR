@@ -35,6 +35,7 @@
 #' @import stats
 #' @import utils
 #' @import downloader
+#' @import grDevices
 #'
 #' @examples
 #' 
@@ -47,7 +48,8 @@
 #' rowname <- get_gene_symbol(Signature)
 #' rownames(Signature) <- rowname$rowname
 #' genes <- rownames(Signature)[1:100]
-#' heatmap_test <- heatmap_generation(genesIn = genes, "scMappR_test", reference = Signature, which_species = "mouse")
+#' heatmap_test <- heatmap_generation(genesIn = genes, "scMappR_test",
+#'                                    reference = Signature, which_species = "mouse")
 #'
 NULL
 #' @rdname heatmap_generation
@@ -98,11 +100,11 @@ heatmap_generation <- function(genesIn, comp, cex = 0.8, rd_path = "~/scMappR/da
       
       
       
-      thefiles <- list.files(path = rda_path, "bioMart_ortholog_human_mouse.rda")
+      thefiles <- list.files(path = rd_path, "bioMart_ortholog_human_mouse.rda")
       
       
       if(length(thefiles) == 0) {
-        warning(paste0("Cell-marker databases are not present in ", rda_path, " downloading and loading data."))
+        warning(paste0("Cell-marker databases are not present in ", rd_path, " downloading and loading data."))
         #
         datafile <- "bioMart_ortholog_human_mouse.rda"
         metafile <- paste0(datafile)
@@ -113,7 +115,7 @@ heatmap_generation <- function(genesIn, comp, cex = 0.8, rd_path = "~/scMappR/da
         load(destfile)
         #
       } else {
-        load(paste0(rda_path,"/bioMart_ortholog_human_mouse.rda"))
+        load(paste0(rd_path,"/bioMart_ortholog_human_mouse.rda"))
       }
       
       rownames(bioMart_orthologs) <- bioMart_orthologs[,RN_2$species]
@@ -154,9 +156,9 @@ heatmap_generation <- function(genesIn, comp, cex = 0.8, rd_path = "~/scMappR/da
   if(length(whichGenesInter) == 1) { # if only 1 gene is
     print("One input gene is preferentially expressed")
     if(toSave == TRUE) {
-    pdf(paste0(comp,"_barplot.pdf"))
+    grDevices::pdf(paste0(comp,"_barplot.pdf"))
     graphics::barplot(wilcoxon_rank_mat_t[whichGenesInter,], las = 2, main = rownames(wilcoxon_rank_mat_t)[whichGenesInter])
-    dev.off()
+    grDevices::dev.off()
     } else {
       warning("toSave = F and threfore plots are not allowed to be saved. I would reccomend allowing it to be true.")
     }
@@ -167,9 +169,9 @@ heatmap_generation <- function(genesIn, comp, cex = 0.8, rd_path = "~/scMappR/da
     # make the heatmap
     if(toSave == TRUE) {
     myheatcol <- grDevices::colorRampPalette(c("lightblue", "white", "orange"))(256)
-    pdf(paste0(comp,"_heatmap.pdf"))
+    grDevices::pdf(paste0(comp,"_heatmap.pdf"))
     gplots::heatmap.2(wilcoxon_rank_mat_t[whichGenesInter,], Rowv = T, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
-    dev.off()
+    grDevices::dev.off()
     geneHeat <- wilcoxon_rank_mat_t[whichGenesInter,]
     preferences <- extract_genes_cell(geneHeat, cellTypes = cellTypes, val = pVal, isMax = isMax, isPvalue = isPval)
 

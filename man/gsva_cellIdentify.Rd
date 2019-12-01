@@ -4,7 +4,8 @@
 \alias{gsva_cellIdentify}
 \title{Cell-type naming with GSVA}
 \usage{
-gsva_cellIdentify(pbmc, theSpecies, naming_preference, rda_path = "")
+gsva_cellIdentify(pbmc, theSpecies, naming_preference, rda_path = "",
+  toSave = FALSE)
 }
 \arguments{
 \item{pbmc}{Processed seurat object without named cells}
@@ -25,10 +26,9 @@ This function computes the mean expression of every cell-typ before predicting t
 This function inputs a Seurat object and uses the average normalized expression of each gene in each cluster to identify cell-types using the gsva method.
 }
 \examples{
-\\notrun {
+\donttest {
 
-load("~/scMappR/data/cell_process_example.rda")
-#data(cell_process_example)
+data(single_cell_process)
 toProcess <- list(example = sm)
 tst1 <- process_from_count(toProcess, "testProcess")
 cellnames <- gsva_cellIdentify(tst1, "mouse", "brain", "~/scMappR/data")

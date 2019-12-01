@@ -42,9 +42,9 @@ Along the way, it saves the Seurat object (if you choose), cell-type identites f
 Cell-type marker outputs are also saved in the generes.RData list. Names of the generes objects and the signature matrices are kept.
 }
 \examples{
-
-load("~/scMappR/data/cell_process_example.rda")
-# data(cell_process_example)
+\donttest{
+data(single_cell_process)
 toProcess <- list(example = sm)
 tst1 <- process_dgTMatrix_lists(toProcess, "testProcess", -9, "eye",rda_path = "~/scMappR/data", TRUE)
+}
 }

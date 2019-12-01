@@ -29,15 +29,10 @@ This function takes a signature matrix and
 extracts cell-type markers above a p-value or fold-change threshold.
 }
 \examples{
-\\notrun {
-
-# load in signature matrices
-load("~/scMappR/data/Preoptic_region_example.rda")
-# data(Preoptic_region_example)
-Signature <- POA_Rank_signature
- RowName <- get_gene_symbol(Signature)
- rownames(Signature) <-RowName$rowname
- # extract genes with a -log10(Padj > 1)
- Signat <- extract_genes_cell(Signature)
- }
+data(Preoptic_Area)
+Signature <- POA_example$POA_Rank_signature
+RowName <- get_gene_symbol(Signature)
+rownames(Signature) <-RowName$rowname
+# extract genes with a -log10(Padj > 1)
+Signat <- extract_genes_cell(Signature)
 }

@@ -26,6 +26,7 @@
 #' @import stats
 #' @import utils
 #' @import downloader
+#' @import grDevices
 #'
 #' @examples 
 #' \donttest {
@@ -57,7 +58,8 @@ gsva_cellIdentify <- function(pbmc, theSpecies, naming_preference, rda_path = ""
   # panglao
   print(theSpecies)
   thefiles <- list.files(path = rda_path, "_cell_markers.rda")
-
+  gmt_list <- "" # to help with the CRAN warning
+  cell_preference_final <- ""
   if(theSpecies == "human") { # load cell marker database
     if(length(thefiles) == 0) {
       warning(paste0("Cell-marker databases are not present in ", rda_path, " downloading and loading data."))

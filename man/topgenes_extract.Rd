@@ -28,11 +28,10 @@ if you have not used the FindMarkers function, then a list of summary statistics
 fld change designated by avg_logFC and p-val by p_val_adj
 }
 \examples{
-
  
  # load generes object
- load("data/Preoptic_region_example.rda")
- data(Preoptic_region_example)
- topGenes <- topgenes_extract(POA_generes)
+ data(Preoptic_Area)
+ topGenes <- topgenes_extract(POA_example$POA_generes)
+
 
 }

@@ -64,9 +64,8 @@ Then, for every gene, scMappR is applied, the example for upreguatled genes is h
 Once these values are computed, they are returned. If printplots = true, then this function also returns boplots giving the estimated cell-type proportion with each gene removed.
 }
 \examples{
-\\notrun {
-load("~/scMappR/data/PBMC_scMappR_and_pathway_analysis_example.rda")
-#data(PBMC_scMappR)
+
+data(PBMC_scMappR)
 bulk_DE_cors <- PBMC_example$bulk_DE_cors
 bulk_normalized <- PBMC_example$bulk_normalized
 odds_ratio_in <- PBMC_example$odds_ratio_in
@@ -75,8 +74,7 @@ control_grep <- "_male"
 max_proportion_change <- 10
 print_plots <- FALSE
 theSpecies <- "human"
-
 norm <- deconvolute_and_contextualize(bulk_normalized, odds_ratio_in, bulk_DE_cors, case_grep = case_grep, control_grep = control_grep,
-                                     max_proportion_change = max_proportion_change, print_plots = print_plots, theSpecies = theSpecies)
- }
+                                     max_proportion_change = max_proportion_change, print_plots = print_plots, theSpecies = theSpecies, toSave = F)
+                                     
 }

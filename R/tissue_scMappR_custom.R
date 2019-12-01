@@ -30,6 +30,7 @@
 #' @import stats
 #' @import utils
 #' @import downloader
+#' @import grDevices
 #'
 #' @examples 
 #' 
@@ -41,7 +42,8 @@
 #' POA_Rank_signature <- POA_example$POA_Rank_signature
 #' Signature <- POA_Rank_signature
 #' genes <- rownames(Signature)[1:60]
-#' heatmap_test <- tissue_scMappR_custom( genes, signature_matrix = Signature,output_directory =  "scMappR_test", toSave = F)
+#' heatmap_test <- tissue_scMappR_custom( genes, signature_matrix = Signature,
+#'                                       output_directory =  "scMappR_test", toSave = F)
 #'  
 NULL
 #' @rdname tissue_scMappR_custom

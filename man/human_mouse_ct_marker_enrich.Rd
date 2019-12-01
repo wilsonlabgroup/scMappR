@@ -28,23 +28,16 @@ Then, if naming_preference != -9, it will extract the enriched cell-types within
 Generally, this method seems to be biased to cell-types with a greater number of markers.
 }
 \examples{
-\\notrun {
+\donttest {
 
-# load in signature matrices
-load("~/scMappR/data/Preoptic_region_example.rda")
+data(Preoptic_Area)
 POA_generes <- POA_example$POA_generes
 POA_OR_signature <- POA_example$POA_OR_signature
 POA_Rank_signature <- POA_example$POA_Rank_signature
-# data(Preoptic_region_example)
 Signature <- POA_Rank_signature
- rowname <- get_gene_symbol(Signature)
- rownames(Signature) <- rowname$rowname
- genes <- rownames(Signature)[1:100]
- 
- # Assuming mouse_cell_markers.rda is in you "~/scMappR/data" directory
- gmt1 <- "~/scMappR/data/mouse_cell_markers.rda"
- load(gmt1)
- gmt <- gmt_list$gmt_panglao
- enriched <- human_mouse_ct_marker_enrich(gene_lists = genes, theSpecies = "mouse", cell_marker_path = "", naming_preference = "brain")
+rowname <- get_gene_symbol(Signature)
+rownames(Signature) <- rowname$rowname
+genes <- rownames(Signature)[1:100]
+enriched <- human_mouse_ct_marker_enrich(gene_lists = genes, theSpecies = "mouse", cell_marker_path = "", naming_preference = "brain")
  }
 }
