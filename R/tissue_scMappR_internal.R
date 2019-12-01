@@ -35,7 +35,7 @@
 #' @import grDevices
 #'
 #' @examples 
-#' \donttest {
+#' \donttest{
 #' 
 #' data(Preoptic_Area)
 #' POA_generes <- POA_example$POA_generes
