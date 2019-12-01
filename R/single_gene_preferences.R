@@ -48,8 +48,6 @@
 #'                                       output_directory =  "scMappR_test", toSave = F)
 #' single_preferences <- heatmap_test$single_celltype_preferences
 #'  }
-NUL
-#' @rdname single_gene_preferences
 #' @export
 #' 
 single_gene_preferences <- function(hg_short, hg_full, study_name, outDir, toSave = FALSE) {

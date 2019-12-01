@@ -35,9 +35,8 @@
 #' tst1 <- process_from_count(toProcess, "testProcess")
 #' generes <- seurat_to_generes(tst1)
 #' 
-NULL
 #' @export
-#' @rdname seurat_to_generes
+
 
 
 seurat_to_generes <- function(pbmc){

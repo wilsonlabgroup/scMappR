@@ -51,8 +51,6 @@
 #' heatmap_test <- heatmap_generation(genesIn = genes, "scMappR_test",
 #'                                    reference = Signature, which_species = "mouse")
 #'
-NULL
-#' @rdname heatmap_generation
 #' @export
 #' 
 heatmap_generation <- function(genesIn, comp, cex = 0.8, rd_path = "~/scMappR/data", cellTypes = "ALL", pVal = 0.01, isPval=TRUE, isMax =F,  isBackground = F,reference = "C:/Users/Dustin Sokolowski/Desktop/romanov_wilcoxon_test_2.RData",  which_species = "human", toSave = FALSE) {

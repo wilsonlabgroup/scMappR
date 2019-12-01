@@ -38,8 +38,6 @@
 #' 
 #' }
 #'  
-NULL
-#' @rdname gsva_cellIdentify
 #' @export
 #' 
 gsva_cellIdentify <- function(pbmc, theSpecies, naming_preference, rda_path = "", toSave = FALSE) {

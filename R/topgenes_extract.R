@@ -37,8 +37,6 @@
 #'  topGenes <- topgenes_extract(POA_example$POA_generes)
 #' 
 #' 
-NULL
-#' @rdname topgenes_extract
 #' @export
 
 

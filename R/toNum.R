@@ -31,8 +31,6 @@
 #' # convert to numeric
 #' num <- toNum(fact)
 #'  
-NULL
-#' @rdname toNum
 #' @export
 
 toNum <- function(x) {

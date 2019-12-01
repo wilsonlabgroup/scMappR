@@ -37,9 +37,6 @@
 #' toProcess <- list(example = sm)
 #' tst1 <- process_from_count(toProcess, "testProcess")
 #' 
-#' 
-NULL
-#' @rdname process_from_count
 #' @export
 #' 
 process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = FALSE, saveALL = FALSE, panglao_set = F, toSave = FALSE) {

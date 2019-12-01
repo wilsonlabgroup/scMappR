@@ -44,8 +44,6 @@
 #' output_directory =  "scMappR_test", toSave = F)
 #' group_preferences <- heatmap_test$group_celltype_preferences
 #' }
-NULL
-#' @rdname coEnrich
 #' @export
 #' 
 coEnrich <- function(sig, gene_list_heatmap, background_heatmap, study_name, outDir, toSave = FALSE) {

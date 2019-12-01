@@ -52,8 +52,6 @@
 #'                         background, "test_path", "test_figs", toSave = TRUE)
 #' 
 #' }
-NULL
-#' @rdname pathway_enrich_internal
 #' @export
 #' 
 pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_genes, output_directory, plot_names, number_genes, toSave = FALSE) {

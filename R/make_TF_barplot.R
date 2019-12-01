@@ -43,8 +43,6 @@
 #' bp <- plotBP(BP)
 #' tf <- make_TF_barplot(TF)
 #'  }
-NULL
-#' @rdname make_TF_barplot
 #' @export
 #' 
 make_TF_barplot <- function(ordered_back_all_tf, top_tf = 5) {

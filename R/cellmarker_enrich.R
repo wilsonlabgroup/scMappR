@@ -47,8 +47,6 @@
 #' enriched <- cellmarker_enrich(genes, 0.05, gmt = gmt)
 #'  
 #'  
-NULL
-#' @rdname cellmarker_enrich
 #' @export
 #' 
 cellmarker_enrich <- function(gene_list, p_thresh, gmt = "cellmarker_list.Rdata", fixed_length = 13000, min_genes = 5, max_genes = 3000, isect_size = 3) {

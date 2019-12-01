@@ -50,8 +50,6 @@
 #' 
 #'  }
 #'  
-NULL
-#' @rdname gProfiler_STV
 #' @export
 #' 
 

@@ -37,8 +37,6 @@
 #'  POA_generes <- POA_example$POA_generes
 #' signature <- generes_to_heatmap(POA_generes,species = -9, make_names = F)
 #' 
-NULL
-#' @rdname generes_to_heatmap
 #' @export
 
 generes_to_heatmap <- function(generes,  

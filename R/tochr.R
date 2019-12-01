@@ -31,8 +31,6 @@
 #'  # convert to character
 #'  char <- tochr(fact)
 #'  
-NULL
-#' @rdname tochr
 #' @export
 
 tochr <- function(x) {

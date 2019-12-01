@@ -50,8 +50,6 @@
 #'                                     tissue = "hypothalamus",rda_path = rda_path1)
 #' 
 #'  }
-NULL
-#' @rdname tissue_scMappR_internal
 #' @export
 #' 
 tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,rda_path, cluster = "Pval", genecex = 0.01, raw_pval = FALSE, toSave = FALSE) {

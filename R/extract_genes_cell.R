@@ -38,8 +38,6 @@
 #' rownames(Signature) <-RowName$rowname
 #' # extract genes with a -log10(Padj > 1)
 #' Signat <- extract_genes_cell(Signature)
-NULL
-#' @rdname extract_genes_cell
 #' @export
 #' 
 extract_genes_cell <- function(geneHeat, cellTypes = "ALL", val = 1, isMax = F, isPvalue = FALSE) {

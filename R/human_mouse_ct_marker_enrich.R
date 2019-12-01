@@ -44,8 +44,6 @@
 #' enriched <- human_mouse_ct_marker_enrich(gene_lists = genes, theSpecies = "mouse", 
 #'                                          cell_marker_path = "", naming_preference = "brain")
 #'  }
-NULL
-#' @rdname human_mouse_ct_marker_enrich
 #' @export
 #' 
 human_mouse_ct_marker_enrich <- function(gene_lists, theSpecies = "human",cell_marker_path = "~/scMappR/data", naming_preference = -9) {

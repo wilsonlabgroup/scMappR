@@ -43,8 +43,6 @@
 #' tst1 <- process_dgTMatrix_lists(toProcess, "testProcess", -9, 
 #'                                 "eye",rda_path = "~/scMappR/data", TRUE)
 #' }
-NULL
-#' @rdname process_dgTMatrix_lists
 #' @export
 #' 
 
