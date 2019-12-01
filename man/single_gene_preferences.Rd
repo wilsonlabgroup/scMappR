@@ -4,8 +4,8 @@
 \alias{single_gene_preferences}
 \title{Single cell-type gene preferences}
 \usage{
-single_gene_preferences(hg_short, hg_full, study_name,
-  outDir = output_directory, toSave = FALSE)
+single_gene_preferences(hg_short, hg_full, study_name, outDir,
+  toSave = FALSE)
 }
 \arguments{
 \item{hg_short}{A list with two objects: a "preferences" and a "genesIn". preferences is a list of gene symbols over-represented ine ach cell-type and genesIn were all the inputted genes.}
@@ -41,7 +41,8 @@ POA_OR_signature <- POA_example$POA_OR_signature
 POA_Rank_signature <- POA_example$POA_Rank_signature
 Signature <- POA_Rank_signature
 genes <- rownames(Signature)[1:60]
-heatmap_test <- tissue_scMappR_custom( genes, signature_matrix = Signature,output_directory =  "scMappR_test", toSave = F)
+heatmap_test <- tissue_scMappR_custom( genes, signature_matrix = Signature,
+                                      output_directory =  "scMappR_test", toSave = F)
 single_preferences <- heatmap_test$single_celltype_preferences
  }
 }

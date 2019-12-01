@@ -56,6 +56,7 @@ Signature <- POA_Rank_signature
 rowname <- get_gene_symbol(Signature)
 rownames(Signature) <- rowname$rowname
 genes <- rownames(Signature)[1:100]
-heatmap_test <- heatmap_generation(genesIn = genes, "scMappR_test", reference = Signature, which_species = "mouse")
+heatmap_test <- heatmap_generation(genesIn = genes, "scMappR_test",
+                                   reference = Signature, which_species = "mouse")
 
 }

@@ -38,6 +38,7 @@ Signature <- POA_Rank_signature
 rowname <- get_gene_symbol(Signature)
 rownames(Signature) <- rowname$rowname
 genes <- rownames(Signature)[1:100]
-enriched <- human_mouse_ct_marker_enrich(gene_lists = genes, theSpecies = "mouse", cell_marker_path = "", naming_preference = "brain")
+enriched <- human_mouse_ct_marker_enrich(gene_lists = genes, theSpecies = "mouse", 
+                                         cell_marker_path = "", naming_preference = "brain")
  }
 }

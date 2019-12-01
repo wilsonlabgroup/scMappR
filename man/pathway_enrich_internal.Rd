@@ -44,10 +44,13 @@ control_grep <- "_male"
 max_proportion_change <- 10
 print_plots <- FALSE
 theSpecies <- "human"
-norm <- deconvolute_and_contextualize(bulk_normalized, odds_ratio_in, bulk_DE_cors, case_grep = case_grep, control_grep = control_grep, max_proportion_change = max_proportion_change, print_plots = print_plots, theSpecies = theSpecies)
+norm <- deconvolute_and_contextualize(bulk_normalized, odds_ratio_in, bulk_DE_cors, case_grep = case_grep,
+                                      control_grep = control_grep, max_proportion_change = max_proportion_change,
+                                      print_plots = print_plots, theSpecies = theSpecies)
 background = rownames(bulk_normalized)
 dir.create("test_path")
-pathway_enrich_internal(bulk_DE_cors, "human", norm$scMappR_transformed_values, background, "test_path", "test_figs", toSave = TRUE)
+pathway_enrich_internal(bulk_DE_cors, "human", norm$scMappR_transformed_values,
+                        background, "test_path", "test_figs", toSave = TRUE)
 
 }
 }

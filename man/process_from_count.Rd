@@ -38,5 +38,4 @@ data(single_cell_process)
 toProcess <- list(example = sm)
 tst1 <- process_from_count(toProcess, "testProcess")
 
-
 }

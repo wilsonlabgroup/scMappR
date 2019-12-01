@@ -48,7 +48,8 @@ rowname <- get_gene_symbol(Signature)
 rownames(Signature) <- rowname$rowname
 genes <- rownames(Signature)[1:200]
 rda_path1 = "~/Documents/scMappR/data"
-internal <- tissue_scMappR_internal(genes,"mouse",output_directory = "scMappR_Test", tissue = "hypothalamus",rda_path = rda_path1)
+internal <- tissue_scMappR_internal(genes,"mouse", output_directory = "scMappR_Test",
+                                    tissue = "hypothalamus",rda_path = rda_path1)
 
  }
 }
