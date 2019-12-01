@@ -123,7 +123,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   # load required packages
 
   
-  rowVars <- function(x) return(apply(x, 1, var)) # get variance of rows, used later
+  rowVars <- function(x) return(apply(x, 1, S4Vectors::var)) # get variance of rows, used later
   # load in normalized count matrices, signature matrix, and DEGs
   if(class(count_file) == "character") {
     norm_counts_i <- read.table(count_file, header = T, as.is = T, sep = "\t")
