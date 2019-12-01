@@ -32,7 +32,7 @@ This function then returns a table describing the cell-type enrichments (p-value
 of each cell-type
 }
 \examples{
-\donttest {
+\donttest{
 
 # load in signature matrices
 data(Preoptic_Area)

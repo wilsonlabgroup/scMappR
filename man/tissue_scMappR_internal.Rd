@@ -37,7 +37,7 @@ it then completes cell-type enrichment of each individual cell-type, then, if mo
 of those cell-types.
 }
 \examples{
-\donttest {
+\donttest{
 
 data(Preoptic_Area)
 POA_generes <- POA_example$POA_generes
