@@ -28,7 +28,7 @@
 #' @import grDevices
 #'
 #' @examples 
-#' \donttest {
+#' \donttest{
 #' data("Preoptic_Area")
 #'  POA_generes <- POA_example$POA_generes
 #'  POA_OR_signature <- POA_example$POA_OR_signature

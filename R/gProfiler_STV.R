@@ -29,7 +29,7 @@
 #' @import grDevices
 #'
 #' @examples 
-#' \donttest {
+#' \donttest{
 #' 
 #' data(PBMC_scMappR)
 #' 
@@ -42,9 +42,12 @@
 #' max_proportion_change <- 10
 #' print_plots <- FALSE
 #' theSpecies <- "human"
-#' norm <- deconvolute_and_contextualize(bulk_normalized, odds_ratio_in, bulk_DE_cors, case_grep = case_grep, 
-#'                                       control_grep = control_grep, max_proportion_change = max_proportion_change,
-#'                                        print_plots = print_plots, theSpecies = theSpecies)
+#' norm <- deconvolute_and_contextualize(bulk_normalized, odds_ratio_in,
+#'                                       bulk_DE_cors, case_grep = case_grep, 
+#'                                       control_grep = control_grep,
+#'                                        max_proportion_change = max_proportion_change,
+#'                                        print_plots = print_plots,
+#'                                        theSpecies = theSpecies)
 #' background = rownames(bulk_normalized)
 #' STVs <- gProfiler_STV(norm$scMappR_transformed_values, theSpecies, background)
 #' 

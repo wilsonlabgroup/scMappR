@@ -29,7 +29,7 @@
 #' @import grDevices
 #'
 #' @examples 
-#' \donttest {
+#' \donttest{
 #' 
 #' data(single_cell_process)
 #' toProcess <- list(example = sm)
