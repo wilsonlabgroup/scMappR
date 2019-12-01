@@ -36,11 +36,11 @@
 #' @import downloader
 #'
 #' @examples 
-#' 
-#' load("~/scMappR/data/cell_process_example.rda")
-#' # data(cell_process_example)
+#' \donttest{
+#' data(single_cell_process)
 #' toProcess <- list(example = sm)
 #' tst1 <- process_dgTMatrix_lists(toProcess, "testProcess", -9, "eye",rda_path = "~/scMappR/data", TRUE)
+#' }
 NULL
 #' @rdname process_dgTMatrix_lists
 #' @export

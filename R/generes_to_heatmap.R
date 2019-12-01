@@ -32,13 +32,10 @@
 #' @examples
 #'  
 #'  
-#'  # load generes object
-#' load("~/scMappR/data/Preoptic_region_example.rda")
-#' #data(Preoptic_region_example)
+#' data(Preoptic_Area)
 #'  POA_generes <- POA_example$POA_generes
-#'  POA_OR_signature <- POA_example$POA_OR_signature
-#'  POA_Rank_signature <- POA_example$POA_Rank_signature
 #' signature <- generes_to_heatmap(POA_generes,species = -9, make_names = F)
+#' 
 NULL
 #' @rdname generes_to_heatmap
 #' @export
@@ -65,6 +62,7 @@ generes_to_heatmap <- function(generes,
   if(species == -9) {
     # if it's internal and symbols and ENSBML are attached
     for(i in 1:length(generes)) {
+      generes[[i]] <- generes[[i]][complete.cases(generes[[i]]),]
       names1 <- get_gene_symbol(generes[[i]])
       rownames(generes[[i]]) <- names1$rowname
     }

@@ -39,17 +39,16 @@
 #' @examples
 #' 
 #' # load in signature matrices
-#' load("~/scMappR/data/Preoptic_region_example.rda")
+#' data(Preoptic_Area)
 #' POA_generes <- POA_example$POA_generes
 #' POA_OR_signature <- POA_example$POA_OR_signature
 #' POA_Rank_signature <- POA_example$POA_Rank_signature
-#' # data(Preoptic_region_example)
 #' Signature <- POA_Rank_signature
-#'  rowname <- get_gene_symbol(Signature)
-#'  rownames(Signature) <- rowname$rowname
-#'  genes <- rownames(Signature)[1:100]
-#'  heatmap_test <- heatmap_generation(genesIn = genes, "scMappR_test", reference = Signature, which_species = "mouse")
-#'  
+#' rowname <- get_gene_symbol(Signature)
+#' rownames(Signature) <- rowname$rowname
+#' genes <- rownames(Signature)[1:100]
+#' heatmap_test <- heatmap_generation(genesIn = genes, "scMappR_test", reference = Signature, which_species = "mouse")
+#'
 NULL
 #' @rdname heatmap_generation
 #' @export

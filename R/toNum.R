@@ -26,9 +26,9 @@
 #' 
 #'  
 #'  # vector of factors
-#'  fact <- C("1", "2", "3", "4"))
-#'  # convert to character
-#'  num <- toNum(fact)
+#' fact <- factor(c("1", "2", "3", "4"))
+#' # convert to numeric
+#' num <- toNum(fact)
 #'  
 NULL
 #' @rdname toNum

@@ -34,18 +34,18 @@
 #' @import downloader
 #'
 #' @examples 
-#' 
+#' \donttest {
 #' 
 #' # load in signature matrices
-#'  load("data/Preoptic_region_example.rda")
-#'  POA_generes <- POA_example$POA_generes
-#'  POA_OR_signature <- POA_example$POA_OR_signature
-#'  POA_Rank_signature <- POA_example$POA_Rank_signature
-#' # data(Preoptic_region_example)
-#'  Signature <- POA_Rank_signature
-#'  genes <- rownames(Signature)[1:200]
-#'  heatmap_test <- tissue_scMappR_custom( genes, signature_matrix = Signature,output_directory =  "scMappR_test")
-#'  
+#' data(Preoptic_Area)
+#' POA_generes <- POA_example$POA_generes
+#' POA_OR_signature <- POA_example$POA_OR_signature
+#' POA_Rank_signature <- POA_example$POA_Rank_signature
+#' Signature <- POA_Rank_signature
+#' genes <- rownames(Signature)[1:60]
+#' heatmap_test <- tissue_scMappR_custom( genes, signature_matrix = Signature,output_directory =  "scMappR_test", toSave = F)
+#' single_preferences <- heatmap_test$single_celltype_preferences
+#'  }
 NULL
 #' @rdname single_gene_preferences
 #' @export

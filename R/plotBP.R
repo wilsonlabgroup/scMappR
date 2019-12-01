@@ -28,20 +28,18 @@
 #'
 #' @examples 
 #' \notrun {
-#' # load in signature matrices
-#' load("~/scMappR/data/Preoptic_region_example.rda")
+#' data("Preoptic_Area")
 #'  POA_generes <- POA_example$POA_generes
 #'  POA_OR_signature <- POA_example$POA_OR_signature
 #'  POA_Rank_signature <- POA_example$POA_Rank_signature
-#' # data(Preoptic_region_example)
 #' Signature <- as.data.frame(POA_Rank_signature)
 #' rowname <- get_gene_symbol(Signature)
 #' rownames(Signature) <- rowname$rowname
-#' genes <- rownames(Signature)[Signature$` Enteroendocrine cell_and_Neuroendocrine cells_17` > 1]
-#' BP <- gProfileR::gprofiler(genes, "mmusculus", src_filter = c("GO:BP", "KEGG", "REAC"), max_set_size = 2000, exclude_iea = T)
-#' TF <- gProfileR::gprofiler(genes, "mmusculus", src_filter = c("TF"), max_set_size = 5000, exclude_iea = T)
+#' BP <- gProfileR::gprofiler(rowname$rowname, "mmusculus", src_filter = c("GO:BP", "KEGG", "REAC"), max_set_size = 2000, exclude_iea = T)
+#' TF <- gProfileR::gprofiler(rowname$rowname, "mmusculus", src_filter = c("TF"), max_set_size = 5000, exclude_iea = T)
 #' bp <- plotBP(BP)
 #' tf <- make_TF_barplot(TF)
+#' 
 #'  }
 NULL
 #' @rdname plotBP

@@ -36,20 +36,17 @@
 #' @examples 
 #' \donttest {
 #' 
-#' # load in signature matrices
-#' load("~/scMappR/data/Preoptic_region_example.rda")
-#'  POA_generes <- POA_example$POA_generes
-#'  POA_OR_signature <- POA_example$POA_OR_signature
-#'  POA_Rank_signature <- POA_example$POA_Rank_signature
-#' 
-#' # data(Preoptic_region_example)
+#' data(Preoptic_Area)
+#' POA_generes <- POA_example$POA_generes
+#' POA_OR_signature <- POA_example$POA_OR_signature
+#' POA_Rank_signature <- POA_example$POA_Rank_signature
 #' Signature <- POA_Rank_signature
-#'  rowname <- get_gene_symbol(Signature)
-#'  rownames(Signature) <- rowname$rowname
-#'  genes <- rownames(Signature)[1:200]
-#'  # Assuming Signature_matrices_pVal.rda is in you "~/Documents/scMappR/data" directory
-#'  # rda_path1 = "~/Documents/scMappR/data"
-#'  internal <- tissue_scMappR_internal(genes,"mouse",output_directory = "scMappR_Test", tissue = "hypothalamus",rda_path = rda_path1)
+#' rowname <- get_gene_symbol(Signature)
+#' rownames(Signature) <- rowname$rowname
+#' genes <- rownames(Signature)[1:200]
+#' rda_path1 = "~/Documents/scMappR/data"
+#' internal <- tissue_scMappR_internal(genes,"mouse",output_directory = "scMappR_Test", tissue = "hypothalamus",rda_path = rda_path1)
+#' 
 #'  }
 NULL
 #' @rdname tissue_scMappR_internal

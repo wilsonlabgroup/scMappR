@@ -32,10 +32,10 @@
 #'
 #' @examples 
 #' 
-#' load("~/scMappR/data/cell_process_example.rda")
-#' #data(cell_process_example)
+#' data(single_cell_process)
 #' toProcess <- list(example = sm)
 #' tst1 <- process_from_count(toProcess, "testProcess")
+#' 
 #' 
 NULL
 #' @rdname process_from_count

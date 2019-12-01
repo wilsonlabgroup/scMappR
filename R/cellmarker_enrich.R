@@ -32,26 +32,19 @@
 #' @import downloader
 #'
 #' @examples 
-#' \donttest {
 #' 
-#' # load in signature matrices
-#' load("~/scMappR/data/Preoptic_region_example.rda")
+#' 
+#' data(Preoptic_Area)
 #' POA_generes <- POA_example$POA_generes
 #' POA_OR_signature <- POA_example$POA_OR_signature
 #' POA_Rank_signature <- POA_example$POA_Rank_signature
-#' # data(Preoptic_region_example)
 #' Signature <- POA_Rank_signature
-#'  rowname <- get_gene_symbol(Signature)
-#'  rownames(Signature) <- rowname$rowname
-#'  genes <- rownames(Signature)[1:100]
+#' rowname <- get_gene_symbol(Signature)
+#' rownames(Signature) <- rowname$rowname
+#' genes <- rownames(Signature)[1:100]
+#' data(gmt_example)
+#' enriched <- cellmarker_enrich(genes, 0.05, gmt = gmt)
 #'  
-#'  # Assuming mouse_cell_markers.rda is in you "~/Documents/scMappR/data" directory
-#'  gmt1 <- "~/scMappR/data/mouse_cell_markers.rda"
-#'  load(gmt1)
-#'  gmt_panglao <- gmt_list$gmt_panglao
-#'  gmt <- gmt_panglao
-#'  enriched <- cellmarker_enrich(genes, 0.05, gmt = gmt)
-#'  }
 #'  
 NULL
 #' @rdname cellmarker_enrich
