@@ -43,6 +43,7 @@
 #' @import downloader
 #' @import pcaMethods
 #' @import grDevices
+#' @import gProfileR
 #'
 #' @examples 
 #' 

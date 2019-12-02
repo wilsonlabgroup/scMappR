@@ -30,6 +30,7 @@
 #' @import utils
 #' @import downloader
 #' @import grDevices
+#' @import gProfileR
 #'
 #' @examples
 #' data(Preoptic_Area)
