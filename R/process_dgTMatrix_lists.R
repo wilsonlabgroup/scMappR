@@ -35,6 +35,7 @@
 #' @import utils
 #' @import downloader
 #' @import grDevices
+#' @import gProfileR
 #'
 #' @examples 
 #' \donttest{
