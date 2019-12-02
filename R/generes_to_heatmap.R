@@ -61,7 +61,7 @@ generes_to_heatmap <- function(generes,
   if(species == -9) {
     # if it's internal and symbols and ENSBML are attached
     for(i in 1:length(generes)) {
-      generes[[i]] <- generes[[i]][complete.cases(generes[[i]]),]
+      generes[[i]] <- generes[[i]][S4Vectors::complete.cases(generes[[i]]),]
       names1 <- get_gene_symbol(generes[[i]])
       rownames(generes[[i]]) <- names1$rowname
     }

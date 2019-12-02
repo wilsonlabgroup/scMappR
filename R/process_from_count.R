@@ -68,7 +68,7 @@ process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = 
   for(f in 1:length(SRA_in)) { # for each count matrix
     
     sm <- SRA_in[[f]]
-    sm <- sm[!duplicated(rownames(sm)),]
+    sm <- sm[!S4Vectors::duplicated(rownames(sm)),]
     ####################################
     ####################################
     

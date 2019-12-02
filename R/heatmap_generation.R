@@ -83,7 +83,7 @@ heatmap_generation <- function(genesIn, comp, cex = 0.8, rd_path = "~/scMappR/da
     if(class(reference) != "character") stop("Error: reference was not in matrix format or name of signature matrix RData file")
     load(reference) 
     
-    wilcoxon_rank_mat_t <- wilcoxon_rank_mat_t[!duplicated(rownames(wilcoxon_rank_mat_t)),]
+    wilcoxon_rank_mat_t <- wilcoxon_rank_mat_t[!S4Vectors::duplicated(rownames(wilcoxon_rank_mat_t)),]
     if(length(grep("-", rownames(wilcoxon_rank_mat_t))) / length(rownames(wilcoxon_rank_mat_t)) > 0.75) {  
       print("Detected signature matrix from scMappR catelogue", quote = F)
       RN_2 <- get_gene_symbol(wilcoxon_rank_mat_t)

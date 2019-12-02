@@ -72,15 +72,15 @@ single_gene_preferences <- function(hg_short, hg_full, study_name, outDir, toSav
   sP <- hg_short$preferences # all of the cell-type markers in the background
   in_length <- length(hg_short$genesIn) # the number of input genes
   inmarker_length <- length(hg_full$genesIn) # the number of background genes
-  uni <- length(unique(c(hg_short$genesIn, hg_full$genesIn)))
+  uni <- length(S4Vectors::unique(c(hg_short$genesIn, hg_full$genesIn)))
   
   pref <- c()
   for(cell in 1:length(sP)) { # for every cell type
-    theGenes <- unique(sP[[cell]]) # take unique markers
+    theGenes <- S4Vectors::unique(sP[[cell]]) # take unique markers
     theGenes_p <- paste0(theGenes,collapse = ",")
-    aa <- length(unique(sP[[cell]])) # cell-type marker in gene list
+    aa <- length(S4Vectors::unique(sP[[cell]])) # cell-type marker in gene list
     ab <- in_length - aa # gene list not cell-type marker
-    ba <- length(unique(fP[[cell]])) # cell-type marker not gene lsit
+    ba <- length(S4Vectors::unique(fP[[cell]])) # cell-type marker not gene lsit
     bb <-  uni - ba # background without that cell-type
     m <- matrix(c(aa, ba, ab, bb), nrow = 2) # fisher's test
     ftest <- stats::fisher.test(m)
@@ -88,7 +88,7 @@ single_gene_preferences <- function(hg_short, hg_full, study_name, outDir, toSav
     OR <- ftest$estimate
     nSP <- names(sP)[cell]
     P <- c(nSP, p, OR, theGenes_p)
-    pref <- rbind(pref, P) # combine the summary statistics
+    pref <- S4Vectors::rbind(pref, P) # combine the summary statistics
   }
   colnames(pref) <- c("cell_type", "p_val", "Odds_Ratio", "genes")
   # build the table and p-adjust 

@@ -54,7 +54,7 @@ seurat_to_generes <- function(pbmc){
   count <-1
   if(class(id) != "try-error") {
     # if it's V2
-    for(i in sort(unique(pbmc@ident))) {
+    for(i in S4Vectors::sort(S4Vectors::unique(pbmc@ident))) {
       
       de_genes <- try(Seurat::FindMarkers(pbmc, ident.1 = i, test.use = "wilcox"))
       if(class(de_genes) == "try-error" | class(de_genes) == "NULL" ) {
@@ -71,7 +71,7 @@ seurat_to_generes <- function(pbmc){
     
     
   }
-  for(i in sort(unique(pbmc@active.ident))) {
+  for(i in S4Vectors::sort(S4Vectors::unique(pbmc@active.ident))) {
     # if object is Seurat V3
     de_genes <- try(Seurat::FindMarkers(pbmc, ident.1 = i, test.use = "wilcox"))
     if(class(de_genes) == "try-error" | class(de_genes) == "NULL" ) {
