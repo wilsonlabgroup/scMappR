@@ -16,9 +16,9 @@ coEnrich(sig, gene_list_heatmap, background_heatmap, study_name, outDir,
 
 \item{study_name}{Name of the outputted table.}
 
-\item{toSave}{Allow scMappR to write files in the current directory (T/F)}
+\item{outDir}{Name of the directory this table will be printed in.}
 
-\item{output_directory}{Name of the directory this table will be printed in.}
+\item{toSave}{Allow scMappR to write files in the current directory (T/F)}
 }
 \value{
 \code{coEnrich} Enrichment of cell-types that are expressed by the same genes, from 2-5 sets of cell-types. \cr

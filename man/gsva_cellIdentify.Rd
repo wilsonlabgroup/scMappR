@@ -8,13 +8,15 @@ gsva_cellIdentify(pbmc, theSpecies, naming_preference, rda_path = "",
   toSave = FALSE)
 }
 \arguments{
-\item{pbmc}{Processed seurat object without named cells}
+\item{pbmc}{Processed seurat object without named cells.}
 
-\item{theSpecies}{"human" or "mouse" -- it will determine which CT marker database to use -- there are some differences}
+\item{theSpecies}{"human" or "mouse" -- it will determine which CT marker database to use -- there are some differences.}
 
 \item{naming_preference}{Once top CT markers are identified, naming_preferences will then extract CT markers within a more appropriate tissue type etc.}
 
 \item{rda_path}{Path to precomputed cell-type gmt files (rda objects).}
+
+\item{toSave}{If scMappR is allowed to write files and directories.}
 }
 \value{
 \code{gsva_cellIdentify} A list containing the top cell-type marker for a cell-type using the panglao dataset as well as the cellMarker dataset. \cr

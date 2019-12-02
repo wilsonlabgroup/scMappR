@@ -14,9 +14,9 @@ single_gene_preferences(hg_short, hg_full, study_name, outDir,
 
 \item{study_name}{name of output table}
 
-\item{toSave}{Allow scMappR to write files in the current directory (T/F)}
+\item{outDir}{directory where table is outputted}
 
-\item{outputDir}{directory where table is outputted}
+\item{toSave}{Allow scMappR to write files in the current directory (T/F)}
 }
 \value{
 \code{single_gene_preferences} A gene-set enrichment table of individual cell-type enrichment. \cr

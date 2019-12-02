@@ -16,7 +16,7 @@
 #' @param hg_short A list with two objects: a "preferences" and a "genesIn". preferences is a list of gene symbols over-represented ine ach cell-type and genesIn were all the inputted genes.
 #' @param hg_full The same as hg_short but fore very gene in the signature matrix.
 #' @param study_name name of output table
-#' @param outputDir directory where table is outputted
+#' @param outDir directory where table is outputted
 #' @param toSave Allow scMappR to write files in the current directory (T/F)
 #'
 #' @return \code{single_gene_preferences} A gene-set enrichment table of individual cell-type enrichment. \cr

@@ -9,6 +9,12 @@ cellmarker_enrich(gene_list, p_thresh, gmt = "cellmarker_list.Rdata",
   isect_size = 3)
 }
 \arguments{
+\item{gene_list}{a character vector of gene symbols with the same designation (e.g. mouse symbol - mouse, human symbol - human) as the gene set database}
+
+\item{p_thresh}{the Fisher's test cutoff for a cell-marker to be enriched.}
+
+\item{gmt}{either a path to an rda file containing an object called "gmt", which is a named list where each element of the list is a vector of gene symbols website for more detail on the file type (https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats). The gmt list may also be inputted.}
+
 \item{fixed_length}{Estimated number of genes in your background.}
 
 \item{min_genes}{Minimum number of genes in the cell-type markers.}
@@ -16,14 +22,6 @@ cellmarker_enrich(gene_list, p_thresh, gmt = "cellmarker_list.Rdata",
 \item{max_genes}{Maximum number of genes in a cell-type marker.}
 
 \item{isect_size}{Number of genes in your list and the cell-type.}
-
-\item{gene_list:}{a character vector of gene symbols with the same designation (e.g. mouse symbol - mouse, human symbol - human) as the gene set database}
-
-\item{p_thresh:}{the Fisher's test cutoff for a cell-marker to be enriched.}
-
-\item{gmt:}{either a path to an rda file containing an object called "gmt", which is a named list where each element of the list is a vector of gene symbols website for more detail on the file type (https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats).}
-
-\item{the}{gmt list may also be inputted.}
 }
 \value{
 \code{cellmarker_enrich} Gene set enrichment of cell-types on your inputted gene list. \cr
@@ -47,7 +45,7 @@ rowname <- get_gene_symbol(Signature)
 rownames(Signature) <- rowname$rowname
 genes <- rownames(Signature)[1:100]
 data(gmt_example)
-enriched <- cellmarker_enrich(genes, 0.05, gmt = gmt)
+enriched <- cellmarker_enrich(gene_list = genes, p_thresh = 0.05, gmt = gmt)
  
  
 }

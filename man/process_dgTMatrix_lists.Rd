@@ -14,19 +14,21 @@ process_dgTMatrix_lists(dgTMatrix_list, name, species_name,
 
 \item{name}{The name of the outputted signature matrices, cell-type preferences, and seurat objects if you choose to save them.}
 
+\item{species_name}{Mouse or human symbols, -9 if internal as panglao objects have gene symbol and ensembl strapped together.}
+
 \item{naming_preference}{For cell-type naming, see if cell-types given the inputted tissues are more likely to be named within one of the categories of get_naming_preference_options().}
 
+\item{rda_path}{If saved, directory to where data from scMappR_data is downloaded.}
+
 \item{panglao_set}{If the inputted matrices are from panglao (i.e. if they're internal).}
+
+\item{haveUMAP}{Save the umaps -- only use if the package is downloaded with pip.}
+
+\item{saveSCObject}{Save the seurat object as an RData object (T/F).}
 
 \item{internal}{Was this used as part of the internal processing of panglao datasets (T/F).}
 
 \item{toSave}{Allow scMappR to write files in the current directory (T/F)}
-
-\item{species}{Mouse or human symbols, -9 if internal as panglao objects have gene symbol and ensembl strapped together.}
-
-\item{have_umap}{Save the umaps -- only use if the package is downloaded with pip.}
-
-\item{saveSCobject}{Save the seurat object as an RData object (T/F).}
 }
 \value{
 \code{process_from_count} A processed & integrated Seurat object that has been scaled and clustered. It can be returned as an internal object or also stored as an RData object if neccesary. \cr

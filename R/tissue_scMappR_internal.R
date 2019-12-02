@@ -17,8 +17,9 @@
 #' @param genecex The size of the gene names of the rows in the heatmap.
 #' @param raw_pval  If the inputed signature matrix are raw (untransformed) Pvalues -- reccomended to generate rank first.
 #' @param rda_path Path to the rda file containing all of the signature matrices.
-#' @param toSave Allow scMappR to write files in the current directory (T/F)
-#'
+#' @param toSave Allow scMappR to write files in the current directory (T/F).
+#' @param output_directory if toSave = TRUE, the name of the output directory that would be built.
+#' 
 #' @return \code{tissue_scMappR_internal} A list containing the entire signature matrix, the matrix subsetted for your genes, enrichment of each cell-type, and co-enrichment. \cr
 #'
 #' @import matrixStats

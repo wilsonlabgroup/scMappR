@@ -8,19 +8,18 @@
 #' @rdname heatmap_generation
 #' @name heatmap_generation
 #'
-#' @param genesIn A list of gene symbols (all caps) to have their cell type enrichment
-#' @param comp The name of the comparison
-#' @param Cex  the size of the genes in the column label for the heatmap
+#' @param genesIn A list of gene symbols (all caps) to have their cell type enrichment.
+#' @param comp The name of the comparison.
+#' @param cex The size of the genes in the column label for the heatmap.
 #' @param rd_path The directory to R data files -- if they are not in this directory, then the files will be downloaded.
-#' @param isMax If you are taking the single best CT marker (T/F) -- TRUE not reccomended
-#' @param isPvalue If the signature matrix is raw p-value (T/F) -- TRUE not reccomended 
-#' @param cellTypes Colnames of the cell-types you will extract (passed to extract_genes_cell)
-#' @param pVal The level of association a gene has within a cell type (passed to extract_genes_cell)
-#' @param isMax only take the top most DEG for each cell-type (T/F) -- TRUE not reccomended
+#' @param isMax If you are taking the single best CT marker (T/F) -- TRUE not reccomended.
+#' @param isPval If the signature matrix is raw p-value (T/F) -- TRUE not reccomended.
+#' @param cellTypes Colnames of the cell-types you will extract (passed to extract_genes_cell).
+#' @param pVal The level of association a gene has within a cell type (passed to extract_genes_cell).
 #' @param isBackground If the heatmap is from the entire signature matrix or just the inputted gene list (T/F). isBackground == TRUE is used for internal.
-#' @param refence Path to signature matrix or the signature matrix itself.
-#' @param which_species Species of gene symbols -- "human" or "mouse" 
-#' @param toSave Allow scMappR to write files in the current directory (T/F)
+#' @param reference Path to signature matrix or the signature matrix itself.
+#' @param which_species Species of gene symbols -- "human" or "mouse" .
+#' @param toSave Allow scMappR to write files in the current directory (T/F).
 #'
 #' @return \code{heatmap_generation} A heatmap/barplot of p-value or odds-ratio of cell-type specific genes intersecting with the gene list. A list of genes that do/don't intersect with the signature matrix as well as a list of which cell-type these over-represented genes live in. \cr
 #'

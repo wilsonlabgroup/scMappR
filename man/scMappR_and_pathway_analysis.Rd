@@ -13,7 +13,7 @@ scMappR_and_pathway_analysis(count_file, signature_matrix, DEG_list,
   number_genes = -9, toSave = FALSE)
 }
 \arguments{
-\item{count_file}{Normalized RNA-seq count matrix where rows are gene symbols and columns are individuals. Either the object tself of the path of a TSV file}
+\item{count_file}{Normalized RNA-seq count matrix where rows are gene symbols and columns are individuals. Either the object tself of the path of a TSV file.}
 
 \item{signature_matrix}{Signature matrix (reccommended odds ratios) of cell-type specificity of genes. Either the object itself or a pathway to an RData file containing an object named "wilcoxon_rank_mat_or" -- generally internal.}
 
@@ -23,13 +23,15 @@ scMappR_and_pathway_analysis(count_file, signature_matrix, DEG_list,
 
 \item{control_grep}{tag in the column name for controls (i.e. samples representing downregulated OR an index of controls.}
 
+\item{rda_path}{If downloaded, path to where data from scMappR_data is stored.}
+
 \item{max_proportion_change}{Maximum cell-type proportion change -- may be useful if there are many rare cell-types.}
 
-\item{print_plots}{Whether boxplots of the estimated CT proportion for the leave-one-out method of CT deconvolution should be printed. The same name of the plots will be completed for top pathways}
+\item{print_plots}{Whether boxplots of the estimated CT proportion for the leave-one-out method of CT deconvolution should be printed. The same name of the plots will be completed for top pathways.}
 
 \item{plot_names}{The prefix of plot pdf files.}
 
-\item{theSpecies}{-9 if using a precomputed count matrix from scMappR, human, mouse, or a specied directly compatible with g:Profiler. Removes ensembl symbols if appended}
+\item{theSpecies}{-9 if using a precomputed count matrix from scMappR, human, mouse, or a specied directly compatible with g:Profiler. Removes ensembl symbols if appended.}
 
 \item{output_directory}{The name of the directory that will contain off of the analysis.}
 
@@ -37,15 +39,15 @@ scMappR_and_pathway_analysis(count_file, signature_matrix, DEG_list,
 
 \item{drop_unkown_celltype}{Whether or not to remove "unknown" cell-types from the signature matrix.}
 
+\item{internet}{Whether you have stable WIFI (T/F).}
+
 \item{up_and_downregulated}{Whether you are additionally splitting up/downregulated genes (T/F).}
 
 \item{gene_label_size}{The size of the gene label on the plot.}
 
-\item{number_genes}{The number of genes to cut-off for pathway analysis (good with many DEGs)}
+\item{number_genes}{The number of genes to cut-off for pathway analysis (good with many DEGs).}
 
-\item{toSave}{Allow scMappR to write files in the current directory (T/F)}
-
-\item{WIFI}{Whether you have stable WIFI (T/F).}
+\item{toSave}{Allow scMappR to write files in the current directory (T/F).}
 }
 \value{
 \code{scMappR_and_pathway_analysis} A directory with: STVs in RData file, Cell Type proportions (RData file), cell-type proportions leave one out (RData file), heatmap of STVs (all), heatmap of STVs (within signature), heatmap of signature (all), heatmap of signature (overlapping with DEG_list), Pathway enrichment for DEG list(all), RData file and Biological Processes, Pathway enrichment of STVs for each cell-type, RData file and biological processes. \cr

@@ -14,7 +14,8 @@
 #' @param theSpecies Gene symbols for human, mouse, or -9 if internal. If your species is not human or mouse gene symbols, make sure that you have "MT-" before your mitochondrial gene names then pick "human".
 #' @param haveUmap Write a UMAP (T/F).
 #' @param saveALL Save the Seurat object generated (T/F).
-#' @param Panglao_set If the function is being used from internal (T/F).
+#' @param panglao_set If the function is being used from internal (T/F).
+#' @param toSave Allows scMappR to print files and make directories locally (T/F).
 #' 
 #' @return \code{process_from_count} A processed & integrated Seurat object that has been scaled and clustered. It can be returned as an internal object or also stored as an RData object if neccesary. \cr
 #'

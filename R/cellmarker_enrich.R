@@ -8,10 +8,9 @@
 #' @rdname cellmarker_enrich
 #' @name cellmarker_enrich
 #'
-#' @param gene_list: a character vector of gene symbols with the same designation (e.g. mouse symbol - mouse, human symbol - human) as the gene set database
-#' @param p_thresh: the Fisher's test cutoff for a cell-marker to be enriched.
-#' @param gmt: either a path to an rda file containing an object called "gmt", which is a named list where each element of the list is a vector of gene symbols website for more detail on the file type (https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats).
-#' @param the gmt list may also be inputted.  
+#' @param gene_list a character vector of gene symbols with the same designation (e.g. mouse symbol - mouse, human symbol - human) as the gene set database
+#' @param p_thresh the Fisher's test cutoff for a cell-marker to be enriched.
+#' @param gmt either a path to an rda file containing an object called "gmt", which is a named list where each element of the list is a vector of gene symbols website for more detail on the file type (https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats). The gmt list may also be inputted.  
 #' @param fixed_length Estimated number of genes in your background.
 #' @param min_genes Minimum number of genes in the cell-type markers.
 #' @param max_genes Maximum number of genes in a cell-type marker.
@@ -45,7 +44,7 @@
 #' rownames(Signature) <- rowname$rowname
 #' genes <- rownames(Signature)[1:100]
 #' data(gmt_example)
-#' enriched <- cellmarker_enrich(genes, 0.05, gmt = gmt)
+#' enriched <- cellmarker_enrich(gene_list = genes, p_thresh = 0.05, gmt = gmt)
 #'  
 #'  
 #' @export

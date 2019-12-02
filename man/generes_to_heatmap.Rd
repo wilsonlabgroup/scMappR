@@ -14,6 +14,8 @@ generes_to_heatmap(generes, species = "human", naming_preference = -9,
 
 \item{naming_preference}{Likely cell-types given tissues (to be passed into human_mouse_ct_marker_enrich)}
 
+\item{rda_path}{Path to output direcotry, if toSave is true}
+
 \item{make_names}{Identify names of cell-type markers using the Fisher's Exact-Test method (T/F).}
 
 \item{internal}{If this function is pre-processing from panglao (T/F).}

@@ -19,7 +19,9 @@ process_from_count(countmat_list, name, theSpecies = -9,
 
 \item{saveALL}{Save the Seurat object generated (T/F).}
 
-\item{Panglao_set}{If the function is being used from internal (T/F).}
+\item{panglao_set}{If the function is being used from internal (T/F).}
+
+\item{toSave}{Allows scMappR to print files and make directories locally (T/F).}
 }
 \value{
 \code{process_from_count} A processed & integrated Seurat object that has been scaled and clustered. It can be returned as an internal object or also stored as an RData object if neccesary. \cr

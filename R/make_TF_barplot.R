@@ -9,7 +9,7 @@
 #' @rdname make_TF_barplot
 #' @name make_TF_barplot
 #'
-#' @param ordered_back_all output of the g:ProfileR function
+#' @param ordered_back_all_tf output of the g:ProfileR function
 #' @param top_tf The number of pathways you want to plot
 #' 
 #' @return \code{make_TF_barplot} A barplot of the number of "top_tf" tf names (not motifs), ranked by -log10(Pfdr). \cr

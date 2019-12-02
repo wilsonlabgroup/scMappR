@@ -17,6 +17,8 @@ deconvolute_and_contextualize(count_file, signature_matrix, DEG_list,
 
 \item{DEG_list}{An object with the first column as gene symbols within the bulk dataset (doesn't have to be in signature matrix), second column is the adjusted P-value, and the third the log2FC. Path to a tsv file containing this info is also acceptable.}
 
+\item{case_grep}{Tag in the column name for cases (i.e. samples representing upregulated) OR an index of cases.}
+
 \item{control_grep}{Tag in the column name for control (i.e. samples representing downregulated) OR an index of cases.}
 
 \item{max_proportion_change}{Maximum cell-type proportion change -- may be useful if there are many rare cell-types.}
@@ -42,8 +44,6 @@ deconvolute_and_contextualize(count_file, signature_matrix, DEG_list,
 \item{ordered_back_all}{output of the g:ProfileR function}
 
 \item{top_bp}{The number of pathways you want to plot}
-
-\item{case_grep.}{Tag in the column name for cases (i.e. samples representing upregulated) OR an index of cases.}
 }
 \value{
 \code{deconvolute_and_contextualize} ScMappR transformed Values for every gene in every cell-type, cell-type composition with, allgenes included, average gene expression of each cell-type usng leave one out approach for each gene, and the processed signature matrix. Optional: boxplots of estimated CT proportions for each gene using a leave-one-out method \cr

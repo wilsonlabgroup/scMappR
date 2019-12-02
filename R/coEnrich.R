@@ -13,7 +13,7 @@
 #' @param gene_list_heatmap Signature matrix of inputted genes in heatmap and the cell-type preferences -- output of heatmap generation.
 #' @param background_heatmap  Signature matrix of background matrix in heatmap and cell-type preferences -- output of heatmap generation.
 #' @param study_name Name of the outputted table.
-#' @param output_directory Name of the directory this table will be printed in.
+#' @param outDir Name of the directory this table will be printed in.
 #' @param toSave Allow scMappR to write files in the current directory (T/F)
 #'
 #' @return \code{coEnrich} Enrichment of cell-types that are expressed by the same genes, from 2-5 sets of cell-types. \cr

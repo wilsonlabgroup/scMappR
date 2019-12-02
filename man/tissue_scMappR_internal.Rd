@@ -13,6 +13,8 @@ tissue_scMappR_internal(gene_list, species, output_directory, tissue,
 
 \item{species}{"mouse", "human" or "-9" if using a precomputed signature matrix.}
 
+\item{output_directory}{if toSave = TRUE, the name of the output directory that would be built.}
+
 \item{tissue}{Name of the tissue in "get_tissues".}
 
 \item{rda_path}{Path to the rda file containing all of the signature matrices.}
@@ -23,7 +25,7 @@ tissue_scMappR_internal(gene_list, species, output_directory, tissue,
 
 \item{raw_pval}{If the inputed signature matrix are raw (untransformed) Pvalues -- reccomended to generate rank first.}
 
-\item{toSave}{Allow scMappR to write files in the current directory (T/F)}
+\item{toSave}{Allow scMappR to write files in the current directory (T/F).}
 }
 \value{
 \code{tissue_scMappR_internal} A list containing the entire signature matrix, the matrix subsetted for your genes, enrichment of each cell-type, and co-enrichment. \cr

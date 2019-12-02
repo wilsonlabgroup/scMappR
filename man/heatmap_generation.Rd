@@ -11,31 +11,29 @@ heatmap_generation(genesIn, comp, cex = 0.8,
   which_species = "human", toSave = FALSE)
 }
 \arguments{
-\item{genesIn}{A list of gene symbols (all caps) to have their cell type enrichment}
+\item{genesIn}{A list of gene symbols (all caps) to have their cell type enrichment.}
 
-\item{comp}{The name of the comparison}
+\item{comp}{The name of the comparison.}
+
+\item{cex}{The size of the genes in the column label for the heatmap.}
 
 \item{rd_path}{The directory to R data files -- if they are not in this directory, then the files will be downloaded.}
 
-\item{cellTypes}{Colnames of the cell-types you will extract (passed to extract_genes_cell)}
+\item{cellTypes}{Colnames of the cell-types you will extract (passed to extract_genes_cell).}
 
-\item{pVal}{The level of association a gene has within a cell type (passed to extract_genes_cell)}
+\item{pVal}{The level of association a gene has within a cell type (passed to extract_genes_cell).}
 
-\item{isMax}{If you are taking the single best CT marker (T/F) -- TRUE not reccomended}
+\item{isPval}{If the signature matrix is raw p-value (T/F) -- TRUE not reccomended.}
+
+\item{isMax}{If you are taking the single best CT marker (T/F) -- TRUE not reccomended.}
 
 \item{isBackground}{If the heatmap is from the entire signature matrix or just the inputted gene list (T/F). isBackground == TRUE is used for internal.}
 
-\item{which_species}{Species of gene symbols -- "human" or "mouse"}
+\item{reference}{Path to signature matrix or the signature matrix itself.}
 
-\item{toSave}{Allow scMappR to write files in the current directory (T/F)}
+\item{which_species}{Species of gene symbols -- "human" or "mouse" .}
 
-\item{Cex}{the size of the genes in the column label for the heatmap}
-
-\item{isPvalue}{If the signature matrix is raw p-value (T/F) -- TRUE not reccomended}
-
-\item{isMax}{only take the top most DEG for each cell-type (T/F) -- TRUE not reccomended}
-
-\item{refence}{Path to signature matrix or the signature matrix itself.}
+\item{toSave}{Allow scMappR to write files in the current directory (T/F).}
 }
 \value{
 \code{heatmap_generation} A heatmap/barplot of p-value or odds-ratio of cell-type specific genes intersecting with the gene list. A list of genes that do/don't intersect with the signature matrix as well as a list of which cell-type these over-represented genes live in. \cr

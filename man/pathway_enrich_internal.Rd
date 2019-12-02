@@ -10,17 +10,19 @@ pathway_enrich_internal(DEGs, theSpecies, scMappR_vals, background_genes,
 \arguments{
 \item{DEGs}{Differentially expressed genes (gene_name, padj, log2fc).}
 
+\item{theSpecies}{Human, mouse, or a charcter that is compatible with gProfileR.}
+
+\item{scMappR_vals}{scMappR Transformed Values of differentially expressed genes.}
+
+\item{background_genes}{A list of background genes to test against.}
+
 \item{output_directory}{Path to the directory where files will be saved.}
 
 \item{plot_names}{Names of output.}
 
-\item{number_genes}{Number of genes to if there are many many DEGs}
+\item{number_genes}{Number of genes to if there are many many DEGs.}
 
-\item{toSave}{Allow scMappR to write files in the current directory (T/F)}
-
-\item{species}{Human, mouse, or a charcter that is compatible with gProfileR.}
-
-\item{background}{A list of background genes to test against.}
+\item{toSave}{Allow scMappR to write files in the current directory (T/F).}
 }
 \value{
 \code{pathway_enrich_internal} Plots and pathway enrichment of bulk DE and STVs. \cr

@@ -12,8 +12,7 @@
 #' @param naming_preference Likely cell-types given tissues (to be passed into human_mouse_ct_marker_enrich)
 #' @param make_names Identify names of cell-type markers using the Fisher's Exact-Test method (T/F).
 #' @param internal If this function is pre-processing from panglao (T/F).
-#' 
-#'  
+#' @param rda_path Path to output direcotry, if toSave is true
 #'
 #' @return \code{generes_to_heatmap} A list containing a signature matrix by rank := -1*log10(Pfdr) and by fold-change (only increasing). Additionally it returns the top (up to) 30 CT markers for each cell-type, as well as the name of each cell-type (from the signature methods method). \cr
 #'
