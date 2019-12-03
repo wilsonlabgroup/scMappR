@@ -72,7 +72,7 @@
 #'                                      
 #' @export
 #' 
-deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list, case_grep, control_grep, max_proportion_change = -9, print_plots=T, plot_names="scMappR",theSpecies = "human", make_scale = F, FC_coef = T, sig_matrix_size = 3000, sig_distort = 1, drop_unkown_celltype = TRUE, toSave = FALSE) {
+deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list, case_grep, control_grep, max_proportion_change = -9, print_plots=T, plot_names="scMappR",theSpecies = "human", make_scale = FALSE, FC_coef = T, sig_matrix_size = 3000, sig_distort = 1, drop_unkown_celltype = TRUE, toSave = FALSE) {
   # This function completes the cell-type contextualization in scMappR -- reranking every DEG based on their fold change, likelihood the gene is in each detected cell type, average cell-type proportion, and ratio of cell-type proportion between case and control.
   # such that if a gene is upregulated, then it is being controlled by control/case, otherwise it is case/control
   # This function expects that the genes within the count file, signature matrix, and DEG_list are have the same logos
@@ -136,7 +136,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
     wilcoxon_rank_mat_or <- signature_matrix
   }
   if(class(DEG_list) == "character") {
-    DEGs <- read.table(DEG_list, header = F, as.is = T, sep = "\t")
+    DEGs <- read.table(DEG_list, header = FALSE, as.is = T, sep = "\t")
   } else {
     DEGs <- as.data.frame(DEG_list)
   }
@@ -196,7 +196,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   if(class(norm_counts_i) == "matrix") norm_counts_i <- as.data.frame(norm_counts_i)
   
   # cell-type deconvolution with all genes included
-  all_genes_in <- DeconRNAseq_CRAN(norm_counts_i, wilcox_or_signature, fig = F)
+  all_genes_in <- DeconRNAseq_CRAN(norm_counts_i, wilcox_or_signature)
   
   proportions <- all_genes_in$out.all
   
@@ -208,7 +208,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   proportions <- proportions[,colMeans(proportions) > 0.001]
   
   print("your bulk data contains the following cell types")
-  print(colnames(proportions), quote = F)
+  print(colnames(proportions), quote = FALSE)
   #convert to correct datatypes for downstream analysis
   wilcox_or <- wilcox_or[,colnames(proportions)]
   wilcox_or_df <- as.data.frame(wilcox_or)
@@ -249,11 +249,11 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
     }
     
     
-    testMine <- DeconRNAseq_CRAN(bulk_rem, signature_rem, fig = F)
+    testMine <- DeconRNAseq_CRAN(bulk_rem, signature_rem)
     
     proportions <- testMine$out.all # get proprotions
     
-    print(x)
+    #print(x)
     return(proportions)
   }
   
@@ -327,7 +327,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   if(length(dup_gene_names) > 0) {
     dup_gene_names <- DEGs$gene_name[dup_gene_names]
     warning("Duplicated gene names:")
-    print(dup_gene_names, quote = F)
+    print(dup_gene_names, quote = FALSE)
     warning("Some gene names are duplicated -- keeping the first duplicate in the list. Check if there should be duplicate gene symbols in your dataset.")
   }
   DEGs <- DEGs[!duplicated(DEGs$gene_name),]
@@ -346,7 +346,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
     # FC_coef: if the STV is based on Fold-Change (reccomended) or Rank
     # Returns:
     # STVs for every cell-type within a single gene.
-    print(gene)
+    #print(gene)
     if(gene %in% rownames(scaled_odds_ratio)) {
       scaled_pref <- scaled_odds_ratio[gene,] # extract gene from signature
     } else {
