@@ -196,7 +196,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   if(class(norm_counts_i) == "matrix") norm_counts_i <- as.data.frame(norm_counts_i)
   
   # cell-type deconvolution with all genes included
-  all_genes_in <- DeconRNASeq::DeconRNASeq(norm_counts_i, wilcox_or_signature, fig = F)
+  all_genes_in <- DeconRNAseq_CRAN(norm_counts_i, wilcox_or_signature, fig = F)
   
   proportions <- all_genes_in$out.all
   
@@ -249,7 +249,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
     }
     
     
-    testMine <- DeconRNASeq::DeconRNASeq(bulk_rem, signature_rem, fig = F)
+    testMine <- DeconRNAseq_CRAN(bulk_rem, signature_rem, fig = F)
     
     proportions <- testMine$out.all # get proprotions
     
