@@ -74,15 +74,15 @@ pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_g
     stop("toSave = FALSE and therefore scMappR is not allowed to print pathways. For this function to work, please set toSave = TRUE")
   }
   
-  print("Reordering DEGs from bulk dataset.", quote = F)
+  print("Reordering DEGs from bulk dataset.", quote = FALSE)
   DEG_Names <- rownames(DEGs)[S4Vectors::order(DEGs$padj)]
   if(theSpecies == "human") species_bulk <- "hsapiens"
   if(theSpecies == "mouse") species_bulk <- "mmusculus"
   
   ### We could theoretically split this into it's own function if we wanted
   # Pathway enrichment 
-  ordered_back_all <- gProfileR::gprofiler(DEG_Names, species_bulk, ordered_query = T, min_set_size = 3, max_set_size = 2000, src_filter = c("GO:BP", "REAC", "KEGG"),custom_bg = background_genes, correction_method = "fdr", min_isect_size = 3, hier_filtering = "moderate")
-  ordered_back_all_tf <- gProfileR::gprofiler(DEG_Names, species_bulk, ordered_query = T, min_set_size = 3, max_set_size = 5000, src_filter = c("TF"),custom_bg = background_genes, correction_method = "fdr", min_isect_size = 3, hier_filtering = "moderate")
+  ordered_back_all <- gProfileR::gprofiler(DEG_Names, species_bulk, ordered_query = TRUE, min_set_size = 3, max_set_size = 2000, src_filter = c("GO:BP", "REAC", "KEGG"),custom_bg = background_genes, correction_method = "fdr", min_isect_size = 3, hier_filtering = "moderate")
+  ordered_back_all_tf <- gProfileR::gprofiler(DEG_Names, species_bulk, ordered_query = TRUE, min_set_size = 3, max_set_size = 5000, src_filter = c("TF"),custom_bg = background_genes, correction_method = "fdr", min_isect_size = 3, hier_filtering = "moderate")
 
   save(ordered_back_all, file = paste0(output_directory,"/Bulk_pathway_enrichment.RData"))
   save(ordered_back_all_tf, file = paste0(output_directory,"/Bulk_TF_enrichment.RData"))
@@ -102,7 +102,7 @@ pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_g
   save(ordered_back_all, file = paste0(output_directory, "/",plot_names,"_bulk_pathways.RData"))
   save(ordered_back_all_tf, file = paste0(output_directory, "/",plot_names,"_bulk_transcription_factors.RData"))
   
-  print("Compelting pathway analysis of STVs.", quote = F)
+  print("Compelting pathway analysis of STVs.", quote = FALSE)
   paths <- gProfiler_STV(scMappR_vals,species =  theSpecies, background = background_genes, gene_cut = number_genes) # re-rodered pathway analysis
   
   biological_pathways <- paths$BP # Biological pathways
@@ -110,7 +110,7 @@ pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_g
   save(biological_pathways, file = paste0(output_directory, "/",plot_names,"_reordered_pathways.RData"))
   save(transcription_factors, file = paste0(output_directory, "/",plot_names,"_reordered_transcription_factors.RData"))
   
-  print("Plotting top 10 biological proccesses and TFs", quote= F)
+  print("Plotting top 10 biological proccesses and TFs", quote= FALSE)
   BP_dir <- paste0(output_directory, "/BP_barplot")
   TF_dir <- paste0(output_directory, "/TF_barplot")
   

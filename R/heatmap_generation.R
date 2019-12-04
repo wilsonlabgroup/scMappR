@@ -53,7 +53,7 @@
 #'
 #' @export
 #' 
-heatmap_generation <- function(genesIn, comp, cex = 0.8, rd_path = "~/scMappR/data", cellTypes = "ALL", pVal = 0.01, isPval=TRUE, isMax =F,  isBackground = F,reference = "C:/Users/Dustin Sokolowski/Desktop/romanov_wilcoxon_test_2.RData",  which_species = "human", toSave = FALSE) {
+heatmap_generation <- function(genesIn, comp, cex = 0.8, rd_path = "~/scMappR/data", cellTypes = "ALL", pVal = 0.01, isPval=TRUE, isMax =F,  isBackground = FALSE,reference = "C:/Users/Dustin Sokolowski/Desktop/romanov_wilcoxon_test_2.RData",  which_species = "human", toSave = FALSE) {
   # This function takes an inputted signature matrix as well as a list of genes and overlaps them. Then, if there is overlap, it prints a heatmap or barplot (depending on the number of overlapping genes)
   # Then, for every cell-type, genes considered over-represented are saved in a list
   
@@ -85,7 +85,7 @@ heatmap_generation <- function(genesIn, comp, cex = 0.8, rd_path = "~/scMappR/da
     
     wilcoxon_rank_mat_t <- wilcoxon_rank_mat_t[!S4Vectors::duplicated(rownames(wilcoxon_rank_mat_t)),]
     if(length(grep("-", rownames(wilcoxon_rank_mat_t))) / length(rownames(wilcoxon_rank_mat_t)) > 0.75) {  
-      print("Detected signature matrix from scMappR catelogue", quote = F)
+      print("Detected signature matrix from scMappR catelogue", quote = FALSE)
       RN_2 <- get_gene_symbol(wilcoxon_rank_mat_t)
       
       rownames(wilcoxon_rank_mat_t) <- RN_2$rowname
@@ -168,7 +168,7 @@ heatmap_generation <- function(genesIn, comp, cex = 0.8, rd_path = "~/scMappR/da
     if(toSave == TRUE) {
     myheatcol <- grDevices::colorRampPalette(c("lightblue", "white", "orange"))(256)
     grDevices::pdf(paste0(comp,"_heatmap.pdf"))
-    gplots::heatmap.2(wilcoxon_rank_mat_t[whichGenesInter,], Rowv = T, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+    gplots::heatmap.2(wilcoxon_rank_mat_t[whichGenesInter,], Rowv = TRUE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
     grDevices::dev.off()
     geneHeat <- wilcoxon_rank_mat_t[whichGenesInter,]
     preferences <- extract_genes_cell(geneHeat, cellTypes = cellTypes, val = pVal, isMax = isMax, isPvalue = isPval)

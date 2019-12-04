@@ -38,9 +38,9 @@
 #' rowname <- get_gene_symbol(Signature)
 #' rownames(Signature) <- rowname$rowname
 #' BP <- gProfileR::gprofiler(rowname$rowname, "mmusculus", src_filter = c("GO:BP", "KEGG", "REAC"), 
-#'                            max_set_size = 2000, exclude_iea = T)
+#'                            max_set_size = 2000, exclude_iea = TRUE)
 #' TF <- gProfileR::gprofiler(rowname$rowname, "mmusculus", src_filter = c("TF"),
-#'                           max_set_size = 5000, exclude_iea = T)
+#'                           max_set_size = 5000, exclude_iea = TRUE)
 #' bp <- plotBP(BP)
 #' tf <- make_TF_barplot(TF)
 #' 

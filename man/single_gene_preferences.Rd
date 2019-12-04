@@ -42,7 +42,7 @@ POA_Rank_signature <- POA_example$POA_Rank_signature
 Signature <- POA_Rank_signature
 genes <- rownames(Signature)[1:60]
 heatmap_test <- tissue_scMappR_custom( genes, signature_matrix = Signature,
-                                      output_directory =  "scMappR_test", toSave = F)
+                                      output_directory =  "scMappR_test", toSave = FALSE)
 single_preferences <- heatmap_test$single_celltype_preferences
  }
 }

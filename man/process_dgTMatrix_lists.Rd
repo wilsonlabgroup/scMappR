@@ -6,7 +6,7 @@
 \usage{
 process_dgTMatrix_lists(dgTMatrix_list, name, species_name,
   naming_preference, rda_path = "", panglao_set = FALSE,
-  haveUMAP = FALSE, saveSCObject = FALSE, internal = F,
+  haveUMAP = FALSE, saveSCObject = FALSE, internal = FALSE,
   toSave = FALSE)
 }
 \arguments{

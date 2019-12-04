@@ -6,7 +6,7 @@
 \usage{
 heatmap_generation(genesIn, comp, cex = 0.8,
   rd_path = "~/scMappR/data", cellTypes = "ALL", pVal = 0.01,
-  isPval = TRUE, isMax = F, isBackground = F,
+  isPval = TRUE, isMax = F, isBackground = FALSE,
   reference = "C:/Users/Dustin Sokolowski/Desktop/romanov_wilcoxon_test_2.RData",
   which_species = "human", toSave = FALSE)
 }

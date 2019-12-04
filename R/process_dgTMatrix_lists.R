@@ -48,7 +48,7 @@
 #' @export
 #' 
 
-process_dgTMatrix_lists <- function(dgTMatrix_list, name, species_name, naming_preference,rda_path="",  panglao_set = FALSE ,haveUMAP = FALSE, saveSCObject = FALSE, internal = F, toSave = FALSE) {
+process_dgTMatrix_lists <- function(dgTMatrix_list, name, species_name, naming_preference,rda_path="",  panglao_set = FALSE ,haveUMAP = FALSE, saveSCObject = FALSE, internal = FALSE, toSave = FALSE) {
   
   # This function is a one line wrapper to process count matrices into a signature matrix
   # It combines process from count, two methods of identifying cell-type identitt (gsva and fisher's test)

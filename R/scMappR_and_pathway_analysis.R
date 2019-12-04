@@ -60,11 +60,11 @@
 #' toOut <- scMappR_and_pathway_analysis(bulk_normalized, odds_ratio_in, 
 #'                                       bulk_DE_cors, case_grep = case_grep,
 #'                                       control_grep = control_grep, rda_path = "", 
-#'                                       max_proportion_change = 10, print_plots = T, 
+#'                                       max_proportion_change = 10, print_plots = TRUE, 
 #'                                        plot_names = "tst1", theSpecies = "human", 
 #'                                        output_directory = "tester",
-#'                                        sig_matrix_size = 3000, up_and_downregulated = F, 
-#'                                        internet = F)
+#'                                        sig_matrix_size = 3000, up_and_downregulated = FALSE, 
+#'                                        internet = FALSE)
 #' 
 #' @export
 #' 
@@ -128,7 +128,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   
   theSpecies <- tolower(theSpecies)
   if(class(count_file) == "character") {
-    norm_counts_i <- read.table(count_file, header = T, as.is = T, sep = "\t")
+    norm_counts_i <- read.table(count_file, header = TRUE, as.is = TRUE, sep = "\t")
   } else {
     norm_counts_i <- count_file
   }
@@ -136,7 +136,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   background_genes <-  rownames(norm_counts_i)  
   # list of differential expression
   if(class(DEG_list) == "character") {
-    DEGs <- read.table(DEG_list, header = F, as.is = T, sep = "\t")
+    DEGs <- read.table(DEG_list, header = FALSE, as.is = TRUE, sep = "\t")
   } else {
     DEGs <- as.data.frame(DEG_list)
   }
@@ -144,8 +144,8 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   colnames(DEGs) <- c("gene_name", "padj", "log2fc")
   rownames(DEGs) <- DEGs$gene_name
   if(class(case_grep) != "character" | length(case_grep) > 1) {
-    print("Assuming that case_grep and control_grep are indeces of 'case' and 'control'.", quote = F)
-    print("Appending 'scMappR_case' to cases and 'scMappR_control to controls.", quote = F  )
+    print("Assuming that case_grep and control_grep are indeces of 'case' and 'control'.", quote = FALSE)
+    print("Appending 'scMappR_case' to cases and 'scMappR_control to controls.", quote = FALSE  )
     colnames(count_file)[case_grep] <- paste0("scMappR_case_", colnames(count_file)[case_grep])
     colnames(count_file)[control_grep] <- paste0("scMappR_control_", colnames(count_file)[control_grep])
     control_grep <- "scMappR_control"
@@ -230,15 +230,15 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   print(paste0("Making scMappR output directory named", output_directory, "."))
   if(toSave == FALSE) {
     warning("toSave == FALSE therefore files cannot be saved. Switching toSave = TRUE is strongly reccomended. Returning STVs and no pathway analysis.")
-    print("toSave == FALSE therefore files cannot be saved. Switching toSave = TRUE is strongly reccomended. Returning STVs and no pathway analysis.", quote = F)
+    print("toSave == FALSE therefore files cannot be saved. Switching toSave = TRUE is strongly reccomended. Returning STVs and no pathway analysis.", quote = FALSE)
     return(STVs)    
   }
   dir.create(output_directory)
   
   scMappR_vals <- STVs$scMappR_transformed_values # scMappR values
   T_test_outs <- STVs$ProportionT.test
-  print("Writing summary of cell-type proportion changes between case and control." , quote = F)
-  write.table(T_test_outs, file = paste0(output_directory, "/", plot_names, "_cell_proportion_changes_summary.tsv"), quote = F, row.names = T, col.names = T, sep = "\t")
+  print("Writing summary of cell-type proportion changes between case and control." , quote = FALSE)
+  write.table(T_test_outs, file = paste0(output_directory, "/", plot_names, "_cell_proportion_changes_summary.tsv"), quote = FALSE, row.names = TRUE, col.names = TRUE, sep = "\t")
   
   print(scMappR_vals)
   save(scMappR_vals, file = paste0(output_directory, "/",plot_names, "_STVs.RData"))
@@ -253,7 +253,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   save(signature_mat, file = paste0(output_directory, "/",plot_names, "_leaveOneOut_gene_proportions.RData"))
   if(nrow(DEG_list) == 1) {
     warning("You only have 1 DEG, no heatmaps can be made. Returning STV")
-    print("You only have 1 DEG, no heatmaps can be made. Returning STV",quote = F)
+    print("You only have 1 DEG, no heatmaps can be made. Returning STV",quote = FALSE)
     return(scMappR_vals)
     }
   myheatcol <- grDevices::colorRampPalette(c("lightblue", "white", "orange"))(256)
@@ -265,37 +265,37 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   scMappR_vals_up <- as.matrix(scMappR_vals[apply(scMappR_vals,1, sum) > 0,])
   scMappR_vals_down <- as.matrix(scMappR_vals[apply(scMappR_vals,1, sum) < 0,])
   grDevices::pdf(paste0(output_directory,"/",plot_names,"_cell_proportions_heatmap.pdf")) 
-  gplots::heatmap.2(as.matrix(STVs$cellType_Proportions), Rowv = T, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+  gplots::heatmap.2(as.matrix(STVs$cellType_Proportions), Rowv = TRUE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
   grDevices::dev.off()
   if(nrow(scMappR_vals_up) > 2 & ncol(scMappR_vals_up) > 2) {
     grDevices::pdf(paste0(output_directory, "/", plot_names,"_STVs_upregulated_DEGs_heatmap.pdf"))
-    gplots::heatmap.2(as.matrix(abs(scMappR_vals_up)), Rowv = T, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+    gplots::heatmap.2(as.matrix(abs(scMappR_vals_up)), Rowv = TRUE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
     grDevices::dev.off()
   } else {
     warning("There were fewer than two upregulated DEGs, therefore a heatmap could not be made.")
-    print("There were fewer than two upregulated DEGs, therefore a heatmap could not be made.", quote = F)
+    print("There were fewer than two upregulated DEGs, therefore a heatmap could not be made.", quote = FALSE)
     
   }
   print(dim(scMappR_vals_down))
   if(nrow(scMappR_vals_down) > 2 & ncol(scMappR_vals_down) > 2) {
   grDevices::pdf(paste0(output_directory, "/", plot_names,"_STVs_downregulated_DEGs_heatmap.pdf"))
-  gplots::heatmap.2(as.matrix(abs(scMappR_vals_down)), Rowv = T, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+  gplots::heatmap.2(as.matrix(abs(scMappR_vals_down)), Rowv = TRUE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
   grDevices::dev.off()
   } else {
     warning("There were fewer than two downregulated DEGs, therefore a heatmap could not be made.")
-    print("There were fewer than two downregulated DEGs, therefore a heatmap could not be made.", quote = F)
+    print("There were fewer than two downregulated DEGs, therefore a heatmap could not be made.", quote = FALSE)
     
   }
   
   grDevices::pdf(paste0(output_directory, "/",plot_names,"_all_CT_markers_in_background.pdf"))
-  gplots::heatmap.2(as.matrix(signature_mat), Rowv = T, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+  gplots::heatmap.2(as.matrix(signature_mat), Rowv = TRUE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
   grDevices::dev.off()
   
   celltype_preferred_degs <- intersect(rownames(scMappR_vals), rownames(signature_matrix)) # intersect DEGs and Genes in signature matrix
   
   if(length(celltype_preferred_degs) < 3) {
     warning("Fewer than 3 genes are both De and in the signature matrix. Therefore, these heatmaps will not be generated. Furthermore, there is insufficient re-ranking of genes for different pathway analyses to be neccesary. Therefore, here, STVs are more representative of a scaling factor for each cell-type.")
-    print("Fewer than 3 genes are both De and in the signature matrix. Therefore, these heatmaps will not be generated. Furthermore, there is insufficient re-ranking of genes for different pathway analyses to be neccesary. Therefore, here, STVs are more representative of a scaling factor for each cell-type.", quote = F)
+    print("Fewer than 3 genes are both De and in the signature matrix. Therefore, these heatmaps will not be generated. Furthermore, there is insufficient re-ranking of genes for different pathway analyses to be neccesary. Therefore, here, STVs are more representative of a scaling factor for each cell-type.", quote = FALSE)
     
     return(list(STVs = STVs))
 
@@ -317,17 +317,17 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     # Upregulated DEG Heatmap
     if(nrow(signature_mat_up) > 2 & ncol(signature_mat_up) > 2) {
     grDevices::pdf(paste0(output_directory, "/",plot_names,"_celltype_specific_preferences_upregulated_DEGs_heatmap.pdf"))
-    pl <- gplots::heatmap.2(as.matrix(signature_mat_up), Rowv = T, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+    pl <- gplots::heatmap.2(as.matrix(signature_mat_up), Rowv = TRUE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
     #print(pl)
     grDevices::dev.off()
     
     
     grDevices::pdf(paste0(output_directory, "/", plot_names,"celltype_specific_STVs_upregulated_heatmap.pdf"))
-    gplots::heatmap.2(as.matrix(scMappR_vals_up1[S4Vectors::rev(colnames(pl$carpet)),pl$colInd]),Colv=F, Rowv = F, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+    gplots::heatmap.2(as.matrix(scMappR_vals_up1[S4Vectors::rev(colnames(pl$carpet)),pl$colInd]),Colv=F, Rowv = FALSE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
     grDevices::dev.off()
     } else {
       warning("There were fewer than two cell-type specific, upregulated DEGs, therefore a heatmap could not be made.")
-      print("There were fewer than two cell-type specific, upregulated DEGs, therefore a heatmap could not be made.", quote = F)
+      print("There were fewer than two cell-type specific, upregulated DEGs, therefore a heatmap could not be made.", quote = FALSE)
       
     }
     
@@ -335,16 +335,16 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     
     if(nrow(signature_mat_down) > 2 & ncol(signature_mat_down) > 2) {
     grDevices::pdf(paste0(output_directory, "/",plot_names,"_celltype_specific_preferences_downregulated_DEGs_heatmap.pdf"))
-    pl2 <- gplots::heatmap.2(as.matrix(signature_mat_down), Rowv = T, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+    pl2 <- gplots::heatmap.2(as.matrix(signature_mat_down), Rowv = TRUE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
     grDevices::dev.off()
     
     
     grDevices::pdf(paste0(output_directory, "/", plot_names,"celltype_specific_STVs_downregulated_heatmap.pdf"))
-    gplots::heatmap.2(as.matrix(abs(scMappR_vals_down1[rev(colnames(pl2$carpet)),pl2$colInd])),Colv=F, Rowv = F, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+    gplots::heatmap.2(as.matrix(abs(scMappR_vals_down1[rev(colnames(pl2$carpet)),pl2$colInd])),Colv=F, Rowv = FALSE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
     grDevices::dev.off()
     }  else {
       warning("There were fewer than two cell-type specific, downregulated DEGs, therefore a heatmap could not be made.")
-      print("There were fewer than two cell-type specific, downregulated DEGs, therefore a heatmap could not be made.", quote = F)
+      print("There were fewer than two cell-type specific, downregulated DEGs, therefore a heatmap could not be made.", quote = FALSE)
       
     }
   }
@@ -354,7 +354,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   }
   up_and_down_together <- pathway_enrich_internal(  DEGs, theSpecies, scMappR_vals, background_genes, output_directory, plot_names, number_genes, toSave=TRUE)
   if(up_and_downregulated == TRUE)  {
-    print("Splitting genes by up- and down-regulated and then repeating analysis", quote = F)
+    print("Splitting genes by up- and down-regulated and then repeating analysis", quote = FALSE)
     rownames(DEGs) <- DEGs$gene_name
     upGenes <- DEGs$gene_name[DEGs$log2fc > 0]
     downGenes <- DEGs$gene_name[DEGs$log2fc < 0]

@@ -4,8 +4,8 @@
 \alias{extract_genes_cell}
 \title{Extract Markers}
 \usage{
-extract_genes_cell(geneHeat, cellTypes = "ALL", val = 1, isMax = F,
-  isPvalue = FALSE)
+extract_genes_cell(geneHeat, cellTypes = "ALL", val = 1,
+  isMax = FALSE, isPvalue = FALSE)
 }
 \arguments{
 \item{geneHeat}{The heatmap of ranks from your scRNA-seq dataset with your genes subsetted}

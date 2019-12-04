@@ -41,7 +41,7 @@
 #' Signat <- extract_genes_cell(Signature)
 #' @export
 #' 
-extract_genes_cell <- function(geneHeat, cellTypes = "ALL", val = 1, isMax = F, isPvalue = FALSE) {
+extract_genes_cell <- function(geneHeat, cellTypes = "ALL", val = 1, isMax = FALSE, isPvalue = FALSE) {
 
 # This function takes a signature matrix and extracts cell-type markers above a p-value or fold-change threshold. 
 

@@ -5,7 +5,7 @@
 \title{Count Matrix To Seurat Object}
 \usage{
 process_from_count(countmat_list, name, theSpecies = -9,
-  haveUmap = FALSE, saveALL = FALSE, panglao_set = F,
+  haveUmap = FALSE, saveALL = FALSE, panglao_set = FALSE,
   toSave = FALSE)
 }
 \arguments{

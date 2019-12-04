@@ -46,7 +46,7 @@
 #' Signature <- POA_Rank_signature
 #' genes <- rownames(Signature)[1:60]
 #' heatmap_test <- tissue_scMappR_custom( genes, signature_matrix = Signature,
-#'                                       output_directory =  "scMappR_test", toSave = F)
+#'                                       output_directory =  "scMappR_test", toSave = FALSE)
 #' single_preferences <- heatmap_test$single_celltype_preferences
 #'  }
 #' @export
@@ -96,7 +96,7 @@ single_gene_preferences <- function(hg_short, hg_full, study_name, outDir, toSav
   pref$p_val <- toNum(pref$p_val)
   pref$pFDR <- stats::p.adjust(pref$p_val, "fdr")
   if(toSave == TRUE) {
-    write.table(pref, file = paste0(outDir, "/",study_name, "cell_co_preferences.tsv"), quote = F, row.names = F, col.names = T, sep = "\t")
+    write.table(pref, file = paste0(outDir, "/",study_name, "cell_co_preferences.tsv"), quote = FALSE, row.names = FALSE, col.names = TRUE, sep = "\t")
   } else {
     warning("You are not allowing scMappR to save files. We strongly reccomend you switch toSave = TRUE")
   }

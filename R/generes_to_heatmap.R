@@ -35,7 +35,7 @@
 #'  
 #' data(Preoptic_Area)
 #'  POA_generes <- POA_example$POA_generes
-#' signature <- generes_to_heatmap(POA_generes,species = -9, make_names = F)
+#' signature <- generes_to_heatmap(POA_generes,species = -9, make_names = FALSE)
 #' 
 #' @export
 

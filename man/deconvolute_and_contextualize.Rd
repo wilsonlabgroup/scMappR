@@ -6,7 +6,7 @@
 \usage{
 deconvolute_and_contextualize(count_file, signature_matrix, DEG_list,
   case_grep, control_grep, max_proportion_change = -9, print_plots = T,
-  plot_names = "scMappR", theSpecies = "human", make_scale = F,
+  plot_names = "scMappR", theSpecies = "human", make_scale = FALSE,
   FC_coef = T, sig_matrix_size = 3000, sig_distort = 1,
   drop_unkown_celltype = TRUE, toSave = FALSE)
 }
@@ -78,6 +78,6 @@ norm <- deconvolute_and_contextualize(bulk_normalized, odds_ratio_in, bulk_DE_co
                                     case_grep = case_grep, control_grep = control_grep,
                                      max_proportion_change = max_proportion_change,
                                       print_plots = print_plots, 
-                                     theSpecies = theSpecies, toSave = F)
+                                     theSpecies = theSpecies, toSave = FALSE)
                                      
 }

@@ -44,7 +44,7 @@
 #' Signature <- POA_Rank_signature
 #' genes <- rownames(Signature)[1:60]
 #' heatmap_test <- tissue_scMappR_custom( genes, signature_matrix = Signature,
-#'                                       output_directory =  "scMappR_test", toSave = F)
+#'                                       output_directory =  "scMappR_test", toSave = FALSE)
 #' @export
 #' 
 tissue_scMappR_custom <- function(gene_list, signature_matrix ,output_directory = "custom_test", toSave = FALSE, gene_cutoff = 1, is_pvalue = TRUE) {
@@ -72,7 +72,7 @@ tissue_scMappR_custom <- function(gene_list, signature_matrix ,output_directory 
     dir.create(outDir)
   } else {
     warning("toSave == FALSE and therefore a directory cannot be made. Switching toSave = TRUE is reccomended.")
-    print("toSave == FALSE and therefore a directory cannot be made. Switching toSave = TRUE is reccomended.", quote = F)
+    print("toSave == FALSE and therefore a directory cannot be made. Switching toSave = TRUE is reccomended.", quote = FALSE)
     
   }
   single_cell_studies <- list()
@@ -92,7 +92,7 @@ tissue_scMappR_custom <- function(gene_list, signature_matrix ,output_directory 
   singleCTpreferences <- single_gene_preferences(gene_list_heatmap, background_heatmap, study_names, outDir = output_directory, toSave = toSave)
   
   if(toSave == TRUE) {
-    write.table(singleCTpreferences, file = paste0(outDir,"/",outDir, "_celltype_preferences.tsv"), quote=F, row.names = F, col.names = T, sep = "\t")
+    write.table(singleCTpreferences, file = paste0(outDir,"/",outDir, "_celltype_preferences.tsv"), quote= FALSE, row.names = FALSE, col.names = TRUE, sep = "\t")
   }
   # cell-type preferences for indidual cell-types
   sig <- singleCTpreferences[singleCTpreferences$pFDR < 0.05,]

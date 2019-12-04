@@ -61,11 +61,11 @@ DeconRNAseq_CRAN <- function (datasets, signatures, proportions = NULL, checksig
     stop(" Missing the known proprotions, please provide a tab-delimited text file containing known fractions for pure tissue/cell types.")
   x.signature <- signatures
   x.data <- datasets
-  if (is.data.frame(x.signature) == F) 
+  if (is.data.frame(x.signature) == FALSE) 
     stop("signature datasets must be a dataframe")
   if (sum(is.na(x.signature)) > 0) 
     stop("signature data cannot have NAs. please exclude or impute missing values.")
-  if (is.data.frame(x.data) == F) 
+  if (is.data.frame(x.data) == FALSE) 
     stop("mixture datasets must be a dataframe")
   if (sum(is.na(x.data)) > 0) 
     stop("mixture data cannot have NAs. please exclude or impute missing values.")

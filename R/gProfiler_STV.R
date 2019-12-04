@@ -70,12 +70,12 @@ gProfiler_STV <- function(STV_matrix, species , background , gene_cut ) {
   
   
   if(species == "human") {
-    print("Assuming species = Human", quote = F)
+    print("Assuming species = Human", quote = FALSE)
     theSpecies <- "hsapiens"
     
   }
   if(species == "mouse") {
-    print("Assuming species = Mouse", quote = F)
+    print("Assuming species = Mouse", quote = FALSE)
     theSpecies <- "mmusculus"
     
     
@@ -96,15 +96,15 @@ gProfiler_STV <- function(STV_matrix, species , background , gene_cut ) {
     
     
     print(paste0("Re-ordering by absolute value of STVs on cell-type ", colnames(STV_matrix)[x]))
-    STV_matrix1 <- STV_matrix[order(abs(STV_matrix[,x]), decreasing = T) ,]
+    STV_matrix1 <- STV_matrix[order(abs(STV_matrix[,x]), decreasing = TRUE) ,]
     
     STV_matrix1 <- rownames(STV_matrix1)[abs(STV_matrix1[,x]) > 1e-10]
     if(cutgenes != -9) {
-      print(paste0("Taking the top ", cutgenes, " genes for pathway analysis."), quote = F)
+      print(paste0("Taking the top ", cutgenes, " genes for pathway analysis."), quote = FALSE)
       STV_matrix1 <- STV_matrix1[1:cutgenes]
     }
-    ordered_back_all <- gProfileR::gprofiler(STV_matrix1, theSpecies1, ordered_query = T, min_set_size = 3, max_set_size = 2000, src_filter = c("GO:BP", "REAC", "KEGG"),custom_bg = background_genes, correction_method = "fdr", min_isect_size = 3, hier_filtering = "moderate")
-    ordered_back_all_tf <- gProfileR::gprofiler(STV_matrix1, theSpecies1, ordered_query = T, min_set_size = 3, max_set_size = 5000, src_filter = c("TF"),custom_bg = background_genes, correction_method = "fdr", min_isect_size = 3, hier_filtering = "moderate")
+    ordered_back_all <- gProfileR::gprofiler(STV_matrix1, theSpecies1, ordered_query = TRUE, min_set_size = 3, max_set_size = 2000, src_filter = c("GO:BP", "REAC", "KEGG"),custom_bg = background_genes, correction_method = "fdr", min_isect_size = 3, hier_filtering = "moderate")
+    ordered_back_all_tf <- gProfileR::gprofiler(STV_matrix1, theSpecies1, ordered_query = TRUE, min_set_size = 3, max_set_size = 5000, src_filter = c("TF"),custom_bg = background_genes, correction_method = "fdr", min_isect_size = 3, hier_filtering = "moderate")
     return(list(BPs = ordered_back_all, TFs = ordered_back_all_tf))
     
   }

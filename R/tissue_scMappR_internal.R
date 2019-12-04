@@ -136,7 +136,7 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
     dir.create(outDir)
   } else {
     warning("toSave == FALSE and therefore a directory cannot be made. Switching toSave = TRUE is reccomended.")
-    print("toSave == FALSE and therefore a directory cannot be made. Switching toSave = TRUE is reccomended.", quote = F)
+    print("toSave == FALSE and therefore a directory cannot be made. Switching toSave = TRUE is reccomended.", quote = FALSE)
     
   }
   single_cell_studies <- list()
@@ -145,7 +145,7 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
     wilcoxon_rank_mat_t <- scMappR_list[[study_names[i]]]
     
     if(length(grep("-", rownames(wilcoxon_rank_mat_t))) / length(rownames(wilcoxon_rank_mat_t)) > 0.75) {  
-      print("Detected signature matrix from scMappR catelogue", quote = F)
+      print("Detected signature matrix from scMappR catelogue", quote = FALSE)
       RN_2 <- get_gene_symbol(wilcoxon_rank_mat_t)
       
       rownames(wilcoxon_rank_mat_t) <- RN_2$rowname
@@ -197,12 +197,12 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
     background_genes <- rownames(study_ref)
     background_heatmap <- heatmap_generation(background_genes, comp = paste0(outDir, "/", study_names[i],"_background"), reference = study_ref, isBackground = TRUE, cex = genecex, which_species = species, isPval = raw_pval, toSave=toSave)  
     # get the heatmap of all of the genes in the signature matrix
-    print("Number of DEGs that are cell-type markers in current signature matrix: ", quote =F)
+    print("Number of DEGs that are cell-type markers in current signature matrix: ", quote = FALSE)
     print(length(intersect(gene_list, rownames(study_ref))))
     theL <- length(intersect(gene_list, rownames(study_ref)))
     if(theL < 3) {
-      print(paste0("Your gene list contains fewer than 3 overlapping genes with ",study_names[i],". Therefore no heatmap was saved and enrichment cannot be done."), quote = F)
-      print(paste0("Subsetted CT marker preferences of these genes are saved in ",paste0(outDir, "/", study_names[i],"_genelist")), quote = F)
+      print(paste0("Your gene list contains fewer than 3 overlapping genes with ",study_names[i],". Therefore no heatmap was saved and enrichment cannot be done."), quote = FALSE)
+      print(paste0("Subsetted CT marker preferences of these genes are saved in ",paste0(outDir, "/", study_names[i],"_genelist")), quote = FALSE)
       print(intersect(gene_list, rownames(study_ref)))
       subsetted_genes <- study_ref[intersect(gene_list, rownames(study_ref)),]
       if(toSave==TRUE) {

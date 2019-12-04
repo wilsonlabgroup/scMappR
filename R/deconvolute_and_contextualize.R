@@ -68,7 +68,7 @@
 #'                                     case_grep = case_grep, control_grep = control_grep,
 #'                                      max_proportion_change = max_proportion_change,
 #'                                       print_plots = print_plots, 
-#'                                      theSpecies = theSpecies, toSave = F)
+#'                                      theSpecies = theSpecies, toSave = FALSE)
 #'                                      
 #' @export
 #' 

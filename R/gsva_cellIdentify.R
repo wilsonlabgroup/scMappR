@@ -120,8 +120,8 @@ gsva_cellIdentify <- function(pbmc, theSpecies, naming_preference, rda_path = ""
   top5_pang <- list()
   top5_cm <- list()
   for(i in 1:ncol(gbm)) {
-    top5_pang[[i]] <-  round(sort(gbm_pang[,i], decreasing = T)[1:5],2)
-    top5_cm[[i]] <- round(sort(gbm_cellmarker[,i], decreasing = T)[1:5],2)
+    top5_pang[[i]] <-  round(sort(gbm_pang[,i], decreasing = TRUE)[1:5],2)
+    top5_cm[[i]] <- round(sort(gbm_cellmarker[,i], decreasing = TRUE)[1:5],2)
   }
   
   if(length(thefiles) == 0) {
