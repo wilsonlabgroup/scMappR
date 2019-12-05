@@ -1,4 +1,4 @@
-#' PBMC_scMappR
+#' @title PBMC_scMappR
 #' 
 #' Data for scMappR_and_pathway_analysis example
 #'

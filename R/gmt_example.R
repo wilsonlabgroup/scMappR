@@ -1,4 +1,4 @@
-#' gmt_example
+#' @title gmt_example
 #' 
 #' Markers of 5 glial cell-types
 #'

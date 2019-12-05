@@ -1,4 +1,4 @@
-#' single_cell_process
+#' @title single_cell_process
 #' 
 #' Example data for processing scRNA-seq count data with Seurat.
 #'

@@ -1,4 +1,4 @@
-#' Preoptic_Area
+#' @title Preoptic_Area
 #' 
 #' Data for tissue_scMappR_custom, tissue_scMappR_internal, generes_to_heatmap
 #'
