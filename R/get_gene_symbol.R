@@ -14,16 +14,18 @@
 #'
 #' @return \code{seurat_to_generes} A list containing the gene-symbols only as well as if the species is mouse or human. \cr
 #'
-#' @import ggplot2
-#' @import gplots
-#' @import graphics
-#' @import Seurat
-#' @import GSVA
-#' @import stats
-#' @import utils
-#' @import downloader
-#' @import grDevices
-#' @import gProfileR
+#' @importFrom ggplot2 ggplot aes geom_boxplot geom_text theme coord_flip labs element_text
+#' @importFrom gplots heatmap.2
+#' @importFrom graphics barplot
+#' @importFrom Seurat AverageExpression CreateSeuratObject PercentageFeatureSet SCTransform SelectIntegrationFeatures PrepSCTIntegration FindIntegrationAnchors IntegrateData DefaultAssay RunPCA RunUMAP FindNeighbors FindClusters ScaleData FindMarkers
+#' @importFrom GSVA gsva
+#' @importFrom stats fisher.test median p.adjust reorder t.test
+#' @importFrom utils combn
+#' @importFrom downloader download
+#' @importFrom grDevices pdf dev.off colorRampPalette
+#' @importFrom gProfileR gprofiler
+#' @importFrom pcaMethods prep pca R2cum
+#' @importFrom limSolve lsei
 #'
 #' @examples
 #'  

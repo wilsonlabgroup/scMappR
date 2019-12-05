@@ -36,17 +36,18 @@
 #' 
 #' @return \code{deconvolute_and_contextualize} ScMappR transformed Values for every gene in every cell-type, cell-type composition with, allgenes included, average gene expression of each cell-type usng leave one out approach for each gene, and the processed signature matrix. Optional: boxplots of estimated CT proportions for each gene using a leave-one-out method \cr
 #' 
-#' @import ggplot2
-#' @import gplots
-#' @import graphics
-#' @import Seurat
-#' @import GSVA
-#' @import stats
-#' @import utils
-#' @import downloader
-#' @import pcaMethods
-#' @import grDevices
-#' @import gProfileR
+#' @importFrom ggplot2 ggplot aes geom_boxplot geom_text theme coord_flip labs element_text
+#' @importFrom gplots heatmap.2
+#' @importFrom graphics barplot
+#' @importFrom Seurat AverageExpression CreateSeuratObject PercentageFeatureSet SCTransform SelectIntegrationFeatures PrepSCTIntegration FindIntegrationAnchors IntegrateData DefaultAssay RunPCA RunUMAP FindNeighbors FindClusters ScaleData FindMarkers
+#' @importFrom GSVA gsva
+#' @importFrom stats fisher.test median p.adjust reorder t.test
+#' @importFrom utils combn
+#' @importFrom downloader download
+#' @importFrom grDevices pdf dev.off colorRampPalette
+#' @importFrom gProfileR gprofiler
+#' @importFrom pcaMethods prep pca R2cum
+#' @importFrom limSolve lsei
 #'
 #' @examples 
 #' 
