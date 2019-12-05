@@ -59,7 +59,7 @@ make_TF_barplot <- function(ordered_back_all_tf, top_tf = 5) {
   tfs <- unlist(lapply(sp, take1))
   tfs <- gsub("Factor:","",gsub("-","", tochr(tfs))) # remove extra text
   ordered_back_all_tf$tf <- tochr(tfs)
-  nodup <- ordered_back_all_tf[!S4Vectors::duplicated(tochr(tfs)),] # keep the most signficant TF motif
+  nodup <- ordered_back_all_tf[!duplicated(tochr(tfs)),] # keep the most signficant TF motif
   ndup_1_10 <- nodup[order(nodup$p.value),]
   if(nrow(ndup_1_10) > top_tf) { # take the top TF numberof factors
     ndup_1_10 <- ndup_1_10[1:top_tf,]

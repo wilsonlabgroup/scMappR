@@ -221,7 +221,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     return(toReturn)
   } 
   stacked <- lapply(1:ncol(STVs$cellType_Proportions), ttest_decon)
-  proportion_T <- S4Vectors::do.call("rbind",stacked) # t test of proportions of each cell-type and staack
+  proportion_T <- do.call("rbind",stacked) # t test of proportions of each cell-type and staack
   rownames(proportion_T) <- colnames(STVs$cellType_Proportions)
   colnames(proportion_T) <- c("P.Value", "T.Statistic", "CaseMean", "ControlMean")
   
@@ -323,7 +323,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     
     
     grDevices::pdf(paste0(output_directory, "/", plot_names,"celltype_specific_STVs_upregulated_heatmap.pdf"))
-    gplots::heatmap.2(as.matrix(scMappR_vals_up1[S4Vectors::rev(colnames(pl$carpet)),pl$colInd]),Colv=F, Rowv = FALSE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+    gplots::heatmap.2(as.matrix(scMappR_vals_up1[rev(colnames(pl$carpet)),pl$colInd]),Colv=F, Rowv = FALSE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
     grDevices::dev.off()
     } else {
       warning("There were fewer than two cell-type specific, upregulated DEGs, therefore a heatmap could not be made.")

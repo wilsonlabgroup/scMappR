@@ -236,7 +236,7 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
       single_cell_studies[[i]] <- output 
       next
     }
-    sig <- sig[S4Vectors::order(sig$pFDR),]
+    sig <- sig[order(sig$pFDR),]
     coCTpreferences <- coEnrich(sig, gene_list_heatmap, background_heatmap, study_names[i], outDir = output_directory, toSave = toSave)
     # complete co-enrichment of up to 5 cell-types
     output <- list(background_heatmap = background_heatmap, gene_list_heatmap = gene_list_heatmap, single_celltype_preferences = singleCTpreferences, group_celtype_preference = coCTpreferences)

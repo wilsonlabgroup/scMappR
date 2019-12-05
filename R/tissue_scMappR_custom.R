@@ -107,7 +107,7 @@ tissue_scMappR_custom <- function(gene_list, signature_matrix ,output_directory 
     single_cell_studies <- output 
     
   } else {
-    sig <- sig[S4Vectors::order(sig$pFDR),]
+    sig <- sig[order(sig$pFDR),]
     
     coCTpreferences <- coEnrich(sig, gene_list_heatmap, background_heatmap, study_names[i], outDir = output_directory, toSave = toSave)
     # test to see if the same genes are responsible for the enrichment of multiple cell-types

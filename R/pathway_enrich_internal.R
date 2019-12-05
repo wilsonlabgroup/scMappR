@@ -75,7 +75,7 @@ pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_g
   }
   
   print("Reordering DEGs from bulk dataset.", quote = FALSE)
-  DEG_Names <- rownames(DEGs)[S4Vectors::order(DEGs$padj)]
+  DEG_Names <- rownames(DEGs)[order(DEGs$padj)]
   if(theSpecies == "human") species_bulk <- "hsapiens"
   if(theSpecies == "mouse") species_bulk <- "mmusculus"
   
