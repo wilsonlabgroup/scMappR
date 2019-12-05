@@ -11,6 +11,8 @@ DeconRNAseq_CRAN(datasets, signatures, proportions = NULL,
 \arguments{
 \item{datasets}{normalized RNA-seq dataset}
 
+\item{signatures}{signature matrix of odds ratios}
+
 \item{proportions}{if cell-type proportion is already inputted - always NULL for scMappR}
 
 \item{checksig}{check to see if plotting is significant - always false for scMappR}
@@ -20,8 +22,6 @@ DeconRNAseq_CRAN(datasets, signatures, proportions = NULL,
 \item{use.scale}{Scale and center value - always TRUE for scMappR}
 
 \item{fig}{Make figures - always FALSE for scMappR}
-
-\item{Signatures}{signature matrix of odds ratios}
 }
 \value{
 \code{DeconRNAseq_CRAN} Estimated cell-type proportions with DeconRNAse \cr

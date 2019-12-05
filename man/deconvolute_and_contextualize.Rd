@@ -40,10 +40,6 @@ deconvolute_and_contextualize(count_file, signature_matrix, DEG_list,
 \item{drop_unkown_celltype}{Whether or not to remove "unknown" cell-types from the signature matrix.}
 
 \item{toSave}{Allow scMappR to write files in the current directory (T/F)}
-
-\item{ordered_back_all}{output of the g:ProfileR function}
-
-\item{top_bp}{The number of pathways you want to plot}
 }
 \value{
 \code{deconvolute_and_contextualize} ScMappR transformed Values for every gene in every cell-type, cell-type composition with, allgenes included, average gene expression of each cell-type usng leave one out approach for each gene, and the processed signature matrix. Optional: boxplots of estimated CT proportions for each gene using a leave-one-out method \cr
