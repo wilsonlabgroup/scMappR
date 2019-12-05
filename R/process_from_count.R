@@ -19,9 +19,6 @@
 #' 
 #' @return \code{process_from_count} A processed & integrated Seurat object that has been scaled and clustered. It can be returned as an internal object or also stored as an RData object if neccesary. \cr
 #'
-#' @import matrixStats
-#' @import DeconRNASeq
-#' @import S4Vectors
 #' @import ggplot2
 #' @import gplots
 #' @import graphics

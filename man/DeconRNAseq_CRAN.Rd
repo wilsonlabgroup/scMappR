@@ -4,9 +4,15 @@
 \alias{DeconRNAseq_CRAN}
 \title{DeconRNASeq CRAN compatible}
 \usage{
-DeconRNAseq_CRAN(datasets, signatures, proportions = NULL,
-  checksig = FALSE, known.prop = FALSE, use.scale = TRUE,
-  fig = FALSE)
+DeconRNAseq_CRAN(
+  datasets,
+  signatures,
+  proportions = NULL,
+  checksig = FALSE,
+  known.prop = FALSE,
+  use.scale = TRUE,
+  fig = FALSE
+)
 }
 \arguments{
 \item{datasets}{normalized RNA-seq dataset}

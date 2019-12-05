@@ -18,9 +18,6 @@
 #'
 #' @return \code{cellmarker_enrich} Gene set enrichment of cell-types on your inputted gene list. \cr
 #'
-#' @import matrixStats
-#' @import DeconRNASeq
-#' @import S4Vectors
 #' @import ggplot2
 #' @import gplots
 #' @import graphics

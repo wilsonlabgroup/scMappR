@@ -21,9 +21,6 @@
 #'
 #' @return \code{single_gene_preferences} A gene-set enrichment table of individual cell-type enrichment. \cr
 #'
-#' @import matrixStats
-#' @import DeconRNASeq
-#' @import S4Vectors
 #' @import ggplot2
 #' @import gplots
 #' @import graphics

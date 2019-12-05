@@ -19,9 +19,6 @@
 #' 
 #' @return \code{pathway_enrich_internal} Plots and pathway enrichment of bulk DE and STVs. \cr
 #' 
-#' @import matrixStats
-#' @import DeconRNASeq
-#' @import S4Vectors
 #' @import ggplot2
 #' @import gplots
 #' @import graphics

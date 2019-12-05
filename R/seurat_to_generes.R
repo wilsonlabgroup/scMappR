@@ -14,9 +14,6 @@
 #'
 #' @return \code{seurat_to_generes} A list of genes where their over-representation in the i'th cell-type is computed. Each element contains the gene name, adjusted p-value, and the log2FC of each gene being present in that cell-type. \cr
 #'
-#' @import matrixStats
-#' @import DeconRNASeq
-#' @import S4Vectors
 #' @import ggplot2
 #' @import gplots
 #' @import graphics

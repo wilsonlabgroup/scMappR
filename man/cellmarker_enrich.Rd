@@ -4,9 +4,15 @@
 \alias{cellmarker_enrich}
 \title{Fisher's Exact Cell-Type Identification.}
 \usage{
-cellmarker_enrich(gene_list, p_thresh, gmt = "cellmarker_list.Rdata",
-  fixed_length = 13000, min_genes = 5, max_genes = 3000,
-  isect_size = 3)
+cellmarker_enrich(
+  gene_list,
+  p_thresh,
+  gmt = "cellmarker_list.Rdata",
+  fixed_length = 13000,
+  min_genes = 5,
+  max_genes = 3000,
+  isect_size = 3
+)
 }
 \arguments{
 \item{gene_list}{a character vector of gene symbols with the same designation (e.g. mouse symbol - mouse, human symbol - human) as the gene set database}

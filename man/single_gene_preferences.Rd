@@ -4,8 +4,7 @@
 \alias{single_gene_preferences}
 \title{Single cell-type gene preferences}
 \usage{
-single_gene_preferences(hg_short, hg_full, study_name, outDir,
-  toSave = FALSE)
+single_gene_preferences(hg_short, hg_full, study_name, outDir, toSave = FALSE)
 }
 \arguments{
 \item{hg_short}{A list with two objects: a "preferences" and a "genesIn". preferences is a list of gene symbols over-represented ine ach cell-type and genesIn were all the inputted genes.}

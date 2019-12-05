@@ -1,4 +1,3 @@
-
 Package: scMappR
 Title: Single Cell Mapper
 Version: 0.0.0.9000
@@ -9,8 +8,6 @@ Authors@R:
            email = "dustin.sokolowski@sickkids.ca",
 		   comment = c(ORCID = "YOUR-ORCID-ID"))
 Imports: 
-	matrixStats, 
-	DeconRNASeq, 
 	ggplot2, 
 	gplots, 
 	graphics, 
@@ -27,6 +24,5 @@ Description: We built an R package called scMappR, which contains statistical to
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.0.0
+RoxygenNote: 7.0.2
 Packaged: 2019-11-18
-

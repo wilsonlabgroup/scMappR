@@ -16,9 +16,6 @@
 #'
 #' @return \code{generes_to_heatmap} A list containing a signature matrix by rank := -1*log10(Pfdr) and by fold-change (only increasing). Additionally it returns the top (up to) 30 CT markers for each cell-type, as well as the name of each cell-type (from the signature methods method). \cr
 #'
-#' @import matrixStats
-#' @import DeconRNASeq
-#' @import S4Vectors
 #' @import ggplot2
 #' @import gplots
 #' @import graphics

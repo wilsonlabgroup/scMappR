@@ -16,9 +16,6 @@
 #'
 #' @return \code{human_mouse_ct_marker_enrich} list: The top cell-type for each cell-type markers list, as well as a matrix the top 5 most likely cell-type makers for each gene list (with OR and P-val) \cr
 #'
-#' @import matrixStats
-#' @import DeconRNASeq
-#' @import S4Vectors
 #' @import ggplot2
 #' @import gplots
 #' @import graphics

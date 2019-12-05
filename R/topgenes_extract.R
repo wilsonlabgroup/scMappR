@@ -17,9 +17,6 @@
 #'
 #' @return \code{topgenes_extract} Returns a numeric vector. \cr
 #' 
-#' @import matrixStats
-#' @import DeconRNASeq
-#' @import S4Vectors
 #' @import ggplot2
 #' @import gplots
 #' @import graphics

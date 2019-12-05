@@ -4,13 +4,26 @@
 \alias{scMappR_and_pathway_analysis}
 \title{Generate STV, visualize, and enrich.}
 \usage{
-scMappR_and_pathway_analysis(count_file, signature_matrix, DEG_list,
-  case_grep, control_grep, rda_path = "", max_proportion_change = -9,
-  print_plots = T, plot_names = "scMappR", theSpecies = "human",
-  output_directory = "scMappR_analysis", sig_matrix_size = 3000,
-  drop_unkown_celltype = TRUE, internet = TRUE,
-  up_and_downregulated = FALSE, gene_label_size = 0.4,
-  number_genes = -9, toSave = FALSE)
+scMappR_and_pathway_analysis(
+  count_file,
+  signature_matrix,
+  DEG_list,
+  case_grep,
+  control_grep,
+  rda_path = "",
+  max_proportion_change = -9,
+  print_plots = T,
+  plot_names = "scMappR",
+  theSpecies = "human",
+  output_directory = "scMappR_analysis",
+  sig_matrix_size = 3000,
+  drop_unkown_celltype = TRUE,
+  internet = TRUE,
+  up_and_downregulated = FALSE,
+  gene_label_size = 0.4,
+  number_genes = -9,
+  toSave = FALSE
+)
 }
 \arguments{
 \item{count_file}{Normalized RNA-seq count matrix where rows are gene symbols and columns are individuals. Either the object tself of the path of a TSV file.}

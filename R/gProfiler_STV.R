@@ -15,9 +15,6 @@
 #' 
 #' @return \code{gProfiler_STV} A List of significantly enriched pathways and TFs (correction_method = FDR, hier_sorting = moderate), for every cell-type. \cr
 #' 
-#' @import matrixStats
-#' @import DeconRNASeq
-#' @import S4Vectors
 #' @import ggplot2
 #' @import gplots
 #' @import graphics

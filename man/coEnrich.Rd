@@ -4,8 +4,14 @@
 \alias{coEnrich}
 \title{Identify co-expressed cell-types.}
 \usage{
-coEnrich(sig, gene_list_heatmap, background_heatmap, study_name, outDir,
-  toSave = FALSE)
+coEnrich(
+  sig,
+  gene_list_heatmap,
+  background_heatmap,
+  study_name,
+  outDir,
+  toSave = FALSE
+)
 }
 \arguments{
 \item{sig}{A The number of combinations of significant cell-types to enrich.}

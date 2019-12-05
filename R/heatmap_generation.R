@@ -23,9 +23,6 @@
 #'
 #' @return \code{heatmap_generation} A heatmap/barplot of p-value or odds-ratio of cell-type specific genes intersecting with the gene list. A list of genes that do/don't intersect with the signature matrix as well as a list of which cell-type these over-represented genes live in. \cr
 #'
-#' @import matrixStats
-#' @import DeconRNASeq
-#' @import S4Vectors
 #' @import ggplot2
 #' @import gplots
 #' @import graphics

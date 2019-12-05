@@ -4,11 +4,20 @@
 \alias{heatmap_generation}
 \title{Generate Heatmap}
 \usage{
-heatmap_generation(genesIn, comp, cex = 0.8,
-  rd_path = "~/scMappR/data", cellTypes = "ALL", pVal = 0.01,
-  isPval = TRUE, isMax = F, isBackground = FALSE,
+heatmap_generation(
+  genesIn,
+  comp,
+  cex = 0.8,
+  rd_path = "~/scMappR/data",
+  cellTypes = "ALL",
+  pVal = 0.01,
+  isPval = TRUE,
+  isMax = F,
+  isBackground = FALSE,
   reference = "C:/Users/Dustin Sokolowski/Desktop/romanov_wilcoxon_test_2.RData",
-  which_species = "human", toSave = FALSE)
+  which_species = "human",
+  toSave = FALSE
+)
 }
 \arguments{
 \item{genesIn}{A list of gene symbols (all caps) to have their cell type enrichment.}

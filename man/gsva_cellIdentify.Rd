@@ -4,8 +4,13 @@
 \alias{gsva_cellIdentify}
 \title{Cell-type naming with GSVA}
 \usage{
-gsva_cellIdentify(pbmc, theSpecies, naming_preference, rda_path = "",
-  toSave = FALSE)
+gsva_cellIdentify(
+  pbmc,
+  theSpecies,
+  naming_preference,
+  rda_path = "",
+  toSave = FALSE
+)
 }
 \arguments{
 \item{pbmc}{Processed seurat object without named cells.}

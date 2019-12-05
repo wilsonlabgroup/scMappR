@@ -14,9 +14,6 @@
 #'
 #' @return \code{seurat_to_generes} A list containing the gene-symbols only as well as if the species is mouse or human. \cr
 #'
-#' @import matrixStats
-#' @import DeconRNASeq
-#' @import S4Vectors
 #' @import ggplot2
 #' @import gplots
 #' @import graphics

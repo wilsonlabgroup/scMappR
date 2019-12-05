@@ -15,9 +15,6 @@
 #'
 #' @return \code{gsva_cellIdentify} A list containing the top cell-type marker for a cell-type using the panglao dataset as well as the cellMarker dataset. \cr
 #'
-#' @import matrixStats
-#' @import DeconRNASeq
-#' @import S4Vectors
 #' @import ggplot2
 #' @import gplots
 #' @import graphics

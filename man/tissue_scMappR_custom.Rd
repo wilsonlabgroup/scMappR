@@ -4,9 +4,14 @@
 \alias{tissue_scMappR_custom}
 \title{Gene List Visualization and Enrichment with Custom Signature Matrix}
 \usage{
-tissue_scMappR_custom(gene_list, signature_matrix,
-  output_directory = "custom_test", toSave = FALSE, gene_cutoff = 1,
-  is_pvalue = TRUE)
+tissue_scMappR_custom(
+  gene_list,
+  signature_matrix,
+  output_directory = "custom_test",
+  toSave = FALSE,
+  gene_cutoff = 1,
+  is_pvalue = TRUE
+)
 }
 \arguments{
 \item{gene_list}{A list of gene symbols, mouse or human.}

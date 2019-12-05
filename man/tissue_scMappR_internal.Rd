@@ -4,9 +4,17 @@
 \alias{tissue_scMappR_internal}
 \title{Gene List Visualization and Enrichment (Internal)}
 \usage{
-tissue_scMappR_internal(gene_list, species, output_directory, tissue,
-  rda_path, cluster = "Pval", genecex = 0.01, raw_pval = FALSE,
-  toSave = FALSE)
+tissue_scMappR_internal(
+  gene_list,
+  species,
+  output_directory,
+  tissue,
+  rda_path,
+  cluster = "Pval",
+  genecex = 0.01,
+  raw_pval = FALSE,
+  toSave = FALSE
+)
 }
 \arguments{
 \item{gene_list}{A list of gene symbols, mouse or human.}

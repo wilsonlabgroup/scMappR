@@ -31,9 +31,6 @@
 #' 
 #' @return \code{scMappR_and_pathway_analysis} A directory with: STVs in RData file, Cell Type proportions (RData file), cell-type proportions leave one out (RData file), heatmap of STVs (all), heatmap of STVs (within signature), heatmap of signature (all), heatmap of signature (overlapping with DEG_list), Pathway enrichment for DEG list(all), RData file and Biological Processes, Pathway enrichment of STVs for each cell-type, RData file and biological processes. \cr
 #' 
-#' @import matrixStats
-#' @import DeconRNASeq
-#' @import S4Vectors
 #' @import ggplot2
 #' @import gplots
 #' @import graphics

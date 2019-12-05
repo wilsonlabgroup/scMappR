@@ -36,9 +36,6 @@
 #' 
 #' @return \code{deconvolute_and_contextualize} ScMappR transformed Values for every gene in every cell-type, cell-type composition with, allgenes included, average gene expression of each cell-type usng leave one out approach for each gene, and the processed signature matrix. Optional: boxplots of estimated CT proportions for each gene using a leave-one-out method \cr
 #' 
-#' @import matrixStats
-#' @import DeconRNASeq
-#' @import S4Vectors
 #' @import ggplot2
 #' @import gplots
 #' @import graphics
@@ -120,7 +117,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   # load required packages
 
   
-  rowVars <- function(x) return(apply(x, 1, S4Vectors::var)) # get variance of rows, used later
+  rowVars <- function(x) return(apply(x, 1, var)) # get variance of rows, used later
   # load in normalized count matrices, signature matrix, and DEGs
   if(class(count_file) == "character") {
     norm_counts_i <- read.table(count_file, header = T, as.is = T, sep = "\t")

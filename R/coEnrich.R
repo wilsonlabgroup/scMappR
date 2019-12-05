@@ -18,9 +18,6 @@
 #'
 #' @return \code{coEnrich} Enrichment of cell-types that are expressed by the same genes, from 2-5 sets of cell-types. \cr
 #'
-#' @import matrixStats
-#' @import DeconRNASeq
-#' @import S4Vectors
 #' @import ggplot2
 #' @import gplots
 #' @import graphics

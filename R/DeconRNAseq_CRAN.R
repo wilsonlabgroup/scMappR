@@ -18,9 +18,6 @@
 #' 
 #' @return \code{DeconRNAseq_CRAN} Estimated cell-type proportions with DeconRNAse \cr
 #' 
-#' @import matrixStats
-#' @import DeconRNASeq
-#' @import S4Vectors
 #' @import ggplot2
 #' @import gplots
 #' @import graphics
