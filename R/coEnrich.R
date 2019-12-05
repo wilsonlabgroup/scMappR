@@ -24,7 +24,7 @@
 #' @import Seurat
 #' @import GSVA
 #' @import stats
-#' @importFrom utils combn
+#' @import utils 
 #' @import downloader
 #' @import grDevices
 #' @import gProfileR
