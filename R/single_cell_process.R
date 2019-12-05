@@ -1,8 +1,10 @@
-#' @title single_cell_process
+#' single_cell_process
 #' 
 #' Example data for processing scRNA-seq count data with Seurat.
 #'
 #' A dgCMatrix object containing count data for scRNA-seq processing.
+#'
+#' @rdname single_cell_process
 #'
 #' @usage data(single_cell_process)
 #'

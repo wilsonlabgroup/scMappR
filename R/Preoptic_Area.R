@@ -1,8 +1,10 @@
-#' @title Preoptic_Area
+#' Preoptic_Area
 #' 
 #' Data for tissue_scMappR_custom, tissue_scMappR_internal, generes_to_heatmap
 #'
 #' A named list called POA_example containing three objects, POA_generes: a list of truncated dataframes containing summary statistics for each cell-type marker, POA_OR_signature a truncated signature matrix of odds ratio's for cell-types in the POA, and POA_Rank_signature a truncated signature matrix of -log10(Padj) for cell-type markers in the POA.
+#'
+#' @rdname Preoptic_Area
 #'
 #' @usage data(Preoptic_Area)
 #'
