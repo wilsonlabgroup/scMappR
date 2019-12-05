@@ -118,11 +118,11 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   # load required packages
 
   
-  rowVars <- function(x) return(apply(x, 1, var)) # get variance of rows, used later
+  rowVars <- function(x) return(apply(x, 1, stats::var)) # get variance of rows, used later
   colMedians <- function(x) return(apply(x, 2, stats::median)) # medians of cols, used later
   # load in normalized count matrices, signature matrix, and DEGs
   if(class(count_file) == "character") {
-    norm_counts_i <- read.table(count_file, header = T, as.is = T, sep = "\t")
+    norm_counts_i <- utils::read.table(count_file, header = T, as.is = T, sep = "\t")
   } else {
     norm_counts_i <- count_file
   }
@@ -133,7 +133,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
     wilcoxon_rank_mat_or <- signature_matrix
   }
   if(class(DEG_list) == "character") {
-    DEGs <- read.table(DEG_list, header = FALSE, as.is = T, sep = "\t")
+    DEGs <- utils::read.table(DEG_list, header = FALSE, as.is = T, sep = "\t")
   } else {
     DEGs <- as.data.frame(DEG_list)
   }
@@ -154,9 +154,9 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   if(length(toInter)==0) { 
     # if there isn't overlap in the genes in the signature matrices and count matrix
     print("Rownames of signature matrix")
-    print(head(RN_2))
+    print(utils::head(RN_2))
     print("Rownames of count matrix")
-    print(head(norm_counts_i))
+    print(utils::head(norm_counts_i))
     stop("There is no overlap between the signature and count matrix. Please make sure that gene symbols are row names and they are gene symbols of te same species.")
   }
   rownames(wilcoxon_rank_mat_or) <- RN_2
@@ -212,7 +212,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   wilcox_or_signature <- as.data.frame(wilcox_or_signature[,colnames(proportions)])
   bulk_in <- norm_counts_i
   
-  DEGs <- DEGs[complete.cases(DEGs),]
+  DEGs <- DEGs[stats::complete.cases(DEGs),]
   
   
   genesIn <- DEGs$gene_name[DEGs$gene_name %in% rownames(bulk_in)]
@@ -394,7 +394,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
         cm_stack <- cmeaned_stacked[,i]
         # name top 3 genes, replace non top-3 with ""
         top3 <- head(sort(cm_stack), 3)
-        bottom3 <- tail(sort(cm_stack), 3)
+        bottom3 <- utils::tail(sort(cm_stack), 3)
         empty <- rep("", length(cm_stack))
         names(empty) <- names(cm_stack)
         empty[names(top3)] <- names(top3)
@@ -416,7 +416,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
       grDevices::pdf(paste0("deconvolute_generemove_quantseq_",names,".pdf"))
       g <- ggplot2::ggplot(all_stack, ggplot2::aes(factor(cell_type), proportion)) + ggplot2::geom_boxplot()  + ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, hjust = 1, size = 8))
       # generate barplot for every cell-type combined
-      plot(g)
+      print(g)
       grDevices::dev.off()
       
       for(i in unique(all_stack$cell_type)) {
@@ -428,7 +428,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
         
         grDevices::pdf(paste0("deconvolute_generemov_quantseq_", i,"_",names,".pdf"))
                 # generate barplot for one cell-type at a time
-        plot(g)
+        print(g)
         grDevices::dev.off()
         print(i)
       }

@@ -126,7 +126,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   
   theSpecies <- tolower(theSpecies)
   if(class(count_file) == "character") {
-    norm_counts_i <- read.table(count_file, header = TRUE, as.is = TRUE, sep = "\t")
+    norm_counts_i <- utils::read.table(count_file, header = TRUE, as.is = TRUE, sep = "\t")
   } else {
     norm_counts_i <- count_file
   }
@@ -134,7 +134,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   background_genes <-  rownames(norm_counts_i)  
   # list of differential expression
   if(class(DEG_list) == "character") {
-    DEGs <- read.table(DEG_list, header = FALSE, as.is = TRUE, sep = "\t")
+    DEGs <- utils::read.table(DEG_list, header = FALSE, as.is = TRUE, sep = "\t")
   } else {
     DEGs <- as.data.frame(DEG_list)
   }
@@ -236,7 +236,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   scMappR_vals <- STVs$scMappR_transformed_values # scMappR values
   T_test_outs <- STVs$ProportionT.test
   print("Writing summary of cell-type proportion changes between case and control." , quote = FALSE)
-  write.table(T_test_outs, file = paste0(output_directory, "/", plot_names, "_cell_proportion_changes_summary.tsv"), quote = FALSE, row.names = TRUE, col.names = TRUE, sep = "\t")
+  utils::write.table(T_test_outs, file = paste0(output_directory, "/", plot_names, "_cell_proportion_changes_summary.tsv"), quote = FALSE, row.names = TRUE, col.names = TRUE, sep = "\t")
   
   print(scMappR_vals)
   save(scMappR_vals, file = paste0(output_directory, "/",plot_names, "_STVs.RData"))

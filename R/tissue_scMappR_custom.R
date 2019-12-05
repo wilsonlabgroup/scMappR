@@ -91,7 +91,7 @@ tissue_scMappR_custom <- function(gene_list, signature_matrix ,output_directory 
   singleCTpreferences <- single_gene_preferences(gene_list_heatmap, background_heatmap, study_names, outDir = output_directory, toSave = toSave)
   
   if(toSave == TRUE) {
-    write.table(singleCTpreferences, file = paste0(outDir,"/",outDir, "_celltype_preferences.tsv"), quote= FALSE, row.names = FALSE, col.names = TRUE, sep = "\t")
+    utils::write.table(singleCTpreferences, file = paste0(outDir,"/",outDir, "_celltype_preferences.tsv"), quote= FALSE, row.names = FALSE, col.names = TRUE, sep = "\t")
   }
   # cell-type preferences for indidual cell-types
   sig <- singleCTpreferences[singleCTpreferences$pFDR < 0.05,]
