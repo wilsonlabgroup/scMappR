@@ -9,7 +9,7 @@
 #' @name DeconRNAseq_CRAN
 #'
 #' @param datasets normalized RNA-seq dataset
-#' @param Signatures signature matrix of odds ratios
+#' @param signatures signature matrix of odds ratios
 #' @param proportions if cell-type proportion is already inputted - always NULL for scMappR
 #' @param checksig check to see if plotting is significant - always false for scMappR
 #' @param known.prop if proportions were known - always false for scMappR

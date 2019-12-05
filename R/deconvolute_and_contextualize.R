@@ -18,8 +18,6 @@
 #' @rdname deconvolute_and_contextualize
 #' @name deconvolute_and_contextualize
 #'
-#' @param ordered_back_all output of the g:ProfileR function
-#' @param top_bp The number of pathways you want to plot
 #' @param count_file Normalized RNA-seq count matrix where rows are gene symbols and columns are individuals. Either the object tself of the path of a TSV file
 #' @param signature_matrix Signature matrix (reccommended odds ratios) of cell-type specificity of genes. Either the object itself or a pathway to an RData file containing an object named "wilcoxon_rank_mat_or" -- generally internal
 #' @param DEG_list An object with the first column as gene symbols within the bulk dataset (doesn't have to be in signature matrix), second column is the adjusted P-value, and the third the log2FC. Path to a tsv file containing this info is also acceptable.
