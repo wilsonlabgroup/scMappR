@@ -5,6 +5,7 @@
 #' A dgCMatrix object containing count data for scRNA-seq processing.
 #'
 #' @rdname single_cell_process
+#' @name single_cell_process
 #'
 #' @usage data(single_cell_process)
 #'

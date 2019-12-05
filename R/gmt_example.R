@@ -5,6 +5,7 @@
 #' A named list containing the cell-type markers of 5 glial cell types. Used for testing cell-type naming functions.
 #'
 #' @rdname gmt_example
+#' @name gmt_example
 #'
 #' @usage data(gmt_example)
 #'

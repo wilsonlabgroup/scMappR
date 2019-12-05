@@ -5,6 +5,7 @@
 #' A named list called "PBMC_example", containing the count data, signature matrix, and DEGs. The count data and signature matrix are shortened to fit the size of the package and do not reflect the paper.
 #'
 #' @rdname PBMC_scMappR
+#' @name PBMC_scMappR
 #'
 #' @usage data(PBMC_scMappR)
 #'
