@@ -17,15 +17,15 @@
 #'
 #' @return \code{topgenes_extract} Returns a numeric vector. \cr
 #' 
-#' @import ggplot2
-#' @import gplots
+#' @import ggplot2 ggplot aes geom_boxplot geom_text theme coord_flip labs
+#' @importFrom gplots heatmap.2
 #' @import graphics
 #' @import Seurat
 #' @import GSVA
-#' @import stats
+#' @import stats fisher.test p.adjust median
 #' @import utils
 #' @import downloader
-#' @import grDevices
+#' @import grDevices pdf dev.off colorRampPalette
 #' @import gProfileR
 #'
 #' @examples 

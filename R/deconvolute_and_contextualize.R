@@ -118,6 +118,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
 
   
   rowVars <- function(x) return(apply(x, 1, var)) # get variance of rows, used later
+  colMedians <- function(x) return(apply(x, 2, stats::median)) # medians of cols, used later
   # load in normalized count matrices, signature matrix, and DEGs
   if(class(count_file) == "character") {
     norm_counts_i <- read.table(count_file, header = T, as.is = T, sep = "\t")
@@ -174,7 +175,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   wilcox_or[wilcox_or < 0 ] <- 0
   if(nrow(wilcox_or) > sig_matrix_size) {
     print(paste0("For deconvolution, we're using the top ", sig_matrix_size," most vairable signatures"))
-    RVar <- matrixStats::rowVars(wilcox_var)
+    RVar <- rowVars(wilcox_var)
     wilcox_or_var <- wilcox_or[order(RVar, decreasing = T), ]
     wilcox_or_signature <- wilcox_or_var[1:sig_matrix_size,]
   } else {
@@ -262,11 +263,12 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
     # tester: a lis of cell-type proporitons for each leave one out for each gene
     # Returns: 
     # cell-type proportions for ever gene given case/control and their odds ratio
+
     rownames(tester) <- colnames(bulk_in)
     cases <- grep(case_grep, rownames(tester))
     control <- grep(control_grep, rownames(tester))
-    cases_Med <- matrixStats::colMedians(tester[cases,])
-    control_Med <- matrixStats::colMedians(tester[control,])
+    cases_Med <- colMedians(tester[cases,])
+    control_Med <- colMedians(tester[control,])
     
     # If the cell-type is not detected in case/control at all, replace with the lowest value overall
     # this removes the chance of an infinite fold-change in CT proportion
@@ -286,8 +288,8 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   pull_means <- function(x) return(x$Mean)
   pull_fc <- function(x) return(x$FC) 
   # pull the means and fold-changes and bind it into a matrix
-  means <- S4Vectors::do.call("rbind",lapply(iterated_pull, pull_means))
-  fold_changes <- S4Vectors::do.call("rbind",lapply(iterated_pull, pull_fc))
+  means <- do.call("rbind",lapply(iterated_pull, pull_means))
+  fold_changes <- do.call("rbind",lapply(iterated_pull, pull_fc))
   if( max_proportion_change != -9) { # if there is a maximum of cell-type proprotion changes, cap it at your max
     print("converting maximum CT proportion change to have a maximum odds-ratio of")
     print(max_proportion_change)
@@ -297,7 +299,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   
   # get the average cell-type proportion for the leave one out approach with every gene removed
   cmeaned <- lapply(iterated, colMeans) 
-  cmeaned_stacked <- S4Vectors::do.call("rbind", cmeaned)
+  cmeaned_stacked <- do.call("rbind", cmeaned)
   n <- colnames(cmeaned_stacked)
   print("Done")
   cmeaned_no0 <- as.data.frame(cmeaned_stacked[,colSums(cmeaned_stacked) > 0 ])
@@ -368,7 +370,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   print("Adjusting Coefficients:")
   vals_out <- lapply(toInter_InGene$gene_name, values_with_preferences)
   print("Done")
-  vals_out_mat <- S4Vectors::do.call("rbind", vals_out)
+  vals_out_mat <- do.call("rbind", vals_out)
   rownames(vals_out_mat) <- toInter_InGene$gene_name
   
   colnames(vals_out_mat) <- colnames(wilcox_or)
