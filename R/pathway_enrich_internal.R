@@ -28,7 +28,7 @@
 #' @importFrom utils combn read.table write.table head tail
 #' @importFrom downloader download
 #' @importFrom grDevices pdf dev.off colorRampPalette
-#' @importFrom gProfileR gprofiler
+#' @importFrom gprofiler2 gost
 #' @importFrom pcaMethods prep pca R2cum
 #' @importFrom limSolve lsei
 #'
@@ -80,9 +80,15 @@ pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_g
   
   ### We could theoretically split this into it's own function if we wanted
   # Pathway enrichment 
-  ordered_back_all <- gProfileR::gprofiler(DEG_Names, species_bulk, ordered_query = TRUE, min_set_size = 3, max_set_size = 2000, src_filter = c("GO:BP", "REAC", "KEGG"),custom_bg = background_genes, correction_method = "fdr", min_isect_size = 3, hier_filtering = "moderate")
-  ordered_back_all_tf <- gProfileR::gprofiler(DEG_Names, species_bulk, ordered_query = TRUE, min_set_size = 3, max_set_size = 5000, src_filter = c("TF"),custom_bg = background_genes, correction_method = "fdr", min_isect_size = 3, hier_filtering = "moderate")
 
+  ordered_back_all <- gprofiler2::gost(query = DEG_Names, organism = species_bulk, ordered_query = TRUE, significant = TRUE, exclude_iea = FALSE, multi_query = FALSE, measure_underrepresentation = FALSE, evcodes = FALSE, user_threshold = 0.05, correction_method = "fdr", domain_scope = "custom", custom_bg =background_genes, numeric_ns = "", sources = c("GO:BP", "KEGG", "REAC"))  
+  ordered_back_all <- ordered_back_all$result
+  ordered_back_all <- ordered_back_all[ordred_back_all$term_size > 15 & ordered_back_all$term_size < 2000 & ordered_back_all$intersection_size > 2,]
+  
+  ordered_back_all_tf <- gprofiler2::gost(query = DEG_Names, organism = species_bulk, ordered_query = TRUE, significant = TRUE, exclude_iea = FALSE, multi_query = FALSE, measure_underrepresentation = FALSE, evcodes = FALSE, user_threshold = 0.05, correction_method = "fdr", domain_scope = "custom", custom_bg =background_genes, numeric_ns = "", sources = c("TF"))  
+  ordered_back_all_tf <- ordered_back_all_tf$result
+  ordered_back_all_tf <- ordered_back_all_tf[ordred_back_all_tf$term_size > 15 & ordered_back_all_tf$term_size < 5000 & ordered_back_all_tf$intersection_size > 2,]
+  
   save(ordered_back_all, file = paste0(output_directory,"/Bulk_pathway_enrichment.RData"))
   save(ordered_back_all_tf, file = paste0(output_directory,"/Bulk_TF_enrichment.RData"))
   #plotting paths

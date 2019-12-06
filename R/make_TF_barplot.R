@@ -23,7 +23,7 @@
 #' @importFrom utils combn read.table write.table head tail
 #' @importFrom downloader download
 #' @importFrom grDevices pdf dev.off colorRampPalette
-#' @importFrom gProfileR gprofiler
+#' @importFrom gprofiler2 gost
 #' @importFrom pcaMethods prep pca R2cum
 #' @importFrom limSolve lsei
 #'
@@ -54,16 +54,16 @@ make_TF_barplot <- function(ordered_back_all_tf, top_tf = 5) {
   # The top "top_5" TF names, ordered by -log10(Pfdr)
   
   take1 <- function(x) return(x[1]) # take the first element of a list
-  sp <- strsplit(ordered_back_all_tf$term.name, ";") # split the ane of the TF output
+  sp <- strsplit(ordered_back_all_tf$term_name, ";") # split the ane of the TF output
   tfs <- unlist(lapply(sp, take1))
   tfs <- gsub("Factor:","",gsub("-","", tochr(tfs))) # remove extra text
   ordered_back_all_tf$tf <- tochr(tfs)
   nodup <- ordered_back_all_tf[!duplicated(tochr(tfs)),] # keep the most signficant TF motif
-  ndup_1_10 <- nodup[order(nodup$p.value),]
+  ndup_1_10 <- nodup[order(nodup$p_value),]
   if(nrow(ndup_1_10) > top_tf) { # take the top TF numberof factors
     ndup_1_10 <- ndup_1_10[1:top_tf,]
   }
-  ndup_1_10$log10 <- -1*log10(ndup_1_10$p.value) # make ranks
+  ndup_1_10$log10 <- -1*log10(ndup_1_10$p_value) # make ranks
   # ggplot barplot
   log10 <- ndup_1_10$log10
   tf <- ndup_1_10$tf
