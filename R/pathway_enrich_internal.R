@@ -104,9 +104,6 @@ pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_g
   }  
   
   
-  ordered_back_all_tf <- ordered_back_all_tf$result
-  ordered_back_all_tf <- ordered_back_all_tf[ordered_back_all_tf$term_size > 15 & ordered_back_all_tf$term_size < 5000 & ordered_back_all_tf$intersection_size > 2,]
-  
   save(ordered_back_all, file = paste0(output_directory,"/Bulk_pathway_enrichment.RData"))
   save(ordered_back_all_tf, file = paste0(output_directory,"/Bulk_TF_enrichment.RData"))
   #plotting paths
