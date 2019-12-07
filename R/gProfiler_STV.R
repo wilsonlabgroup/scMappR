@@ -108,6 +108,8 @@ gProfiler_STV <- function(STV_matrix, species , background , gene_cut, newGprofi
     if(NewGprofiler == FALSE) {
     ordered_back_all <- gProfileR::gprofiler(STV_matrix1, theSpecies1, ordered_query = TRUE, min_set_size = 3, max_set_size = 2000, src_filter = c("GO:BP", "REAC", "KEGG"),custom_bg = background_genes, correction_method = "fdr", min_isect_size = 3, hier_filtering = "moderate")
     ordered_back_all_tf <- gProfileR::gprofiler(STV_matrix1, theSpecies1, ordered_query = TRUE, min_set_size = 3, max_set_size = 5000, src_filter = c("TF"),custom_bg = background_genes, correction_method = "fdr", min_isect_size = 3, hier_filtering = "moderate")
+    ordered_back_all$term_name <- ordered_back_all$term.name
+    ordered_back_all$p_value <- ordered_back_all$p.value
     } else {
     ordered_back_all <- gprofiler2::gost(query = STV_matrix1, organism = theSpecies1, ordered_query = TRUE, significant = TRUE, exclude_iea = FALSE, multi_query = FALSE, measure_underrepresentation = FALSE, evcodes = FALSE, user_threshold = 0.05, correction_method = "fdr",  custom_bg =background_genes, numeric_ns = "", sources = c("GO:BP", "KEGG", "REAC"))  
     if(is.null(ordered_back_all)) { #if nothing is significant, gost returns null. making compatible with plotBP and make_TF_barplot
