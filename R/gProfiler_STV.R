@@ -113,7 +113,6 @@ gProfiler_STV <- function(STV_matrix, species , background , gene_cut ) {
     ordered_back_all_tf <- ordered_back_all_tf[ordered_back_all_tf$term_size > 15 & ordered_back_all_tf$term_size < 5000 & ordered_back_all_tf$intersection_size > 2,]
 
     
-    ordered_back_all <- gprofiler2::gost()
     return(list(BPs = ordered_back_all, TFs = ordered_back_all_tf))
     
   }
