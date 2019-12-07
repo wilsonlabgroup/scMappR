@@ -57,6 +57,17 @@ make_TF_barplot <- function(ordered_back_all_tf, top_tf = 5) {
   # top_tf = the number of TFs being plotted
   # Returns:
   # The top "top_5" TF names, ordered by -log10(Pfdr)
+  if(nrow(ordered_back_all_tf) == 0) {
+    g <- ggplot2::ggplot() + ggplot2::geom_bar(stat = "identity", fill = "mediumpurple") + ggplot2::coord_flip() +  ggplot2::labs(y = "-log10(Padj)", x = "TF Motif") 
+    y <- g + ggplot2::theme(axis.text.x = ggplot2::element_text(face=NULL, color="black", 
+                                                                size=12, angle=35),
+                            axis.text.y = ggplot2::element_text(face=NULL, color="black", 
+                                                                size=12, angle=35), 
+                            axis.title=ggplot2::element_text(size=16, color = "black"))
+    print(y)
+    return(y)
+    
+  }
  ordered_back_all_tf$p_value <- toNum(ordered_back_all_tf$p_value)
  ordered_back_all_tf$term_name <- tochr(ordered_back_all_tf$term_name)
   take1 <- function(x) return(x[1]) # take the first element of a list
@@ -65,6 +76,7 @@ make_TF_barplot <- function(ordered_back_all_tf, top_tf = 5) {
   tfs <- gsub("Factor:","",gsub("-","", tochr(tfs))) # remove extra text
   ordered_back_all_tf$tf <- tochr(tfs)
   nodup <- ordered_back_all_tf[!duplicated(tochr(tfs)),] # keep the most signficant TF motif
+
   ndup_1_10 <- nodup[order(nodup$p_value),]
   if(nrow(ndup_1_10) > top_tf) { # take the top TF numberof factors
     ndup_1_10 <- ndup_1_10[1:top_tf,]

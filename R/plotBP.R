@@ -60,12 +60,25 @@ plotBP <- function(ordered_back_all, top_bp = 10) {
   # Returns:
   # A barplot of the number of "top_bp" pathways, ranked by -log10(Pfdr)
   
+  if(nrow(ordered_back_all) == 0) {
+    g <- ggplot2::ggplot() + ggplot2::geom_bar(stat = "identity", fill = "mediumpurple") + ggplot2::coord_flip() +  ggplot2::labs(y = "-log10(Padj)", x = "Gene Ontology") 
+    y <- g + ggplot2::theme(axis.text.x = ggplot2::element_text(face=NULL, color="black", 
+                                                                size=12, angle=35),
+                            axis.text.y = ggplot2::element_text(face=NULL, color="black", 
+                                                                size=12, angle=35), 
+                            axis.title=ggplot2::element_text(size=16, color = "black"))
+    print(y)
+    return(y)
+    
+  }
   ordered_back_all$p_value <- toNum(ordered_back_all$p_value)
   ordered_back_all$term_name <- tolower(tochr(ordered_back_all$term_name))
   ordered_back_all$log10 <- -1*log10(ordered_back_all$p_value) # ranks of g:profileR
+  ordered_back_all <- ordered_back_all[order(ordered_back_all$log10, decreasing = TRUE),]
   if(nrow(ordered_back_all) > top_bp) {
     ordered_back_all <- ordered_back_all[1:top_bp,]
   }
+  
   term_name <- ordered_back_all$term_name
   log10 <- ordered_back_all$log10
   # Plot the barplot and set the size of the text of each pathway to fit 
