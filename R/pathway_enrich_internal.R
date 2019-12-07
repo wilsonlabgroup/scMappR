@@ -111,6 +111,8 @@ pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_g
     ordered_back_all_tf <- gProfileR::gprofiler(DEG_Names, species_bulk, ordered_query = TRUE, min_set_size = 3, max_set_size = 5000, src_filter = c("TF"),custom_bg = background_genes, correction_method = "fdr", min_isect_size = 3, hier_filtering = "moderate")
     ordered_back_all$term_name <- ordered_back_all$term.name
     ordered_back_all$p_value <- ordered_back_all$p.value
+    ordered_back_all_tf$term_name <- ordered_back_all_tf$term.name
+    ordered_back_all_tf$p_value <- ordered_back_all_tf$p.value
   }
   
   save(ordered_back_all, file = paste0(output_directory,"/Bulk_pathway_enrichment.RData"))
