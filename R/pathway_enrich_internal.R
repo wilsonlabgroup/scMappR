@@ -82,10 +82,28 @@ pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_g
   # Pathway enrichment 
 
   ordered_back_all <- gprofiler2::gost(query = DEG_Names, organism = species_bulk, ordered_query = TRUE, significant = TRUE, exclude_iea = FALSE, multi_query = FALSE, measure_underrepresentation = FALSE, evcodes = FALSE, user_threshold = 0.05, correction_method = "fdr",  custom_bg =background_genes, numeric_ns = "", sources = c("GO:BP", "KEGG", "REAC"))  
-  ordered_back_all <- ordered_back_all$result
-  ordered_back_all <- ordered_back_all[ordered_back_all$term_size > 15 & ordered_back_all$term_size < 2000 & ordered_back_all$intersection_size > 2,]
-  
+
+  if(is.null(ordered_back_all)) { # grpofiler2 returns null if nothing is significant, making compatile with plotBP and make_TF_barplot
+  ordered_back_all <- as.data.frame(matrix(c(1," "),nrow = 1))
+  colnames(ordered_back_all) <- c("p_value", "term_name")
+  ordered_back_all <- ordered_back_all[-1,]
+  } else {
+    ordered_back_all <- ordered_back_all$result
+    ordered_back_all <- ordered_back_all[ordered_back_all$term_size > 15 & ordered_back_all$term_size < 2000 & ordered_back_all$intersection_size > 2,]
+  }  
+
   ordered_back_all_tf <- gprofiler2::gost(query = DEG_Names, organism = species_bulk, ordered_query = TRUE, significant = TRUE, exclude_iea = FALSE, multi_query = FALSE, measure_underrepresentation = FALSE, evcodes = FALSE, user_threshold = 0.05, correction_method = "fdr", custom_bg =background_genes, numeric_ns = "", sources = c("TF"))  
+  
+  if(is.null(ordered_back_all_tf)) { # grpofiler2 returns null if nothing is significant, making compatile with plotBP and make_TF_barplot
+    ordered_back_all_tf <- as.data.frame(matrix(c(1," "),nrow = 1))
+    colnames(ordered_back_all_tf) <- c("p_value", "term_name")
+    ordered_back_all_tf <- ordered_back_all_tf[-1,]
+  } else {
+    ordered_back_all_tf <- ordered_back_all_tf$result
+    ordered_back_all_tf <- ordered_back_all_tf[ordered_back_all_tf$term_size > 15 & ordered_back_all_tf$term_size < 5000 & ordered_back_all_tf$intersection_size > 2,]
+  }  
+  
+  
   ordered_back_all_tf <- ordered_back_all_tf$result
   ordered_back_all_tf <- ordered_back_all_tf[ordered_back_all_tf$term_size > 15 & ordered_back_all_tf$term_size < 5000 & ordered_back_all_tf$intersection_size > 2,]
   

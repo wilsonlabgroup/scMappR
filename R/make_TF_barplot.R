@@ -56,7 +56,8 @@ make_TF_barplot <- function(ordered_back_all_tf, top_tf = 5) {
   # top_tf = the number of TFs being plotted
   # Returns:
   # The top "top_5" TF names, ordered by -log10(Pfdr)
-  
+ ordered_back_all_tf$p_value <- toNum(ordered_back_all_tf$p_value)
+ ordered_back_all_tf$term_name <- tochr(ordered_back_all_tf$term_name)
   take1 <- function(x) return(x[1]) # take the first element of a list
   sp <- strsplit(tochr(ordered_back_all_tf$term_name), ";") # split the ane of the TF output
   tfs <- unlist(lapply(sp, take1))
@@ -67,7 +68,7 @@ make_TF_barplot <- function(ordered_back_all_tf, top_tf = 5) {
   if(nrow(ndup_1_10) > top_tf) { # take the top TF numberof factors
     ndup_1_10 <- ndup_1_10[1:top_tf,]
   }
-  ndup_1_10$log10 <- -1*log10(ndup_1_10$p_value) # make ranks
+  ndup_1_10$log10 <- -1*toNum(log10(ndup_1_10$p_value)) # make ranks
   # ggplot barplot
   log10 <- ndup_1_10$log10
   tf <- ndup_1_10$tf

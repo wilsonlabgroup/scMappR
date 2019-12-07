@@ -59,6 +59,7 @@ plotBP <- function(ordered_back_all, top_bp = 10) {
   # Returns:
   # A barplot of the number of "top_bp" pathways, ranked by -log10(Pfdr)
   
+  ordered_back_all$p_value <- toNum(ordered_back_all$p_value)
   ordered_back_all$term_name <- tolower(tochr(ordered_back_all$term_name))
   ordered_back_all$log10 <- -1*log10(ordered_back_all$p_value) # ranks of g:profileR
   if(nrow(ordered_back_all) > top_bp) {
