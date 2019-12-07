@@ -29,6 +29,7 @@
 #' @importFrom downloader download
 #' @importFrom grDevices pdf dev.off colorRampPalette
 #' @importFrom gProfileR gprofiler
+#' @importFrom gprofiler2 gost
 #' @importFrom pcaMethods prep pca R2cum
 #' @importFrom limSolve lsei
 #'

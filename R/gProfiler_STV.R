@@ -12,6 +12,7 @@
 #' @param species Human, mouse, or a charcter that is compatible with gProfileR.
 #' @param background A list of background genes to test against.
 #' @param gene_cut The top number of genes in pathway analysis.
+#' @param newGprofiler Using gProfileR or gprofiler2, T/F
 #' 
 #' @return \code{gProfiler_STV} A List of significantly enriched pathways and TFs (correction_method = FDR, hier_sorting = moderate), for every cell-type. \cr
 #' 
@@ -25,6 +26,7 @@
 #' @importFrom downloader download
 #' @importFrom grDevices pdf dev.off colorRampPalette
 #' @importFrom gprofiler2 gost
+#' @importFrom gProfileR gprofiler
 #' @importFrom pcaMethods prep pca R2cum
 #' @importFrom limSolve lsei
 #'
@@ -58,7 +60,7 @@
 
 
 
-gProfiler_STV <- function(STV_matrix, species , background , gene_cut ) {
+gProfiler_STV <- function(STV_matrix, species , background , gene_cut, newGprofiler ) {
   
   # Args: 
   # STV_matrix: matrix of scMappR Transformed Values from the deconvolute_and_contextualize functions
@@ -84,7 +86,8 @@ gProfiler_STV <- function(STV_matrix, species , background , gene_cut ) {
     theSpecies <- species
     
   }
-  gProfiler_internal <- function(x, theSpecies1 = theSpecies, background_genes = background, cutgenes = gene_cut) {
+  
+  gProfiler_internal <- function(x, theSpecies1 = theSpecies, background_genes = background, cutgenes = gene_cut, NewGprofiler = newGprofiler) {
     #Internal -- This function takes a signle STV and computes gProfiler BP and TF enrichment with the list re-ordered for each cell-type
     # Args:
     # X: a numeric index giving the cell-type in the STV matrix
@@ -102,8 +105,10 @@ gProfiler_STV <- function(STV_matrix, species , background , gene_cut ) {
       print(paste0("Taking the top ", cutgenes, " genes for pathway analysis."), quote = FALSE)
       STV_matrix1 <- STV_matrix1[1:cutgenes]
     }
-    #ordered_back_all <- gProfileR::gprofiler(STV_matrix1, theSpecies1, ordered_query = TRUE, min_set_size = 3, max_set_size = 2000, src_filter = c("GO:BP", "REAC", "KEGG"),custom_bg = background_genes, correction_method = "fdr", min_isect_size = 3, hier_filtering = "moderate")
-    #ordered_back_all_tf <- gProfileR::gprofiler(STV_matrix1, theSpecies1, ordered_query = TRUE, min_set_size = 3, max_set_size = 5000, src_filter = c("TF"),custom_bg = background_genes, correction_method = "fdr", min_isect_size = 3, hier_filtering = "moderate")
+    if(NewGprofiler == FALSE) {
+    ordered_back_all <- gProfileR::gprofiler(STV_matrix1, theSpecies1, ordered_query = TRUE, min_set_size = 3, max_set_size = 2000, src_filter = c("GO:BP", "REAC", "KEGG"),custom_bg = background_genes, correction_method = "fdr", min_isect_size = 3, hier_filtering = "moderate")
+    ordered_back_all_tf <- gProfileR::gprofiler(STV_matrix1, theSpecies1, ordered_query = TRUE, min_set_size = 3, max_set_size = 5000, src_filter = c("TF"),custom_bg = background_genes, correction_method = "fdr", min_isect_size = 3, hier_filtering = "moderate")
+    } else {
     ordered_back_all <- gprofiler2::gost(query = STV_matrix1, organism = theSpecies1, ordered_query = TRUE, significant = TRUE, exclude_iea = FALSE, multi_query = FALSE, measure_underrepresentation = FALSE, evcodes = FALSE, user_threshold = 0.05, correction_method = "fdr",  custom_bg =background_genes, numeric_ns = "", sources = c("GO:BP", "KEGG", "REAC"))  
     if(is.null(ordered_back_all)) { #if nothing is significant, gost returns null. making compatible with plotBP and make_TF_barplot
       ordered_back_all <- as.data.frame(matrix(c(1," "),nrow = 1))
@@ -122,6 +127,7 @@ gProfiler_STV <- function(STV_matrix, species , background , gene_cut ) {
     } else {
       ordered_back_all_tf <- ordered_back_all_tf$result
       ordered_back_all_tf <- ordered_back_all_tf[ordered_back_all_tf$term_size > 15 & ordered_back_all_tf$term_size < 5000 & ordered_back_all_tf$intersection_size > 2,]
+    }
     }
     
     return(list(BPs = ordered_back_all, TFs = ordered_back_all_tf))

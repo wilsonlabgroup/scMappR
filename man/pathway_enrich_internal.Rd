@@ -12,6 +12,7 @@ pathway_enrich_internal(
   output_directory,
   plot_names,
   number_genes,
+  newGprofiler,
   toSave = FALSE
 )
 }
@@ -29,6 +30,8 @@ pathway_enrich_internal(
 \item{plot_names}{Names of output.}
 
 \item{number_genes}{Number of genes to if there are many many DEGs.}
+
+\item{newGprofiler}{Whether to use g:ProfileR or gprofiler2 (T/F).}
 
 \item{toSave}{Allow scMappR to write files in the current directory (T/F).}
 }

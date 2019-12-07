@@ -15,6 +15,7 @@
 #' @param output_directory Path to the directory where files will be saved.
 #' @param plot_names Names of output.
 #' @param number_genes Number of genes to if there are many many DEGs.
+#' @param newGprofiler Whether to use g:ProfileR or gprofiler2 (T/F).
 #' @param toSave Allow scMappR to write files in the current directory (T/F).
 #' 
 #' @return \code{pathway_enrich_internal} Plots and pathway enrichment of bulk DE and STVs. \cr
@@ -29,6 +30,7 @@
 #' @importFrom downloader download
 #' @importFrom grDevices pdf dev.off colorRampPalette
 #' @importFrom gprofiler2 gost
+#' @importFrom gProfileR gprofiler
 #' @importFrom pcaMethods prep pca R2cum
 #' @importFrom limSolve lsei
 #'
@@ -56,7 +58,7 @@
 #' }
 #' @export
 #' 
-pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_genes, output_directory, plot_names, number_genes, toSave = FALSE) {
+pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_genes, output_directory, plot_names, number_genes,  newGprofiler, toSave = FALSE) {
   # Internal: Pathway analysis od DEGs and STVs for each cell-type. Returns RData objects of differential analysis as well as plots of the top bulk pathways.
   # It is a wrapper for making barplots, bulk pathway analysis, and gProfiler_STV
   # Args:
@@ -81,6 +83,8 @@ pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_g
   ### We could theoretically split this into it's own function if we wanted
   # Pathway enrichment 
 
+  if(newGprofiler == TRUE) {
+  
   ordered_back_all <- gprofiler2::gost(query = DEG_Names, organism = species_bulk, ordered_query = TRUE, significant = TRUE, exclude_iea = FALSE, multi_query = FALSE, measure_underrepresentation = FALSE, evcodes = FALSE, user_threshold = 0.05, correction_method = "fdr",  custom_bg =background_genes, numeric_ns = "", sources = c("GO:BP", "KEGG", "REAC"))  
 
   if(is.null(ordered_back_all)) { # grpofiler2 returns null if nothing is significant, making compatile with plotBP and make_TF_barplot
@@ -102,7 +106,11 @@ pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_g
     ordered_back_all_tf <- ordered_back_all_tf$result
     ordered_back_all_tf <- ordered_back_all_tf[ordered_back_all_tf$term_size > 15 & ordered_back_all_tf$term_size < 5000 & ordered_back_all_tf$intersection_size > 2,]
   }  
-  
+  } else {
+    ordered_back_all <- gProfileR::gprofiler(DEG_Names, species_bulk, ordered_query = TRUE, min_set_size = 3, max_set_size = 2000, src_filter = c("GO:BP", "REAC", "KEGG"),custom_bg = background_genes, correction_method = "fdr", min_isect_size = 3, hier_filtering = "moderate")
+    ordered_back_all_tf <- gProfileR::gprofiler(DEG_Names, species_bulk, ordered_query = TRUE, min_set_size = 3, max_set_size = 5000, src_filter = c("TF"),custom_bg = background_genes, correction_method = "fdr", min_isect_size = 3, hier_filtering = "moderate")
+    
+  }
   
   save(ordered_back_all, file = paste0(output_directory,"/Bulk_pathway_enrichment.RData"))
   save(ordered_back_all_tf, file = paste0(output_directory,"/Bulk_TF_enrichment.RData"))
@@ -123,7 +131,7 @@ pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_g
   save(ordered_back_all_tf, file = paste0(output_directory, "/",plot_names,"_bulk_transcription_factors.RData"))
   
   print("Compelting pathway analysis of STVs.", quote = FALSE)
-  paths <- gProfiler_STV(scMappR_vals,species =  theSpecies, background = background_genes, gene_cut = number_genes) # re-rodered pathway analysis
+  paths <- gProfiler_STV(scMappR_vals,species =  theSpecies, background = background_genes, gene_cut = number_genes, newGprofiler = newGprofiler) # re-rodered pathway analysis
   
   biological_pathways <- paths$BP # Biological pathways
   transcription_factors <- paths$TF # Transcription factors

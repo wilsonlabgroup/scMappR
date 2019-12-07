@@ -22,7 +22,8 @@ scMappR_and_pathway_analysis(
   up_and_downregulated = FALSE,
   gene_label_size = 0.4,
   number_genes = -9,
-  toSave = FALSE
+  toSave = FALSE,
+  newGprofiler = FALSE
 )
 }
 \arguments{
@@ -61,6 +62,8 @@ scMappR_and_pathway_analysis(
 \item{number_genes}{The number of genes to cut-off for pathway analysis (good with many DEGs).}
 
 \item{toSave}{Allow scMappR to write files in the current directory (T/F).}
+
+\item{newGprofiler}{Whether to use g:ProfileR or gprofiler2 (T/F).}
 }
 \value{
 \code{scMappR_and_pathway_analysis} A directory with: STVs in RData file, Cell Type proportions (RData file), cell-type proportions leave one out (RData file), heatmap of STVs (all), heatmap of STVs (within signature), heatmap of signature (all), heatmap of signature (overlapping with DEG_list), Pathway enrichment for DEG list(all), RData file and Biological Processes, Pathway enrichment of STVs for each cell-type, RData file and biological processes. \cr
