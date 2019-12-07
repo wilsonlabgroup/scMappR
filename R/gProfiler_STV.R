@@ -111,7 +111,7 @@ gProfiler_STV <- function(STV_matrix, species , background , gene_cut ) {
     ordered_back_all_tf <- gprofiler2::gost(query = STV_matrix1, organism = theSpecies1, ordered_query = TRUE, significant = TRUE, exclude_iea = FALSE, multi_query = FALSE, measure_underrepresentation = FALSE, evcodes = FALSE, user_threshold = 0.05, correction_method = "fdr",  custom_bg =background_genes, numeric_ns = "", sources = c("TF"))  
     ordered_back_all_tf <- ordered_back_all_tf$result
     ordered_back_all_tf <- ordered_back_all_tf[ordered_back_all_tf$term_size > 15 & ordered_back_all_tf$term_size < 5000 & ordered_back_all_tf$intersection_size > 2,]
-
+ 
     
     return(list(BPs = ordered_back_all, TFs = ordered_back_all_tf))
     
