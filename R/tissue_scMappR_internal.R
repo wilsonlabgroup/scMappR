@@ -19,6 +19,7 @@
 #' @param rda_path Path to the rda file containing all of the signature matrices.
 #' @param toSave Allow scMappR to write files in the current directory (T/F).
 #' @param output_directory if toSave = TRUE, the name of the output directory that would be built.
+#' @param drop_unkown_celltype Whether or not to remove "unknown" cell-types from the signature matrix.
 #' 
 #' @return \code{tissue_scMappR_internal} A list containing the entire signature matrix, the matrix subsetted for your genes, enrichment of each cell-type, and co-enrichment. \cr
 #'
@@ -70,6 +71,14 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
   # heatmap for signature matrix and matrix intersecting with heatmap
   # RData file containing cell-type preferences
   # tsv files with gene set enrichment for single cell-types and co-enrichment
+  
+  if(class(gene_list) != "character") {
+    stop("The 'gene_list' argumet must be a character vector of gene symbols.")
+  }
+  if(!(species %in% c("mouse", "human"))) {
+    stop("the 'species' argument must be 'mouse' or 'human' (case sensitive). ")
+  }
+  
   RankValueSignature <- "" # empty for cran
   OddsRatioSignature <- "" # 
   outDir <- output_directory
@@ -197,6 +206,15 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
       theSpecies <- sym$species # name of species
     }
     study_ref <- wilcoxon_rank_mat_t
+    
+    unknown <- grep(toupper("unknown"),toupper(colnames(wilcoxon_rank_mat_or)))
+    if(length(unknown) > 0 & drop_unkown_celltype == TRUE) {
+      print("Removing unknown cell-types")
+      study_ref <- study_ref[,-unknown]
+    } else {
+      study_ref <- study_ref
+    }
+    
     background_genes <- rownames(study_ref)
     background_heatmap <- heatmap_generation(background_genes, comp = paste0(outDir, "/", study_names[i],"_background"), reference = study_ref, isBackground = TRUE, cex = genecex, which_species = species, isPval = raw_pval, toSave=toSave)  
     # get the heatmap of all of the genes in the signature matrix
