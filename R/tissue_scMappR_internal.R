@@ -130,6 +130,9 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
   }
   hm <- names(scMappR_list) # get all the available pvalue signautres
   hm_tissue <- grep(toupper(tissue), toupper(hm))
+  if(length(hm_tissue) == 0) {
+    stop(print(paste0(tissue, " is not currently an available tissue for scMappR. Please check spelling or try a different tissue.")))
+  }
   input_studies <- hm[hm_tissue]
   study_names <- input_studies
   if(toSave == TRUE) {
