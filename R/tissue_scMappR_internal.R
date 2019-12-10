@@ -55,7 +55,7 @@
 #'  }
 #' @export
 #' 
-tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,rda_path, cluster = "Pval", genecex = 0.01, raw_pval = FALSE, toSave = FALSE) {
+tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,rda_path, cluster = "Pval", genecex = 0.01, raw_pval = FALSE, toSave = FALSE, drop_unkown_celltype = FALSE) {
   
   # This function takes a list of genes and a tissue available in 'get_tissues' function and generates heatmaps of cell-type preferences
   # it then completes cell-type enrichment of each individual cell-type, then, if more than two cell-types are signficiantly enriched, co-enrichemnt 
