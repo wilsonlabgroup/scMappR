@@ -96,7 +96,7 @@ single_gene_preferences <- function(hg_short, hg_full, study_name, outDir, toSav
   pref$p_val <- toNum(pref$p_val)
   pref$pFDR <- stats::p.adjust(pref$p_val, "fdr")
   if(toSave == TRUE) {
-    utils::write.table(pref, file = paste0(outDir, "/",study_name, "cell_co_preferences.tsv"), quote = FALSE, row.names = FALSE, col.names = TRUE, sep = "\t")
+    utils::write.table(pref, file = paste0(outDir, "/",study_name, "cell_type_preferences.tsv"), quote = FALSE, row.names = FALSE, col.names = TRUE, sep = "\t")
   } else {
     warning("You are not allowing scMappR to save files. We strongly reccomend you switch toSave = TRUE")
   }
