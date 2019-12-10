@@ -207,7 +207,7 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
     }
     study_ref <- wilcoxon_rank_mat_t
     
-    unknown <- grep(toupper("unknown"),toupper(colnames(wilcoxon_rank_mat_or)))
+    unknown <- grep(toupper("unknown"),toupper(colnames(study_ref)))
     if(length(unknown) > 0 & drop_unkown_celltype == TRUE) {
       print("Removing unknown cell-types")
       study_ref <- study_ref[,-unknown]
