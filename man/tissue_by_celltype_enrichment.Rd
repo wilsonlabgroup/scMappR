@@ -7,6 +7,7 @@
 tissue_by_celltype_enrichment(
   gene_list,
   species,
+  name = "CT_Tissue_example",
   p_thresh = 0.05,
   rda_path = "~/scMappR/data/",
   isect_size = 3,
@@ -18,6 +19,8 @@ tissue_by_celltype_enrichment(
 \item{gene_list}{a character vector of gene symbols with the same designation (e.g. mouse symbol - mouse, human symbol - human) as the gene set database}
 
 \item{species}{Species of cell-type marker to use, 'human' or 'mouse'.}
+
+\item{name}{Name of the pdf to be printed}
 
 \item{p_thresh}{the Fisher's test cutoff for a cell-marker to be enriched.}
 
