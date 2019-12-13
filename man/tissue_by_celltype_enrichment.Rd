@@ -39,7 +39,7 @@ This funciton uses a fishers-exact-test to rank gene set enrichment
 Complete a fishers exact test of an input list of genes against one of the two curated tissue by cell-type marker datasets from scMappR.
 }
 \examples{
-\donttest {
+\donttest{
 
 data(Preoptic_Area)
 POA_generes <- POA_example$POA_generes
@@ -50,7 +50,9 @@ rowname <- get_gene_symbol(Signature)
 rownames(Signature) <- rowname$rowname
 genes <- rownames(Signature)[1:100]
 
-enriched <- tissue_by_celltype_enrichment(gene_list = genes, species = "mouse",p_thresh = 0.05, isect_size = 3)
- }
+enriched <- tissue_by_celltype_enrichment(gene_list = genes, 
+species = "mouse",p_thresh = 0.05, isect_size = 3)
+
+}
  
 }

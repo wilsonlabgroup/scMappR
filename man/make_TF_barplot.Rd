@@ -30,10 +30,16 @@ data("Preoptic_Area")
 Signature <- as.data.frame(POA_Rank_signature)
 rowname <- get_gene_symbol(Signature)
 rownames(Signature) <- rowname$rowname
-ordered_back_all <- gprofiler2::gost(query = rowname$rowname[1:100], organism = "mmusculus", ordered_query = TRUE, significant = TRUE, exclude_iea = FALSE, multi_query = FALSE, measure_underrepresentation = FALSE, evcodes = FALSE, user_threshold = 0.05, correction_method = "fdr",   numeric_ns = "", sources = c("GO:BP", "KEGG", "REAC"))  
+ordered_back_all <- gprofiler2::gost(query = rowname$rowname[1:100], organism = "mmusculus", 
+ordered_query = TRUE, significant = TRUE, exclude_iea = FALSE, multi_query = FALSE, 
+measure_underrepresentation = FALSE, evcodes = FALSE, user_threshold = 0.05, 
+correction_method = "fdr",   numeric_ns = "", sources = c("GO:BP", "KEGG", "REAC"))  
 ordered_back_all <- ordered_back_all$result
 ordered_back_all <- ordered_back_all[ordered_back_all$term_size > 15 & ordered_back_all$term_size < 2000 & ordered_back_all$intersection_size > 2,]
-ordered_back_all_tf <- gprofiler2::gost(query = rowname$rowname[1:150], organism = "mmusculus", ordered_query = TRUE, significant = TRUE, exclude_iea = FALSE, multi_query = FALSE, measure_underrepresentation = FALSE, evcodes = FALSE, user_threshold = 0.05, correction_method = "fdr",  numeric_ns = "", sources = c("TF"))  
+ordered_back_all_tf <- gprofiler2::gost(query = rowname$rowname[1:150], organism = "mmusculus", ordered_query = TRUE, 
+significant = TRUE, exclude_iea = FALSE, multi_query = FALSE,
+ measure_underrepresentation = FALSE, evcodes = FALSE, user_threshold = 0.05,
+  correction_method = "fdr",  numeric_ns = "", sources = c("TF"))  
 ordered_back_all_tf <- ordered_back_all_tf$result
 ordered_back_all_tf <- ordered_back_all_tf[ordered_back_all_tf$term_size > 15 & ordered_back_all_tf$term_size < 5000 & ordered_back_all_tf$intersection_size > 2,]
 TF = ordered_back_all_tf
