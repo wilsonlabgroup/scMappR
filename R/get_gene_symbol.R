@@ -1,6 +1,6 @@
 #' Internal -- get gene symbol from Panglao.db matrix
 #'
-#' internal -- removes ensembl signature appended to signature matrix from panglao and figure out species by type of ensembl is appended to gene names.
+#' Internal -- removes ensembl signature appended to signature matrix from panglao and figure out species by type of ensembl is appended to gene names.
 #'
 #' Internal: This function runs the FindMarkers function from seurat in a loop, will use the seurat v2 or seurat v3 object after identifying which seurat object is inputted. 
 #' It then takes the output of the FindMarkers and puts it in a list, returning it.
@@ -32,7 +32,7 @@
 #'  
 #'  
 #'  # load signature
-#' data(Preoptic_Area) 
+#' data(POA_example) 
 #' POA_OR_signature <- POA_example$POA_OR_signature
 #' symbols <- get_gene_symbol(POA_OR_signature)
 #' 

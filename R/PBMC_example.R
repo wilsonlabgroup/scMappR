@@ -7,7 +7,7 @@
 #' @rdname PBMC_example
 #' @name PBMC_example
 #'
-#' @usage data(PBMC_scMappR)
+#' @usage data(PBMC_example)
 #'
 #' @format A list containing three data frames, normalized count data, a signature matrix, and a list of differentially expressed genes.
 #' \describe{
@@ -16,7 +16,7 @@
 #'   \item{bulk_DE_cors}{A 59 x 3 matrix of sex-specific genes found between male and female PBMC samples (female biased = upregulated). row and rownames are genes, columns are gene name, FDR adjusted p-value, and log2 fold-change. DEGs were computed with DESeq2 and genes with a log2FC > 1 were kept. }
 #' }
 #' @examples 
-#' data(PBMC_scMappR)
+#' data(PBMC_example)
 #' @keywords datasets
 #' 
 NULL

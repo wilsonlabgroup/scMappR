@@ -40,7 +40,7 @@
 #'
 #' @examples 
 #' \donttest{
-#' data(single_cell_process)
+#' data(sm)
 #' toProcess <- list(example = sm)
 #' tst1 <- process_dgTMatrix_lists(toProcess, "testProcess", -9, 
 #'                                 "eye",rda_path = "~/scMappR/data", TRUE)

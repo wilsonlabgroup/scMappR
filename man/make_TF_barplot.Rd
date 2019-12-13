@@ -23,7 +23,7 @@ enriched P-values before plotting the rank of their P-values
 }
 \examples{
 \donttest{
-data("Preoptic_Area")
+data(POA_example)
  POA_generes <- POA_example$POA_generes
  POA_OR_signature <- POA_example$POA_OR_signature
  POA_Rank_signature <- POA_example$POA_Rank_signature

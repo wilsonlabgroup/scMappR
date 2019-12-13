@@ -22,7 +22,7 @@ It then takes the output of the FindMarkers and puts it in a list, returning it.
 \examples{
  
  
-data(single_cell_process)
+data(sm)
 toProcess <- list(example = sm)
 tst1 <- process_from_count(toProcess, "testProcess")
 generes <- seurat_to_generes(tst1)

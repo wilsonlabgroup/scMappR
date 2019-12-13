@@ -34,7 +34,7 @@ This function takes a signature matrix and
 extracts cell-type markers above a p-value or fold-change threshold.
 }
 \examples{
-data(Preoptic_Area)
+data(POA_example)
 Signature <- POA_example$POA_Rank_signature
 RowName <- get_gene_symbol(Signature)
 rownames(Signature) <-RowName$rowname

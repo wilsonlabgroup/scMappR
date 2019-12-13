@@ -35,7 +35,7 @@
 #' @examples 
 #' 
 #' 
-#' data(Preoptic_Area)
+#' data(POA_example)
 #' POA_generes <- POA_example$POA_generes
 #' POA_OR_signature <- POA_example$POA_OR_signature
 #' POA_Rank_signature <- POA_example$POA_Rank_signature
@@ -43,7 +43,7 @@
 #' rowname <- get_gene_symbol(Signature)
 #' rownames(Signature) <- rowname$rowname
 #' genes <- rownames(Signature)[1:100]
-#' data(gmt_example)
+#' data(gmt)
 #' enriched <- cellmarker_enrich(gene_list = genes, p_thresh = 0.05, gmt = gmt)
 #'  
 #'  

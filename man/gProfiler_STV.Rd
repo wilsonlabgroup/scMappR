@@ -30,7 +30,7 @@ Before completing pathway analysis with g:ProfileR. Enriched pathways are stored
 \examples{
 \donttest{
 
-data(PBMC_scMappR)
+data(PBMC_example)
 
 bulk_DE_cors <- PBMC_example$bulk_DE_cors
 bulk_normalized <- PBMC_example$bulk_normalized

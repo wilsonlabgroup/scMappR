@@ -34,7 +34,7 @@
 #' @examples 
 #'  
 #'  # load generes object
-#'  data(Preoptic_Area)
+#'  data(POA_example)
 #'  topGenes <- topgenes_extract(POA_example$POA_generes)
 #' 
 #' 

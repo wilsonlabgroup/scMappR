@@ -48,7 +48,7 @@ It is a wrapper for making barplots, bulk pathway analysis, and gProfiler_STV
 \examples{
 \donttest{
 
-data(PBMC_scMappR)
+data(PBMC_example)
 bulk_DE_cors <- PBMC_example$bulk_DE_cors
 bulk_normalized <- PBMC_example$bulk_normalized
 odds_ratio_in <- PBMC_example$odds_ratio_in

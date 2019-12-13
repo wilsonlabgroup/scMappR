@@ -33,7 +33,7 @@
 #' @importFrom limSolve lsei
 #'
 #' @examples
-#' data(Preoptic_Area)
+#' data(POA_example)
 #' Signature <- POA_example$POA_Rank_signature
 #' RowName <- get_gene_symbol(Signature)
 #' rownames(Signature) <-RowName$rowname

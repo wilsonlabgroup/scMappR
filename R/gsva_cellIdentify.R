@@ -32,7 +32,7 @@
 #' @examples 
 #' \donttest{
 #' 
-#' data(single_cell_process)
+#' data(sm)
 #' toProcess <- list(example = sm)
 #' tst1 <- process_from_count(toProcess, "testProcess")
 #' cellnames <- gsva_cellIdentify(tst1, "mouse", "brain", "~/scMappR/data")

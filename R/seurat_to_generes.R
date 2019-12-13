@@ -31,7 +31,7 @@
 #' @examples
 #'  
 #'  
-#' data(single_cell_process)
+#' data(sm)
 #' toProcess <- list(example = sm)
 #' tst1 <- process_from_count(toProcess, "testProcess")
 #' generes <- seurat_to_generes(tst1)
