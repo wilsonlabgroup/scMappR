@@ -32,7 +32,7 @@
 #' @importFrom limSolve lsei
 #'
 #' @examples 
-#' \donttest {
+#' \donttest{
 #' 
 #' data(Preoptic_Area)
 #' POA_generes <- POA_example$POA_generes
@@ -43,11 +43,14 @@
 #' rownames(Signature) <- rowname$rowname
 #' genes <- rownames(Signature)[1:100]
 #' 
-#' enriched <- tissue_by_celltype_enrichment(gene_list = genes, species = "mouse",p_thresh = 0.05, isect_size = 3)
-#'  }
+#' enriched <- tissue_by_celltype_enrichment(gene_list = genes, 
+#' species = "mouse",p_thresh = 0.05, isect_size = 3)
+#' 
+#' }
 #'  
 #' @export
 #' 
+
 tissue_by_celltype_enrichment <- function(gene_list, species, p_thresh = 0.05, rda_path = "~/scMappR/data/",  isect_size = 3, toSave = FALSE, return_gmt= FALSE) {
   if(is.null(species)) stop("please select 'human' or 'mouse' as a species.")
   if(class(gene_list) != "character") {
