@@ -13,7 +13,8 @@ tissue_scMappR_internal(
   cluster = "Pval",
   genecex = 0.01,
   raw_pval = FALSE,
-  toSave = FALSE
+  toSave = FALSE,
+  drop_unkown_celltype = FALSE
 )
 }
 \arguments{
@@ -34,6 +35,8 @@ tissue_scMappR_internal(
 \item{raw_pval}{If the inputed signature matrix are raw (untransformed) Pvalues -- reccomended to generate rank first.}
 
 \item{toSave}{Allow scMappR to write files in the current directory (T/F).}
+
+\item{drop_unkown_celltype}{Whether or not to remove "unknown" cell-types from the signature matrix.}
 }
 \value{
 \code{tissue_scMappR_internal} A list containing the entire signature matrix, the matrix subsetted for your genes, enrichment of each cell-type, and co-enrichment. \cr
