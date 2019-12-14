@@ -1,6 +1,6 @@
 #' Count Matrix To Signature Matrix
 #'
-#' This function takes a list of count matrices, procces them, calls cell-types, and genreates signature matrices. much of the data is kept.
+#' This function takes a list of count matrices, processes them, calls cell-types, and genreates signature matrices. much of the data is kept.
 #' 
 #' This function is a one line wrapper to process count matrices into a signature matrix.
 #' It combines process from count, two methods of identifying cell-type identitt (gsva and fisher's test).
