@@ -181,7 +181,7 @@ heatmap_generation <- function(genesIn, comp,reference, cex = 0.8, rd_path = "~/
   }
   if(length(whichGenesInter) == 0) { # if no genes inputted are preferentially expressed
     print("No input genes are preferentially expressed")
-    return("No_downstram_analysis")
+    stop("No_downstram_analysis")
   }
   if(length(whichGenesInter) == 1) { # if only 1 gene is
     print("One input gene is preferentially expressed")
@@ -192,7 +192,7 @@ heatmap_generation <- function(genesIn, comp,reference, cex = 0.8, rd_path = "~/
     } else {
       warning("toSave = F and threfore plots are not allowed to be saved. I would reccomend allowing it to be true.")
     }
-    return("No_downstream_analysis")
+    stop("No_downstream_analysis")
   }
   if(length(whichGenesInter) > 1) { # if > 1 genes are
     print("At least one input gene is preferentially expressed")

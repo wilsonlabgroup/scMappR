@@ -41,7 +41,9 @@
 #' POA_generes <- POA_example$POA_generes
 #' POA_OR_signature <- POA_example$POA_OR_signature
 #' POA_Rank_signature <- POA_example$POA_Rank_signature
+#' sig <- get_gene_symbol(POA_Rank_signature)
 #' Signature <- POA_Rank_signature
+#' rownames(Signature) <- sig(rowname)
 #' genes <- rownames(Signature)[1:60]
 #' heatmap_test <- tissue_scMappR_custom( genes, signature_matrix = Signature,
 #'                                       output_directory =  "scMappR_test", toSave = FALSE)
@@ -102,7 +104,7 @@ tissue_scMappR_custom <- function(gene_list, signature_matrix ,output_directory 
   if(class(gene_list_heatmap) == "character") {
     warning("0 or 1 input genes were cell-type specific. No downstream analysis available.")
     warning("With 0 genes being cell-type specific, I would make sure that they are the same gene symbols.")
-    return("0 or 1 input genes were cell-type specific. No downstream analysis available.")
+    stop("0 or 1 input genes were cell-type specific. No downstream analysis available.")
   }
   # heatmap generation of the background matrix as well as getting preferred genes based on your cutoff, p-value or otherwise
   singleCTpreferences <- single_gene_preferences(gene_list_heatmap, background_heatmap, study_names, outDir = output_directory, toSave = toSave)
