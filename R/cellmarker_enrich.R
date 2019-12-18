@@ -78,7 +78,7 @@ cellmarker_enrich <- function(gene_list, p_thresh, gmt = "cellmarker_list.Rdata"
   if(!all(is.numeric(fixed_length), is.numeric(min_genes), is.numeric(max_genes), is.numeric(isect_size))) {
     stop("One of these variables: 'fixed_length', 'min_genes', 'max_genes', 'isect_size', are not of class numeric.")
   }
-  if(class(gmt) != "character" | class(gmt) != "list") {
+  if(class(gmt) != "character" & class(gmt) != "list") {
     stop("gmt object must be a character or list object.")
   }
   toTest_n <- gene_list

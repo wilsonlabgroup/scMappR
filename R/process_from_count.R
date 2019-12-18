@@ -148,7 +148,7 @@ process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = 
       pbmc <- pbmc[,which(pbmc$percent.mt.adj < toremove)]
       pbmc <- Seurat::NormalizeData(object = pbmc, normalization.method = "LogNormalize",
                                     scale.factor = 10000)
-      pbmc <- Seurat::FindVariableFeatures(object = pbmc, mean.function = ExpMean, dispersion.function = LogVMR,
+      pbmc <- Seurat::FindVariableFeatures(object = pbmc, mean.function = Seurat::ExpMean, dispersion.function = Seurat::LogVMR,
                                            x.low.cutoff = 0.0125, x.high.cutoff = 3, y.cutoff = 0.5, do.plot = FALSE)
       
       pbmc <- Seurat::ScaleData(pbmc, vars.to.regress = "percent.mt.adj")

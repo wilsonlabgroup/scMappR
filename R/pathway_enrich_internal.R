@@ -70,6 +70,35 @@ pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_g
   # plot_names = names of output
   # Returns:
   # plots and pathway enrichment of bulk DE and STVs.
+
+  if(class(DEGs) != "data.frame" & class(DEGs) == "matrix") {
+    stop("DEGs must be of class data frame or matrix.")
+  }
+  
+  if(class(scMappR_vals) != "data.frame" & class(scMappR_vals) != "matrix") {
+    stop("scMappR_vals must be a data.frame or matrix.")
+  }
+  if(class(background_genes) != "character") {
+    stop("background_genes must be a character vector of gene names.")
+  }
+    
+  if(class(theSpecies) != "character") {
+    stop("the species must be a character, human, mouse, or a species compatible with gprofiler.")
+  }
+  
+  if(class(output_directory) != "character") {
+    stop("output_directory must be a character, human, mouse, or a species compatible with gprofiler.")
+  }
+  if(class(plot_names) != "character") {
+    stop("plot_names must be a character, human, mouse, or a species compatible with gprofiler.")
+  }
+  if(class(number_genes) != "numeric") {
+    stop("number_genes must be of class numeric.")
+  }
+  if(!is.logical(newGprofiler)) {
+    stop("newGprofiler must be logical TRUE/FALSE.")
+  }
+  
   
   if(toSave == FALSE) {
     stop("toSave = FALSE and therefore scMappR is not allowed to print pathways. For this function to work, please set toSave = TRUE")

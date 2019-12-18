@@ -76,9 +76,9 @@ human_mouse_ct_marker_enrich <- function(gene_lists, theSpecies = "human",cell_m
   if(class(gene_lists) != "list") {
     stop("gene_lists is not a list, please try again.")
   }
-  if(!(species_name %in% c("human", "mouse"))) {
-    if(species_name != -9) {
-      stop("species_name is not 'human' 'mouse' or '-9' (case sensitive), please try again with this filled.")
+  if(!(theSpecies %in% c("human", "mouse"))) {
+    if(theSpecies != -9) {
+      stop("theSpecies is not 'human' 'mouse' or '-9' (case sensitive), please try again with this filled.")
     }
   }
   if(class(cell_marker_path) != "character") {

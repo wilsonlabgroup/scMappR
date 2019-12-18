@@ -122,7 +122,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   if(class(count_file) != "character" & class(count_file) != "data.frame" & class(count_file) != "matrix" ) {
     stop("count_file must be of class character, data.frame, or matrix.")
   }
-  if(class(odds_ratio_in) != "character" & class(odds_ratio_in) != "data.frame" & class(odds_ratio_in) != "matrix" ) {
+  if(class(signature_matrix) != "character" & class(signature_matrix) != "data.frame" & class(signature_matrix) != "matrix" ) {
     stop("count_file must be of class character, data.frame, or matrix.")
   }
   if(class(DEG_list) != "character" & class(DEG_list) != "data.frame" & class(DEG_list) == "matrix") {
