@@ -48,8 +48,8 @@ get_gene_symbol <- function(wilcoxon_rank_mat_t) {
   # Returns:
   # A list containing the gene-symbols only as well as if the species is mouse or human
   
-  if(class(wilcoxon_rank_mat_t) != "matrix" & class(wilcoxon_rank_mat_t) != "data.frame") {
-    stop("wilcoxon_rank_mat_t object must be  matrix")
+  if(is.null(rownames(wilcoxon_rank_mat_t))) {
+    stop("wilcoxon_rank_mat_t must be an object with row names. Currently, rownames == NULL")
   }
   
   the_human <- length(grep("ENSG00", rownames(wilcoxon_rank_mat_t)))

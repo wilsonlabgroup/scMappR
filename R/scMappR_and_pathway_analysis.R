@@ -124,11 +124,43 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   # RData file and biological processes
   
   # load in the count matrix
-
+  
+  if(class(count_file) != "character" & class(count_file) != "data.frame" & class(count_file) != "matrix" ) {
+    stop("count_file must be of class character, data.frame, or matrix.")
+  }
+  if(class(signature_matrix) != "character" & class(signature_matrix) != "data.frame" & class(signature_matrix) != "matrix" ) {
+    stop("count_file must be of class character, data.frame, or matrix.")
+  }
+  if(class(DEG_list) != "character" & class(DEG_list) != "data.frame" & class(DEG_list) != "matrix") {
+    stop("DEG_list must be of class character, data.frame, or matrix.")
+  }
+  if(class(case_grep) != "character" & class(case_grep) != "numeric") {
+    stop("case_grep must be of class character (as a single character designating cases in column names) or of class numeric (integer matrix giving indeces of cases).")
+  }
+  if(class(control_grep) != "character" & class(control_grep) != "numeric") {
+    stop("control_grep must be of class character (as a single character designating controls in column names) or of class numeric (integer matrix giving indeces of controls).")
+  }
+  
+  if(!(theSpecies %in% c("human", "mouse"))) {
+    if(theSpecies != -9) {
+      stop("species_name is not 'human' 'mouse' or '-9' (case sensitive), please try again with this filled.")
+    }
+  }
+  if(class(rda_path) != "character") {
+    stop("rda_path must be of class list.")
+  }
+  if(class(max_proportion_change) != "numeric") {
+    stop("max_proportion_change must be of class numeric.")
+  }
+  
+  # rda_path = "", max_proportion_change = -9, print_plots=T, plot_names="scMappR",theSpecies = "human", output_directory = "scMappR_analysis",sig_matrix_size = 3000, drop_unkown_celltype = TRUE, internet = TRUE, up_and_downregulated = FALSE, gene_label_size = 0.4, number_genes = -9, toSave=FALSE, newGprofiler = FALSE
   
   theSpecies <- tolower(theSpecies)
   if(class(count_file) == "character") {
     norm_counts_i <- utils::read.table(count_file, header = TRUE, as.is = TRUE, sep = "\t")
+    warning("reading in a count file where the first column is expected to be the row names.")    
+    rownames(norm_counts_i) <- norm_counts_i[,1]
+    norm_counts_i <- norm_counts_i[,-1]
   } else {
     norm_counts_i <- count_file
   }
