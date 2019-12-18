@@ -152,9 +152,23 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   if(class(max_proportion_change) != "numeric") {
     stop("max_proportion_change must be of class numeric.")
   }
-  
-  # rda_path = "", max_proportion_change = -9, print_plots=T, plot_names="scMappR",theSpecies = "human", output_directory = "scMappR_analysis",sig_matrix_size = 3000, drop_unkown_celltype = TRUE, internet = TRUE, up_and_downregulated = FALSE, gene_label_size = 0.4, number_genes = -9, toSave=FALSE, newGprofiler = FALSE
-  
+  if(class(plot_names) != "character" ) {
+    stop("plot_names must be of class character.")
+  }
+  if(class(output_directory) != "character") {
+    stop("output_directory must be of class character.")
+  }
+  if(class(sig_matrix_size) != "numeric") {
+    stop("sig_matrix_size is not numeric.")
+  }
+  if(class(gene_label_size) != "numeric") {
+    stop("gene_label_size must be of class numeric.")
+  }
+  if(class(number_genes) != "numeric") {
+    stop("number_genes must be of class numeric.")
+  }
+  if(!any(is.logical(print_plots),is.logical(drop_unkown_celltype),is.logical(internet),is.logical(up_and_downregulated),is.logical(toSave),is.logical(newGprofiler) ))
+
   theSpecies <- tolower(theSpecies)
   if(class(count_file) == "character") {
     norm_counts_i <- utils::read.table(count_file, header = TRUE, as.is = TRUE, sep = "\t")
