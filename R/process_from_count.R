@@ -16,6 +16,7 @@
 #' @param saveALL Save the Seurat object generated (T/F).
 #' @param panglao_set If the function is being used from internal (T/F).
 #' @param toSave Allows scMappR to print files and make directories locally (T/F).
+#' @param use_sctransform If you should use scRNAsform or the normalize/variablefeatures/scaledata pipeline (T/F).
 #' 
 #' @return \code{process_from_count} A processed & integrated Seurat object that has been scaled and clustered. It can be returned as an internal object or also stored as an RData object if neccesary. \cr
 #'
@@ -41,7 +42,7 @@
 #' 
 #' @export
 #' 
-process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = FALSE, saveALL = FALSE, panglao_set = FALSE, toSave = FALSE) {
+process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = FALSE, saveALL = FALSE, panglao_set = FALSE, toSave = FALSE, use_sctransform = FALSE) {
   # This function takes a list of count matrices and returns a seurat object of the count matrices integrated using Seurat V3 and the interation anchors
   # Different options are used for if the function is internal for PanglaoDB dataset reprocessing or being used for a custom set of count matrices.
   # For larger scRNA-seq datasets (~20k + cells), it is likely that this function will be required to run on an hpc.
@@ -55,9 +56,25 @@ process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = 
   # haveUmap =  write a Umap T/F
   # saveALL = save the Seurat object generated T/F
   # Panglao_set = If the function is being used from internal T/F
+  # use_sctransform = If you should use scRNAsform or the normalize/variablefeatures/scaledata pipeline (T/F)
   # Returns:
   # A processed & integrated Seurat object that has been scaled and clustered. It can be returned as an internal object or 
   # also stored as an RData object if neccesary.
+  
+  if(!is.character(name)) {
+    stop("Name is not a character for your outputs, please change the parameter and try again.")
+  }
+    
+  
+  if(class(countmat_list) == "dgCMatrix" | class(countmat_list) == "matrix") {
+    print("'dgTMatrix_list' is of class dgCMatrix or matrix, converting to a named list.", quote = F)
+    countmat_list <- list(name = countmat_list)
+    names(countmat_list) <- name
+  }
+  if(is.null(names(countmat_list))) {
+    warning("List has no names, adding names")
+    names(countmat_list) <- paste0(name,"_",1:length(countmat_list))
+  }
   
   SRA_in <- countmat_list
   
@@ -123,12 +140,41 @@ process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = 
     mean <- mean(pbmc$percent.mt.adj)
     x<- stats::sd(pbmc$percent.mt.adj)
     toremove <- mean + (2*x)
-    if(toremove > 0){
+    
+    if(use_sctransform == FALSE) { # alternative to using scTransform, use the traditional NormalizeData, FindVariableFeatures, and SaleData parameters. 
+                                   # This should be faster and cost less memory
+      
+    if(toremove > 0) {
       pbmc <- pbmc[,which(pbmc$percent.mt.adj < toremove)]
-      pbmc <- Seurat::SCTransform(pbmc, vars.to.regress = "percent.mt.adj", verbose = FALSE)
+      pbmc <- Seurat::NormalizeData(object = pbmc, normalization.method = "LogNormalize",
+                                    scale.factor = 10000)
+      pbmc <- Seurat::FindVariableFeatures(object = pbmc, mean.function = ExpMean, dispersion.function = LogVMR,
+                                           x.low.cutoff = 0.0125, x.high.cutoff = 3, y.cutoff = 0.5, do.plot = FALSE)
+      
+      pbmc <- Seurat::ScaleData(pbmc, vars.to.regress = "percent.mt.adj")
     } else {
-      warning("Dataset has no MT contamination -- this is highly unlikely. Please make sure that MT genes are designated with 'MT-' for human and 'mt-' for mouse. Normalizing on depth and not % mitochondria.")
-      pbmc <- Seurat::SCTransform(pbmc, verbose = FALSE)
+      
+      pbmc <- Seurat::NormalizeData(object = pbmc, normalization.method = "LogNormalize",
+                                    scale.factor = 10000)
+      pbmc <- Seurat::FindVariableFeatures(object = pbmc, mean.function = ExpMean, dispersion.function = LogVMR,
+                                           x.low.cutoff = 0.0125, x.high.cutoff = 3, y.cutoff = 0.5, do.plot = FALSE)
+      
+      pbmc <- Seurat::ScaleData(pbmc)
+      
+    }
+
+    
+    
+    } else {
+      
+      if(toremove > 0){
+        pbmc <- pbmc[,which(pbmc$percent.mt.adj < toremove)]
+        pbmc <- Seurat::SCTransform(pbmc, vars.to.regress = "percent.mt.adj", verbose = FALSE)
+      } else {
+        warning("Dataset has no MT contamination -- this is highly unlikely. Please make sure that MT genes are designated with 'MT-' for human and 'mt-' for mouse. Normalizing on depth and not % mitochondria.")
+        pbmc <- Seurat::SCTransform(pbmc, verbose = FALSE)
+        
+      }
       
     }
     #########

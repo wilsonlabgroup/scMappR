@@ -21,6 +21,7 @@
 #' @param internal Was this used as part of the internal processing of panglao datasets (T/F).
 #' @param toSave Allow scMappR to write files in the current directory (T/F)
 #' @param rda_path If saved, directory to where data from scMappR_data is downloaded.
+#' @param use_sctransform If you should use scRNAsform or the normalize/variablefeatures/scaledata pipeline (T/F).
 #'
 #' @return \code{process_from_count} A processed & integrated Seurat object that has been scaled and clustered. It can be returned as an internal object or also stored as an RData object if neccesary. \cr
 #'
@@ -48,7 +49,7 @@
 #' @export
 #' 
 
-process_dgTMatrix_lists <- function(dgTMatrix_list, name, species_name, naming_preference,rda_path="",  panglao_set = FALSE ,haveUMAP = FALSE, saveSCObject = FALSE, internal = FALSE, toSave = FALSE) {
+process_dgTMatrix_lists <- function(dgTMatrix_list, name, species_name, naming_preference = -9,rda_path="",  panglao_set = FALSE ,haveUMAP = FALSE, saveSCObject = FALSE, internal = FALSE, toSave = FALSE, use_sctransform = FALSE) {
   
   # This function is a one line wrapper to process count matrices into a signature matrix
   # It combines process from count, two methods of identifying cell-type identitt (gsva and fisher's test)
@@ -71,13 +72,46 @@ process_dgTMatrix_lists <- function(dgTMatrix_list, name, species_name, naming_p
   # these are also named by the fisher's exact test method
   # Signature matrices using a -log10(Padj) and fold-changes # in Rdata file
   # It returns the signature matrix of P-values as an R object. 
+  
+  if(!is.character(name)) {
+    stop("Name is not a character for your outputs, please change the parameter and try again.")
+  }
+  
+  
+  if(!(class(dgTMatrix_list) %in% c("dgCMatrix", "matrix", "list"))) {
+    stop("'dgTMatrix_list' is not dgCMatrix, matrix, or list. Please input data in appropriate class.")
+  }
+  
+  if(class(dgTMatrix_list) == "dgCMatrix" | class(dgTMatrix_list) == "matrix") {
+    print("'dgTMatrix_list' is of class dgCMatrix or matrix, converting to a named list.", quote = F)
+    dgTMatrix_list <- list(name = dgTMatrix_list)
+    names(dgTMatrix_list) <- name
+  }
+  if(is.null(names(dgTMatrix_list))) {
+    warning("List has no names, adding names")
+    names(dgTMatrix_list) <- paste0(name,"_",1:length(dgTMatrix_list))
+  }
+  
   sm <- dgTMatrix_list[[1]] # first thing we're going to do is figure out the species if it is currently unknown (mostly for internal)
+  
+  if(!(species_name %in% c("human", "mouse"))) {
+    if(species_name != -9) {
+      stop("species_name is not 'human' 'mouse' or '-9' (case sensitive), please try again with this filled.")
+    }
+  }
+  
   if(species_name == -9) {
     spec=get_gene_symbol(sm)
     species_name <- spec$species
   } 
-  
-  pbmc <- process_from_count(countmat_list = dgTMatrix_list, name = name, theSpecies = species_name, panglao_set = panglao_set, haveUmap = haveUMAP, saveALL  = saveSCObject, toSave=toSave)
+  naming_preferences <- c("brain", "epithelial", "endothelial", "blood", "connective","eye", "epidermis", "Digestive", "Immune", "pancreas", "liver", "reproductive", "kidney", "respiratory") 
+  if(!naming_preference %in% naming_preferences) {
+    if(naming_preferences != -9)
+      print("Naming preference options")
+      print(naming_preferences)
+      stop("Naming preferences not in options (case sensitive) and isn't a non-choice (-9), please try again.")
+  }
+  pbmc <- process_from_count(countmat_list = dgTMatrix_list, name = name, theSpecies = species_name, panglao_set = panglao_set, haveUmap = haveUMAP, saveALL  = saveSCObject, toSave=toSave, use_sctransform = use_sctransform)
   # process from the count matrices to the Seurat object -- see process_from_count for details
   print(class(pbmc))
   #print(head(pbmc))

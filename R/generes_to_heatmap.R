@@ -43,7 +43,7 @@ generes_to_heatmap <- function(generes,
                                species = "human",  
                                naming_preference = -9, 
                                rda_path = "~/scMappR/data", 
-                               make_names = T, 
+                               make_names = TRUE, 
                                internal = FALSE) {
   # take an list of compiled DEGs from different cell types, identify what the cell-types are using the fisher's exact method, and then convert into a signature matrix for both the adjusted p-value and odds ratio
   # Args:
@@ -58,6 +58,31 @@ generes_to_heatmap <- function(generes,
   # Returns:
   # A list containing a signature matrix by rank := -1*log10(Pfdr) and by fold-change (only increasing). 
   # additionally it returns the top (up to) 30 CT markers for each cell-type, as well as the name of each cell-type (from the signature methods method)
+  
+  if(class(generes) != "list") {
+    stop("generes object must be a list.")
+  }
+  
+  if(!(species %in% c("human", "mouse"))) {
+    if(species != -9) {
+      stop("species is not 'human' 'mouse' or '-9' (case sensitive), please try again with this filled.")
+    }
+  }
+  
+  naming_preferences <- c("brain", "epithelial", "endothelial", "blood", "connective","eye", "epidermis", "Digestive", "Immune", "pancreas", "liver", "reproductive", "kidney", "respiratory") 
+  if(!naming_preference %in% naming_preferences) {
+    if(naming_preference != -9)
+      print("Naming preference options")
+    print(naming_preferences)
+    stop("Naming preferences not in options (case sensitive) and isn't a non-choice (-9), please try again.")
+  }
+  if(class(rda_path) != "character") {
+    stop("rda_path must be of class character")
+  }
+  if(!(any(is.logical(make_names), is.logical(internal)))) {
+    stop("make_names and internal must be class logical (TRUE/FALSE)")
+  }
+  
   if(species == -9) {
     # if it's internal and symbols and ENSBML are attached
     for(i in 1:length(generes)) {

@@ -47,8 +47,17 @@ get_gene_symbol <- function(wilcoxon_rank_mat_t) {
   # wilcoxon_rank_mat_t: often a signature matrix but can be any dataframe with rownames such as geneSymbol-Ensembl
   # Returns:
   # A list containing the gene-symbols only as well as if the species is mouse or human
+  
+  if(class(wilcoxon_rank_mat_t) != "matrix") {
+    stop("wilcoxon_rank_mat_t object must be  matrix")
+  }
+  
   the_human <- length(grep("ENSG00", rownames(wilcoxon_rank_mat_t)))
   the_mouse <- length(grep("ENSMUSG00", rownames(wilcoxon_rank_mat_t)))
+  
+  if(the_mouse == 0 & the_human == 0) {
+    stop("Matrix is not internal and this function should not be required. gene symbols of genes, bulk matrix, and signature matrix should already match.")
+  }
   
   #say which species
   if(the_human >= the_mouse) {

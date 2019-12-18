@@ -41,7 +41,7 @@
 #'  
 #' @export
 #' 
-gsva_cellIdentify <- function(pbmc, theSpecies, naming_preference, rda_path = "", toSave = FALSE) {
+gsva_cellIdentify <- function(pbmc, theSpecies, naming_preference = -9, rda_path = "", toSave = FALSE) {
   # this function inputs a Seurat object and uses the average normalized expression of each gene
   # in each cluster to identify cell-types using the gsva method
   # Args: 
@@ -51,6 +51,30 @@ gsva_cellIdentify <- function(pbmc, theSpecies, naming_preference, rda_path = ""
   # rda_path Path to precomputed cell-type gmt files (rda objects).
   # Returns: 
   # A list containing the top cell-type marker for a cell-type using the panglao dataset as well as the cellMarker dataset
+  
+  if(class(pbmc) != "Seurat") {
+    stop("pbmc must be of class 'Seurat'")
+  }
+  
+  naming_preferences <- c("brain", "epithelial", "endothelial", "blood", "connective","eye", "epidermis", "Digestive", "Immune", "pancreas", "liver", "reproductive", "kidney", "respiratory") 
+  if(!naming_preference %in% naming_preferences) {
+    if(naming_preferences != -9)
+      print("Naming preference options")
+    print(naming_preferences)
+    stop("Naming preferences not in options (case sensitive) and isn't a non-choice (-9), please try again.")
+  }
+  if(!(theSpecies %in% c("human", "mouse"))) {
+    if(theSpecies != -9) {
+      stop("theSpecies is not 'human' 'mouse' or '-9' (case sensitive), please try again with this filled.")
+    }
+  }
+  if(class(rda_path) != "character") {
+    stop("rda_path must be of class character.")
+  }
+  if(class(toSave) != "logical") {
+    stop("toSave must be of class logical.")
+  }
+  
   
   avg_expr <- Seurat::AverageExpression(pbmc)
   # identify average expression of clusters  

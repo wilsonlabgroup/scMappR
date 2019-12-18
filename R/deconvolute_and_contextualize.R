@@ -118,16 +118,53 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   
   # load required packages
 
-  
+
+  if(class(count_file) != "character" & class(count_file) != "data.frame" & class(count_file) != "matrix" ) {
+    stop("count_file must be of class character, data.frame, or matrix.")
+  }
+  if(class(odds_ratio_in) != "character" & class(odds_ratio_in) != "data.frame" & class(odds_ratio_in) != "matrix" ) {
+    stop("count_file must be of class character, data.frame, or matrix.")
+  }
+  if(class(DEG_list) != "character" & class(DEG_list) != "data.frame" & class(DEG_list) == "matrix") {
+    stop("DEG_list must be of class character, data.frame, or matrix.")
+  }
+  if(class(case_grep) != "character" & class(case_grep) != "numeric") {
+    stop("case_grep must be of class character (as a single character designating cases in column names) or of class numeric (integer matrix giving indeces of cases).")
+  }
+  if(class(control_grep) != "character" & class(control_grep) != "numeric") {
+    stop("control_grep must be of class character (as a single character designating controls in column names) or of class numeric (integer matrix giving indeces of controls).")
+  }
+
+
+  if(!(any(is.numeric(sig_distort), is.numeric(max_proportion_change), is.numeric(sig_matrix_size)))) {
+    stop("sig_distort, max_proportion_change, and sig_matrix_size must all be of class numeric" )
+  }
+  if(!any(is.logical(print_plots), is.logical(make_scale), is.logical(FC_coef), is.logical(drop_unkown_celltype), is.logical(toSave))) {
+    stop("print_plots, make_scale, FC_coef, drop_unknown_celltype, toSave must all be of class logical." )
+  }
+     
+  if(class(plot_names) != "character") {
+    stop("plot_names must be of class character.")
+  }
+  if(!(theSpecies %in% c("human", "mouse"))) {
+    if(theSpecies != -9) {
+      stop("species_name is not 'human' 'mouse' or '-9' (case sensitive), please try again with this filled.")
+    }
+  }
+    
   rowVars <- function(x) return(apply(x, 1, stats::var)) # get variance of rows, used later
   colMedians <- function(x) return(apply(x, 2, stats::median)) # medians of cols, used later
   # load in normalized count matrices, signature matrix, and DEGs
   if(class(count_file) == "character") {
+    warning("reading count file table, assuming first column is the gene symbols -- not reccomended.")
     norm_counts_i <- utils::read.table(count_file, header = T, as.is = T, sep = "\t")
+    rownames(norm_counts_i) <- norm_counts_i[,1]
+    norm_counts_i <- norm_counts_i[,-1]
   } else {
     norm_counts_i <- count_file
   }
   if(class(signature_matrix) == "character") {
+    warning("loading in signature matrix from Rdata file -- not reccomeneded.")
     load(signature_matrix)
     
   } else {
@@ -138,7 +175,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   } else {
     DEGs <- as.data.frame(DEG_list)
   }
-  
+
   colnames(DEGs) <- c("gene_name", "padj", "log2fc")
   sm <- wilcoxon_rank_mat_or
   

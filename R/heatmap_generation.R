@@ -53,7 +53,7 @@
 #'
 #' @export
 #' 
-heatmap_generation <- function(genesIn, comp, cex = 0.8, rd_path = "~/scMappR/data", cellTypes = "ALL", pVal = 0.01, isPval=TRUE, isMax =F,  isBackground = FALSE,reference = "C:/Users/Dustin Sokolowski/Desktop/romanov_wilcoxon_test_2.RData",  which_species = "human", toSave = FALSE) {
+heatmap_generation <- function(genesIn, comp,reference, cex = 0.8, rd_path = "~/scMappR/data", cellTypes = "ALL", pVal = 0.01, isPval=TRUE, isMax =FALSE,  isBackground = FALSE,  which_species = "human", toSave = FALSE) {
   # This function takes an inputted signature matrix as well as a list of genes and overlaps them. Then, if there is overlap, it prints a heatmap or barplot (depending on the number of overlapping genes)
   # Then, for every cell-type, genes considered over-represented are saved in a list
   
@@ -73,16 +73,46 @@ heatmap_generation <- function(genesIn, comp, cex = 0.8, rd_path = "~/scMappR/da
   # A heatmap/barplot of p-value or odds-ratio of cell-type specific genes intersecting with the gene list
   # a list of genes that do/don't intersect with the signature matrix as well as a list of which cell-type these over-represented genes live in.
   
-  print(paste0("assumes inputted gene symbols are of ", which_species, " origin."))
-  if(class(genesIn) != "character") stop("Error: inputted gene list is not character vector")
- 
+  print(paste0("Assumes inputted gene symbols are of ", which_species, " origin."))
+  if(class(genesIn) != "character") {
+    stop("Inputted gene list is not character vector")
+  }
+  if(class(comp) != "character") {
+    stop("comp must be of class caracter.")
+  }
+  if(class(cex) != "numeric") {
+    stop("cex must be a numeric between 0 and 1")
+  }
+  if(cex < 0) {
+    warning("cex < 0, setting to 0.001 (essentially invisible)") 
+    cex <- 0.001
+  }
+
+  if(class(reference) != "data.frame" & class(reference) != "matrix") {
+    stop("Reference must be of class data.frame or matrix.")
+  }
+  # cellTypes = "ALL", pVal = 0.01, isPval=TRUE, isMax =FALSE,  isBackground = FALSE,  which_species = "human", toSave = FALSE
+  if(class(cellTypes) != "character") {
+    stop("cellTypes should be of class character -- either column names of cell-types to include or 'ALL' -- ALL is reccomended.")
+  }
+  if(class(pVal) != "numeric") {
+    stop("val must be of class numeric.")
+  }
+  if(!(any(is.logical(isMax), is.logical(isPval),is.logical(isBackground),is.logical(toSave)))) {
+    stop("isMax, isBackground, toSave, and isPval must be of class logical (TRUE/FALSE).")
+  }
+  if(class(rd_path) != "character") {
+    stop("rd_path must be of class character.")
+  }
+    
+  if(!(which_species %in% c("human", "mouse"))) {
+    stop("which_species must be either 'human' or 'mouse' (case sensitive).")
+  }
+  
   if(class(reference) == "data.frame") reference <- as.matrix(reference)
   if(class(reference) == "matrix") { # then you have a custom signature matrix or it's pre-loaded into R
     wilcoxon_rank_mat_t <- reference  
-  } else {
-    if(class(reference) != "character") stop("Error: reference was not in matrix format or name of signature matrix RData file")
-    load(reference) 
-    
+  }
     wilcoxon_rank_mat_t <- wilcoxon_rank_mat_t[!duplicated(rownames(wilcoxon_rank_mat_t)),]
     if(length(grep("-", rownames(wilcoxon_rank_mat_t))) / length(rownames(wilcoxon_rank_mat_t)) > 0.75) {  
       print("Detected signature matrix from scMappR catelogue", quote = FALSE)
@@ -90,11 +120,13 @@ heatmap_generation <- function(genesIn, comp, cex = 0.8, rd_path = "~/scMappR/da
       
       rownames(wilcoxon_rank_mat_t) <- RN_2$rowname
       
+    } else {
+      RN_2 <- list(rowname = rownames(wilcoxon_rank_mat_t), species = which_species)
     }
     if(which_species != RN_2$species ) { # convert background species to your species (internal only)
       
       warning(paste0("Species in signature matrix, ",RN_2$species, " is not the same as the inputted gene species ", which_species,"."))
-      warning(paste0( "converting gene symbols in background from ",RN_2$species, " to ", which_species))
+      warning(paste0( "Converting gene symbols in background from ",RN_2$species, " to ", which_species))
       
       
       
@@ -114,7 +146,7 @@ heatmap_generation <- function(genesIn, comp, cex = 0.8, rd_path = "~/scMappR/da
         #
       } else {
         load(paste0(rd_path,"/bioMart_ortholog_human_mouse.rda"))
-      }
+      
       
       rownames(bioMart_orthologs) <- bioMart_orthologs[,RN_2$species]
       RN <- rownames(wilcoxon_rank_mat_t)
@@ -131,7 +163,7 @@ heatmap_generation <- function(genesIn, comp, cex = 0.8, rd_path = "~/scMappR/da
   
   
   if(any(duplicated(colnames(wilcoxon_rank_mat_t)))) { # if cell-types are named the same (i.e. two clusters have the same tag then convert)
-    print("cell-types not uniquely named, appending tag to make all cell-types unique")
+    print("Cell-types not uniquely named, appending tag to make all cell-types unique")
     colnames(wilcoxon_rank_mat_t) <- paste0(colnames(wilcoxon_rank_mat_t),"_tag",1:ncol(wilcoxon_rank_mat_t))
     
   }
@@ -142,10 +174,10 @@ heatmap_generation <- function(genesIn, comp, cex = 0.8, rd_path = "~/scMappR/da
   genes_noInter <- genesIn[!(genesIn %in% genesInter)]
   geneHeat <- c()
   if(isBackground == TRUE) {
-    print("preferential expression in background set: ")
+    print("Preferential expression in background set: ")
   }
   if(isBackground == FALSE) {
-    print("preferential expression in inputted gene list: ")
+    print("Preferential expression in inputted gene list: ")
   }
   if(length(whichGenesInter) == 0) { # if no genes inputted are preferentially expressed
     print("No input genes are preferentially expressed")
@@ -163,7 +195,7 @@ heatmap_generation <- function(genesIn, comp, cex = 0.8, rd_path = "~/scMappR/da
     return("No_downstream_analysis")
   }
   if(length(whichGenesInter) > 1) { # if > 1 genes are
-    print("at least one input gene is preferentially expressed")
+    print("At least one input gene is preferentially expressed")
     # make the heatmap
     if(toSave == TRUE) {
     myheatcol <- grDevices::colorRampPalette(c("lightblue", "white", "orange"))(256)

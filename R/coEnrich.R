@@ -60,6 +60,14 @@ coEnrich <- function(sig, gene_list_heatmap, background_heatmap, study_name, out
   # output_directory = the name of the directory where co-enrich will be completed
   # Returns:
   # Enrichment of cell-types that are expressed by the same genes, from 2-5 sets of cell-types.
+  
+  if(any(is.null(sig), is.null(gene_list_heatmap), is.null(background_heatmap), is.null(study_name), is.null(outDir))) {
+    stop("One of the arguments is NULL suggesting that this function is not being run internally.")
+  } 
+  if(!is.logical(toSave)) {
+    stop("toSave is not a logical object (TRUE/FALSE)")
+  }
+  
   if(nrow(sig) > 5) {
     sig <- sig[1:5,]
   }

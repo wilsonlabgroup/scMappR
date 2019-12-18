@@ -69,6 +69,24 @@ gProfiler_STV <- function(STV_matrix, species , background , gene_cut, newGprofi
   # Returns:
   # A List of significantly enriched pathways and TFs (correction_method = FDR, hier_sorting = moderate), for every cell-type
   
+  if(class(STV_matrix) != "data.frame") {
+    stop("STV_matrix much be a class == data.frame of scMappR Transformed Values from the deconvolute_and_contextualize function.")
+  }
+  if(class(background) != "character") {
+    stop("background must be class == character of gene symbols as a background for gprofiler")
+  }
+  if(class(gene_cut) != "numeric") {
+    stop("gene_cut must be a positive integer giving the numer of top genes for gprofiler or -9 if not used.")
+  }
+  if(!(is.logical(newGprofiler))) {
+    stop("newGprofiler must be logical (TRUE/FALSE)")
+  }
+  
+  if(!(species %in% c("human", "mouse"))) {
+    if(species != -9) {
+      stop("species is not 'human' 'mouse' or '-9' (case sensitive), please try again with this filled.")
+    }
+  }
   
   if(species == "human") {
     print("Assuming species = Human", quote = FALSE)

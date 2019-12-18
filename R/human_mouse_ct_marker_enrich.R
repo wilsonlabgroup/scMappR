@@ -62,6 +62,29 @@ human_mouse_ct_marker_enrich <- function(gene_lists, theSpecies = "human",cell_m
   # MarkerSets: the gene set enrichment for each cell-type (to see what was the second/third most significant etc)
   # cellTypes: The top cell-type for each marker
   
+  if(class(gene_lists) != "list") {
+    stop("gene_lists obect must be of class list.")
+  }
+  
+  naming_preferences <- c("brain", "epithelial", "endothelial", "blood", "connective","eye", "epidermis", "Digestive", "Immune", "pancreas", "liver", "reproductive", "kidney", "respiratory") 
+  if(!naming_preference %in% naming_preferences) {
+    if(naming_preferences != -9)
+      print("Naming preference options")
+    print(naming_preferences)
+    stop("Naming preferences not in options (case sensitive) and isn't a non-choice (-9), please try again.")
+  }
+  if(class(gene_lists) != "list") {
+    stop("gene_lists is not a list, please try again.")
+  }
+  if(!(species_name %in% c("human", "mouse"))) {
+    if(species_name != -9) {
+      stop("species_name is not 'human' 'mouse' or '-9' (case sensitive), please try again with this filled.")
+    }
+  }
+  if(class(cell_marker_path) != "character") {
+    stop("cell_marker_path must be of class character.")
+  }
+  
   gmt_list <- "" # for CRAN dependencies
   cell_preference_final <- "" # for CRAN dependencies
   

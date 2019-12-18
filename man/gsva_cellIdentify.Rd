@@ -7,7 +7,7 @@
 gsva_cellIdentify(
   pbmc,
   theSpecies,
-  naming_preference,
+  naming_preference = -9,
   rda_path = "",
   toSave = FALSE
 )

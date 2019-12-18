@@ -8,13 +8,14 @@ process_dgTMatrix_lists(
   dgTMatrix_list,
   name,
   species_name,
-  naming_preference,
+  naming_preference = -9,
   rda_path = "",
   panglao_set = FALSE,
   haveUMAP = FALSE,
   saveSCObject = FALSE,
   internal = FALSE,
-  toSave = FALSE
+  toSave = FALSE,
+  use_sctransform = FALSE
 )
 }
 \arguments{
@@ -37,12 +38,14 @@ process_dgTMatrix_lists(
 \item{internal}{Was this used as part of the internal processing of panglao datasets (T/F).}
 
 \item{toSave}{Allow scMappR to write files in the current directory (T/F)}
+
+\item{use_sctransform}{If you should use scRNAsform or the normalize/variablefeatures/scaledata pipeline (T/F).}
 }
 \value{
 \code{process_from_count} A processed & integrated Seurat object that has been scaled and clustered. It can be returned as an internal object or also stored as an RData object if neccesary. \cr
 }
 \description{
-This function takes a list of count matrices, procces them, calls cell-types, and genreates signature matrices. much of the data is kept.
+This function takes a list of count matrices, processes them, calls cell-types, and genreates signature matrices. much of the data is kept.
 }
 \details{
 This function is a one line wrapper to process count matrices into a signature matrix.

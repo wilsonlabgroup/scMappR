@@ -11,7 +11,8 @@ process_from_count(
   haveUmap = FALSE,
   saveALL = FALSE,
   panglao_set = FALSE,
-  toSave = FALSE
+  toSave = FALSE,
+  use_sctransform = FALSE
 )
 }
 \arguments{
@@ -28,6 +29,8 @@ process_from_count(
 \item{panglao_set}{If the function is being used from internal (T/F).}
 
 \item{toSave}{Allows scMappR to print files and make directories locally (T/F).}
+
+\item{use_sctransform}{If you should use scRNAsform or the normalize/variablefeatures/scaledata pipeline (T/F).}
 }
 \value{
 \code{process_from_count} A processed & integrated Seurat object that has been scaled and clustered. It can be returned as an internal object or also stored as an RData object if neccesary. \cr

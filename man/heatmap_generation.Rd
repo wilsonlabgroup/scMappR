@@ -7,14 +7,14 @@
 heatmap_generation(
   genesIn,
   comp,
+  reference,
   cex = 0.8,
   rd_path = "~/scMappR/data",
   cellTypes = "ALL",
   pVal = 0.01,
   isPval = TRUE,
-  isMax = F,
+  isMax = FALSE,
   isBackground = FALSE,
-  reference = "C:/Users/Dustin Sokolowski/Desktop/romanov_wilcoxon_test_2.RData",
   which_species = "human",
   toSave = FALSE
 )
@@ -23,6 +23,8 @@ heatmap_generation(
 \item{genesIn}{A list of gene symbols (all caps) to have their cell type enrichment.}
 
 \item{comp}{The name of the comparison.}
+
+\item{reference}{Path to signature matrix or the signature matrix itself.}
 
 \item{cex}{The size of the genes in the column label for the heatmap.}
 
@@ -37,8 +39,6 @@ heatmap_generation(
 \item{isMax}{If you are taking the single best CT marker (T/F) -- TRUE not reccomended.}
 
 \item{isBackground}{If the heatmap is from the entire signature matrix or just the inputted gene list (T/F). isBackground == TRUE is used for internal.}
-
-\item{reference}{Path to signature matrix or the signature matrix itself.}
 
 \item{which_species}{Species of gene symbols -- "human" or "mouse" .}
 
