@@ -40,7 +40,7 @@ toNum <- function(x) {
   # x = vector that is character, factor, or numeric
   # Returns
   # Vector as a numeric 
-  if(class(x) %in% c("character", "factor", "numeric")) {
+  if(!(class(x) %in% c("character", "factor", "numeric"))) {
     stop("x must be in class character, factor, or numeric")
   }
   
