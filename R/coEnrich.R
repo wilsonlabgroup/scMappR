@@ -1,8 +1,8 @@
-#' Identify co-expressed cell-types.
+#' Identify co-expressed cell-types
 #'
 #' This function identifies genes with similar cell-type markers and if those markers are driving enrichment.
 #'
-#' This function takes significantly enriched cell-types from the single CT enrich before testing to see if the genes driving their enrichment are overlapping.
+#' This function takes significantly enriched cell-types from the single)CT_enrich before testing to see if the genes driving their enrichment are overlapping to a significant proportion.
 #' To save computational time and to not complete this with an incredible number of permutations, scMappR stops at overlapping 5 cell-types.
 #'
 #'
@@ -11,10 +11,10 @@
 #'
 #' @param sig A The number of combinations of significant cell-types to enrich.
 #' @param gene_list_heatmap Signature matrix of inputted genes in heatmap and the cell-type preferences -- output of heatmap generation.
-#' @param background_heatmap  Signature matrix of background matrix in heatmap and cell-type preferences -- output of heatmap generation.
+#' @param background_heatmap Signature matrix of background matrix in heatmap and cell-type preferences -- output of heatmap generation.
 #' @param study_name Name of the outputted table.
 #' @param outDir Name of the directory this table will be printed in.
-#' @param toSave Allow scMappR to write files in the current directory (T/F)
+#' @param toSave Allow scMappR to write files in the current directory (T/F).
 #'
 #' @return \code{coEnrich} Enrichment of cell-types that are expressed by the same genes, from 2-5 sets of cell-types. \cr
 #'

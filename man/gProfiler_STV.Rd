@@ -15,16 +15,16 @@ gProfiler_STV(STV_matrix, species, background, gene_cut, newGprofiler)
 
 \item{gene_cut}{The top number of genes in pathway analysis.}
 
-\item{newGprofiler}{Using gProfileR or gprofiler2, T/F}
+\item{newGprofiler}{Using gProfileR or gprofiler2, (T/F).}
 }
 \value{
 \code{gProfiler_STV} A List of significantly enriched pathways and TFs (correction_method = FDR, hier_sorting = moderate), for every cell-type. \cr
 }
 \description{
-This function runs through each list of STV's and completes both pathway and TF enrichment.
+This function runs through each list of scMappR Transformed Values (STV)'s and completes both pathway and Transcription Factor (TF) enrichment.
 }
 \details{
-This function takes a matrix of scMappR_Transformed_Values and a species (Human, mouse, or a character directly compatible with g:ProfileR).
+This function takes a matrix of scMappR_Transformed_Values and a species (human, mouse, or a character directly compatible with g:ProfileR).
 Before completing pathway analysis with g:ProfileR. Enriched pathways are stored in a list and returned.
 }
 \examples{

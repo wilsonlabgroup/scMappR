@@ -2,7 +2,7 @@
 % Please edit documentation in R/coEnrich.R
 \name{coEnrich}
 \alias{coEnrich}
-\title{Identify co-expressed cell-types.}
+\title{Identify co-expressed cell-types}
 \usage{
 coEnrich(
   sig,
@@ -24,7 +24,7 @@ coEnrich(
 
 \item{outDir}{Name of the directory this table will be printed in.}
 
-\item{toSave}{Allow scMappR to write files in the current directory (T/F)}
+\item{toSave}{Allow scMappR to write files in the current directory (T/F).}
 }
 \value{
 \code{coEnrich} Enrichment of cell-types that are expressed by the same genes, from 2-5 sets of cell-types. \cr
@@ -33,7 +33,7 @@ coEnrich(
 This function identifies genes with similar cell-type markers and if those markers are driving enrichment.
 }
 \details{
-This function takes significantly enriched cell-types from the single CT enrich before testing to see if the genes driving their enrichment are overlapping.
+This function takes significantly enriched cell-types from the single)CT_enrich before testing to see if the genes driving their enrichment are overlapping to a significant proportion.
 To save computational time and to not complete this with an incredible number of permutations, scMappR stops at overlapping 5 cell-types.
 }
 \examples{

@@ -1,16 +1,16 @@
 #' Plot g:ProfileR Barplot (TF)
 #' 
-#' Make a barplot of the top transcription factors enriched by g:ProfileR
+#' Make a barplot of the top transcription factors enriched by g:ProfileR.
 #'
 #' This function takes a g:ProfleR output and prints the top "top_tfs" most significantly
-#' enriched P-values before plotting the rank of their P-values
+#' enriched P-values before plotting the rank of their P-values.
 #'
 #'
 #' @rdname make_TF_barplot
 #' @name make_TF_barplot
 #'
-#' @param ordered_back_all_tf output of the g:ProfileR function
-#' @param top_tf The number of pathways you want to plot
+#' @param ordered_back_all_tf Output of the g:ProfileR function.
+#' @param top_tf The number of pathways you want to plot.
 #' 
 #' @return \code{make_TF_barplot} A barplot of the number of "top_tf" tf names (not motifs), ranked by -log10(Pfdr). \cr
 #' 

@@ -27,10 +27,10 @@ gsva_cellIdentify(
 \code{gsva_cellIdentify} A list containing the top cell-type marker for a cell-type using the panglao dataset as well as the cellMarker dataset. \cr
 }
 \description{
-This function computes the mean expression of every cell-typ before predicting the most likely cell-type using the GSVA method.s
+This function computes the mean expression of every cell-typ before predicting the most likely cell-type using the GSVA method.
 }
 \details{
-This function inputs a Seurat object and uses the average normalized expression of each gene in each cluster to identify cell-types using the gsva method.
+This function inputs a Seurat object and uses the average normalized expression of each gene in each cluster to identify cell-types using the GSVA method.
 }
 \examples{
 \donttest{

@@ -222,7 +222,7 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
       background_genes <- rownames(wilcoxon_rank_mat_t)
       theSpecies <- species
     } else {
-      sym <- get_gene_symbol(wilcoxon_rank_mat_t) # get the species and shave on ensembl symbol
+      sym <- RN_2 # get the species and shave on ensembl symbol
       
       background_genes <- sym$rowname # genes of background
       theSpecies <- sym$species # name of species

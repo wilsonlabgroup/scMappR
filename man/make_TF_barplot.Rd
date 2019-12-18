@@ -7,19 +7,19 @@
 make_TF_barplot(ordered_back_all_tf, top_tf = 5)
 }
 \arguments{
-\item{ordered_back_all_tf}{output of the g:ProfileR function}
+\item{ordered_back_all_tf}{Output of the g:ProfileR function.}
 
-\item{top_tf}{The number of pathways you want to plot}
+\item{top_tf}{The number of pathways you want to plot.}
 }
 \value{
 \code{make_TF_barplot} A barplot of the number of "top_tf" tf names (not motifs), ranked by -log10(Pfdr). \cr
 }
 \description{
-Make a barplot of the top transcription factors enriched by g:ProfileR
+Make a barplot of the top transcription factors enriched by g:ProfileR.
 }
 \details{
 This function takes a g:ProfleR output and prints the top "top_tfs" most significantly
-enriched P-values before plotting the rank of their P-values
+enriched P-values before plotting the rank of their P-values.
 }
 \examples{
 \donttest{

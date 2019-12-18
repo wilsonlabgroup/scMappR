@@ -2,8 +2,8 @@
 #' 
 #' This function completes pathway enrichment of STVs and bulk gene list.
 #'
-#' Internal: Pathway analysis od DEGs and STVs for each cell-type. Returns RData objects of differential analysis as well as plots of the top bulk pathways.
-#' It is a wrapper for making barplots, bulk pathway analysis, and gProfiler_STV
+#' Internal: Pathway analysis of Differentially expressed genes (DEGs) and scMappR Transcription Values (STVs) for each cell-type. Returns RData objects of differential analysis as well as plots of the top bulk pathways.
+#' It is a wrapper for making barplots, bulk pathway analysis, and gProfiler_STV.
 #' 
 #' @rdname pathway_enrich_internal
 #' @name pathway_enrich_internal
@@ -18,7 +18,7 @@
 #' @param newGprofiler Whether to use g:ProfileR or gprofiler2 (T/F).
 #' @param toSave Allow scMappR to write files in the current directory (T/F).
 #' 
-#' @return \code{pathway_enrich_internal} Plots and pathway enrichment of bulk DE and STVs. \cr
+#' @return \code{pathway_enrich_internal} Plots and pathway enrichment of bulk DEGs and STVs. \cr
 #' 
 #' @importFrom ggplot2 ggplot aes geom_boxplot geom_text theme coord_flip labs element_text
 #' @importFrom gplots heatmap.2

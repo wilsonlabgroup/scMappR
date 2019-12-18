@@ -36,14 +36,14 @@ pathway_enrich_internal(
 \item{toSave}{Allow scMappR to write files in the current directory (T/F).}
 }
 \value{
-\code{pathway_enrich_internal} Plots and pathway enrichment of bulk DE and STVs. \cr
+\code{pathway_enrich_internal} Plots and pathway enrichment of bulk DEGs and STVs. \cr
 }
 \description{
 This function completes pathway enrichment of STVs and bulk gene list.
 }
 \details{
-Internal: Pathway analysis od DEGs and STVs for each cell-type. Returns RData objects of differential analysis as well as plots of the top bulk pathways.
-It is a wrapper for making barplots, bulk pathway analysis, and gProfiler_STV
+Internal: Pathway analysis of Differentially expressed genes (DEGs) and scMappR Transcription Values (STVs) for each cell-type. Returns RData objects of differential analysis as well as plots of the top bulk pathways.
+It is a wrapper for making barplots, bulk pathway analysis, and gProfiler_STV.
 }
 \examples{
 \donttest{

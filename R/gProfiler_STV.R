@@ -1,8 +1,8 @@
 #' Pathway enrichment for STV's
 #' 
-#' This function runs through each list of STV's and completes both pathway and TF enrichment.
+#' This function runs through each list of scMappR Transformed Values (STV)'s and completes both pathway and Transcription Factor (TF) enrichment.
 #'
-#' This function takes a matrix of scMappR_Transformed_Values and a species (Human, mouse, or a character directly compatible with g:ProfileR).
+#' This function takes a matrix of scMappR_Transformed_Values and a species (human, mouse, or a character directly compatible with g:ProfileR).
 #' Before completing pathway analysis with g:ProfileR. Enriched pathways are stored in a list and returned.
 #'
 #' @rdname gProfiler_STV
@@ -12,7 +12,7 @@
 #' @param species Human, mouse, or a charcter that is compatible with gProfileR.
 #' @param background A list of background genes to test against.
 #' @param gene_cut The top number of genes in pathway analysis.
-#' @param newGprofiler Using gProfileR or gprofiler2, T/F
+#' @param newGprofiler Using gProfileR or gprofiler2, (T/F).
 #' 
 #' @return \code{gProfiler_STV} A List of significantly enriched pathways and TFs (correction_method = FDR, hier_sorting = moderate), for every cell-type. \cr
 #' 

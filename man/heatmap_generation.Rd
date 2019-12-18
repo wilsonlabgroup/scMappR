@@ -49,8 +49,8 @@ heatmap_generation(
 }
 \description{
 This function takes an inputted signature matrix as well as a list of genes and overlaps them.
- Then, if there is overlap, it prints a heatmap or barplot (depending on the number of overlapping genes)
- Then, for every cell-type, genes considered over-represented are saved in a list
+ Then, if there is overlap, it prints a heatmap or barplot (depending on the number of overlapping genes).
+ Then, for every cell-type, genes considered over-represented are saved in a list.
 }
 \examples{
 
