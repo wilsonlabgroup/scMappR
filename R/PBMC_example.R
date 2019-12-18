@@ -1,6 +1,6 @@
 #' PBMC_scMappR
 #' 
-#' Data for scMappR_and_pathway_analysis example
+#' Data for scMappR_and_pathway_analysis example.
 #'
 #' A named list called "PBMC_example", containing the count data, signature matrix, and DEGs. The count data and signature matrix are shortened to fit the size of the package and do not reflect the paper.
 #'
