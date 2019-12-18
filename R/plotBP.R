@@ -68,6 +68,22 @@ plotBP <- function(ordered_back_all, top_bp = 10) {
   # Returns:
   # A barplot of the number of "top_bp" pathways, ranked by -log10(Pfdr)
   
+  if(class(ordered_back_all) != "data.frame" & class(ordered_back_all) != "matrix") {
+    stop("ordered_back_all_tf must be of class data.frame or matrix")
+  }
+  if(class(ordered_back_all) == "matrix") {
+    warning("converting ordered_back_all_tf matrix to dataframe") 
+    ordered_back_all <- as.data.frame(ordered_back_all) 
+    
+  }
+  if(!("term_name" %in% colnames(ordered_back_all)) | !("p_value" %in% colnames(ordered_back_all)) ) {
+    stop("ordered_back_all must contain two columns, term_name and p_vale")
+  }
+  if(class(top_bp) != "numeric") {
+    stop("top_bp must be of class numeric.")
+  }
+  
+  
   if(nrow(ordered_back_all) == 0) {
     g <- ggplot2::ggplot() + ggplot2::geom_bar(stat = "identity", fill = "mediumpurple") + ggplot2::coord_flip() +  ggplot2::labs(y = "-log10(Padj)", x = "Gene Ontology") 
     y <- g + ggplot2::theme(axis.text.x = ggplot2::element_text(face=NULL, color="black", 

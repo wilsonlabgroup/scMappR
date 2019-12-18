@@ -99,7 +99,16 @@ process_dgTMatrix_lists <- function(dgTMatrix_list, name, species_name, naming_p
       stop("species_name is not 'human' 'mouse' or '-9' (case sensitive), please try again with this filled.")
     }
   }
+  if(class(rda_path) != "character" ) {
+    stop("rda_path must be of class character.")
+  }
   
+  # panglao_set = FALSE ,haveUMAP = FALSE, saveSCObject = FALSE, internal = FALSE, toSave = FALSE, use_sctransform = FALSE)
+
+  if(!(any(is.logical(panglao_set),is.logical(haveUMAP),is.logical(saveSCObject),is.logical(internal),is.logical(panglao_set),is.logical(toSave),is.logical(use_sctransform)))) {
+    stop("panglao_set, haveUMAP, saveSCObject, internal, toSave, and use_sctransform must all be of class logical.")
+  }
+    
   if(species_name == -9) {
     spec=get_gene_symbol(sm)
     species_name <- spec$species

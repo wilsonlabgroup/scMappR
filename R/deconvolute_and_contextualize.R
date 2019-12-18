@@ -125,7 +125,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   if(class(signature_matrix) != "character" & class(signature_matrix) != "data.frame" & class(signature_matrix) != "matrix" ) {
     stop("count_file must be of class character, data.frame, or matrix.")
   }
-  if(class(DEG_list) != "character" & class(DEG_list) != "data.frame" & class(DEG_list) == "matrix") {
+  if(class(DEG_list) != "character" & class(DEG_list) != "data.frame" & class(DEG_list) != "matrix") {
     stop("DEG_list must be of class character, data.frame, or matrix.")
   }
   if(class(case_grep) != "character" & class(case_grep) != "numeric") {
