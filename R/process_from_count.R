@@ -64,7 +64,10 @@ process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = 
   if(!is.character(name)) {
     stop("Name is not a character for your outputs, please change the parameter and try again.")
   }
-    
+  
+  if(class(countmat_list) != "dgCMatrix" & class(countmat_list) != "matrix" & class(countmat_list) != "list") {
+    stop("countmat_list must be of class dgCMatrix, matrix, or list.")
+  }  
   
   if(class(countmat_list) == "dgCMatrix" | class(countmat_list) == "matrix") {
     print("'dgTMatrix_list' is of class dgCMatrix or matrix, converting to a named list.", quote = F)
