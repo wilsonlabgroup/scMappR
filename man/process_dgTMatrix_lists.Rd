@@ -42,16 +42,16 @@ process_dgTMatrix_lists(
 \item{use_sctransform}{If you should use scRNAsform or the normalize/variablefeatures/scaledata pipeline (T/F).}
 }
 \value{
-\code{process_from_count} A processed & integrated Seurat object that has been scaled and clustered. It can be returned as an internal object or also stored as an RData object if neccesary. \cr
+\code{process_dgTMatrix_lists} Signature matrices populated with rank and odds-ratio. If toSave is considered TRUE, then cell-type names from GSVA and the cell-type names are printed. saveSCObject = TRUE will also save the Seurat object. \cr
 }
 \description{
-This function takes a list of count matrices, processes them, calls cell-types, and genreates signature matrices. much of the data is kept.
+This function takes a list of count matrices, processes them, calls cell-types, and genreates signature matrices.
 }
 \details{
 This function is a one line wrapper to process count matrices into a signature matrix.
-It combines process from count, two methods of identifying cell-type identitt (gsva and fisher's test).
-Then, it takes the output of cell-type markers and converts it into a signature matrix of P-value ranks and odds-ratios.
-Along the way, it saves the Seurat object (if you choose), cell-type identites from gsva (it's own obect), and the signature matrices.
+It combines process_from_count, two methods of identifying cell-type identitt (GSVA and Fisher's test).
+Then, it takes the output of cell-type markers and converts it into a signature matrix of P-value ranks and Odds-ratios.
+Along the way, it saves the Seurat object (if chosen with saveSCObject), cell-type identites from GSVA (it's own obect), and the signature matrices.
 Cell-type marker outputs are also saved in the generes.RData list. Names of the generes objects and the signature matrices are kept.
 }
 \examples{

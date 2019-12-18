@@ -1,6 +1,6 @@
 #' Consensus cell-type naming (Fisher's Exact)
 #'
-#' This function completes the Fisher's exact test cell-type naming for all cell-types
+#' This function completes the Fisher's exact test cell-type naming for all cell-types.
 #' 
 #' Fisher's exact test method of cell-type identification using the Panglao and CellMarker databases. It extracts significant pathways (pFDR < 0.05).
 #' Then, if naming_preference != -9, it will extract the enriched cell-types within the cell-types identified with the naming preferences option.
@@ -9,12 +9,12 @@
 #' @rdname human_mouse_ct_marker_enrich
 #' @name human_mouse_ct_marker_enrich
 #'
-#' @param gene_lists A named list of vectors containing cell-type markers (mouse or human gene-symbols) which will be named as a cell-type via the fish'er sexact test method.
-#' @param theSpecies The species of the gene symbols: human or mouse.
+#' @param gene_lists A named list of vectors containing cell-type markers (mouse or human gene-symbols) which will be named as a cell-type via the Fisher's exact test method.
+#' @param theSpecies The species of the gene symbols: "human" or "mouse".
 #' @param cell_marker_path If local, path to Cell-Type marker rda files, otherwise, we will try to download datafiles.
 #' @param naming_preference Either -9 if there is no expected cell-type or one of the categories from get_naming_preference_options(). This is useful if you previously have an idea of which cell-type you were going to enrich.
 #'
-#' @return \code{human_mouse_ct_marker_enrich} list: The top cell-type for each cell-type markers list, as well as a matrix the top 5 most likely cell-type makers for each gene list (with OR and P-val) \cr
+#' @return \code{human_mouse_ct_marker_enrich} list: The top cell-type for each cell-type markers list, as well as a matrix the top 5 most likely cell-type makers for each gene list (with OddsRatio and P-value). \cr
 #'
 #' @importFrom ggplot2 ggplot aes geom_boxplot geom_text theme coord_flip labs element_text
 #' @importFrom gplots heatmap.2

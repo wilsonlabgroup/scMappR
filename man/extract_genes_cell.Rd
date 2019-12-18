@@ -13,15 +13,15 @@ extract_genes_cell(
 )
 }
 \arguments{
-\item{geneHeat}{The heatmap of ranks from your scRNA-seq dataset with your genes subsetted}
+\item{geneHeat}{The heatmap of ranks from your scRNA-seq dataset with your genes subsetted.}
 
-\item{cellTypes}{The cell-types that you're interested in extracting. They need to be colnames (not-case sensitive)}
+\item{cellTypes}{The cell-types that you're interested in extracting. They need to be colnames (not-case sensitive).}
 
-\item{val}{How associated a gene is with a particualr cell type to include in your list - default is slightly}
+\item{val}{How associated a gene is with a particualr cell type to include in your list - default is slightly.}
 
-\item{isMax}{If you are taking the single best CT marker (T/F) -- TRUE not reccomended}
+\item{isMax}{If you are taking the single best CT marker (T/F) -- TRUE not reccomended.}
 
-\item{isPvalue}{If the signature matrix is raw p-value (T/F) -- TRUE not reccomended}
+\item{isPvalue}{If the signature matrix is raw p-value (T/F) -- TRUE not reccomended.}
 }
 \value{
 \code{extract_genes_cell} A list of genes above the threshold for each sample. \cr

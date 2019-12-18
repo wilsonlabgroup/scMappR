@@ -1,9 +1,9 @@
 #' Count Matrix To Seurat Object
 #'
-#' This function processes a list of count matrices (same species/gene symbols in each list) and converts them to a Seurat object
+#' This function processes a list of count matrices (same species/gene symbols in each list) and converts them to a Seurat object.
 #' 
-#' This function takes a list of count matrices and returns a seurat object of the count matrices integrated using Seurat V3 and the interation anchors
-#' Different options are used for if the function is internal for PanglaoDB dataset reprocessing or being used for a custom set of count matrices.
+#' This function takes a list of count matrices and returns a seurat object of the count matrices integrated using Seurat V3 (with sctransform and integration-anchors).
+#' Different options are used when the function is being ran internally (i.e. reprocessing count matrices from PanglaoDB) or if it is running from custom scNRA-seq data.
 #' For larger scRNA-seq datasets (~20k + cells), it is likely that this function will be required to run on an hpc.
 #'
 #' @rdname process_from_count
@@ -18,7 +18,7 @@
 #' @param toSave Allows scMappR to print files and make directories locally (T/F).
 #' @param use_sctransform If you should use scRNAsform or the normalize/variablefeatures/scaledata pipeline (T/F).
 #' 
-#' @return \code{process_from_count} A processed & integrated Seurat object that has been scaled and clustered. It can be returned as an internal object or also stored as an RData object if neccesary. \cr
+#' @return \code{process_from_count} A processed and integrated Seurat object that has been scaled and clustered. It can be returned as an internal object or also stored as an RData object if neccesary. \cr
 #'
 #' @importFrom ggplot2 ggplot aes geom_boxplot geom_text theme coord_flip labs element_text
 #' @importFrom gplots heatmap.2

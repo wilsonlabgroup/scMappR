@@ -1,16 +1,16 @@
 #' Plot g:ProfileR Barplot
 #' 
-#' Make a barplot of the top biological factors enriched by g:ProfileR
+#' Make a barplot of the top biological factors enriched by g:ProfileR.
 #'
 #' This function takes a g:ProfleR output and prints the top "top_bp" most significantly
-#' enriched P-values before plotting the rank of their P-values#' 
+#' enriched P-values before plotting the rank of their P-values#' .
 #'
 #'
 #' @rdname plotBP
 #' @name plotBP
 #'
-#' @param ordered_back_all output of the g:ProfileR function
-#' @param top_bp The number of pathways you want to plot
+#' @param ordered_back_all Output of the g:ProfileR function.
+#' @param top_bp The number of pathways you want to plot.
 #' 
 #' @return \code{plotBP} A barplot of the number of "top_bp" pathways, ranked by -log10(Pfdr). \cr
 #' 

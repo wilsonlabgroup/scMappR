@@ -15,11 +15,11 @@ cellmarker_enrich(
 )
 }
 \arguments{
-\item{gene_list}{a character vector of gene symbols with the same designation (e.g. mouse symbol - mouse, human symbol - human) as the gene set database}
+\item{gene_list}{A character vector of gene symbols with the same designation (e.g. mouse symbol - mouse, human symbol - human) as the gene set database.}
 
-\item{p_thresh}{the Fisher's test cutoff for a cell-marker to be enriched.}
+\item{p_thresh}{The Fisher's test cutoff for a cell-marker to be enriched.}
 
-\item{gmt}{either a path to an rda file containing an object called "gmt", which is a named list where each element of the list is a vector of gene symbols website for more detail on the file type (https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats). The gmt list may also be inputted.}
+\item{gmt}{Either a path to an rda file containing an object called "gmt", which is a named list where each element of the list is a vector of gene symbols website for more detail on the file type (https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats). The gmt list may also be inputted.}
 
 \item{fixed_length}{Estimated number of genes in your background.}
 
@@ -33,11 +33,11 @@ cellmarker_enrich(
 \code{cellmarker_enrich} Gene set enrichment of cell-types on your inputted gene list. \cr
 }
 \description{
-This function uses the cellmarker and panglao datasets to identify cell-type DEGs
+This function uses the cellmarker and panglao datasets to identify cell-type Differentially Expressed Genes.
 }
 \details{
 Complete a fishers exact test of an input list of genes against a gene set saved in an *.RData object.
-The RData object is storing a named list of genes called "gmt"
+The RData object is storing a named list of genes called "gmt".
 }
 \examples{
 

@@ -2,22 +2,22 @@
 % Please edit documentation in R/get_gene_symbol.R
 \name{get_gene_symbol}
 \alias{get_gene_symbol}
-\title{Internal -- get gene symbol from Panglao.db matrix}
+\title{Internal -- get gene symbol from Panglao.db matrix.}
 \usage{
 get_gene_symbol(wilcoxon_rank_mat_t)
 }
 \arguments{
-\item{wilcoxon_rank_mat_t}{Matrix where row names are "GeneSymbol-Ensembl" (human or mouse)}
+\item{wilcoxon_rank_mat_t}{Matrix where row names are "GeneSymbol-Ensembl" (human or mouse).}
 }
 \value{
 \code{seurat_to_generes} A list containing the gene-symbols only as well as if the species is mouse or human. \cr
 }
 \description{
-Internal -- removes ensembl signature appended to signature matrix from panglao and figure out species by type of ensembl is appended to gene names.
+Internal -- removes ensembl signature appended to signature matrix from panglao and figure out species by prefix ensembl of the ensembl I.D that is appended to gene names.
 }
 \details{
-Internal: This function runs the FindMarkers function from seurat in a loop, will use the seurat v2 or seurat v3 object after identifying which seurat object is inputted. 
-It then takes the output of the FindMarkers and puts it in a list, returning it.
+Internal: This function removes the ENGMUS/ENGS tag from panglao created gene names (symbol-ENGS).
+From the ENSG/ENSMUS, this function determines if the species is mouse/human and it will return the gene symbols.
 }
 \examples{
  

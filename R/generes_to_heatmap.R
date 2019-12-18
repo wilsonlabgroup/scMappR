@@ -2,17 +2,17 @@
 #'
 #' Convert a list of cell-type markers from FindMarkers in Seurat to a signature matrix defined by odds ratio and rank.
 #'
-#' Take an list of compiled DEGs from different cell types, identify what the cell-types are using the fisher's exact method, and then convert into a signature matrix for both the adjusted p-value and odds ratio
+#' Take a list of compiled DEGs from different cell types, identify what the cell-types are using the Fisher's exact method, and then convert into a signature matrix for both the adjusted p-value and odds ratio.
 #' 
 #' @rdname generes_to_heatmap
 #' @name generes_to_heatmap
 #'
-#' @param generes A list of cell-tpe markers with fold-changes and P-vlaues (FindMarkers output in Seurat)
-#' @param species The species of gene symbols, if not internal, "human" or "mouse"
-#' @param naming_preference Likely cell-types given tissues (to be passed into human_mouse_ct_marker_enrich)
+#' @param generes A list of cell-tpe markers with fold-changes and P-vlaues (FindMarkers output in Seurat).
+#' @param species The species of gene symbols, if not internal, "human" or "mouse".
+#' @param naming_preference Likely cell-types given tissues (to be passed into human_mouse_ct_marker_enrich).
 #' @param make_names Identify names of cell-type markers using the Fisher's Exact-Test method (T/F).
 #' @param internal If this function is pre-processing from panglao (T/F).
-#' @param rda_path Path to output direcotry, if toSave is true
+#' @param rda_path Path to output direcotry, if toSave is true.
 #'
 #' @return \code{generes_to_heatmap} A list containing a signature matrix by rank := -1*log10(Pfdr) and by fold-change (only increasing). Additionally it returns the top (up to) 30 CT markers for each cell-type, as well as the name of each cell-type (from the signature methods method). \cr
 #'

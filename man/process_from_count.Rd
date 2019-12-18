@@ -33,14 +33,14 @@ process_from_count(
 \item{use_sctransform}{If you should use scRNAsform or the normalize/variablefeatures/scaledata pipeline (T/F).}
 }
 \value{
-\code{process_from_count} A processed & integrated Seurat object that has been scaled and clustered. It can be returned as an internal object or also stored as an RData object if neccesary. \cr
+\code{process_from_count} A processed and integrated Seurat object that has been scaled and clustered. It can be returned as an internal object or also stored as an RData object if neccesary. \cr
 }
 \description{
-This function processes a list of count matrices (same species/gene symbols in each list) and converts them to a Seurat object
+This function processes a list of count matrices (same species/gene symbols in each list) and converts them to a Seurat object.
 }
 \details{
-This function takes a list of count matrices and returns a seurat object of the count matrices integrated using Seurat V3 and the interation anchors
-Different options are used for if the function is internal for PanglaoDB dataset reprocessing or being used for a custom set of count matrices.
+This function takes a list of count matrices and returns a seurat object of the count matrices integrated using Seurat V3 (with sctransform and integration-anchors).
+Different options are used when the function is being ran internally (i.e. reprocessing count matrices from PanglaoDB) or if it is running from custom scNRA-seq data.
 For larger scRNA-seq datasets (~20k + cells), it is likely that this function will be required to run on an hpc.
 }
 \examples{
