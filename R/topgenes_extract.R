@@ -55,6 +55,14 @@ topgenes_extract <- function(generes,  padj = 0.05, FC = 1.5, topNum = 30) {
   
   # Returns:
   # a list of gene symbols showing the top most "topNum" cell-markers in each cell-type (i.e. for every element in generes)
+  
+  if(class(generes) != "list") {
+    stop("generes must be of class list.")
+  }
+  if(!(any(is.numeric(padj), is.numeric(FC), is.numeric(topNum)))) {
+    stop("padj, FC, and topNum must all be of class numeric.")
+  }
+  
   topGenes <- list()
   for(i in 1:length(generes)) {
     #extract all genes that are above the cutoff

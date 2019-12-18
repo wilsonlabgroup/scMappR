@@ -55,7 +55,7 @@
 #'  }
 #' @export
 #' 
-tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,rda_path, cluster = "Pval", genecex = 0.01, raw_pval = FALSE, toSave = FALSE, drop_unkown_celltype = FALSE) {
+tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,rda_path = "~/scMappR/data", cluster = "Pval", genecex = 0.01, raw_pval = FALSE, toSave = FALSE, drop_unkown_celltype = FALSE) {
   
   # This function takes a list of genes and a tissue available in 'get_tissues' function and generates heatmaps of cell-type preferences
   # it then completes cell-type enrichment of each individual cell-type, then, if more than two cell-types are signficiantly enriched, co-enrichemnt 
@@ -77,6 +77,28 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
   }
   if(!(species %in% c("mouse", "human"))) {
     stop("the 'species' argument must be 'mouse' or 'human' (case sensitive). ")
+  }
+  
+
+  if(class(output_directory) != "character") {
+    stop("output_directory must be of class character.")
+  }
+  if(class(genecex) != "numeric") {
+    stop("genecex must be of class numeric.")
+  }
+  if(genecex < 0) {
+    warning("making genecex low positive value as it is currently < 0.")
+    genecex <- 0.001
+  }
+  if(class(cluster) != "character") {
+    stop("cluster must be of class character.")
+  }
+  if(class(rda_path) != "character") {
+    stop("rda_path must be of class character.")
+  }
+
+  if(!(any(is.logical(toSave), is.logical(raw_pval), is.logical(drop_unkown_celltype)))) {
+    stop("toSave and raw_pval and drop_unknown_celltype must be of class logical.")
   }
   
   RankValueSignature <- "" # empty for cran

@@ -67,6 +67,22 @@ tissue_by_celltype_enrichment <- function(gene_list, species, name = "CT_Tissue_
   if(species != "human" & species != "mouse") { # making sure species is correct
     stop("species does not equal human or mouse (case sensitive)")
   }
+  if(class(name) != "character") {
+    stop("name must be of class character.")
+  }
+  if(class(rda_path) != "character") {
+    stop("rda_path must be of class character.")
+  }
+  if(class(p_thresh) != "numeric" ) {
+    stop("p_thresh must be of class numeric.")
+  }
+  if(class(isect_size) != "numeric" ) {
+    stop("isect_size must be of class numeric.")
+  }
+  if(!(any(is.logical(toSave), is.logical(return_gmt)))) {
+    stop("toSave and return_gmt must both be of class logical.")
+  }
+  
   if(species == "human") { # downloading human CT markers
   #
   thefiles <- list.files(path = rda_path, "human_tissue_celltype_scMappR.rda")

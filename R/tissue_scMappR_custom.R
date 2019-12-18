@@ -65,6 +65,22 @@ tissue_scMappR_custom <- function(gene_list, signature_matrix ,output_directory 
   # tsv files with gene set enrichment for single cell-types and co-enrichment
   # It also returns the object of the single cell-type preferences
   
+  if(class(gene_list) != "character") {
+    stop("gene_list must be of class character.")
+  }
+  if(class(signature_matrix) != "data.frame" & class(signature_matrix) != "matrix") {
+    stop("signature_matrix must be of class data.frame or matrix.")
+  }
+  if(class(output_directory) != "character") {
+    stop("output_directory must be of class character.")
+  }
+  if(class(gene_cutoff) != "numeric") {
+    stop("gene_cutoff must be of class numeric." )
+  }
+  if(!(any(is.logical(toSave), is.logical(is_pvalue)))) {
+    stop("toSave and is_pvalue must be of class logical.")
+  }
+  
   
   outDir <- paste0(output_directory)
   study_names <- outDir

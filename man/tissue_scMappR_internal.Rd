@@ -9,7 +9,7 @@ tissue_scMappR_internal(
   species,
   output_directory,
   tissue,
-  rda_path,
+  rda_path = "~/scMappR/data",
   cluster = "Pval",
   genecex = 0.01,
   raw_pval = FALSE,

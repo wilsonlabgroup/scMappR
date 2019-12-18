@@ -41,6 +41,9 @@ tochr <- function(x) {
 	# x = vector that is character, factor, or numeric
   # Returns
 	# Vector as a character 
+  if(class(x) %in% c("character", "factor", "numeric")) {
+    stop("x must be in class character, factor, or numeric")
+  }
   if(class(x) == "character") return(x)
   if(class(x) == "factor") return(as.character(levels(x))[x])
   if(class(x) == "numeric") return(as.character(x))

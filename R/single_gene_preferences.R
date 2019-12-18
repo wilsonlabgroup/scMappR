@@ -67,7 +67,21 @@ single_gene_preferences <- function(hg_short, hg_full, study_name, outDir, toSav
   # outputDir = directory where table is outputted
   # Returns:
   # A gene-set enrichment table of individual cell-type enrichment
-  
+  if(class(hg_full) != "list") {
+    stop("hg_full must be of class list.")
+  }
+  if(class(hg_short) != "list") {
+    stop("hg_short must be of class list.")
+  }
+  if(class(study_name) != "character") {
+    stop("study_name must be of class character.")
+  }
+  if(class(outDir) != "character") {
+    stop("outDir must be of class character.")
+  }
+  if(class(toSave) != "logical") {
+    stop("toSave must be of class logical.")
+  }
   fP <- hg_full$preferences # your gene list sorted into each cell-type (if it's over-expressed)
   sP <- hg_short$preferences # all of the cell-type markers in the background
   in_length <- length(hg_short$genesIn) # the number of input genes
