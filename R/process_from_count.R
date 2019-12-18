@@ -79,6 +79,16 @@ process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = 
     names(countmat_list) <- paste0(name,"_",1:length(countmat_list))
   }
   
+  if(!(theSpecies %in% c("human", "mouse"))) {
+    if(theSpecies != -9) {
+      stop("species_name is not 'human' 'mouse' or '-9' (case sensitive), please try again with this filled.")
+    }
+  }
+  
+  # haveUmap = FALSE, saveALL = FALSE, panglao_set = FALSE, toSave = FALSE, use_sctransform = FALSE
+  if(!(any(is.logical(haveUmap), is.logical(saveALL), is.logical(panglao_set), is.logical(toSave),is.logical(use_sctransform) ))) {
+    stop("haveUmap, saveALL, panglao_set, toSave, and use_sctransform are all logical." )
+  }
   SRA_in <- countmat_list
   
   shrt <- names(SRA_in)
