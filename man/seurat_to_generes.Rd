@@ -10,10 +10,10 @@ seurat_to_generes(pbmc)
 \item{pbmc}{Processed seurat object.}
 }
 \value{
-\code{seurat_to_generes} A list of genes where their over-representation in the i'th cell-type is computed. Each element contains the gene name, adjusted p-value, and the log2FC of each gene being present in that cell-type. \cr
+\code{seurat_to_generes} A list of genes where their over-representation in the i'th cell-type is computed. Each element contains the gene name, adjusted p-value, and the log2Fold-Change of each gene being present in that cell-type. \cr
 }
 \description{
-Takes processed Seurat matrix and identifies cell-type markers with FindMarkers
+Takes processed Seurat matrix and identifies cell-type markers with FindMarkers.
 }
 \details{
 Internal: This function runs the FindMarkers function from seurat in a loop, will use the seurat v2 or seurat v3 object after identifying which seurat object is inputted. 

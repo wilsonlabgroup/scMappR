@@ -1,21 +1,21 @@
 #' Gene List Visualization and Enrichment with Custom Signature Matrix
 #'
-#' This function visualizes signature matrix, cluster's subsetted genes, completes enrichment of individual cell-types and co-enrichment.
+#' This function visualizes signature matrix, clusters subsetted genes, completes enrichment of individual cell-types and co-enrichment.
 #' 
 #' This function is roughly the same as tissue_scMappR_internal, however now there is a custom signature matrix.
-#' it generates a heatmap of the signature matrixand your inputted gene list as well as single cell-type and 
+#' it generates a heatmap of the signature matrix and your inputted gene list as well as single cell-type and 
 #' co-celltype enrichment.
 #'
 #'
 #' @rdname tissue_scMappR_custom
 #' @name tissue_scMappR_custom
 #'
-#' @param gene_list A list of gene symbols, mouse or human.
-#' @param signature_matrix precomputed signature matrix with matching gene names.
-#' @param output_directory Directory made containing outputs
-#' @param gene_cutoff value cutoff (generally rank := log10(Padj)) for a gene to be considered a marker
-#' @param is_pvalue If signature matrix is p-value before rank is applied (not recommended ) (T/F)
-#' @param toSave Allow scMappR to write files in the current directory (T/F)
+#' @param gene_list A list of gene symbols matching that of the signature_matrix -- any gene symbol is acceptable.
+#' @param signature_matrix Precomputed signature matrix with matching gene names.
+#' @param output_directory Directory made containing output of functions.
+#' @param gene_cutoff Value cutoff (generally rank := log10(Padj)) for a gene to be considered a marker.
+#' @param is_pvalue If signature matrix is p-value before rank is applied (not recommended ) (T/F).
+#' @param toSave Allow scMappR to write files in the current directory (T/F).
 #'
 #' @return \code{tissue_scMappR_custom} A list containing the entire signature matrix, the matrix subsetted for your genes, enrichment of each cell-type, and co-enrichment. \cr
 #'

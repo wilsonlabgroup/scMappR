@@ -6,7 +6,7 @@
 #' @rdname toNum
 #' @name toNum
 #'
-#' @param x a vector of character, factor, or numeric
+#' @param x A vector of character, factor, or numeric.
 #'
 #' @return \code{toNum} Returns a numeric vector. \cr
 #'

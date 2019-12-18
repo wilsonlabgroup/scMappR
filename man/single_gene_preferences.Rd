@@ -11,24 +11,24 @@ single_gene_preferences(hg_short, hg_full, study_name, outDir, toSave = FALSE)
 
 \item{hg_full}{The same as hg_short but fore very gene in the signature matrix.}
 
-\item{study_name}{name of output table}
+\item{study_name}{Name of output table.}
 
-\item{outDir}{directory where table is outputted}
+\item{outDir}{Directory where table is outputted.}
 
-\item{toSave}{Allow scMappR to write files in the current directory (T/F)}
+\item{toSave}{Allow scMappR to write files in the current directory (T/F).}
 }
 \value{
 \code{single_gene_preferences} A gene-set enrichment table of individual cell-type enrichment. \cr
 }
 \description{
-Measure enrichment of individual cell-types in a signautre matrix
+Measure enrichment of individual cell-types in a signautre matrix.
  
 Internal function as part of tissue_scMappR_internal().
-This function takes genes preferentially expressed within your gene list, each cell-type
-and the background (i.e. all genes within the signature matrix) before completing identifying
+This function takes genes preferentially expressed within a gene list, each cell-type
+and the background (i.e. all genes within the signature matrix) before completing 
 the cell-type specific enrichment of the inputted gene list on each cell type.
 This function then returns a table describing the cell-type enrichments (p-value and odds ratio)
-of each cell-type
+of each cell-type.
 }
 \examples{
 \donttest{

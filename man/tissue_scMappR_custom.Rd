@@ -14,27 +14,27 @@ tissue_scMappR_custom(
 )
 }
 \arguments{
-\item{gene_list}{A list of gene symbols, mouse or human.}
+\item{gene_list}{A list of gene symbols matching that of the signature_matrix -- any gene symbol is acceptable.}
 
-\item{signature_matrix}{precomputed signature matrix with matching gene names.}
+\item{signature_matrix}{Precomputed signature matrix with matching gene names.}
 
-\item{output_directory}{Directory made containing outputs}
+\item{output_directory}{Directory made containing output of functions.}
 
-\item{toSave}{Allow scMappR to write files in the current directory (T/F)}
+\item{toSave}{Allow scMappR to write files in the current directory (T/F).}
 
-\item{gene_cutoff}{value cutoff (generally rank := log10(Padj)) for a gene to be considered a marker}
+\item{gene_cutoff}{Value cutoff (generally rank := log10(Padj)) for a gene to be considered a marker.}
 
-\item{is_pvalue}{If signature matrix is p-value before rank is applied (not recommended ) (T/F)}
+\item{is_pvalue}{If signature matrix is p-value before rank is applied (not recommended ) (T/F).}
 }
 \value{
 \code{tissue_scMappR_custom} A list containing the entire signature matrix, the matrix subsetted for your genes, enrichment of each cell-type, and co-enrichment. \cr
 }
 \description{
-This function visualizes signature matrix, cluster's subsetted genes, completes enrichment of individual cell-types and co-enrichment.
+This function visualizes signature matrix, clusters subsetted genes, completes enrichment of individual cell-types and co-enrichment.
 }
 \details{
 This function is roughly the same as tissue_scMappR_internal, however now there is a custom signature matrix.
-it generates a heatmap of the signature matrixand your inputted gene list as well as single cell-type and 
+it generates a heatmap of the signature matrix and your inputted gene list as well as single cell-type and 
 co-celltype enrichment.
 }
 \examples{

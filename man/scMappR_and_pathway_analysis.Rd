@@ -69,13 +69,13 @@ scMappR_and_pathway_analysis(
 \code{scMappR_and_pathway_analysis} A directory with: STVs in RData file, Cell Type proportions (RData file), cell-type proportions leave one out (RData file), heatmap of STVs (all), heatmap of STVs (within signature), heatmap of signature (all), heatmap of signature (overlapping with DEG_list), Pathway enrichment for DEG list(all), RData file and Biological Processes, Pathway enrichment of STVs for each cell-type, RData file and biological processes. \cr
 }
 \description{
-This function generates STVs, visualies them in a heatmap, and completes pathway enrichment of STVs and bulk gene list.
+This function generates scMappR Transformed Variables (STVs), visualies them in a heatmap, and completes pathway enrichment of STVs and bulk gene list.
 }
 \details{
 This function generates STVs for every cell-type (see deconvolute_and_contextualize) as well as the relative cell-type proportions (which will be reutrned and pushed through).
-Then, it generates heatmaps of all STVs, STVs overlapping with the signature matrix, the signature matrix, the signature matrix overlapping with STVs.
+Then, it generates heatmaps of all STVs, STVs overlapping with the signature matrix, the entire signature matrix, the and values from the signature matrix that overlap with inputted differentially expressed genes.
 Then, if you have WIFI, it will complete g:ProfilR of the reordered STVs as well as a the ordered list of genes.
-This function is a wrapper for deconvolute_and_contextualize, as well as pathway_enrich_internal.
+This function is a wrapper for deconvolute_and_contextualize and pathway_enrich_internal.
 }
 \examples{
 

@@ -7,7 +7,7 @@
 tochr(x)
 }
 \arguments{
-\item{x}{a vector of character, factor, or numeric}
+\item{x}{A vector of character, factor, or numeric}
 }
 \value{
 \code{tochr} Returns a character vector. \cr

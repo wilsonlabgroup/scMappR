@@ -1,11 +1,11 @@
 #' Generate STV, visualize, and enrich.
 #' 
-#' This function generates STVs, visualies them in a heatmap, and completes pathway enrichment of STVs and bulk gene list.
+#' This function generates scMappR Transformed Variables (STVs), visualies them in a heatmap, and completes pathway enrichment of STVs and bulk gene list.
 #'
 #' This function generates STVs for every cell-type (see deconvolute_and_contextualize) as well as the relative cell-type proportions (which will be reutrned and pushed through).
-#' Then, it generates heatmaps of all STVs, STVs overlapping with the signature matrix, the signature matrix, the signature matrix overlapping with STVs.
+#' Then, it generates heatmaps of all STVs, STVs overlapping with the signature matrix, the entire signature matrix, the and values from the signature matrix that overlap with inputted differentially expressed genes.
 #' Then, if you have WIFI, it will complete g:ProfilR of the reordered STVs as well as a the ordered list of genes.
-#' This function is a wrapper for deconvolute_and_contextualize, as well as pathway_enrich_internal.
+#' This function is a wrapper for deconvolute_and_contextualize and pathway_enrich_internal.
 #' 
 #' @rdname scMappR_and_pathway_analysis
 #' @name scMappR_and_pathway_analysis

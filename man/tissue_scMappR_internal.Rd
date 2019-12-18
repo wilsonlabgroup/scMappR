@@ -22,7 +22,7 @@ tissue_scMappR_internal(
 
 \item{species}{"mouse", "human" or "-9" if using a precomputed signature matrix.}
 
-\item{output_directory}{if toSave = TRUE, the name of the output directory that would be built.}
+\item{output_directory}{If toSave = TRUE, the name of the output directory that would be built.}
 
 \item{tissue}{Name of the tissue in "get_tissues".}
 
@@ -32,11 +32,11 @@ tissue_scMappR_internal(
 
 \item{genecex}{The size of the gene names of the rows in the heatmap.}
 
-\item{raw_pval}{If the inputed signature matrix are raw (untransformed) Pvalues -- reccomended to generate rank first.}
+\item{raw_pval}{If the inputed signature matrix are raw (untransformed) Pvalues -- reccomended to generate rank first (T/F).}
 
 \item{toSave}{Allow scMappR to write files in the current directory (T/F).}
 
-\item{drop_unkown_celltype}{Whether or not to remove "unknown" cell-types from the signature matrix.}
+\item{drop_unkown_celltype}{Whether or not to remove "unknown" cell-types from the signature matrix (T/F).}
 }
 \value{
 \code{tissue_scMappR_internal} A list containing the entire signature matrix, the matrix subsetted for your genes, enrichment of each cell-type, and co-enrichment. \cr
@@ -45,9 +45,9 @@ tissue_scMappR_internal(
 This function loops through every signature matrix in a particular tissue and generates heatmaps, cell-type preferences, and co-enrichment.
 }
 \details{
-This function takes a list of genes and a tissue available in 'get_tissues' function and generates heatmaps of cell-type preferences
-it then completes cell-type enrichment of each individual cell-type, then, if more than two cell-types are signficiantly enriched, co-enrichemnt 
-of those cell-types.
+This function takes a list of genes and a tissue that is contained in current signature matrices before and generating heatmaps of cell-type preferences.
+It then completes cell-type enrichment of each individual cell-type, then, if more than two cell-types are signficiantly enriched, co-enrichemnt 
+of those enriched cell-types is then computed.
 }
 \examples{
 \donttest{

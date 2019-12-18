@@ -1,6 +1,6 @@
 #' Identify all cell-type markers 
 #'
-#' Takes processed Seurat matrix and identifies cell-type markers with FindMarkers
+#' Takes processed Seurat matrix and identifies cell-type markers with FindMarkers.
 #'
 #' Internal: This function runs the FindMarkers function from seurat in a loop, will use the seurat v2 or seurat v3 object after identifying which seurat object is inputted. 
 #' It then takes the output of the FindMarkers and puts it in a list, returning it.
@@ -12,7 +12,7 @@
 #' 
 #'  
 #'
-#' @return \code{seurat_to_generes} A list of genes where their over-representation in the i'th cell-type is computed. Each element contains the gene name, adjusted p-value, and the log2FC of each gene being present in that cell-type. \cr
+#' @return \code{seurat_to_generes} A list of genes where their over-representation in the i'th cell-type is computed. Each element contains the gene name, adjusted p-value, and the log2Fold-Change of each gene being present in that cell-type. \cr
 #'
 #' @importFrom ggplot2 ggplot aes geom_boxplot geom_text theme coord_flip labs element_text
 #' @importFrom gplots heatmap.2

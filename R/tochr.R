@@ -6,7 +6,7 @@
 #' @rdname tochr
 #' @name tochr
 #'
-#' @param x a vector of character, factor, or numeric
+#' @param x A vector of character, factor, or numeric
 #'
 #' @return \code{tochr} Returns a character vector. \cr
 #'

@@ -1,21 +1,21 @@
 #' Extract Top Markers
 #'
-#'  Internal -- Extracts strongect cell-type markers from a Seurat object
+#' Internal -- Extracts strongect cell-type markers from a Seurat object.
 #'
 #' Internal, this function runs through a list of outputs from FindMarkers objects in Seurat
-#' at will take genes past a padj and FC threshold. Then it extracts the topNum number of genes
+#' at will extract genes past a padj and fold-change threshold. Then it extracts the topNum number of genes.
 #' if you have not used the FindMarkers function, then a list of summary statistics with 
-#' fld change designated by avg_logFC and p-val by p_val_adj
+#' fold-change designated by avg_logFC and p-val by p_val_adj.
 #'
 #' @rdname topgenes_extract
 #' @name topgenes_extract
 #'
-#' @param generes A list of cell-tpe markers with fold-changes and P-vlaues (FindMarkers output in Seurat)
-#' @param padj The p-value (FDR) cutoff
-#' @param FC The fold-change cutoff
-#' @param topNum The number of genes to extract
+#' @param generes A list of cell-tpe markers with fold-changes and P-vlaues (FindMarkers output in Seurat).
+#' @param padj The p-value (FDR) cutoff.
+#' @param FC The fold-change cutoff.
+#' @param topNum The number of genes to extract.
 #'
-#' @return \code{topgenes_extract} Returns a numeric vector. \cr
+#' @return \code{topgenes_extract} Returns a list of character vectors with the top (topNum) of gene markers for each cell-type. \cr
 #' 
 #' @importFrom ggplot2 ggplot aes geom_boxplot geom_text theme coord_flip labs element_text
 #' @importFrom gplots heatmap.2

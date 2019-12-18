@@ -16,27 +16,27 @@ tissue_by_celltype_enrichment(
 )
 }
 \arguments{
-\item{gene_list}{a character vector of gene symbols with the same designation (e.g. mouse symbol - mouse, human symbol - human) as the gene set database}
+\item{gene_list}{A character vector of gene symbols with the same designation (e.g. mouse symbol - mouse, human symbol - human) as the gene set database.}
 
 \item{species}{Species of cell-type marker to use, 'human' or 'mouse'.}
 
-\item{name}{Name of the pdf to be printed}
+\item{name}{Name of the pdf to be printed.}
 
-\item{p_thresh}{the Fisher's test cutoff for a cell-marker to be enriched.}
+\item{p_thresh}{The Fisher's test cutoff for a cell-marker to be enriched.}
 
-\item{rda_path}{path to an rda file containing an object called "gmt". Either human or mouse cell-type markers split by experiment. If the correct file isn't present they will be downloaded from https://github.com/DustinSokolowski/scMappR_Data}
+\item{rda_path}{Path to an rda file containing an object called "gmt". Either human or mouse cell-type markers split by experiment. If the correct file isn't present they will be downloaded from https://github.com/DustinSokolowski/scMappR_Data.}
 
 \item{isect_size}{Number of genes in your list and the cell-type.}
 
-\item{toSave}{Permission to print plot in current directory (T/F)}
+\item{toSave}{Permission to print plot in current directory (T/F).}
 
-\item{return_gmt}{Return gmt file -- reccomended if downloading from online as it may have updated.}
+\item{return_gmt}{Return gmt file -- reccomended if downloading from online as it may have updated (T/F).}
 }
 \value{
 \code{tissue_by_celltype_enrichment} Gene set enrichment of cell-types on your inputted gene list, a plot of cell-type enrichment (can be saved), and the gmt file will cell-type markers (optionally). \cr
 }
 \description{
-This funciton uses a fishers-exact-test to rank gene set enrichment
+This funciton uses a fishers-exact-test to rank gene set enrichment.
 }
 \details{
 Complete a fishers exact test of an input list of genes against one of the two curated tissue by cell-type marker datasets from scMappR.

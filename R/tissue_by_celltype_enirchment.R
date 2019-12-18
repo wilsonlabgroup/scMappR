@@ -1,20 +1,20 @@
 #' tissue_by_celltype_enrichment
 #'
-#' This funciton uses a fishers-exact-test to rank gene set enrichment
+#' This funciton uses a fishers-exact-test to rank gene set enrichment.
 #' 
 #' Complete a fishers exact test of an input list of genes against one of the two curated tissue by cell-type marker datasets from scMappR.
 #'
 #' @rdname tissue_by_celltype_enrichment
 #' @name tissue_by_celltype_enrichment
 #'
-#' @param gene_list a character vector of gene symbols with the same designation (e.g. mouse symbol - mouse, human symbol - human) as the gene set database
+#' @param gene_list A character vector of gene symbols with the same designation (e.g. mouse symbol - mouse, human symbol - human) as the gene set database.
 #' @param species Species of cell-type marker to use, 'human' or 'mouse'.
-#' @param p_thresh the Fisher's test cutoff for a cell-marker to be enriched.
-#' @param rda_path path to an rda file containing an object called "gmt". Either human or mouse cell-type markers split by experiment. If the correct file isn't present they will be downloaded from https://github.com/DustinSokolowski/scMappR_Data
+#' @param p_thresh The Fisher's test cutoff for a cell-marker to be enriched.
+#' @param rda_path Path to an rda file containing an object called "gmt". Either human or mouse cell-type markers split by experiment. If the correct file isn't present they will be downloaded from https://github.com/DustinSokolowski/scMappR_Data.
 #' @param isect_size Number of genes in your list and the cell-type.
-#' @param toSave Permission to print plot in current directory (T/F)
-#' @param return_gmt Return gmt file -- reccomended if downloading from online as it may have updated.
-#' @param name Name of the pdf to be printed
+#' @param toSave Permission to print plot in current directory (T/F).
+#' @param return_gmt Return gmt file -- reccomended if downloading from online as it may have updated (T/F).
+#' @param name Name of the pdf to be printed.
 #' 
 #' @return \code{tissue_by_celltype_enrichment} Gene set enrichment of cell-types on your inputted gene list, a plot of cell-type enrichment (can be saved), and the gmt file will cell-type markers (optionally). \cr
 #'

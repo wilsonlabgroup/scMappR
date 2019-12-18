@@ -7,7 +7,7 @@
 toNum(x)
 }
 \arguments{
-\item{x}{a vector of character, factor, or numeric}
+\item{x}{A vector of character, factor, or numeric.}
 }
 \value{
 \code{toNum} Returns a numeric vector. \cr

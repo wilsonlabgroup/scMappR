@@ -2,9 +2,9 @@
 #'
 #' This function loops through every signature matrix in a particular tissue and generates heatmaps, cell-type preferences, and co-enrichment.
 #' 
-#' This function takes a list of genes and a tissue available in 'get_tissues' function and generates heatmaps of cell-type preferences
-#' it then completes cell-type enrichment of each individual cell-type, then, if more than two cell-types are signficiantly enriched, co-enrichemnt 
-#' of those cell-types.
+#' This function takes a list of genes and a tissue that is contained in current signature matrices before and generating heatmaps of cell-type preferences.
+#' It then completes cell-type enrichment of each individual cell-type, then, if more than two cell-types are signficiantly enriched, co-enrichemnt 
+#' of those enriched cell-types is then computed.
 #'
 #'
 #' @rdname tissue_scMappR_internal
@@ -15,11 +15,11 @@
 #' @param tissue  Name of the tissue in "get_tissues".
 #' @param cluster 'Pval' or 'OR' depending on if you wantto cluster odds ratios or pvalues of CT preferences.
 #' @param genecex The size of the gene names of the rows in the heatmap.
-#' @param raw_pval  If the inputed signature matrix are raw (untransformed) Pvalues -- reccomended to generate rank first.
+#' @param raw_pval  If the inputed signature matrix are raw (untransformed) Pvalues -- reccomended to generate rank first (T/F).
 #' @param rda_path Path to the rda file containing all of the signature matrices.
 #' @param toSave Allow scMappR to write files in the current directory (T/F).
-#' @param output_directory if toSave = TRUE, the name of the output directory that would be built.
-#' @param drop_unkown_celltype Whether or not to remove "unknown" cell-types from the signature matrix.
+#' @param output_directory If toSave = TRUE, the name of the output directory that would be built.
+#' @param drop_unkown_celltype Whether or not to remove "unknown" cell-types from the signature matrix (T/F).
 #' 
 #' @return \code{tissue_scMappR_internal} A list containing the entire signature matrix, the matrix subsetted for your genes, enrichment of each cell-type, and co-enrichment. \cr
 #'
