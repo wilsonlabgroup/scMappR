@@ -4,7 +4,13 @@
 \alias{gProfiler_STV}
 \title{Pathway enrichment for STV's}
 \usage{
-gProfiler_STV(STV_matrix, species, background, gene_cut, newGprofiler)
+gProfiler_STV(
+  STV_matrix,
+  species,
+  background,
+  gene_cut = -9,
+  newGprofiler = FALSE
+)
 }
 \arguments{
 \item{STV_matrix}{Matrix of scMappR Transformed Values from the deconvolute_and_contextualize functions.}

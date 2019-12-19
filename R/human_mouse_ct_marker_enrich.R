@@ -62,8 +62,8 @@ human_mouse_ct_marker_enrich <- function(gene_lists, theSpecies = "human",cell_m
   # MarkerSets: the gene set enrichment for each cell-type (to see what was the second/third most significant etc)
   # cellTypes: The top cell-type for each marker
   
-  if(class(gene_lists) != "list") {
-    stop("gene_lists obect must be of class list.")
+  if(class(gene_lists) != "list" & class(gene_lists) != "character") {
+    stop("gene_lists obect must be of class list or a character vector of gene symbols.")
   }
   
   naming_preferences <- c("brain", "epithelial", "endothelial", "blood", "connective","eye", "epidermis", "Digestive", "Immune", "pancreas", "liver", "reproductive", "kidney", "respiratory") 

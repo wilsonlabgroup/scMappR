@@ -11,8 +11,8 @@ pathway_enrich_internal(
   background_genes,
   output_directory,
   plot_names,
-  number_genes,
-  newGprofiler,
+  number_genes = -9,
+  newGprofiler = FALSE,
   toSave = FALSE
 )
 }
