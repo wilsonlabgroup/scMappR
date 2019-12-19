@@ -188,8 +188,8 @@ gsva_cellIdentify <- function(pbmc, theSpecies, naming_preference = -9, rda_path
   # return the top cell-type from each dataset in a manner is that cognisant of cell-type preferences
   cm_top <- lapply(top5_cm, top_ct)
   pang_top <- lapply(top5_pang, top_ct)
-  
-  l <- list(cellMarker = cm_top, panglao = pang_top, avg_expression = avg_expr)
+  ave_expr_RNA <- avg_expr$RNA
+  l <- list(cellMarker = cm_top, panglao = pang_top, avg_expression = ave_expr_RNA)
   return(l)
 }
 
