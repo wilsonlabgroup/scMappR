@@ -48,7 +48,8 @@ norm <- deconvolute_and_contextualize(bulk_normalized, odds_ratio_in,
                                        print_plots = print_plots,
                                        theSpecies = theSpecies)
 background = rownames(bulk_normalized)
-STVs <- gProfiler_STV(norm$scMappR_transformed_values, theSpecies, background, gene_cut = -9, newGprofiler = FALSE)
+STVs <- gProfiler_STV(norm$scMappR_transformed_values, theSpecies,
+ background, gene_cut = -9, newGprofiler = FALSE)
 
  }
  
