@@ -43,8 +43,9 @@
 #' \donttest{
 #' data(sm)
 #' toProcess <- list(example = sm)
-#' tst1 <- process_dgTMatrix_lists(toProcess, "testProcess", -9, naming_preference = "eye", 
-#'                                 rda_path = "~/scMappR/data", TRUE)
+#' tst1 <- process_dgTMatrix_lists(toProcess, name = "testPropcess", species_name = -9,
+#'  naming_preference = "eye", rda_path = "~/scMappR/data", panglao_set = "TRUE")
+#' 
 #' }
 #' @export
 #' 
@@ -128,7 +129,7 @@ process_dgTMatrix_lists <- function(dgTMatrix_list, name, species_name, naming_p
   gsva_cellIdentity_out <- gsva_cellIdentify(pbmc, theSpecies = species_name, naming_preference = naming_preference, rda_path = rda_path, toSave=toSave)
   # identify cell-type identify using the gsva method
   if(toSave == TRUE) {
-    save(gsva_cellIdentity_out, file = paste0(name, "gsva_cellname.Rdata"))
+    save(gsva_cellIdentity_out, file = paste0(name, "_gsva_cellname_and_avg_expression.Rdata"))
       
   } else {
     warning("toSave == FALSE therefore files cannot be saved. Switching toSave = TRUE is strongly reccomended.")

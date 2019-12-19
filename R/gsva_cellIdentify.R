@@ -13,7 +13,7 @@
 #' @param rda_path Path to precomputed cell-type gmt files (rda objects).
 #' @param toSave If scMappR is allowed to write files and directories.
 #'
-#' @return \code{gsva_cellIdentify} A list containing the top cell-type marker for a cell-type using the panglao dataset as well as the cellMarker dataset. \cr
+#' @return \code{gsva_cellIdentify} A list containing the top cell-type marker for a cell-type using the panglao dataset as well as the cellMarker dataset, and the average expression of genes in each cluster. \cr
 #'
 #' @importFrom ggplot2 ggplot aes geom_boxplot geom_text theme coord_flip labs element_text
 #' @importFrom gplots heatmap.2
@@ -189,7 +189,7 @@ gsva_cellIdentify <- function(pbmc, theSpecies, naming_preference = -9, rda_path
   cm_top <- lapply(top5_cm, top_ct)
   pang_top <- lapply(top5_pang, top_ct)
   
-  l <- list(cellMarker = cm_top, panglao = pang_top)
+  l <- list(cellMarker = cm_top, panglao = pang_top, avg_expression = avg_expr)
   return(l)
 }
 
