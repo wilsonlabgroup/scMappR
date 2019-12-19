@@ -133,7 +133,9 @@ tissue_by_celltype_enrichment <- function(gene_list, species, name = "CT_Tissue_
     plotBP(enriched) # plotting by FDR
     dev.off()
   } else {
+    
     plotBP(enriched)
+    
   }
   if(return_gmt == TRUE) {
     l <- list(enriched = enriched, gmt = gmt) # returning the enrichment of the gene list and background gmt as it updates 
