@@ -95,7 +95,7 @@ generes_to_heatmap <- function(generes,
   }
   topGenes <- topgenes_extract(generes) # take the top 30 genes
   if(make_names == T) {
-    cell_name <- human_mouse_ct_marker_enrich(topGenes, theSpecies = species, cell_marker_path = rda_path) 
+    cell_name <- human_mouse_ct_marker_enrich(topGenes, theSpecies = species, cell_marker_path = rda_path, naming_preference = naming_preference) 
     # get the names of each of the cell types
     cell_name <- cell_name$cellTypes # attach the appropriate cell names
   } else {
