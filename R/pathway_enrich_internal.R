@@ -104,9 +104,7 @@ pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_g
     stop("toSave = FALSE and therefore scMappR is not allowed to print pathways. For this function to work, please set toSave = TRUE")
   }
   
-  if(number_genes == -9) {
-    number_genes <- nrow(DEGs)
-  }
+
   
   print("Reordering DEGs from bulk dataset.", quote = FALSE)
   DEG_Names <- rownames(DEGs)[order(DEGs$padj)]

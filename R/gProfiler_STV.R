@@ -88,9 +88,6 @@ gProfiler_STV <- function(STV_matrix, species , background , gene_cut, newGprofi
     }
   }
   
-  if(gene_cut == -9 | is.null(gene_cut)) {
-    gene_cut <- nrow(STV_matrix)
-  }
   
   if(species == "human") {
     print("Assuming species = Human", quote = FALSE)
