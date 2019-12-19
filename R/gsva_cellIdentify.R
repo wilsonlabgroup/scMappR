@@ -58,7 +58,7 @@ gsva_cellIdentify <- function(pbmc, theSpecies, naming_preference = -9, rda_path
   
   naming_preferences <- c("brain", "epithelial", "endothelial", "blood", "connective","eye", "epidermis", "Digestive", "Immune", "pancreas", "liver", "reproductive", "kidney", "respiratory") 
   if(!naming_preference %in% naming_preferences) {
-    if(naming_preferences != -9)
+    if(naming_preference != -9)
       print("Naming preference options")
     print(naming_preferences)
     stop("Naming preferences not in options (case sensitive) and isn't a non-choice (-9), please try again.")

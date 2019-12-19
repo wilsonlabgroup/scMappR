@@ -68,7 +68,6 @@ generes_to_heatmap <- function(generes,
       stop("species is not 'human' 'mouse' or '-9' (case sensitive), please try again with this filled.")
     }
   }
-  
   naming_preferences <- c("brain", "epithelial", "endothelial", "blood", "connective","eye", "epidermis", "Digestive", "Immune", "pancreas", "liver", "reproductive", "kidney", "respiratory") 
   if(!naming_preference %in% naming_preferences) {
     if(naming_preference != -9) {
