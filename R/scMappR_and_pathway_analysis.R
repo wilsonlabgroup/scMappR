@@ -169,6 +169,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   }
   if(!any(is.logical(print_plots),is.logical(drop_unkown_celltype),is.logical(internet),is.logical(up_and_downregulated),is.logical(toSave),is.logical(newGprofiler) ))
 
+
   theSpecies <- tolower(theSpecies)
   if(class(count_file) == "character") {
     norm_counts_i <- utils::read.table(count_file, header = TRUE, as.is = TRUE, sep = "\t")
@@ -189,6 +190,9 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   
   colnames(DEGs) <- c("gene_name", "padj", "log2fc")
   rownames(DEGs) <- DEGs$gene_name
+  if(number_genes == -9) {
+    number_genes <- nrow(DEG_list)
+  }
   if(class(case_grep) != "character" | length(case_grep) > 1) {
     print("Assuming that case_grep and control_grep are indeces of 'case' and 'control'.", quote = FALSE)
     print("Appending 'scMappR_case' to cases and 'scMappR_control to controls.", quote = FALSE  )
