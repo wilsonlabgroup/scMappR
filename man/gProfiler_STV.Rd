@@ -4,13 +4,7 @@
 \alias{gProfiler_STV}
 \title{Pathway enrichment for STV's}
 \usage{
-gProfiler_STV(
-  STV_matrix,
-  species,
-  background,
-  gene_cut = -9,
-  newGprofiler = FALSE
-)
+gProfiler_STV(STV_matrix, species, background, gene_cut, newGprofiler)
 }
 \arguments{
 \item{STV_matrix}{Matrix of scMappR Transformed Values from the deconvolute_and_contextualize functions.}
@@ -54,7 +48,7 @@ norm <- deconvolute_and_contextualize(bulk_normalized, odds_ratio_in,
                                        print_plots = print_plots,
                                        theSpecies = theSpecies)
 background = rownames(bulk_normalized)
-STVs <- gProfiler_STV(norm$scMappR_transformed_values, theSpecies, background)
+STVs <- gProfiler_STV(norm$scMappR_transformed_values, theSpecies, background, gene_cut = -9, newGprofiler = FALSE)
 
  }
  

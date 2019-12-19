@@ -51,7 +51,7 @@
 #'                                        print_plots = print_plots,
 #'                                        theSpecies = theSpecies)
 #' background = rownames(bulk_normalized)
-#' STVs <- gProfiler_STV(norm$scMappR_transformed_values, theSpecies, background)
+#' STVs <- gProfiler_STV(norm$scMappR_transformed_values, theSpecies, background, gene_cut = -9, newGprofiler = FALSE)
 #' 
 #'  }
 #'  
@@ -60,7 +60,7 @@
 
 
 
-gProfiler_STV <- function(STV_matrix, species , background , gene_cut = -9, newGprofiler = FALSE ) {
+gProfiler_STV <- function(STV_matrix, species , background , gene_cut, newGprofiler ) {
   
   # Args: 
   # STV_matrix: matrix of scMappR Transformed Values from the deconvolute_and_contextualize functions
@@ -88,7 +88,7 @@ gProfiler_STV <- function(STV_matrix, species , background , gene_cut = -9, newG
     }
   }
   
-  if(gene_cut == -9) {
+  if(gene_cut == -9 | is.null(gene_cut)) {
     gene_cut <- nrow(STV_matrix)
   }
   
