@@ -62,9 +62,7 @@ human_mouse_ct_marker_enrich <- function(gene_lists, theSpecies = "human",cell_m
   # MarkerSets: the gene set enrichment for each cell-type (to see what was the second/third most significant etc)
   # cellTypes: The top cell-type for each marker
   
-  if(class(gene_lists) != "list" & class(gene_lists) != "character") {
-    stop("gene_lists obect must be of class list or a character vector of gene symbols.")
-  }
+
   
   naming_preferences <- c("brain", "epithelial", "endothelial", "blood", "connective","eye", "epidermis", "Digestive", "Immune", "pancreas", "liver", "reproductive", "kidney", "respiratory") 
   if(!naming_preference %in% naming_preferences) {
@@ -74,8 +72,8 @@ human_mouse_ct_marker_enrich <- function(gene_lists, theSpecies = "human",cell_m
     stop("Naming preferences not in options (case sensitive) and isn't a non-choice (-9), please try again.")
     }
   }
-  if(class(gene_lists) != "list") {
-    stop("gene_lists is not a list, please try again.")
+  if(class(gene_lists) != "list" & class(gene_lists) != "character") {
+    stop("gene_lists obect must be of class list or a character vector of gene symbols.")
   }
   if(!(theSpecies %in% c("human", "mouse"))) {
     if(theSpecies != -9) {
