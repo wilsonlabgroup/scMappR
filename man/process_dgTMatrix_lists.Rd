@@ -58,7 +58,7 @@ Cell-type marker outputs are also saved in the generes.RData list. Names of the 
 \donttest{
 data(sm)
 toProcess <- list(example = sm)
-tst1 <- process_dgTMatrix_lists(toProcess, "testProcess", ,-9, naming_preference = "eye, 
-                                "rda_path = "~/scMappR/data", TRUE)
+tst1 <- process_dgTMatrix_lists(toProcess, "testProcess", -9, naming_preference = "eye", 
+                                rda_path = "~/scMappR/data", TRUE)
 }
 }
