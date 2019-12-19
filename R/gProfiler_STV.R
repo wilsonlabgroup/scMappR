@@ -60,7 +60,7 @@
 
 
 
-gProfiler_STV <- function(STV_matrix, species , background , gene_cut, newGprofiler ) {
+gProfiler_STV <- function(STV_matrix, species , background , gene_cut = -9, newGprofiler = FALSE ) {
   
   # Args: 
   # STV_matrix: matrix of scMappR Transformed Values from the deconvolute_and_contextualize functions
@@ -86,6 +86,10 @@ gProfiler_STV <- function(STV_matrix, species , background , gene_cut, newGprofi
     if(species != -9) {
       stop("species is not 'human' 'mouse' or '-9' (case sensitive), please try again with this filled.")
     }
+  }
+  
+  if(gene_cut == -9) {
+    gene_cut <- nrow(STV_matrix)
   }
   
   if(species == "human") {

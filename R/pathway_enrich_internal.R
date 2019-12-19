@@ -58,7 +58,7 @@
 #' }
 #' @export
 #' 
-pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_genes, output_directory, plot_names, number_genes,  newGprofiler, toSave = FALSE) {
+pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_genes, output_directory, plot_names, number_genes = -9,  newGprofiler = FALSE, toSave = FALSE) {
   # Internal: Pathway analysis od DEGs and STVs for each cell-type. Returns RData objects of differential analysis as well as plots of the top bulk pathways.
   # It is a wrapper for making barplots, bulk pathway analysis, and gProfiler_STV
   # Args:
@@ -102,6 +102,10 @@ pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_g
   
   if(toSave == FALSE) {
     stop("toSave = FALSE and therefore scMappR is not allowed to print pathways. For this function to work, please set toSave = TRUE")
+  }
+  
+  if(number_genes == -9) {
+    number_genes <- nrow(DEGs)
   }
   
   print("Reordering DEGs from bulk dataset.", quote = FALSE)
