@@ -211,6 +211,8 @@ process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = 
     # If there is more than one count matrix in the list, then integrate it using the 
     # integration anchors feature using default parameters
     
+    if(use_sctransform == TRUE) {
+    
     object.features <- Seurat::SelectIntegrationFeatures(object.list = each_sra, nfeatures = 3000)
     object.list <- Seurat::PrepSCTIntegration(object.list = each_sra, anchor.features = object.features, 
                                               verbose = FALSE)
@@ -219,6 +221,17 @@ process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = 
     
     Seurat::DefaultAssay(immune.combined) <- "integrated"
     pbmc <- immune.combined
+    
+    } else {
+      
+      pancreas.anchors <- FindIntegrationAnchors(object.list = each_sra, dims = 1:20)
+      pancreas.integrated <- IntegrateData(anchorset = pancreas.anchors, dims = 1:20)
+      pancreas.integrated <- ScaleData(pancreas.integrated, verbose = FALSE)
+      pbmc <- pancreas.integrated
+      
+      
+      
+    }
   }
   
   #PCA, UMAP, and Clustering of integrated dataset
