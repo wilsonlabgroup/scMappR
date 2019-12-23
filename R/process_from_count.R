@@ -224,9 +224,9 @@ process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = 
     
     } else {
       
-      pancreas.anchors <- FindIntegrationAnchors(object.list = each_sra, dims = 1:20)
-      pancreas.integrated <- IntegrateData(anchorset = pancreas.anchors, dims = 1:20)
-      pancreas.integrated <- ScaleData(pancreas.integrated, verbose = FALSE)
+      pancreas.anchors <- Seurat::FindIntegrationAnchors(object.list = each_sra, dims = 1:20)
+      pancreas.integrated <- Seurat::IntegrateData(anchorset = pancreas.anchors, dims = 1:20)
+      pancreas.integrated <- Seurat::ScaleData(pancreas.integrated, verbose = FALSE)
       pbmc <- pancreas.integrated
       
       
