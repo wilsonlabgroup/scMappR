@@ -126,6 +126,8 @@ process_dgTMatrix_lists <- function(dgTMatrix_list, name, species_name, naming_p
   # process from the count matrices to the Seurat object -- see process_from_count for details
   print(class(pbmc))
   #print(head(pbmc))
+  print(naming_preference)
+  print(class(naming_preference))
   gsva_cellIdentity_out <- gsva_cellIdentify(pbmc, theSpecies = species_name, naming_preference = naming_preference, rda_path = rda_path, toSave=toSave)
   # identify cell-type identify using the gsva method
   if(toSave == TRUE) {
