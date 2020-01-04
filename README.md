@@ -9,6 +9,8 @@ Dustin Sokolowski
 ## Installation
 1. Github (Development Version)
 
+
+
 devtools::install_github("DustinSokolowski/scMappR")
 
 library(scMappR)
