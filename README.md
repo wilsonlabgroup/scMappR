@@ -70,13 +70,13 @@ install.packages("scMappR")
 
 Link to data used in scMappR: https://github.com/DustinSokolowski/scMappR_Data
 
-Currently, to run scMappR locally, please download all .rda files in this data download repository. In many of the functions, the "rda_path" argument can be changed to wherever you would like to download these files to. It however assumes "~/scMappR/data".
+To run scMappR locally, please download all .rda files in this data download repository. In many of the functions, the "rda_path" argument can be changed to wherever you would like to download these files to. It however assumes "~/scMappR/data".
 
-Internally, if these functions do not detect these rda files, they will temporarily download them with the downloader R package; however, these rda files must already be downloaded to use the examples that are not automatically run.
+If these functions do not detect these rda files, they will temporarily download them with the downloader R package; however, these rda files must already be downloaded to use the examples that are not automatically run.
 
 ## Primary Functionalities of scMappR.
 
-Below describes the primary ways scMappR can contextualize gene lists and process data. It is strongly reccomended to set `toSave = TRUE` in functions and, when appropraite, `internet = TRUE`. Otherwise, scMappR will not print files/directories and many of the results will not be printed.
+Below describes the primary ways scMappR can contextualize gene lists and process data. It is strongly reccomended to set `toSave = TRUE` in functions and, when appropraite, `internet = TRUE`. Otherwise scMappR will not print files/directories and many of the results will not be printed.
 
 * `tissue_scMappR_custom()`: This function visualizes signature matrix, clusters subsetted genes, completes enrichment of individual cell-types and co-enrichment. 
 * `tissue_scMappR_internal()`: This function loops through every signature matrix in a particular tissue and generates heatmaps, cell-type preferences, and co-enrichment.
@@ -173,7 +173,7 @@ toOut <- scMappR_and_pathway_analysis(bulk_normalized, odds_ratio_in,
 
 ### Generating a signature matrix and processing scRNA-seq count data
 
-Here a matrix, dgTmatrix, or list of these matrices are inputted where the rows are genes and the columns are indiviudal cells. The gene names must be human or mouse gene symbols. If the dataset is being processed from PanglaoDB, then the rownames are GeneSymbol-ENSMBL, here, set `species_name = -9`. 
+A matrix, dgTMatrix, or list of these matrices are inputted where the rows are genes and the columns are indiviudal cells. The gene names must be human or mouse gene symbols. If the dataset is being processed from PanglaoDB, then the rownames are GeneSymbol-ENSMBL, here, set `species_name = -9`. 
 
 This function returns the signature matrix and cell-type labels. If `toSave = TRUE` signature matrices, all cell-type markers, the average expression of genes from each cell-type, and cell-type labels from gsva are stored as files in the working directory. Additionally, if `saveSCObject = TRUE`, then the Seurat object is also saved in the working directory.
 
