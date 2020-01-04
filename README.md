@@ -1,7 +1,7 @@
 
 # single-cell mapper (scMappR)
 
-### Dustin Sokolowski - djsokolowski95-at-gmail-dot-com
+### Dustin Sokolowski: dustin-dot-sokolowski-at-sickkids-dot-.ca
 
 ### Date: 04/01/2020
 
