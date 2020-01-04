@@ -1,7 +1,7 @@
 
 # single-cell mapper (scMappR)
 
-### Dustin Sokolowski: dustin-dot-sokolowski-at-sickkids-dot-.ca
+### Dustin Sokolowski: dustin-dot-sokolowski-at-sickkids-dot-ca
 
 ### Date: 04/01/2020
 
@@ -27,7 +27,7 @@ Currently, there is only  a development version. scMappR relies on the following
   * gProfileR - CRAN
   * limSolve - CRAN 
   
-Install GSVA and pcaMethods from bioconductor first, as `devtools::install_githb()` will automatically install CRAN. \ 
+Install GSVA and pcaMethods from bioconductor first, as `devtools::install_githb()` will automatically install CRAN. 
 
 1. Github (Development Version)
 
@@ -100,7 +100,7 @@ rownames(Signature) <- rowname$rowname
 genes <- rownames(Signature)[1:60]
  rda_path1 = "~/Documents/scMappR/data" 
 internal <- tissue_scMappR_internal(genes,"mouse",output_directory = "scMappR_Test",
-tissue = "hypothalamus",rda_path = rda_path1, toSave = T)
+tissue = "hypothalamus",rda_path = rda_path1, toSave = TRUE)
 
 ```
 
@@ -145,7 +145,7 @@ enriched <- tissue_by_celltype_enrichment(gene_list = genes, species = "mouse",p
 
 ### Scaling and visualizing Differentially Expressed Genes from bulk RNA-seq data 
 
-This function requires a normalized count matrix from RNA-seq, a signature matrix such that there are fewer cell-types than there are samples, and a list of differentially expressed genes (with log2Fold-Change and adjusted P-value). \
+This function requires a normalized count matrix from RNA-seq, a signature matrix such that there are fewer cell-types than there are samples, and a list of differentially expressed genes (with log2Fold-Change and adjusted P-value). 
 
 Then, it will calculate scMappR Transformed Values (STVs) before estimating if there are changes in cell-type proportion between samples. If `toSave = TRUE` then STV's will be visualized. Additionally, if `internet = TRUE`, scMappR will iteratively re-order DEGs based on their STV's and complete pathway analysis with g:ProfileR or gprofiler2.
 
@@ -173,7 +173,7 @@ toOut <- scMappR_and_pathway_analysis(bulk_normalized, odds_ratio_in,
 
 ### Generating a signature matrix and processing scRNA-seq count data
 
-Here a matrix, dgTmatrix, or list of these matrices are inputted where the rows are genes and the columns are indiviudal cells. The gene names must be human or mouse gene symbols. If the dataset is being processed from PanglaoDB, then the rownames are GeneSymbol-ENSMBL, here, set `species_name = -9`. \
+Here a matrix, dgTmatrix, or list of these matrices are inputted where the rows are genes and the columns are indiviudal cells. The gene names must be human or mouse gene symbols. If the dataset is being processed from PanglaoDB, then the rownames are GeneSymbol-ENSMBL, here, set `species_name = -9`. 
 
 This function returns the signature matrix and cell-type labels. If `toSave = TRUE` signature matrices, all cell-type markers, the average expression of genes from each cell-type, and cell-type labels from gsva are stored as files in the working directory. Additionally, if `saveSCObject = TRUE`, then the Seurat object is also saved in the working directory.
 
