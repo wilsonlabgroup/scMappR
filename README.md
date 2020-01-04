@@ -1,9 +1,10 @@
----
-title: "single-cell mapper (scMappR)"
-author: "Dustin Sokolowski"
-date: "03/01/2020"
-output: github_document
----
+
+# single-cell mapper (scMappR)
+
+## Dustin Sokolowski
+
+## date: "03/01/2020"
+
 
 ## Description
 
