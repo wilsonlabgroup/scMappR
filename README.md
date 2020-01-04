@@ -98,7 +98,8 @@ rowname <- get_gene_symbol(Signature)
 rownames(Signature) <- rowname$rowname
 genes <- rownames(Signature)[1:60]
  rda_path1 = "~/Documents/scMappR/data" 
-internal <- tissue_scMappR_internal(genes,"mouse",output_directory = "scMappR_Test", tissue = "hypothalamus",rda_path = rda_path1, toSave = T)
+internal <- tissue_scMappR_internal(genes,"mouse",output_directory = "scMappR_Test",
+tissue = "hypothalamus",rda_path = rda_path1, toSave = T)
 
 ```
 
@@ -179,7 +180,8 @@ This function returns the signature matrix and cell-type labels. If `toSave = TR
 
 data(sm)
 toProcess <- list(example = sm)
-tst1 <- process_dgTMatrix_lists(toProcess, name = "testPropcess", species_name = -9, naming_preference = "eye", rda_path = "~/scMappR/data", panglao_set = "TRUE", toSave = TRUE, saveSCObject = TRUE)
+tst1 <- process_dgTMatrix_lists(toProcess, name = "testPropcess", species_name = -9, naming_preference = "eye",
+rda_path = "~/scMappR/data", panglao_set = "TRUE", toSave = TRUE, saveSCObject = TRUE)
 
 
 ```
