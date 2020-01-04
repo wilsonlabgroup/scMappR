@@ -91,13 +91,13 @@ Input a list of human or mouse gene symbols as well as a tissue of interest to i
 
 ```{r tissue_scMappR_internal, eval=FALSE }
 
-# load in signature matrices
-data(Preoptic_Area)# region to preoptic area
-Signature <- POA_example$POA_Rank_signature # signature matrix 
-rowname <- get_gene_symbol(Signature) # get signature
+
+data(Preoptic_Area)
+Signature <- POA_example$POA_Rank_signature
+rowname <- get_gene_symbol(Signature) 
 rownames(Signature) <- rowname$rowname
 genes <- rownames(Signature)[1:60]
- rda_path1 = "~/Documents/scMappR/data" # data directory (if it exists)
+ rda_path1 = "~/Documents/scMappR/data" 
 internal <- tissue_scMappR_internal(genes,"mouse",output_directory = "scMappR_Test", tissue = "hypothalamus",rda_path = rda_path1, toSave = T)
 
 ```
@@ -149,14 +149,14 @@ Then, it will calculate scMappR Transformed Values (STVs) before estimating if t
 
 ```{r scMappR_and_pathway_analysis, eval=FALSE}
 
-data(PBMC_scMappR) # load data example of PBMC bulk and cell-sorted RNA-seq data
-bulk_DE_cors <- PBMC_example$bulk_DE_cors # 59 sex specific DEGs in bulk PBMC (upregulated = female biased)
-bulk_normalized <- PBMC_example$bulk_normalized # log CPM normalized bulk RNA-seq data
-odds_ratio_in <- PBMC_example$odds_ratio_in # signature matrix developed from cell-sorted RNA-seq
-case_grep <- "_female" # flag for 'cases' (upregulated), index is also acceptable
-control_grep <- "_male" # flag for 'control' (downregulated), index is also acceptable
-max_proportion_change <- 10 # maximum cell-type proportion change -- good for cell-types that are uncomon in population and small absolute changes may yield large relative changes
-theSpecies <- "human" # these RNAseq data have human gene symbols (are also from human)
+data(PBMC_scMappR) 
+bulk_DE_cors <- PBMC_example$bulk_DE_cors 
+bulk_normalized <- PBMC_example$bulk_normalized 
+odds_ratio_in <- PBMC_example$odds_ratio_in 
+case_grep <- "_female" 
+control_grep <- "_male" 
+max_proportion_change <- 10 
+theSpecies <- "human" 
 
 toOut <- scMappR_and_pathway_analysis(bulk_normalized, odds_ratio_in, 
                                       bulk_DE_cors, case_grep = case_grep,
