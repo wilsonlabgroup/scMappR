@@ -201,6 +201,12 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     control_grep <- "scMappR_control"
     case_grep <- "scMappR_case"
   }
+  cases <- grep(case_grep, rownames(tester))
+  control <- grep(control_grep, rownames(tester))
+  if(any(length(cases) < 2, length(control) < 2)) {
+    stop("There is fewer than two cases or controls, please check 'case_grep' or 'control_grep'.")
+  }
+  
   if(class(signature_matrix) == "character") {
     # assuming that the signature matrix is an RData file containg an object named wilcoxon_rank_mat_or (internal, generally)
     wilcoxon_rank_mat_or <- ""
