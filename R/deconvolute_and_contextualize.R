@@ -306,6 +306,9 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
     rownames(tester) <- colnames(bulk_in)
     cases <- grep(case_grep, rownames(tester))
     control <- grep(control_grep, rownames(tester))
+    if(any(length(cases) < 2, length(control) < 2)) {
+      stop("There is fewer than two cases or controls, please check 'case_grep' or 'control_grep'.")
+    }
     cases_Med <- colMedians(tester[cases,])
     control_Med <- colMedians(tester[control,])
     
