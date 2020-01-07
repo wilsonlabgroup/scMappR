@@ -201,8 +201,8 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     control_grep <- "scMappR_control"
     case_grep <- "scMappR_case"
   }
-  cases <- grep(case_grep, rownames(count_file))
-  control <- grep(control_grep, rownames(count_file))
+  cases <- grep(case_grep, colnames(count_file))
+  control <- grep(control_grep, colnames(count_file))
   if(any(length(cases) < 2, length(control) < 2)) {
     stop("There is fewer than two cases or controls, please check 'case_grep' or 'control_grep'.")
   }
