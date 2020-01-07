@@ -27,7 +27,7 @@ Currently, there is only  a development version. scMappR relies on the following
   * gProfileR - CRAN
   * limSolve - CRAN 
   
-Install GSVA and pcaMethods from bioconductor first, as `devtools::install_githb()` will automatically install CRAN. 
+Install GSVA and pcaMethods from bioconductor first, as `devtools::install_github()` will automatically install CRAN dependencies. 
 
 1. Github (Development Version)
 
