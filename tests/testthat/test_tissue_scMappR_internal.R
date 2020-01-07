@@ -9,7 +9,7 @@ testthat::test_that('200 genes hypothal should work', {
   rowname <- get_gene_symbol(Signature)
   rownames(Signature) <- rowname$rowname
   
-  rda_path1 = "~/Documents/scMappR/data"
+  rda_path1 = "~/scMappR/data"
   
 genes <- rownames(Signature)[1:200]
 internal <- tissue_scMappR_internal(genes,"mouse", output_directory = "scMappR_Test",
@@ -35,7 +35,7 @@ testthat::test_that('unavailable cell-type should fail', {
   rowname <- get_gene_symbol(Signature)
   rownames(Signature) <- rowname$rowname
   
-  rda_path1 = "~/Documents/scMappR/data"
+  rda_path1 = "~/scMappR/data"
   
   genes <- rownames(Signature)[1:200]
   testthat::expect_error(tissue_scMappR_internal(genes,"mouse", output_directory = "scMappR_Test",
@@ -54,7 +54,7 @@ testthat::test_that('wrong species should throw error', {
   rowname <- get_gene_symbol(Signature)
   rownames(Signature) <- rowname$rowname
   
-  rda_path1 = "~/Documents/scMappR/data"
+  rda_path1 = "~/scMappR/data"
   
   genes <- rownames(Signature)[1:200]
   internal <- testthat::expect_error(tissue_scMappR_internal(genes,"human", output_directory = "scMappR_Test",
