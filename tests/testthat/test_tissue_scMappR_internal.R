@@ -17,7 +17,7 @@ internal <- tissue_scMappR_internal(genes,"mouse", output_directory = "scMappR_T
 
 CNames <- c("background_heatmap","gene_list_heatmap" ,"single_celltype_preferences","group_celtype_preference"   )
 
-allTrue <- names(internal[[1]]) == CNames
+allTrue <- all(names(internal[[1]]) == CNames)
 
 testthat::expect_true(allTrue)
 testthat::expect_true(is.list(internal))

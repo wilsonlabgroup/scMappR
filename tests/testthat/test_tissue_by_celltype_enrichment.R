@@ -18,7 +18,7 @@ CName <- c("name", "p", "term_size", "intersect_size",
            "input_length", "genes", "fdr", "bonf", 
            "term_name","p_value")
 
-testthat::expect_true(all(dim(enriched) == CName))
+testthat::expect_true(all(colnames(enriched) == CName))
 
 
 })
