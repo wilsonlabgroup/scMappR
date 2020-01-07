@@ -28,6 +28,15 @@ testthat::test_that('Bulk samples, signature matrices, correct DEGs and index na
 
 testthat::test_that('Must have multiple replicates -- throw error', {
   
+  
+  data(PBMC_example)
+  bulk_DE_cors <- PBMC_example$bulk_DE_cors
+  bulk_normalized <- PBMC_example$bulk_normalized
+  odds_ratio_in <- PBMC_example$odds_ratio_in
+  max_proportion_change <- 10
+  print_plots <- FALSE  
+  case_grep <- "_female"
+  control_grep <- "_male"
   case_grep <- "_female"
   control_grep <- "_male"
   bulk_normalized1 <- bulk_normalized[,1:4]
@@ -63,6 +72,15 @@ testthat::test_that('Strange column names, same error', {
 
 testthat::test_that('Case and control indexed the same, throw error.', {
   
+  
+  data(PBMC_example)
+  bulk_DE_cors <- PBMC_example$bulk_DE_cors
+  bulk_normalized <- PBMC_example$bulk_normalized
+  odds_ratio_in <- PBMC_example$odds_ratio_in
+  max_proportion_change <- 10
+  print_plots <- FALSE  
+  case_grep <- "_female"
+  control_grep <- "_male"
   case_grep <- c(1,2,3,4)
   control_grep <- "_male"
   
@@ -80,6 +98,15 @@ testthat::test_that('Case and control indexed the same, throw error.', {
 
 testthat::test_that('one cell type, throw error.', {
   
+  
+  data(PBMC_example)
+  bulk_DE_cors <- PBMC_example$bulk_DE_cors
+  bulk_normalized <- PBMC_example$bulk_normalized
+  odds_ratio_in <- PBMC_example$odds_ratio_in
+  max_proportion_change <- 10
+  print_plots <- FALSE  
+  case_grep <- "_female"
+  control_grep <- "_male"
   case_grep <- "_female"
   control_grep <- "_male"
   
