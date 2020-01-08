@@ -15,8 +15,8 @@
 #' @param tissue  Name of the tissue in "get_tissues".
 #' @param cluster 'Pval' or 'OR' depending on if you wantto cluster odds ratios or pvalues of CT preferences.
 #' @param genecex The size of the gene names of the rows in the heatmap.
-#' @param raw_pval  If the inputed signature matrix are raw (untransformed) Pvalues -- reccomended to generate rank first (T/F).
-#' @param rda_path Path to the rda file containing all of the signature matrices.
+#' @param raw_pval  If the inputted signature matrix are raw (untransformed) p-values -- recommended to generate rank first (T/F).
+#' @param rda_path Path to the .rda file containing all of the signature matrices.
 #' @param toSave Allow scMappR to write files in the current directory (T/F).
 #' @param output_directory If toSave = TRUE, the name of the output directory that would be built.
 #' @param drop_unkown_celltype Whether or not to remove "unknown" cell-types from the signature matrix (T/F).
