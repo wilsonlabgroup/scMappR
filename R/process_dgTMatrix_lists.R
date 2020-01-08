@@ -1,11 +1,11 @@
 #' Count Matrix To Signature Matrix
 #'
-#' This function takes a list of count matrices, processes them, calls cell-types, and genreates signature matrices. 
+#' This function takes a list of count matrices, processes them, calls cell-types, and generates signature matrices. 
 #' 
 #' This function is a one line wrapper to process count matrices into a signature matrix.
-#' It combines process_from_count, two methods of identifying cell-type identitt (GSVA and Fisher's test).
-#' Then, it takes the output of cell-type markers and converts it into a signature matrix of P-value ranks and Odds-ratios.
-#' Along the way, it saves the Seurat object (if chosen with saveSCObject), cell-type identites from GSVA (it's own obect), and the signature matrices.
+#' It combines process_from_count, two methods of identifying cell-type identities (GSVA and Fisher's test).
+#' Then, it takes the output of cell-type markers and converts it into a signature matrix of p-value ranks and odds ratios.
+#' Along the way, it saves the Seurat object (if chosen with saveSCObject), cell-type identites from GSVA (its own obect), and the signature matrices.
 #' Cell-type marker outputs are also saved in the generes.RData list. Names of the generes objects and the signature matrices are kept.
 #'
 #' @rdname process_dgTMatrix_lists
