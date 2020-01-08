@@ -12,10 +12,8 @@
 #' @param p_thresh The Fisher's test cut-off for a cell-marker to be enriched.
 #' @param rda_path Path to a .rda file containing an object called "gmt". Either human or mouse cell-type markers split by experiment. If the correct file isn't present they will be downloaded from https://github.com/DustinSokolowski/scMappR_Data.
 #' @param isect_size Number of genes in your list and the cell-type.
-#' @param toSave Permission to print plot in current directory (T/F).
 #' @param return_gmt Return .gmt file -- reccomended if downloading from online as it may have updated (T/F).
 #' @param name Name of the pdf to be printed.
-#' @param path If toSave == TRUE, path to the directory where files will be saved.
 #' 
 #' @return \code{tissue_by_celltype_enrichment} Gene set enrichment of cell-types on your inputted gene list, a plot of cell-type enrichment (can be saved), and the gmt file will cell-type markers (optionally). \cr
 #'
@@ -53,7 +51,7 @@
 #' @export
 #' 
 
-tissue_by_celltype_enrichment <- function(gene_list, species, name = "CT_Tissue_example", p_thresh = 0.05, rda_path = "~/scMappR/data/",  isect_size = 3, toSave = FALSE, return_gmt= FALSE, path = NULL) {
+tissue_by_celltype_enrichment <- function(gene_list, species, name = "CT_Tissue_example", p_thresh = 0.05, rda_path = "~/scMappR/data/",  isect_size = 3, return_gmt= FALSE) {
   gmt <- "" # no visible binding 
   if(is.null(species)) stop("please select 'human' or 'mouse' as a species.")
   if(class(gene_list) != "character") {
@@ -138,15 +136,7 @@ tissue_by_celltype_enrichment <- function(gene_list, species, name = "CT_Tissue_
   }
   enriched$term_name <- tochr(enriched$name)
   enriched$p_value <- enriched$fdr
-  if(toSave == TRUE) { # if there is permission to print plots locally 
-    pdf(file = paste0(path,"/",name,"_cellmarker_enriched.pdf"))
-    plotBP(enriched) # plotting by FDR
-    dev.off()
-  } else {
-    
-    plotBP(enriched)
-    
-  }
+
   if(return_gmt == TRUE) {
     l <- list(enriched = enriched, gmt = gmt) # returning the enrichment of the gene list and background gmt as it updates 
     return(l)
