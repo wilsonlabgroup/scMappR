@@ -7,13 +7,13 @@
 toNum(x)
 }
 \arguments{
-\item{x}{A vector of character, factor, or numeric.}
+\item{x}{A character, factor, or numeric vector.}
 }
 \value{
 \code{toNum} Returns a numeric vector. \cr
 }
 \description{
-This function checks if your vector is not a character and will then converts it to a numeric.
+This function checks if your vector is not a character and if it is, then converts it to a numeric.
 }
 \examples{
 

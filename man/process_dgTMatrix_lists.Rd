@@ -29,29 +29,29 @@ process_dgTMatrix_lists(
 
 \item{rda_path}{If saved, directory to where data from scMappR_data is downloaded.}
 
-\item{panglao_set}{If the inputted matrices are from panglao (i.e. if they're internal).}
+\item{panglao_set}{If the inputted matrices are from Panglao (i.e. if they're internal).}
 
-\item{haveUMAP}{Save the umaps -- only use if the package is downloaded with pip.}
+\item{haveUMAP}{Save the UMAPs -- only use if the package is downloaded with pip.}
 
-\item{saveSCObject}{Save the seurat object as an RData object (T/F).}
+\item{saveSCObject}{Save the Seurat object as an RData object (T/F).}
 
-\item{internal}{Was this used as part of the internal processing of panglao datasets (T/F).}
+\item{internal}{Was this used as part of the internal processing of Panglao datasets (T/F).}
 
 \item{toSave}{Allow scMappR to write files in the current directory (T/F)}
 
-\item{use_sctransform}{If you should use scRNAsform or the normalize/variablefeatures/scaledata pipeline (T/F).}
+\item{use_sctransform}{If you should use sctransform or the Normalize/VariableFeatures/ScaleData pipeline (T/F).}
 }
 \value{
 \code{process_dgTMatrix_lists} Signature matrices populated with rank and odds-ratio. If toSave is considered TRUE, then cell-type names from GSVA and the cell-type names are printed. saveSCObject = TRUE will also save the Seurat object. \cr
 }
 \description{
-This function takes a list of count matrices, processes them, calls cell-types, and genreates signature matrices.
+This function takes a list of count matrices, processes them, calls cell-types, and generates signature matrices.
 }
 \details{
 This function is a one line wrapper to process count matrices into a signature matrix.
-It combines process_from_count, two methods of identifying cell-type identitt (GSVA and Fisher's test).
-Then, it takes the output of cell-type markers and converts it into a signature matrix of P-value ranks and Odds-ratios.
-Along the way, it saves the Seurat object (if chosen with saveSCObject), cell-type identites from GSVA (it's own obect), and the signature matrices.
+It combines process_from_count, two methods of identifying cell-type identities (GSVA and Fisher's test).
+Then, it takes the output of cell-type markers and converts it into a signature matrix of p-value ranks and odds ratios.
+Along the way, it saves the Seurat object (if chosen with saveSCObject), cell-type identites from GSVA (its own obect), and the signature matrices.
 Cell-type marker outputs are also saved in the generes.RData list. Names of the generes objects and the signature matrices are kept.
 }
 \examples{

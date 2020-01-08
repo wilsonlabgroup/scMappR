@@ -18,8 +18,8 @@ make_TF_barplot(ordered_back_all_tf, top_tf = 5)
 Make a barplot of the top transcription factors enriched by g:ProfileR.
 }
 \details{
-This function takes a g:ProfleR output and prints the top "top_tfs" most significantly
-enriched P-values before plotting the rank of their P-values.
+This function takes a g:ProfileR output and prints the top "top_tfs" most significantly
+enriched p-values before plotting the rank of their p-values.
 }
 \examples{
 \donttest{

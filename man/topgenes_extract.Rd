@@ -7,7 +7,7 @@
 topgenes_extract(generes, padj = 0.05, FC = 1.5, topNum = 30)
 }
 \arguments{
-\item{generes}{A list of cell-tpe markers with fold-changes and P-vlaues (FindMarkers output in Seurat).}
+\item{generes}{A list of cell-tpe markers with fold-changes and p-vlaues (FindMarkers output in Seurat).}
 
 \item{padj}{The p-value (FDR) cutoff.}
 
@@ -19,11 +19,11 @@ topgenes_extract(generes, padj = 0.05, FC = 1.5, topNum = 30)
 \code{topgenes_extract} Returns a list of character vectors with the top (topNum) of gene markers for each cell-type. \cr
 }
 \description{
-Internal -- Extracts strongect cell-type markers from a Seurat object.
+Internal -- Extracts strongest cell-type markers from a Seurat object.
 }
 \details{
 Internal, this function runs through a list of outputs from FindMarkers objects in Seurat
-at will extract genes past a padj and fold-change threshold. Then it extracts the topNum number of genes.
+and will extract genes past a padj and fold-change threshold. Then it extracts the topNum number of genes.
 if you have not used the FindMarkers function, then a list of summary statistics with 
 fold-change designated by avg_logFC and p-val by p_val_adj.
 }

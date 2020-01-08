@@ -21,7 +21,7 @@ gProfiler_STV(STV_matrix, species, background, gene_cut, newGprofiler)
 \code{gProfiler_STV} A List of significantly enriched pathways and TFs (correction_method = FDR, hier_sorting = moderate), for every cell-type. \cr
 }
 \description{
-This function runs through each list of scMappR Transformed Values (STV)'s and completes both pathway and Transcription Factor (TF) enrichment.
+This function runs through each list of scMappR Transformed Values (STVs) and completes both pathway and transcription factor (TF) enrichment.
 }
 \details{
 This function takes a matrix of scMappR_Transformed_Values and a species (human, mouse, or a character directly compatible with g:ProfileR).

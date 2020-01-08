@@ -28,7 +28,7 @@ heatmap_generation(
 
 \item{cex}{The size of the genes in the column label for the heatmap.}
 
-\item{rd_path}{The directory to R data files -- if they are not in this directory, then the files will be downloaded.}
+\item{rd_path}{The directory to RData files -- if they are not in this directory, then the files will be downloaded.}
 
 \item{cellTypes}{Colnames of the cell-types you will extract (passed to extract_genes_cell).}
 

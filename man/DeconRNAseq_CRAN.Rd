@@ -15,15 +15,15 @@ DeconRNAseq_CRAN(
 )
 }
 \arguments{
-\item{datasets}{normalized RNA-seq dataset}
+\item{datasets}{Normalized RNA-seq dataset}
 
-\item{signatures}{signature matrix of odds ratios}
+\item{signatures}{Signature matrix of odds ratios}
 
-\item{proportions}{if cell-type proportion is already inputted - always NULL for scMappR}
+\item{proportions}{If cell-type proportion is already inputted - always NULL for scMappR}
 
-\item{checksig}{check to see if plotting is significant - always false for scMappR}
+\item{checksig}{Check to see if plotting is significant - always false for scMappR}
 
-\item{known.prop}{if proportions were known - always false for scMappR}
+\item{known.prop}{If proportions were known - always false for scMappR}
 
 \item{use.scale}{Scale and center value - always TRUE for scMappR}
 

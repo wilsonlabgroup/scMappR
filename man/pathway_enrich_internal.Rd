@@ -29,7 +29,7 @@ pathway_enrich_internal(
 
 \item{plot_names}{Names of output.}
 
-\item{number_genes}{Number of genes to if there are many many DEGs.}
+\item{number_genes}{Number of genes to if there are many, many DEGs.}
 
 \item{newGprofiler}{Whether to use g:ProfileR or gprofiler2 (T/F).}
 
@@ -42,7 +42,7 @@ pathway_enrich_internal(
 This function completes pathway enrichment of STVs and bulk gene list.
 }
 \details{
-Internal: Pathway analysis of Differentially expressed genes (DEGs) and scMappR Transcription Values (STVs) for each cell-type. Returns RData objects of differential analysis as well as plots of the top bulk pathways.
+Internal: Pathway analysis of differentially expressed genes (DEGs) and scMappR Transformed Values (STVs) for each cell-type. Returns .RData objects of differential analysis as well as plots of the top bulk pathways.
 It is a wrapper for making barplots, bulk pathway analysis, and gProfiler_STV.
 }
 \examples{

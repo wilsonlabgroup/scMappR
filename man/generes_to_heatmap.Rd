@@ -14,7 +14,7 @@ generes_to_heatmap(
 )
 }
 \arguments{
-\item{generes}{A list of cell-tpe markers with fold-changes and P-vlaues (FindMarkers output in Seurat).}
+\item{generes}{A list of cell-tpe markers with fold-changes and p-vlaues (FindMarkers output in Seurat).}
 
 \item{species}{The species of gene symbols, if not internal, "human" or "mouse".}
 
@@ -22,9 +22,9 @@ generes_to_heatmap(
 
 \item{rda_path}{Path to output direcotry, if toSave is true.}
 
-\item{make_names}{Identify names of cell-type markers using the Fisher's Exact-Test method (T/F).}
+\item{make_names}{Identify names of cell-type markers using the Fisher's exact test method (T/F).}
 
-\item{internal}{If this function is pre-processing from panglao (T/F).}
+\item{internal}{If this function is pre-processing from Panglao (T/F).}
 }
 \value{
 \code{generes_to_heatmap} A list containing a signature matrix by rank := -1*log10(Pfdr) and by fold-change (only increasing). Additionally it returns the top (up to) 30 CT markers for each cell-type, as well as the name of each cell-type (from the signature methods method). \cr
@@ -33,7 +33,7 @@ generes_to_heatmap(
 Convert a list of cell-type markers from FindMarkers in Seurat to a signature matrix defined by odds ratio and rank.
 }
 \details{
-Take a list of compiled DEGs from different cell types, identify what the cell-types are using the Fisher's exact method, and then convert into a signature matrix for both the adjusted p-value and odds ratio.
+Take a list of compiled differentially expressed genes from different cell-types, identify what the cell-types are using the Fisher's exact test, and then convert into a signature matrix for both the adjusted p-value and odds ratio.
 }
 \examples{
  

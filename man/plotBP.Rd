@@ -18,8 +18,8 @@ plotBP(ordered_back_all, top_bp = 10)
 Make a barplot of the top biological factors enriched by g:ProfileR.
 }
 \details{
-This function takes a g:ProfleR output and prints the top "top_bp" most significantly
-enriched P-values before plotting the rank of their P-values.
+This function takes a g:ProfileR output and prints the top "top_bp" most significantly
+enriched p-values before plotting the rank of their p-values.
 }
 \examples{
 \donttest{

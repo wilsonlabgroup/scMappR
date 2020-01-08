@@ -16,7 +16,7 @@ data(POA_example)
 Data for tissue_scMappR_custom, tissue_scMappR_internal, generes_to_heatmap.
 }
 \details{
-A named list called POA_example containing three objects, POA_generes: a list of truncated dataframes containing summary statistics for each cell-type marker, POA_OR_signature a truncated signature matrix of odds ratio's for cell-types in the POA, and POA_Rank_signature a truncated signature matrix of -log10(Padj) for cell-type markers in the POA.
+A named list called POA_example (pre-optic area example) containing three objects, POA_generes: a list of truncated dataframes containing summary statistics for each cell-type marker, POA_OR_signature a truncated signature matrix of odds ratio's for cell-types in the POA, and POA_Rank_signature a truncated signature matrix of -log10(Padj) for cell-type markers in the POA.
 }
 \examples{
 data(POA_example)

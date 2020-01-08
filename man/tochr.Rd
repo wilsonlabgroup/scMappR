@@ -7,13 +7,13 @@
 tochr(x)
 }
 \arguments{
-\item{x}{A vector of character, factor, or numeric}
+\item{x}{A character, factor or numeric vector.}
 }
 \value{
 \code{tochr} Returns a character vector. \cr
 }
 \description{
-This function checks if your vector is not a character and will then converts it to a character.
+This function checks if your vector is not a character and if not, will  convert it to a character.
 }
 \examples{
 

@@ -25,7 +25,7 @@ cellmarker_enrich(
 
 \item{min_genes}{Minimum number of genes in the cell-type markers.}
 
-\item{max_genes}{Maximum number of genes in a cell-type marker.}
+\item{max_genes}{Maximum number of genes in the cell-type markers.}
 
 \item{isect_size}{Number of genes in your list and the cell-type.}
 }
@@ -33,10 +33,10 @@ cellmarker_enrich(
 \code{cellmarker_enrich} Gene set enrichment of cell-types on your inputted gene list. \cr
 }
 \description{
-This function uses the cellmarker and panglao datasets to identify cell-type Differentially Expressed Genes.
+This function uses the CellMarker and Panglao datasets to identify cell-type differentially expressed genes.
 }
 \details{
-Complete a fishers exact test of an input list of genes against a gene set saved in an *.RData object.
+Complete a Fisher's exact test of an input list of genes against a gene set saved in an *.RData object.
 The RData object is storing a named list of genes called "gmt".
 }
 \examples{

@@ -17,9 +17,9 @@ gsva_cellIdentify(
 
 \item{theSpecies}{"human" or "mouse" -- it will determine which CT marker database to use -- there are some differences.}
 
-\item{naming_preference}{Once top CT markers are identified, naming_preferences will then extract CT markers within a more appropriate tissue type etc.}
+\item{naming_preference}{Once top CT markers are identified, naming_preferences will then extract CT markers within a more appropriate tissue type.}
 
-\item{rda_path}{Path to precomputed cell-type gmt files (rda objects).}
+\item{rda_path}{Path to pre-computed cell-type .gmt files (rda objects).}
 
 \item{toSave}{If scMappR is allowed to write files and directories.}
 }
@@ -27,7 +27,7 @@ gsva_cellIdentify(
 \code{gsva_cellIdentify} A list containing the top cell-type marker for a cell-type using the panglao dataset as well as the cellMarker dataset, and the average expression of genes in each cluster. \cr
 }
 \description{
-This function computes the mean expression of every cell-typ before predicting the most likely cell-type using the GSVA method.
+This function computes the mean expression of every cell-type before predicting the most likely cell-type using the GSVA method.
 }
 \details{
 This function inputs a Seurat object and uses the average normalized expression of each gene in each cluster to identify cell-types using the GSVA method.

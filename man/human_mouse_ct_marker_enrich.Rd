@@ -16,7 +16,7 @@ human_mouse_ct_marker_enrich(
 
 \item{theSpecies}{The species of the gene symbols: "human" or "mouse".}
 
-\item{cell_marker_path}{If local, path to Cell-Type marker rda files, otherwise, we will try to download datafiles.}
+\item{cell_marker_path}{If local, path to cell-type marker rda files, otherwise, we will try to download data files.}
 
 \item{naming_preference}{Either -9 if there is no expected cell-type or one of the categories from get_naming_preference_options(). This is useful if you previously have an idea of which cell-type you were going to enrich.}
 }

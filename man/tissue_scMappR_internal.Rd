@@ -26,13 +26,13 @@ tissue_scMappR_internal(
 
 \item{tissue}{Name of the tissue in "get_tissues".}
 
-\item{rda_path}{Path to the rda file containing all of the signature matrices.}
+\item{rda_path}{Path to the .rda file containing all of the signature matrices.}
 
 \item{cluster}{'Pval' or 'OR' depending on if you wantto cluster odds ratios or pvalues of CT preferences.}
 
 \item{genecex}{The size of the gene names of the rows in the heatmap.}
 
-\item{raw_pval}{If the inputed signature matrix are raw (untransformed) Pvalues -- reccomended to generate rank first (T/F).}
+\item{raw_pval}{If the inputted signature matrix are raw (untransformed) p-values -- recommended to generate rank first (T/F).}
 
 \item{toSave}{Allow scMappR to write files in the current directory (T/F).}
 
@@ -60,7 +60,7 @@ Signature <- POA_Rank_signature
 rowname <- get_gene_symbol(Signature)
 rownames(Signature) <- rowname$rowname
 genes <- rownames(Signature)[1:200]
-rda_path1 = "~/Documents/scMappR/data"
+rda_path1 = "~/scMappR/data"
 internal <- tissue_scMappR_internal(genes,"mouse", output_directory = "scMappR_Test",
                                     tissue = "hypothalamus",rda_path = rda_path1)
 

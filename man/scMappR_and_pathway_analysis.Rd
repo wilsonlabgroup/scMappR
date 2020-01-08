@@ -27,15 +27,15 @@ scMappR_and_pathway_analysis(
 )
 }
 \arguments{
-\item{count_file}{Normalized RNA-seq count matrix where rows are gene symbols and columns are individuals. Either the object tself of the path of a TSV file.}
+\item{count_file}{Normalized RNA-seq count matrix where rows are gene symbols and columns are individuals. Either the object tself of the path of a .tsv file.}
 
-\item{signature_matrix}{Signature matrix (reccommended odds ratios) of cell-type specificity of genes. Either the object itself or a pathway to an RData file containing an object named "wilcoxon_rank_mat_or" -- generally internal.}
+\item{signature_matrix}{Signature matrix (recommended odds ratios) of cell-type specificity of genes. Either the object itself or a pathway to a .RData file containing an object named "wilcoxon_rank_mat_or" -- generally internal.}
 
-\item{DEG_list}{An object with the first column as gene symbols within the bulk dataset (doesn't have to be in signature matrix), second column is the adjusted P-value, and the third the log2FC path to a tsv file containing this info is also acceptable.}
+\item{DEG_list}{An object with the first column as gene symbols within the bulk dataset (doesn't have to be in signature matrix), second column is the adjusted p-value, and the third the log2FC path to a .tsv file containing this info is also acceptable.}
 
 \item{case_grep}{Tag in the column name for cases (i.e. samples representing upregulated) OR an index of cases.}
 
-\item{control_grep}{tag in the column name for controls (i.e. samples representing downregulated OR an index of controls.}
+\item{control_grep}{Tag in the column name for controls (i.e. samples representing downregulated OR an index of controls).}
 
 \item{rda_path}{If downloaded, path to where data from scMappR_data is stored.}
 
@@ -45,15 +45,15 @@ scMappR_and_pathway_analysis(
 
 \item{plot_names}{The prefix of plot pdf files.}
 
-\item{theSpecies}{-9 if using a precomputed count matrix from scMappR, human, mouse, or a specied directly compatible with g:Profiler. Removes ensembl symbols if appended.}
+\item{theSpecies}{-9 if using a pre-computed count matrix from scMappR, human, mouse, or a specied directly compatible with g:Profiler. Removes Ensembl symbols if appended.}
 
-\item{output_directory}{The name of the directory that will contain off of the analysis.}
+\item{output_directory}{The name of the directory that will contain output of the analysis.}
 
 \item{sig_matrix_size}{Number of genes in signature matrix for cell-type deconvolution.}
 
 \item{drop_unkown_celltype}{Whether or not to remove "unknown" cell-types from the signature matrix.}
 
-\item{internet}{Whether you have stable WIFI (T/F).}
+\item{internet}{Whether you have stable Wifi (T/F).}
 
 \item{up_and_downregulated}{Whether you are additionally splitting up/downregulated genes (T/F).}
 
@@ -69,12 +69,12 @@ scMappR_and_pathway_analysis(
 \code{scMappR_and_pathway_analysis} A directory with: STVs in RData file, Cell Type proportions (RData file), cell-type proportions leave one out (RData file), heatmap of STVs (all), heatmap of STVs (within signature), heatmap of signature (all), heatmap of signature (overlapping with DEG_list), Pathway enrichment for DEG list(all), RData file and Biological Processes, Pathway enrichment of STVs for each cell-type, RData file and biological processes. \cr
 }
 \description{
-This function generates scMappR Transformed Variables (STVs), visualies them in a heatmap, and completes pathway enrichment of STVs and bulk gene list.
+This function generates scMappR Transformed Variables (STVs), visualizes them in a heatmap, and completes pathway enrichment of STVs and bulk gene list.
 }
 \details{
-This function generates STVs for every cell-type (see deconvolute_and_contextualize) as well as the relative cell-type proportions (which will be reutrned and pushed through).
-Then, it generates heatmaps of all STVs, STVs overlapping with the signature matrix, the entire signature matrix, the and values from the signature matrix that overlap with inputted differentially expressed genes.
-Then, if you have WIFI, it will complete g:ProfilR of the reordered STVs as well as a the ordered list of genes.
+This function generates STVs for every cell-type (see deconvolute_and_contextualize), as well as the relative cell-type proportions (which will be reutrned and pushed through).
+Then, it generates heatmaps of all STVs, STVs overlapping with the signature matrix, the entire signature matrix, the cell-type preference values from the signature matrix that overlap with inputted differentially expressed genes.
+Then, if you have Wifi, it will complete g:ProfileR of the reordered STVs as well as a the ordered list of genes.
 This function is a wrapper for deconvolute_and_contextualize and pathway_enrich_internal.
 }
 \examples{
