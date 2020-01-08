@@ -20,11 +20,12 @@ Internal: This function runs the FindMarkers function from seurat in a loop, wil
 It then takes the output of the FindMarkers and puts it in a list, returning it.
 }
 \examples{
- 
+\donttest{  
  
 data(sm)
 toProcess <- list(example = sm)
 tst1 <- process_from_count(toProcess, "testProcess")
 generes <- seurat_to_generes(tst1)
+}
 
 }

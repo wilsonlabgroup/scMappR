@@ -22,7 +22,8 @@
 #' @param toSave Allow scMappR to write files in the current directory (T/F)
 #' @param rda_path If saved, directory to where data from scMappR_data is downloaded.
 #' @param use_sctransform If you should use sctransform or the Normalize/VariableFeatures/ScaleData pipeline (T/F).
-#'
+#' @param path If toSave == TRUE, path to the directory where files will be saved.
+#' 
 #' @return \code{process_dgTMatrix_lists} Signature matrices populated with rank and odds-ratio. If toSave is considered TRUE, then cell-type names from GSVA and the cell-type names are printed. saveSCObject = TRUE will also save the Seurat object. \cr
 #'
 #' @importFrom ggplot2 ggplot aes geom_boxplot geom_text theme coord_flip labs element_text
@@ -50,7 +51,7 @@
 #' @export
 #' 
 
-process_dgTMatrix_lists <- function(dgTMatrix_list, name, species_name, naming_preference = -9,rda_path="",  panglao_set = FALSE ,haveUMAP = FALSE, saveSCObject = FALSE, internal = FALSE, toSave = FALSE, use_sctransform = FALSE) {
+process_dgTMatrix_lists <- function(dgTMatrix_list, name, species_name, naming_preference = -9,rda_path="",  panglao_set = FALSE ,haveUMAP = FALSE, saveSCObject = FALSE, internal = FALSE, toSave = FALSE, path = NULL, use_sctransform = FALSE) {
   
   # This function is a one line wrapper to process count matrices into a signature matrix
   # It combines process from count, two methods of identifying cell-type identitt (gsva and fisher's test)
@@ -109,6 +110,15 @@ process_dgTMatrix_lists <- function(dgTMatrix_list, name, species_name, naming_p
   if(!(any(is.logical(panglao_set),is.logical(haveUMAP),is.logical(saveSCObject),is.logical(internal),is.logical(panglao_set),is.logical(toSave),is.logical(use_sctransform)))) {
     stop("panglao_set, haveUMAP, saveSCObject, internal, toSave, and use_sctransform must all be of class logical.")
   }
+  
+  if(toSave == TRUE) {
+    if(is.null(path)) {
+      stop("scMappR is given write permission by setting toSave = TRUE but no directory has been selected (path = NULL). Pick a directory or set path to './' for current working directory")
+    }
+    if(!dir.exists(path)) {
+      stop("The selected directory does not seem to exist, please check set path.")
+    }
+  }
     
   if(species_name == -9) {
     spec=get_gene_symbol(sm)
@@ -122,7 +132,7 @@ process_dgTMatrix_lists <- function(dgTMatrix_list, name, species_name, naming_p
       stop("Naming preferences not in options (case sensitive) and isn't a non-choice (-9), please try again.")
     }
   }
-  pbmc <- process_from_count(countmat_list = dgTMatrix_list, name = name, theSpecies = species_name, panglao_set = panglao_set, haveUmap = haveUMAP, saveALL  = saveSCObject, toSave=toSave, use_sctransform = use_sctransform)
+  pbmc <- process_from_count(countmat_list = dgTMatrix_list, name = name, theSpecies = species_name, panglao_set = panglao_set, haveUmap = haveUMAP, saveALL  = saveSCObject, toSave=toSave, use_sctransform = use_sctransform, path = path)
   # process from the count matrices to the Seurat object -- see process_from_count for details
   print(class(pbmc))
   #print(head(pbmc))
@@ -131,7 +141,7 @@ process_dgTMatrix_lists <- function(dgTMatrix_list, name, species_name, naming_p
   gsva_cellIdentity_out <- gsva_cellIdentify(pbmc, theSpecies = species_name, naming_preference = naming_preference, rda_path = rda_path, toSave=toSave)
   # identify cell-type identify using the gsva method
   if(toSave == TRUE) {
-    save(gsva_cellIdentity_out, file = paste0(name, "_gsva_cellname_and_avg_expression.Rdata"))
+    save(gsva_cellIdentity_out, file = paste0(path, "/", name, "_gsva_cellname_and_avg_expression.Rdata"))
       
   } else {
     warning("toSave == FALSE therefore files cannot be saved. Switching toSave = TRUE is strongly reccomended.")
@@ -147,9 +157,9 @@ process_dgTMatrix_lists <- function(dgTMatrix_list, name, species_name, naming_p
   names(generes) <- colnames(wilcoxon_rank_mat_t) <- colnames(wilcoxon_rank_mat_or) <- gene_out$cellname
   # save cell-type markers and signature matrices
   if(toSave == TRUE) {
-    save(generes, file = paste0(name, "_generes.Rdata"))
-    save(wilcoxon_rank_mat_t, file= paste0(name, "_pval_heatmap.Rdata"))
-    save(wilcoxon_rank_mat_or, file= paste0(name, "_or_heatmap.Rdata"))
+    save(generes, file = paste0(path,"/", name, "_generes.Rdata"))
+    save(wilcoxon_rank_mat_t, file= paste0(path,"/", name, "_pval_heatmap.Rdata"))
+    save(wilcoxon_rank_mat_or, file= paste0(path,"/", name, "_or_heatmap.Rdata"))
     l <- list(wilcoxon_rank_mat_t = wilcoxon_rank_mat_t, wilcoxon_rank_mat_or = wilcoxon_rank_mat_or,generes=generes)
   } else {
     warning("toSave == FALSE therefore files cannot be saved. Switching toSave = TRUE is strongly reccomended.")

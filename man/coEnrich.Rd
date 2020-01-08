@@ -25,6 +25,8 @@ coEnrich(
 \item{outDir}{Name of the directory this table will be printed in.}
 
 \item{toSave}{Allow scMappR to write files in the current directory (T/F).}
+
+\item{path}{If toSave == TRUE, path to the directory where files will be saved.}
 }
 \value{
 \code{coEnrich} Enrichment of cell-types that are expressed by the same genes, from 2-5 sets of cell-types. \cr

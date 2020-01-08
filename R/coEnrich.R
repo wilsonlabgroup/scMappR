@@ -15,6 +15,7 @@
 #' @param study_name Name of the outputted table.
 #' @param outDir Name of the directory this table will be printed in.
 #' @param toSave Allow scMappR to write files in the current directory (T/F).
+#' @param path If toSave == TRUE, path to the directory where files will be saved.
 #'
 #' @return \code{coEnrich} Enrichment of cell-types that are expressed by the same genes, from 2-5 sets of cell-types. \cr
 #'
@@ -68,6 +69,15 @@ coEnrich <- function(sig, gene_list_heatmap, background_heatmap, study_name, out
   } 
   if(!is.logical(toSave)) {
     stop("toSave is not a logical object (TRUE/FALSE)")
+  }
+  
+  if(toSave == TRUE) {
+    if(is.null(path)) {
+      stop("scMappR is given write permission by setting toSave = TRUE but no directory has been selected (path = NULL). Pick a directory or set path to './' for current working directory")
+    }
+    if(!dir.exists(path)) {
+      stop("The selected directory does not seem to exist, please check set path.")
+    }
   }
   
   if(nrow(sig) > 5) {

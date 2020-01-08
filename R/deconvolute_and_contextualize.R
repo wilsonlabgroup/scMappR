@@ -32,6 +32,7 @@
 #' @param sig_distort Exponential change of odds ratios. Strongly not recomended and will produce warnings if changed from default.
 #' @param drop_unkown_celltype Whether or not to remove "unknown" cell-types from the signature matrix (T/F).
 #' @param toSave Allow scMappR to write files in the current directory (T/F).
+#' @param path If toSave == TRUE, path to the directory where files will be saved.
 #' 
 #' @return \code{deconvolute_and_contextualize} ScMappR transformed Values for every gene in every cell-type, cell-type composition with, allgenes included, average gene expression of each cell-type usng leave one out approach for each gene, and the processed signature matrix. Optional: boxplots of estimated CT proportions for each gene using a leave-one-out method. \cr
 #' 
@@ -68,7 +69,7 @@
 #'                                      
 #' @export
 #' 
-deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list, case_grep, control_grep, max_proportion_change = -9, print_plots=T, plot_names="scMappR",theSpecies = "human", make_scale = FALSE, FC_coef = T, sig_matrix_size = 3000, sig_distort = 1, drop_unkown_celltype = TRUE, toSave = FALSE) {
+deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list, case_grep, control_grep, max_proportion_change = -9, print_plots=T, plot_names="scMappR",theSpecies = "human", make_scale = FALSE, FC_coef = T, sig_matrix_size = 3000, sig_distort = 1, drop_unkown_celltype = TRUE, toSave = FALSE, path = NULL) {
   # This function completes the cell-type contextualization in scMappR -- reranking every DEG based on their fold change, likelihood the gene is in each detected cell type, average cell-type proportion, and ratio of cell-type proportion between case and control.
   # such that if a gene is upregulated, then it is being controlled by control/case, otherwise it is case/control
   # This function expects that the genes within the count file, signature matrix, and DEG_list are have the same logos
@@ -148,6 +149,15 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   if(!(theSpecies %in% c("human", "mouse"))) {
     if(theSpecies != -9) {
       stop("species_name is not 'human' 'mouse' or '-9' (case sensitive), please try again with this filled.")
+    }
+  }
+  
+  if(toSave == TRUE) {
+    if(is.null(path)) {
+      stop("scMappR is given write permission by setting toSave = TRUE but no directory has been selected (path = NULL). Pick a directory or set path to './' for current working directory")
+    }
+    if(!dir.exists(path)) {
+      stop("The selected directory does not seem to exist, please check set path.")
     }
   }
     
@@ -453,7 +463,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
       cell_type <- all_stack$cell_type
       proportion<- all_stack$proportion
       label <- all_stack$label
-      grDevices::pdf(paste0("deconvolute_generemove_quantseq_",names,".pdf"))
+      grDevices::pdf(paste0(path,"/","deconvolute_generemove_quantseq_",names,".pdf"))
       g <- ggplot2::ggplot(all_stack, ggplot2::aes(factor(cell_type), proportion)) + ggplot2::geom_boxplot()  + ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, hjust = 1, size = 8))
       # generate barplot for every cell-type combined
       print(g)
@@ -466,7 +476,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
         label <- cm_one$label
         g <- ggplot2::ggplot(cm_one, ggplot2::aes(factor(cell_type), proportion)) + ggplot2::geom_boxplot() + ggplot2::geom_text(ggplot2::aes(label=label),hjust=-0.2) + ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 0, hjust = 1, size = 12))
         
-        grDevices::pdf(paste0("deconvolute_generemov_quantseq_", i,"_",names,".pdf"))
+        grDevices::pdf(paste0(path,"/","deconvolute_generemov_quantseq_", i,"_",names,".pdf"))
                 # generate barplot for one cell-type at a time
         print(g)
         grDevices::dev.off()
@@ -475,9 +485,6 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
       return("Done!")
     }
     
-    boxplot_values(cmeaned_stacked, paste0(plot_names,"_average"))
-    #boxplot_values(means, paste0(plot_names,"_median"))
-    boxplot_values(fold_changes, paste0(plot_names,"_foldchange"))
   }
   l <- list(scMappR_transformed_values = all_reordered, 
             cellType_Proportions = proportions,

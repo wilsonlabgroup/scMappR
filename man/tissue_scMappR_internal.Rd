@@ -37,6 +37,8 @@ tissue_scMappR_internal(
 \item{toSave}{Allow scMappR to write files in the current directory (T/F).}
 
 \item{drop_unkown_celltype}{Whether or not to remove "unknown" cell-types from the signature matrix (T/F).}
+
+\item{path}{If toSave == TRUE, path to the directory where files will be saved.}
 }
 \value{
 \code{tissue_scMappR_internal} A list containing the entire signature matrix, the matrix subsetted for your genes, enrichment of each cell-type, and co-enrichment. \cr
@@ -52,17 +54,24 @@ of those enriched cell-types is then computed.
 \examples{
 \donttest{
 
-data(POA_example)
-POA_generes <- POA_example$POA_generes
-POA_OR_signature <- POA_example$POA_OR_signature
-POA_Rank_signature <- POA_example$POA_Rank_signature
-Signature <- POA_Rank_signature
-rowname <- get_gene_symbol(Signature)
-rownames(Signature) <- rowname$rowname
-genes <- rownames(Signature)[1:200]
-rda_path1 = "~/scMappR/data"
-internal <- tissue_scMappR_internal(genes,"mouse", output_directory = "scMappR_Test",
-                                    tissue = "hypothalamus",rda_path = rda_path1)
+data(PBMC_example)
+bulk_DE_cors <- PBMC_example$bulk_DE_cors
+bulk_normalized <- PBMC_example$bulk_normalized
+odds_ratio_in <- PBMC_example$odds_ratio_in
+case_grep <- "_female"
+control_grep <- "_male"
+max_proportion_change <- 10
+print_plots <- FALSE
+theSpecies <- "human"
+toOut <- scMappR_and_pathway_analysis(bulk_normalized, odds_ratio_in, 
+                                      bulk_DE_cors, case_grep = case_grep,
+                                      control_grep = control_grep, rda_path = "", 
+                                      max_proportion_change = 10, print_plots = TRUE, 
+                                       plot_names = "tst1", theSpecies = "human", 
+                                       output_directory = "tester",
+                                       sig_matrix_size = 3000, up_and_downregulated = FALSE, 
+                                       internet = FALSE)
+
 
  }
 }

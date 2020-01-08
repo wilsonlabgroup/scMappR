@@ -15,6 +15,7 @@
 #' @param toSave Permission to print plot in current directory (T/F).
 #' @param return_gmt Return .gmt file -- reccomended if downloading from online as it may have updated (T/F).
 #' @param name Name of the pdf to be printed.
+#' @param path If toSave == TRUE, path to the directory where files will be saved.
 #' 
 #' @return \code{tissue_by_celltype_enrichment} Gene set enrichment of cell-types on your inputted gene list, a plot of cell-type enrichment (can be saved), and the gmt file will cell-type markers (optionally). \cr
 #'
@@ -52,7 +53,7 @@
 #' @export
 #' 
 
-tissue_by_celltype_enrichment <- function(gene_list, species, name = "CT_Tissue_example", p_thresh = 0.05, rda_path = "~/scMappR/data/",  isect_size = 3, toSave = FALSE, return_gmt= FALSE) {
+tissue_by_celltype_enrichment <- function(gene_list, species, name = "CT_Tissue_example", p_thresh = 0.05, rda_path = "~/scMappR/data/",  isect_size = 3, toSave = FALSE, return_gmt= FALSE, path = NULL) {
   gmt <- "" # no visible binding 
   if(is.null(species)) stop("please select 'human' or 'mouse' as a species.")
   if(class(gene_list) != "character") {
@@ -81,6 +82,15 @@ tissue_by_celltype_enrichment <- function(gene_list, species, name = "CT_Tissue_
   }
   if(!(any(is.logical(toSave), is.logical(return_gmt)))) {
     stop("toSave and return_gmt must both be of class logical.")
+  }
+  
+  if(toSave == TRUE) {
+    if(is.null(path)) {
+      stop("scMappR is given write permission by setting toSave = TRUE but no directory has been selected (path = NULL). Pick a directory or set path to './' for current working directory")
+    }
+    if(!dir.exists(path)) {
+      stop("The selected directory does not seem to exist, please check set path.")
+    }
   }
   
   if(species == "human") { # downloading human CT markers
@@ -129,7 +139,7 @@ tissue_by_celltype_enrichment <- function(gene_list, species, name = "CT_Tissue_
   enriched$term_name <- tochr(enriched$name)
   enriched$p_value <- enriched$fdr
   if(toSave == TRUE) { # if there is permission to print plots locally 
-    pdf(file = paste0(name,"_cellmarker_enriched.pdf"))
+    pdf(file = paste0(path,"/",name,"_cellmarker_enriched.pdf"))
     plotBP(enriched) # plotting by FDR
     dev.off()
   } else {

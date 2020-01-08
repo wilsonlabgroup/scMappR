@@ -4,7 +4,14 @@
 \alias{single_gene_preferences}
 \title{Single cell-type gene preferences}
 \usage{
-single_gene_preferences(hg_short, hg_full, study_name, outDir, toSave = FALSE)
+single_gene_preferences(
+  hg_short,
+  hg_full,
+  study_name,
+  outDir,
+  toSave = FALSE,
+  path = NULL
+)
 }
 \arguments{
 \item{hg_short}{A list with two objects: a "preferences" and a "genesIn". Preferences is a list of gene symbols over-represented in each cell-type and genesIn were all the inputted genes.}
@@ -16,6 +23,8 @@ single_gene_preferences(hg_short, hg_full, study_name, outDir, toSave = FALSE)
 \item{outDir}{Directory where table is outputted.}
 
 \item{toSave}{Allow scMappR to write files in the current directory (T/F).}
+
+\item{path}{If toSave == TRUE, path to the directory where files will be saved.}
 }
 \value{
 \code{single_gene_preferences} A gene-set enrichment table of individual cell-type enrichment. \cr

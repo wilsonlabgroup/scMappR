@@ -19,7 +19,8 @@
 #' @param isBackground If the heatmap is from the entire signature matrix or just the inputted gene list (T/F). isBackground == TRUE is used for internal.
 #' @param reference Path to signature matrix or the signature matrix itself.
 #' @param which_species Species of gene symbols -- "human" or "mouse" .
-#' @param toSave Allow scMappR to write files in the current directory (T/F).
+#' @param toSave Allow scMappR to write files in the path directory (T/F).
+#' @param path If toSave == TRUE, path to the directory where files will be saved.
 #'
 #' @return \code{heatmap_generation} A heatmap/barplot of p-value or odds-ratio of cell-type specific genes intersecting with the gene list. A list of genes that do/don't intersect with the signature matrix as well as a list of which cell-type these over-represented genes live in. \cr
 #'
@@ -53,7 +54,7 @@
 #'
 #' @export
 #' 
-heatmap_generation <- function(genesIn, comp,reference, cex = 0.8, rd_path = "~/scMappR/data", cellTypes = "ALL", pVal = 0.01, isPval=TRUE, isMax =FALSE,  isBackground = FALSE,  which_species = "human", toSave = FALSE) {
+heatmap_generation <- function(genesIn, comp,reference, cex = 0.8, rd_path = "~/scMappR/data", cellTypes = "ALL", pVal = 0.01, isPval=TRUE, isMax =FALSE,  isBackground = FALSE,  which_species = "human", toSave = FALSE, path = NULL) {
   # This function takes an inputted signature matrix as well as a list of genes and overlaps them. Then, if there is overlap, it prints a heatmap or barplot (depending on the number of overlapping genes)
   # Then, for every cell-type, genes considered over-represented are saved in a list
   
@@ -107,6 +108,15 @@ heatmap_generation <- function(genesIn, comp,reference, cex = 0.8, rd_path = "~/
     
   if(!(which_species %in% c("human", "mouse"))) {
     stop("which_species must be either 'human' or 'mouse' (case sensitive).")
+  }
+  
+  if(toSave == TRUE) {
+    if(is.null(path)) {
+      stop("scMappR is given write permission by setting toSave = TRUE but no directory has been selected (path = NULL). Pick a directory or set path to './' for current working directory")
+    }
+    if(!dir.exists(path)) {
+      stop("The selected directory does not seem to exist, please check set path.")
+    }
   }
   
   if(class(reference) == "data.frame") reference <- as.matrix(reference)
@@ -186,7 +196,7 @@ heatmap_generation <- function(genesIn, comp,reference, cex = 0.8, rd_path = "~/
   if(length(whichGenesInter) == 1) { # if only 1 gene is
     print("One input gene is preferentially expressed")
     if(toSave == TRUE) {
-    grDevices::pdf(paste0(comp,"_barplot.pdf"))
+    grDevices::pdf(paste0(path,"/",comp,"_barplot.pdf"))
     graphics::barplot(wilcoxon_rank_mat_t[whichGenesInter,], las = 2, main = rownames(wilcoxon_rank_mat_t)[whichGenesInter])
     grDevices::dev.off()
     } else {
@@ -199,13 +209,13 @@ heatmap_generation <- function(genesIn, comp,reference, cex = 0.8, rd_path = "~/
     # make the heatmap
     if(toSave == TRUE) {
     myheatcol <- grDevices::colorRampPalette(c("lightblue", "white", "orange"))(256)
-    grDevices::pdf(paste0(comp,"_heatmap.pdf"))
+    grDevices::pdf(paste0(path,"/",comp,"_heatmap.pdf"))
     gplots::heatmap.2(wilcoxon_rank_mat_t[whichGenesInter,], Rowv = TRUE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
     grDevices::dev.off()
     geneHeat <- wilcoxon_rank_mat_t[whichGenesInter,]
     preferences <- extract_genes_cell(geneHeat, cellTypes = cellTypes, val = pVal, isMax = isMax, isPvalue = isPval)
 
-    save(preferences, file = paste0(comp,"_preferences.RData"))
+    save(preferences, file = paste0(path,"/",comp,"_preferences.RData"))
     } else {
       warning("toSave = F and scMappR is not allowed to print files or plots in your directories. For full functionality of the package, set to true.")
       geneHeat <- wilcoxon_rank_mat_t[whichGenesInter,]

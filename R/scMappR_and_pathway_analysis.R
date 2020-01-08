@@ -29,6 +29,7 @@
 #' @param toSave Allow scMappR to write files in the current directory (T/F).
 #' @param rda_path If downloaded, path to where data from scMappR_data is stored. 
 #' @param newGprofiler Whether to use g:ProfileR or gprofiler2 (T/F).
+#' @param path If toSave == TRUE, path to the directory where files will be saved.
 #' 
 #' @return \code{scMappR_and_pathway_analysis} A directory with: STVs in RData file, Cell Type proportions (RData file), cell-type proportions leave one out (RData file), heatmap of STVs (all), heatmap of STVs (within signature), heatmap of signature (all), heatmap of signature (overlapping with DEG_list), Pathway enrichment for DEG list(all), RData file and Biological Processes, Pathway enrichment of STVs for each cell-type, RData file and biological processes. \cr
 #' 
@@ -68,7 +69,7 @@
 #' 
 #' @export
 #' 
-scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list, case_grep, control_grep, rda_path = "", max_proportion_change = -9, print_plots=T, plot_names="scMappR",theSpecies = "human", output_directory = "scMappR_analysis",sig_matrix_size = 3000, drop_unkown_celltype = TRUE, internet = TRUE, up_and_downregulated = FALSE, gene_label_size = 0.4, number_genes = -9, toSave=FALSE, newGprofiler = FALSE) {
+scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list, case_grep, control_grep, rda_path = "", max_proportion_change = -9, print_plots=T, plot_names="scMappR",theSpecies = "human", output_directory = "scMappR_analysis",sig_matrix_size = 3000, drop_unkown_celltype = TRUE, internet = TRUE, up_and_downregulated = FALSE, gene_label_size = 0.4, number_genes = -9, toSave=FALSE, newGprofiler = FALSE, path = NULL) {
   
   
   
@@ -169,6 +170,14 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   }
   if(!any(is.logical(print_plots),is.logical(drop_unkown_celltype),is.logical(internet),is.logical(up_and_downregulated),is.logical(toSave),is.logical(newGprofiler) ))
 
+  if(toSave == TRUE) {
+      if(is.null(path)) {
+        stop("scMappR is given write permission by setting toSave = TRUE but no directory has been selected (path = NULL). Pick a directory or set path to './' for current working directory")
+      }
+      if(!dir.exists(path)) {
+        stop("The selected directory does not seem to exist, please check set path.")
+    }
+  }
 
   theSpecies <- tolower(theSpecies)
   if(class(count_file) == "character") {
@@ -260,7 +269,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   if(toSave == FALSE) {
     print_plots <- FALSE
   }  
-  STVs <- deconvolute_and_contextualize(count_file, signature_matrix, DEG_list, case_grep , control_grep, max_proportion_change = max_proportion_change, print_plots = print_plots, plot_names = plot_names, theSpecies = theSpecies, sig_matrix_size = sig_matrix_size, drop_unkown_celltype = drop_unkown_celltype, toSave = toSave)
+  STVs <- deconvolute_and_contextualize(count_file, signature_matrix, DEG_list, case_grep , control_grep, max_proportion_change = max_proportion_change, print_plots = print_plots, plot_names = plot_names, theSpecies = theSpecies, sig_matrix_size = sig_matrix_size, drop_unkown_celltype = drop_unkown_celltype, toSave = toSave, path = path)
 
   # Computing t-test for changes in cell-type proportion
   ttest_decon <- function(x) {
@@ -289,24 +298,24 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     print("toSave == FALSE therefore files cannot be saved. Switching toSave = TRUE is strongly reccomended. Returning STVs and no pathway analysis.", quote = FALSE)
     return(STVs)    
   }
-  dir.create(output_directory)
+  dir.create(paste0(path,"/",output_directory))
   
   scMappR_vals <- STVs$scMappR_transformed_values # scMappR values
   T_test_outs <- STVs$ProportionT.test
   print("Writing summary of cell-type proportion changes between case and control." , quote = FALSE)
-  utils::write.table(T_test_outs, file = paste0(output_directory, "/", plot_names, "_cell_proportion_changes_summary.tsv"), quote = FALSE, row.names = TRUE, col.names = TRUE, sep = "\t")
+  utils::write.table(T_test_outs, file = paste0(path,"/",output_directory, "/", plot_names, "_cell_proportion_changes_summary.tsv"), quote = FALSE, row.names = TRUE, col.names = TRUE, sep = "\t")
   
   print(scMappR_vals)
-  save(scMappR_vals, file = paste0(output_directory, "/",plot_names, "_STVs.RData"))
+  save(scMappR_vals, file = paste0(path,"/",output_directory, "/",plot_names, "_STVs.RData"))
   
   cell_proportions_all <- STVs$cellType_Proportions # all gene CT proportion
-  save(cell_proportions_all, file = paste0(output_directory, "/",plot_names, "_celltype_proportions.RData"))
+  save(cell_proportions_all, file = paste0(path,"/",output_directory, "/",plot_names, "_celltype_proportions.RData"))
   
   leave_one_out_proportions <- STVs$leave_one_out_proportions # leave one out avg CT proportions
-  save(cell_proportions_all, file = paste0(output_directory, "/",plot_names, "_leaveOneOut_gene_proportions.RData"))
+  save(cell_proportions_all, file = paste0(path,"/",output_directory, "/",plot_names, "_leaveOneOut_gene_proportions.RData"))
   
   signature_mat <- STVs$processed_signature_matrix # processed_signaure_matrix
-  save(signature_mat, file = paste0(output_directory, "/",plot_names, "_leaveOneOut_gene_proportions.RData"))
+  save(signature_mat, file = paste0(path,"/",output_directory, "/",plot_names, "_leaveOneOut_gene_proportions.RData"))
   if(nrow(DEG_list) == 1) {
     warning("You only have 1 DEG, no heatmaps can be made. Returning STV")
     print("You only have 1 DEG, no heatmaps can be made. Returning STV",quote = FALSE)
@@ -320,11 +329,11 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   
   scMappR_vals_up <- as.matrix(scMappR_vals[apply(scMappR_vals,1, sum) > 0,])
   scMappR_vals_down <- as.matrix(scMappR_vals[apply(scMappR_vals,1, sum) < 0,])
-  grDevices::pdf(paste0(output_directory,"/",plot_names,"_cell_proportions_heatmap.pdf")) 
+  grDevices::pdf(paste0(path,"/",output_directory,"/",plot_names,"_cell_proportions_heatmap.pdf")) 
   gplots::heatmap.2(as.matrix(STVs$cellType_Proportions), Rowv = TRUE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
   grDevices::dev.off()
   if(nrow(scMappR_vals_up) > 2 & ncol(scMappR_vals_up) > 2) {
-    grDevices::pdf(paste0(output_directory, "/", plot_names,"_STVs_upregulated_DEGs_heatmap.pdf"))
+    grDevices::pdf(paste0(path,"/",output_directory, "/", plot_names,"_STVs_upregulated_DEGs_heatmap.pdf"))
     gplots::heatmap.2(as.matrix(abs(scMappR_vals_up)), Rowv = TRUE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
     grDevices::dev.off()
   } else {
@@ -334,7 +343,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   }
   print(dim(scMappR_vals_down))
   if(nrow(scMappR_vals_down) > 2 & ncol(scMappR_vals_down) > 2) {
-  grDevices::pdf(paste0(output_directory, "/", plot_names,"_STVs_downregulated_DEGs_heatmap.pdf"))
+  grDevices::pdf(paste0(path,"/",output_directory, "/", plot_names,"_STVs_downregulated_DEGs_heatmap.pdf"))
   gplots::heatmap.2(as.matrix(abs(scMappR_vals_down)), Rowv = TRUE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
   grDevices::dev.off()
   } else {
@@ -343,7 +352,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     
   }
   
-  grDevices::pdf(paste0(output_directory, "/",plot_names,"_all_CT_markers_in_background.pdf"))
+  grDevices::pdf(paste0(path,"/",output_directory, "/",plot_names,"_all_CT_markers_in_background.pdf"))
   gplots::heatmap.2(as.matrix(signature_mat), Rowv = TRUE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
   grDevices::dev.off()
   
@@ -372,13 +381,13 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
 
     # Upregulated DEG Heatmap
     if(nrow(signature_mat_up) > 2 & ncol(signature_mat_up) > 2) {
-    grDevices::pdf(paste0(output_directory, "/",plot_names,"_celltype_specific_preferences_upregulated_DEGs_heatmap.pdf"))
+    grDevices::pdf(paste0(path,"/",output_directory, "/",plot_names,"_celltype_specific_preferences_upregulated_DEGs_heatmap.pdf"))
     pl <- gplots::heatmap.2(as.matrix(signature_mat_up), Rowv = TRUE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
     #print(pl)
     grDevices::dev.off()
     
     
-    grDevices::pdf(paste0(output_directory, "/", plot_names,"celltype_specific_STVs_upregulated_heatmap.pdf"))
+    grDevices::pdf(paste0(path,"/",output_directory, "/", plot_names,"celltype_specific_STVs_upregulated_heatmap.pdf"))
     gplots::heatmap.2(as.matrix(scMappR_vals_up1[rev(colnames(pl$carpet)),pl$colInd]),Colv=F, Rowv = FALSE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
     grDevices::dev.off()
     } else {
@@ -390,12 +399,12 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     # Downregulated DEG Heatmap
     
     if(nrow(signature_mat_down) > 2 & ncol(signature_mat_down) > 2) {
-    grDevices::pdf(paste0(output_directory, "/",plot_names,"_celltype_specific_preferences_downregulated_DEGs_heatmap.pdf"))
+    grDevices::pdf(paste0(path,"/",output_directory, "/",plot_names,"_celltype_specific_preferences_downregulated_DEGs_heatmap.pdf"))
     pl2 <- gplots::heatmap.2(as.matrix(signature_mat_down), Rowv = TRUE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
     grDevices::dev.off()
     
     
-    grDevices::pdf(paste0(output_directory, "/", plot_names,"celltype_specific_STVs_downregulated_heatmap.pdf"))
+    grDevices::pdf(paste0(path,"/",output_directory, "/", plot_names,"celltype_specific_STVs_downregulated_heatmap.pdf"))
     gplots::heatmap.2(as.matrix(abs(scMappR_vals_down1[rev(colnames(pl2$carpet)),pl2$colInd])),Colv=F, Rowv = FALSE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
     grDevices::dev.off()
     }  else {
@@ -408,14 +417,14 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     warning("There is not a reported stable internet (WIFI = FALSE) and therefore pathway analysis with g:Prof")
     return("Done!")
   }
-  up_and_down_together <- pathway_enrich_internal(  DEGs, theSpecies, scMappR_vals, background_genes, output_directory, plot_names, number_genes, toSave=TRUE, newGprofiler = newGprofiler)
+  up_and_down_together <- pathway_enrich_internal(  DEGs, theSpecies, scMappR_vals, background_genes, output_directory, plot_names, number_genes, toSave=TRUE,path=path, newGprofiler = newGprofiler)
   if(up_and_downregulated == TRUE)  {
     print("Splitting genes by up- and down-regulated and then repeating analysis", quote = FALSE)
     rownames(DEGs) <- DEGs$gene_name
     upGenes <- DEGs$gene_name[DEGs$log2fc > 0]
     downGenes <- DEGs$gene_name[DEGs$log2fc < 0]
-    upDir <- paste0(output_directory,"/upregulated")
-    downDir <- paste0(output_directory, "/downregulated")
+    upDir <- paste0(path,"/",output_directory,"/upregulated")
+    downDir <- paste0(path,"/",output_directory, "/downregulated")
     dir.create(upDir)
     dir.create(downDir)
     
@@ -424,9 +433,9 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     upSTVs <- scMappR_vals[upGenes,]
     DownSTVs <- scMappR_vals[downGenes,]
     print("Pathway analysis of upregulated genes")
-    up_only <- pathway_enrich_internal(  upDEGs, theSpecies, upSTVs, background_genes, upDir, plot_names, number_genes, toSave=TRUE, newGprofiler = newGprofiler)
+    up_only <- pathway_enrich_internal(  upDEGs, theSpecies, upSTVs, background_genes, upDir, plot_names, number_genes, toSave=TRUE, path = path, newGprofiler = newGprofiler)
     print("Pathway analysis of downregulated genes")
-    down_only <- pathway_enrich_internal(  downDEGs, theSpecies, DownSTVs, background_genes, downDir, plot_names, number_genes, toSave=TRUE, newGprofiler = newGprofiler)    
+    down_only <- pathway_enrich_internal(  downDEGs, theSpecies, DownSTVs, background_genes, downDir, plot_names, number_genes, toSave=TRUE, path = path, newGprofiler = newGprofiler)    
   }
   
   return(list(STVs = STVs, paths = up_and_down_together$biological_pathways, TFs = up_and_down_together$transcription_factors))

@@ -19,7 +19,8 @@ deconvolute_and_contextualize(
   sig_matrix_size = 3000,
   sig_distort = 1,
   drop_unkown_celltype = TRUE,
-  toSave = FALSE
+  toSave = FALSE,
+  path = NULL
 )
 }
 \arguments{
@@ -52,6 +53,8 @@ deconvolute_and_contextualize(
 \item{drop_unkown_celltype}{Whether or not to remove "unknown" cell-types from the signature matrix (T/F).}
 
 \item{toSave}{Allow scMappR to write files in the current directory (T/F).}
+
+\item{path}{If toSave == TRUE, path to the directory where files will be saved.}
 }
 \value{
 \code{deconvolute_and_contextualize} ScMappR transformed Values for every gene in every cell-type, cell-type composition with, allgenes included, average gene expression of each cell-type usng leave one out approach for each gene, and the processed signature matrix. Optional: boxplots of estimated CT proportions for each gene using a leave-one-out method. \cr

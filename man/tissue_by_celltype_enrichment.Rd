@@ -12,7 +12,8 @@ tissue_by_celltype_enrichment(
   rda_path = "~/scMappR/data/",
   isect_size = 3,
   toSave = FALSE,
-  return_gmt = FALSE
+  return_gmt = FALSE,
+  path = NULL
 )
 }
 \arguments{
@@ -31,6 +32,8 @@ tissue_by_celltype_enrichment(
 \item{toSave}{Permission to print plot in current directory (T/F).}
 
 \item{return_gmt}{Return .gmt file -- reccomended if downloading from online as it may have updated (T/F).}
+
+\item{path}{If toSave == TRUE, path to the directory where files will be saved.}
 }
 \value{
 \code{tissue_by_celltype_enrichment} Gene set enrichment of cell-types on your inputted gene list, a plot of cell-type enrichment (can be saved), and the gmt file will cell-type markers (optionally). \cr

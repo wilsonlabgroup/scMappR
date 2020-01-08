@@ -16,6 +16,7 @@
 #' @param gene_cutoff Value cut-off (generally rank := log10(Padj)) for a gene to be considered a marker.
 #' @param is_pvalue If signature matrix is p-value before rank is applied (not recommended ) (T/F).
 #' @param toSave Allow scMappR to write files in the current directory (T/F).
+#' @param path If toSave == TRUE, path to the directory where files will be saved.
 #'
 #' @return \code{tissue_scMappR_custom} A list containing the entire signature matrix, the matrix subsetted for your genes, enrichment of each cell-type, and co-enrichment. \cr
 #'
@@ -49,7 +50,7 @@
 #'                                       output_directory =  "scMappR_test", toSave = FALSE)
 #' @export
 #' 
-tissue_scMappR_custom <- function(gene_list, signature_matrix ,output_directory = "custom_test", toSave = FALSE, gene_cutoff = 1, is_pvalue = TRUE) {
+tissue_scMappR_custom <- function(gene_list, signature_matrix ,output_directory = "custom_test", toSave = FALSE, path = NULL, gene_cutoff = 1, is_pvalue = TRUE) {
   # This function is roughly the same as tissue_scMappR_internal, however now there is a custom signature matrix.
   # it generates a heatmap of the signature matrixand your inputted gene list as well as single cell-type and 
   # co-celltype enrichment.
@@ -83,11 +84,20 @@ tissue_scMappR_custom <- function(gene_list, signature_matrix ,output_directory 
     stop("toSave and is_pvalue must be of class logical.")
   }
   
+  if(toSave == TRUE) {
+    if(is.null(path)) {
+      stop("scMappR is given write permission by setting toSave = TRUE but no directory has been selected (path = NULL). Pick a directory or set path to './' for current working directory")
+    }
+    if(!dir.exists(path)) {
+      stop("The selected directory does not seem to exist, please check set path.")
+    }
+  }
+  
   
   outDir <- paste0(output_directory)
   study_names <- outDir
   if(toSave == TRUE) {
-    dir.create(outDir)
+    dir.create(paste0(path,"/",outDir))
   } else {
     warning("toSave == FALSE and therefore a directory cannot be made. Switching toSave = TRUE is reccomended.")
     print("toSave == FALSE and therefore a directory cannot be made. Switching toSave = TRUE is reccomended.", quote = FALSE)
@@ -98,19 +108,19 @@ tissue_scMappR_custom <- function(gene_list, signature_matrix ,output_directory 
   background = signature_matrix
   background_genes <- rownames(signature_matrix)
   
-  background_heatmap <- heatmap_generation(background_genes, comp = paste0(outDir, "/", study_names,"_background"), reference = background, isBackground = TRUE, pVal = gene_cutoff, isPval = is_pvalue, toSave = toSave)  
+  background_heatmap <- heatmap_generation(background_genes, comp = paste0(outDir, "/", study_names,"_background"), reference = background, isBackground = TRUE, pVal = gene_cutoff, isPval = is_pvalue, toSave = toSave, path = path)  
   # heatmap generation of the entire signature matrix
-  gene_list_heatmap <- heatmap_generation(gene_list, comp = paste0(outDir, "/", study_names,"_genelist"), reference = background, pVal = gene_cutoff, isPval = is_pvalue, toSave = toSave)
+  gene_list_heatmap <- heatmap_generation(gene_list, comp = paste0(outDir, "/", study_names,"_genelist"), reference = background, pVal = gene_cutoff, isPval = is_pvalue, toSave = toSave, path = path)
   if(class(gene_list_heatmap) == "character") {
     warning("0 or 1 input genes were cell-type specific. No downstream analysis available.")
     warning("With 0 genes being cell-type specific, I would make sure that they are the same gene symbols.")
     stop("0 or 1 input genes were cell-type specific. No downstream analysis available.")
   }
   # heatmap generation of the background matrix as well as getting preferred genes based on your cutoff, p-value or otherwise
-  singleCTpreferences <- single_gene_preferences(gene_list_heatmap, background_heatmap, study_names, outDir = output_directory, toSave = toSave)
+  singleCTpreferences <- single_gene_preferences(gene_list_heatmap, background_heatmap, study_names, outDir = output_directory, toSave = toSave, path = path)
   
   if(toSave == TRUE) {
-    utils::write.table(singleCTpreferences, file = paste0(outDir,"/",outDir, "_celltype_preferences.tsv"), quote= FALSE, row.names = FALSE, col.names = TRUE, sep = "\t")
+    utils::write.table(singleCTpreferences, file = paste0(path,"/",outDir,"/",outDir, "_celltype_preferences.tsv"), quote= FALSE, row.names = FALSE, col.names = TRUE, sep = "\t")
   }
   # cell-type preferences for indidual cell-types
   sig <- singleCTpreferences[singleCTpreferences$pFDR < 0.05,]
@@ -127,7 +137,7 @@ tissue_scMappR_custom <- function(gene_list, signature_matrix ,output_directory 
   } else {
     sig <- sig[order(sig$pFDR),]
     
-    coCTpreferences <- coEnrich(sig, gene_list_heatmap, background_heatmap, study_names[i], outDir = output_directory, toSave = toSave)
+    coCTpreferences <- coEnrich(sig, gene_list_heatmap, background_heatmap, study_names[i], outDir = output_directory, toSave = toSave, path = path)
     # test to see if the same genes are responsible for the enrichment of multiple cell-types
     output <- list(background_heatmap = background_heatmap, gene_list_heatmap = gene_list_heatmap, single_celltype_preferences = singleCTpreferences, group_celtype_preference = coCTpreferences)
     

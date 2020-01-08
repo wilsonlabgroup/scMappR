@@ -18,6 +18,7 @@
 #' @param study_name Name of output table.
 #' @param outDir Directory where table is outputted.
 #' @param toSave Allow scMappR to write files in the current directory (T/F).
+#' @param path If toSave == TRUE, path to the directory where files will be saved.
 #'
 #' @return \code{single_gene_preferences} A gene-set enrichment table of individual cell-type enrichment. \cr
 #'
@@ -53,7 +54,7 @@
 #'  }
 #' @export
 #' 
-single_gene_preferences <- function(hg_short, hg_full, study_name, outDir, toSave = FALSE) {
+single_gene_preferences <- function(hg_short, hg_full, study_name, outDir, toSave = FALSE, path = NULL) {
   
   # Internal function as part of tissue_scMappR_internal()
   # This function takes genes preferentially expressed within your gene list, each cell-type
@@ -84,6 +85,16 @@ single_gene_preferences <- function(hg_short, hg_full, study_name, outDir, toSav
   if(class(toSave) != "logical") {
     stop("toSave must be of class logical.")
   }
+  
+  if(toSave == TRUE) {
+    if(is.null(path)) {
+      stop("scMappR is given write permission by setting toSave = TRUE but no directory has been selected (path = NULL). Pick a directory or set path to './' for current working directory")
+    }
+    if(!dir.exists(path)) {
+      stop("The selected directory does not seem to exist, please check set path.")
+    }
+  }
+  
   fP <- hg_full$preferences # your gene list sorted into each cell-type (if it's over-expressed)
   sP <- hg_short$preferences # all of the cell-type markers in the background
   in_length <- length(hg_short$genesIn) # the number of input genes
@@ -112,7 +123,7 @@ single_gene_preferences <- function(hg_short, hg_full, study_name, outDir, toSav
   pref$p_val <- toNum(pref$p_val)
   pref$pFDR <- stats::p.adjust(pref$p_val, "fdr")
   if(toSave == TRUE) {
-    utils::write.table(pref, file = paste0(outDir, "/",study_name, "cell_type_preferences.tsv"), quote = FALSE, row.names = FALSE, col.names = TRUE, sep = "\t")
+    utils::write.table(pref, file = paste0(path,"/",outDir, "/",study_name, "cell_type_preferences.tsv"), quote = FALSE, row.names = FALSE, col.names = TRUE, sep = "\t")
   } else {
     warning("You are not allowing scMappR to save files. We strongly reccomend you switch toSave = TRUE")
   }

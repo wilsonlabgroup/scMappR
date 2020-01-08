@@ -9,6 +9,7 @@ tissue_scMappR_custom(
   signature_matrix,
   output_directory = "custom_test",
   toSave = FALSE,
+  path = NULL,
   gene_cutoff = 1,
   is_pvalue = TRUE
 )
@@ -21,6 +22,8 @@ tissue_scMappR_custom(
 \item{output_directory}{Directory made containing output of functions.}
 
 \item{toSave}{Allow scMappR to write files in the current directory (T/F).}
+
+\item{path}{If toSave == TRUE, path to the directory where files will be saved.}
 
 \item{gene_cutoff}{Value cut-off (generally rank := log10(Padj)) for a gene to be considered a marker.}
 

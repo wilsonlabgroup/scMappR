@@ -15,6 +15,7 @@ process_dgTMatrix_lists(
   saveSCObject = FALSE,
   internal = FALSE,
   toSave = FALSE,
+  path = NULL,
   use_sctransform = FALSE
 )
 }
@@ -38,6 +39,8 @@ process_dgTMatrix_lists(
 \item{internal}{Was this used as part of the internal processing of Panglao datasets (T/F).}
 
 \item{toSave}{Allow scMappR to write files in the current directory (T/F)}
+
+\item{path}{If toSave == TRUE, path to the directory where files will be saved.}
 
 \item{use_sctransform}{If you should use sctransform or the Normalize/VariableFeatures/ScaleData pipeline (T/F).}
 }

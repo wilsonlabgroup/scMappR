@@ -12,6 +12,7 @@ process_from_count(
   saveALL = FALSE,
   panglao_set = FALSE,
   toSave = FALSE,
+  path = NULL,
   use_sctransform = FALSE
 )
 }
@@ -29,6 +30,8 @@ process_from_count(
 \item{panglao_set}{If the function is being used from internal (T/F).}
 
 \item{toSave}{Allows scMappR to print files and make directories locally (T/F).}
+
+\item{path}{If toSave == TRUE, path to the directory where files will be saved.}
 
 \item{use_sctransform}{If you should use sctransform or the Normalize/VariableFeatures/ScaleData pipeline (T/F).}
 }

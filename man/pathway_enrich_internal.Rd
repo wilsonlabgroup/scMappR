@@ -13,7 +13,8 @@ pathway_enrich_internal(
   plot_names,
   number_genes = -9,
   newGprofiler = FALSE,
-  toSave = FALSE
+  toSave = FALSE,
+  path = NULL
 )
 }
 \arguments{
@@ -34,6 +35,8 @@ pathway_enrich_internal(
 \item{newGprofiler}{Whether to use g:ProfileR or gprofiler2 (T/F).}
 
 \item{toSave}{Allow scMappR to write files in the current directory (T/F).}
+
+\item{path}{If toSave == TRUE, path to the directory where files will be saved.}
 }
 \value{
 \code{pathway_enrich_internal} Plots and pathway enrichment of bulk DEGs and STVs. \cr
@@ -57,14 +60,14 @@ control_grep <- "_male"
 max_proportion_change <- 10
 print_plots <- FALSE
 theSpecies <- "human"
-norm <- deconvolute_and_contextualize(bulk_normalized, odds_ratio_in, bulk_DE_cors,
-                                       case_grep = case_grep, control_grep = control_grep,
-                                        max_proportion_change = max_proportion_change,
-                                      print_plots = print_plots, theSpecies = theSpecies)
-background = rownames(bulk_normalized)
-dir.create("test_path")
-pathway_enrich_internal(bulk_DE_cors, "human", norm$scMappR_transformed_values,
-                        background, "test_path", "test_figs", toSave = TRUE)
+toOut <- scMappR_and_pathway_analysis(bulk_normalized, odds_ratio_in, 
+                                      bulk_DE_cors, case_grep = case_grep,
+                                      control_grep = control_grep, rda_path = "", 
+                                      max_proportion_change = 10, print_plots = TRUE, 
+                                       plot_names = "tst1", theSpecies = "human", 
+                                       output_directory = "tester",
+                                       sig_matrix_size = 3000, up_and_downregulated = FALSE, 
+                                       internet = FALSE)
 
 }
 }

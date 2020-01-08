@@ -17,6 +17,7 @@
 #' @param number_genes Number of genes to if there are many, many DEGs.
 #' @param newGprofiler Whether to use g:ProfileR or gprofiler2 (T/F).
 #' @param toSave Allow scMappR to write files in the current directory (T/F).
+#' @param path If toSave == TRUE, path to the directory where files will be saved.
 #' 
 #' @return \code{pathway_enrich_internal} Plots and pathway enrichment of bulk DEGs and STVs. \cr
 #' 
@@ -46,19 +47,19 @@
 #' max_proportion_change <- 10
 #' print_plots <- FALSE
 #' theSpecies <- "human"
-#' norm <- deconvolute_and_contextualize(bulk_normalized, odds_ratio_in, bulk_DE_cors,
-#'                                        case_grep = case_grep, control_grep = control_grep,
-#'                                         max_proportion_change = max_proportion_change,
-#'                                       print_plots = print_plots, theSpecies = theSpecies)
-#' background = rownames(bulk_normalized)
-#' dir.create("test_path")
-#' pathway_enrich_internal(bulk_DE_cors, "human", norm$scMappR_transformed_values,
-#'                         background, "test_path", "test_figs", toSave = TRUE)
+#' toOut <- scMappR_and_pathway_analysis(bulk_normalized, odds_ratio_in, 
+#'                                       bulk_DE_cors, case_grep = case_grep,
+#'                                       control_grep = control_grep, rda_path = "", 
+#'                                       max_proportion_change = 10, print_plots = TRUE, 
+#'                                        plot_names = "tst1", theSpecies = "human", 
+#'                                        output_directory = "tester",
+#'                                        sig_matrix_size = 3000, up_and_downregulated = FALSE, 
+#'                                        internet = FALSE)
 #' 
 #' }
 #' @export
 #' 
-pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_genes, output_directory, plot_names, number_genes = -9,  newGprofiler = FALSE, toSave = FALSE) {
+pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_genes, output_directory, plot_names, number_genes = -9,  newGprofiler = FALSE, toSave = FALSE, path = NULL) {
   # Internal: Pathway analysis od DEGs and STVs for each cell-type. Returns RData objects of differential analysis as well as plots of the top bulk pathways.
   # It is a wrapper for making barplots, bulk pathway analysis, and gProfiler_STV
   # Args:
@@ -104,7 +105,14 @@ pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_g
     stop("toSave = FALSE and therefore scMappR is not allowed to print pathways. For this function to work, please set toSave = TRUE")
   }
   
-
+  if(toSave == TRUE) {
+    if(is.null(path)) {
+      stop("scMappR is given write permission by setting toSave = TRUE but no directory has been selected (path = NULL). Pick a directory or set path to './' for current working directory")
+    }
+    if(!dir.exists(path)) {
+      stop("The selected directory does not seem to exist, please check set path.")
+    }
+  }
   
   print("Reordering DEGs from bulk dataset.", quote = FALSE)
   DEG_Names <- rownames(DEGs)[order(DEGs$padj)]
@@ -146,35 +154,35 @@ pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_g
     ordered_back_all_tf$p_value <- ordered_back_all_tf$p.value
   }
   
-  save(ordered_back_all, file = paste0(output_directory,"/Bulk_pathway_enrichment.RData"))
-  save(ordered_back_all_tf, file = paste0(output_directory,"/Bulk_TF_enrichment.RData"))
+  save(ordered_back_all, file = paste0(path, "/", output_directory,"/Bulk_pathway_enrichment.RData"))
+  save(ordered_back_all_tf, file = paste0(path, "/", output_directory,"/Bulk_TF_enrichment.RData"))
   #plotting paths
-  grDevices::pdf(file = paste0(output_directory,"/Bulk_pathway_enrichment.pdf"))
+  grDevices::pdf(file = paste0(path, "/", output_directory,"/Bulk_pathway_enrichment.pdf"))
   bulk_bp <- plotBP(ordered_back_all)
   print(bulk_bp)
   grDevices::dev.off()
   
   #plotting TFs
-  grDevices::pdf(file = paste0(output_directory,"/Bulk_TF_enrichment.pdf"))
+  grDevices::pdf(file = paste0(path,"/",output_directory,"/Bulk_TF_enrichment.pdf"))
   bulk_bp <- make_TF_barplot(ordered_back_all_tf, top_tf = 10)
   print(bulk_bp)
   grDevices::dev.off()
 
   
-  save(ordered_back_all, file = paste0(output_directory, "/",plot_names,"_bulk_pathways.RData"))
-  save(ordered_back_all_tf, file = paste0(output_directory, "/",plot_names,"_bulk_transcription_factors.RData"))
+  save(ordered_back_all, file = paste0(path,"/",output_directory, "/",plot_names,"_bulk_pathways.RData"))
+  save(ordered_back_all_tf, file = paste0(path,"/",output_directory, "/",plot_names,"_bulk_transcription_factors.RData"))
   
   print("Compelting pathway analysis of STVs.", quote = FALSE)
   paths <- gProfiler_STV(scMappR_vals,species =  theSpecies, background = background_genes, gene_cut = number_genes, newGprofiler = newGprofiler) # re-rodered pathway analysis
   
   biological_pathways <- paths$BP # Biological pathways
   transcription_factors <- paths$TF # Transcription factors
-  save(biological_pathways, file = paste0(output_directory, "/",plot_names,"_reordered_pathways.RData"))
-  save(transcription_factors, file = paste0(output_directory, "/",plot_names,"_reordered_transcription_factors.RData"))
+  save(biological_pathways, file = paste0(path, "/", output_directory, "/",plot_names,"_reordered_pathways.RData"))
+  save(transcription_factors, file = paste0(path, "/", output_directory, "/",plot_names,"_reordered_transcription_factors.RData"))
   
   print("Plotting top 10 biological proccesses and TFs", quote= FALSE)
-  BP_dir <- paste0(output_directory, "/BP_barplot")
-  TF_dir <- paste0(output_directory, "/TF_barplot")
+  BP_dir <- paste0(path, "/", output_directory, "/BP_barplot")
+  TF_dir <- paste0(path, "/", output_directory, "/TF_barplot")
   
   dir.create(BP_dir)
   for(i in 1:length(biological_pathways)) {

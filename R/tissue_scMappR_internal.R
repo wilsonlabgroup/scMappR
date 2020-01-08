@@ -20,6 +20,7 @@
 #' @param toSave Allow scMappR to write files in the current directory (T/F).
 #' @param output_directory If toSave = TRUE, the name of the output directory that would be built.
 #' @param drop_unkown_celltype Whether or not to remove "unknown" cell-types from the signature matrix (T/F).
+#' @param path If toSave == TRUE, path to the directory where files will be saved.
 #' 
 #' @return \code{tissue_scMappR_internal} A list containing the entire signature matrix, the matrix subsetted for your genes, enrichment of each cell-type, and co-enrichment. \cr
 #'
@@ -40,17 +41,24 @@
 #' @examples 
 #' \donttest{
 #' 
-#' data(POA_example)
-#' POA_generes <- POA_example$POA_generes
-#' POA_OR_signature <- POA_example$POA_OR_signature
-#' POA_Rank_signature <- POA_example$POA_Rank_signature
-#' Signature <- POA_Rank_signature
-#' rowname <- get_gene_symbol(Signature)
-#' rownames(Signature) <- rowname$rowname
-#' genes <- rownames(Signature)[1:200]
-#' rda_path1 = "~/scMappR/data"
-#' internal <- tissue_scMappR_internal(genes,"mouse", output_directory = "scMappR_Test",
-#'                                     tissue = "hypothalamus",rda_path = rda_path1)
+#' data(PBMC_example)
+#' bulk_DE_cors <- PBMC_example$bulk_DE_cors
+#' bulk_normalized <- PBMC_example$bulk_normalized
+#' odds_ratio_in <- PBMC_example$odds_ratio_in
+#' case_grep <- "_female"
+#' control_grep <- "_male"
+#' max_proportion_change <- 10
+#' print_plots <- FALSE
+#' theSpecies <- "human"
+#' toOut <- scMappR_and_pathway_analysis(bulk_normalized, odds_ratio_in, 
+#'                                       bulk_DE_cors, case_grep = case_grep,
+#'                                       control_grep = control_grep, rda_path = "", 
+#'                                       max_proportion_change = 10, print_plots = TRUE, 
+#'                                        plot_names = "tst1", theSpecies = "human", 
+#'                                        output_directory = "tester",
+#'                                        sig_matrix_size = 3000, up_and_downregulated = FALSE, 
+#'                                        internet = FALSE)
+#' 
 #' 
 #'  }
 #' @export
@@ -99,6 +107,15 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
 
   if(!(any(is.logical(toSave), is.logical(raw_pval), is.logical(drop_unkown_celltype)))) {
     stop("toSave and raw_pval and drop_unknown_celltype must be of class logical.")
+  }
+  
+  if(toSave == TRUE) {
+    if(is.null(path)) {
+      stop("scMappR is given write permission by setting toSave = TRUE but no directory has been selected (path = NULL). Pick a directory or set path to './' for current working directory")
+    }
+    if(!dir.exists(path)) {
+      stop("The selected directory does not seem to exist, please check set path.")
+    }
   }
   
   RankValueSignature <- "" # empty for cran
@@ -167,7 +184,7 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
   input_studies <- hm[hm_tissue]
   study_names <- input_studies
   if(toSave == TRUE) {
-    dir.create(outDir)
+    dir.create(paste0(path,"/",outDir))
   } else {
     warning("toSave == FALSE and therefore a directory cannot be made. Switching toSave = TRUE is reccomended.")
     print("toSave == FALSE and therefore a directory cannot be made. Switching toSave = TRUE is reccomended.", quote = FALSE)
@@ -238,25 +255,25 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
     }
     
     background_genes <- rownames(study_ref)
-    background_heatmap <- heatmap_generation(background_genes, comp = paste0(outDir, "/", study_names[i],"_background"), reference = study_ref, isBackground = TRUE, cex = genecex, which_species = species, isPval = raw_pval, toSave=toSave)  
+    background_heatmap <- heatmap_generation(background_genes, comp = paste0(path,"/",outDir, "/", study_names[i],"_background"), reference = study_ref, isBackground = TRUE, cex = genecex, which_species = species, isPval = raw_pval, toSave=toSave, path = path)  
     # get the heatmap of all of the genes in the signature matrix
     print("Number of DEGs that are cell-type markers in current signature matrix: ", quote = FALSE)
     print(length(intersect(gene_list, rownames(study_ref))))
     theL <- length(intersect(gene_list, rownames(study_ref)))
     if(theL < 3) {
       print(paste0("Your gene list contains fewer than 3 overlapping genes with ",study_names[i],". Therefore no heatmap was saved and enrichment cannot be done."), quote = FALSE)
-      print(paste0("Subsetted CT marker preferences of these genes are saved in ",paste0(outDir, "/", study_names[i],"_genelist")), quote = FALSE)
+      print(paste0("Subsetted CT marker preferences of these genes are saved in ",paste0(path,"/",outDir, "/", study_names[i],"_genelist")), quote = FALSE)
       print(intersect(gene_list, rownames(study_ref)))
       subsetted_genes <- study_ref[intersect(gene_list, rownames(study_ref)),]
       if(toSave==TRUE) {
-      save(subsetted_genes, file = paste0(outDir, "/", study_names[i],"_subsetted.RData"))
+      save(subsetted_genes, file = paste0(path, "/",outDir, "/", study_names[i],"_subsetted.RData"))
       } else {
         warning("Cannot save preferences of subsetted genes as toSave = FALSE")
       }
       next
      }
       
-    gene_list_heatmap <- heatmap_generation(gene_list, comp = paste0(outDir, "/", study_names[i],"_genelist"), reference = study_ref, cex = genecex, which_species = species, isPval = raw_pval, toSave = toSave)
+    gene_list_heatmap <- heatmap_generation(gene_list, comp = paste0(outDir, "/", study_names[i],"_genelist"), reference = study_ref, cex = genecex, which_species = species, isPval = raw_pval, toSave = toSave, path = path)
     
     # get the heatmap of genes overlapping with the signature matrix and the inputted gene list
     if(class(gene_list_heatmap) == "character") {
@@ -265,7 +282,7 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
       single_cell_studies[[i]] <- gene_list_heatmap
       next
     }
-    singleCTpreferences <- single_gene_preferences(gene_list_heatmap, background_heatmap, study_names[i], outDir = output_directory, toSave = toSave)
+    singleCTpreferences <- single_gene_preferences(gene_list_heatmap, background_heatmap, study_names[i], outDir = output_directory, toSave = toSave, path = path)
     # interrogate the enrichment of every cell-type within the signature matrix
     sig <- singleCTpreferences[singleCTpreferences$pFDR < 0.05,]
     sig$Odds_Ratio <- toNum(sig$Odds_Ratio)
@@ -280,7 +297,7 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
       next
     }
     sig <- sig[order(sig$pFDR),]
-    coCTpreferences <- coEnrich(sig, gene_list_heatmap, background_heatmap, study_names[i], outDir = output_directory, toSave = toSave)
+    coCTpreferences <- coEnrich(sig, gene_list_heatmap, background_heatmap, study_names[i], outDir = output_directory, toSave = toSave, path = path)
     # complete co-enrichment of up to 5 cell-types
     output <- list(background_heatmap = background_heatmap, gene_list_heatmap = gene_list_heatmap, single_celltype_preferences = singleCTpreferences, group_celtype_preference = coCTpreferences)
     

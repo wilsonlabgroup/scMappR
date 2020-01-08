@@ -17,7 +17,8 @@
 #' @param panglao_set If the function is being used from internal (T/F).
 #' @param toSave Allows scMappR to print files and make directories locally (T/F).
 #' @param use_sctransform If you should use sctransform or the Normalize/VariableFeatures/ScaleData pipeline (T/F).
-#' 
+#' @param path If toSave == TRUE, path to the directory where files will be saved.
+#'  
 #' @return \code{process_from_count} A processed and integrated Seurat object that has been scaled and clustered. It can be returned as an internal object or also stored as an RData object if neccesary. \cr
 #'
 #' @importFrom ggplot2 ggplot aes geom_boxplot geom_text theme coord_flip labs element_text
@@ -42,7 +43,7 @@
 #' 
 #' @export
 #' 
-process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = FALSE, saveALL = FALSE, panglao_set = FALSE, toSave = FALSE, use_sctransform = FALSE) {
+process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = FALSE, saveALL = FALSE, panglao_set = FALSE, toSave = FALSE, path = NULL, use_sctransform = FALSE) {
   # This function takes a list of count matrices and returns a seurat object of the count matrices integrated using Seurat V3 and the interation anchors
   # Different options are used for if the function is internal for PanglaoDB dataset reprocessing or being used for a custom set of count matrices.
   # For larger scRNA-seq datasets (~20k + cells), it is likely that this function will be required to run on an hpc.
@@ -82,6 +83,15 @@ process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = 
   if(!(theSpecies %in% c("human", "mouse"))) {
     if(theSpecies != -9) {
       stop("species_name is not 'human' 'mouse' or '-9' (case sensitive), please try again with this filled.")
+    }
+  }
+  
+  if(toSave == TRUE) {
+    if(is.null(path)) {
+      stop("scMappR is given write permission by setting toSave = TRUE but no directory has been selected (path = NULL). Pick a directory or set path to './' for current working directory")
+    }
+    if(!dir.exists(path)) {
+      stop("The selected directory does not seem to exist, please check set path.")
     }
   }
   
@@ -243,7 +253,7 @@ process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = 
   pbmc <- Seurat::FindClusters(object = pbmc, verbose = FALSE)
   if(saveALL == TRUE & toSave == TRUE) {
     # Save the seurat object before scaling
-    save(pbmc, file = paste0(name, "_custom.Rdata"))
+    save(pbmc, file = paste0(path,"/",name, "_custom.Rdata"))
   }
   pbmc <- try(Seurat::ScaleData(object = pbmc)) # scale data
   if(class(pbmc) == "try-error") {
@@ -255,7 +265,7 @@ process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = 
   }
   if(saveALL == TRUE & toSave == TRUE) {
     
-    save(pbmc, file = paste0(name, "_custom.Rdata"))
+    save(pbmc, file = paste0(path,"/",name, "_custom.Rdata"))
   } else {
     warning("toSave == FALSE therefore files cannot be saved. Switching toSave = TRUE is strongly reccomended.")
   }
