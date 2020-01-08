@@ -417,7 +417,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     warning("There is not a reported stable internet (WIFI = FALSE) and therefore pathway analysis with g:Prof")
     return("Done!")
   }
-  up_and_down_together <- pathway_enrich_internal(  DEGs, theSpecies, scMappR_vals, background_genes, output_directory, plot_names, number_genes, toSave=TRUE,path=path, newGprofiler = newGprofiler)
+  up_and_down_together <- pathway_enrich_internal(  DEGs, theSpecies, scMappR_vals, background_genes, output_directory, plot_names, number_genes = number_genes, toSave=TRUE,path=path, newGprofiler = newGprofiler)
   if(up_and_downregulated == TRUE)  {
     print("Splitting genes by up- and down-regulated and then repeating analysis", quote = FALSE)
     rownames(DEGs) <- DEGs$gene_name
@@ -433,9 +433,9 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     upSTVs <- scMappR_vals[upGenes,]
     DownSTVs <- scMappR_vals[downGenes,]
     print("Pathway analysis of upregulated genes")
-    up_only <- pathway_enrich_internal(  upDEGs, theSpecies, upSTVs, background_genes, upDir, plot_names, number_genes, toSave=TRUE, path = path, newGprofiler = newGprofiler)
+    up_only <- pathway_enrich_internal(  upDEGs, theSpecies, upSTVs, background_genes, upDir, plot_names, number_genes = number_genes, toSave=TRUE, path = path, newGprofiler = newGprofiler)
     print("Pathway analysis of downregulated genes")
-    down_only <- pathway_enrich_internal(  downDEGs, theSpecies, DownSTVs, background_genes, downDir, plot_names, number_genes, toSave=TRUE, path = path, newGprofiler = newGprofiler)    
+    down_only <- pathway_enrich_internal(  downDEGs, theSpecies, DownSTVs, background_genes, downDir, plot_names, number_genes = number_genes, toSave=TRUE, path = path, newGprofiler = newGprofiler)    
   }
   
   return(list(STVs = STVs, paths = up_and_down_together$biological_pathways, TFs = up_and_down_together$transcription_factors))
