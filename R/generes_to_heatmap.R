@@ -2,7 +2,7 @@
 #'
 #' Convert a list of cell-type markers from FindMarkers in Seurat to a signature matrix defined by odds ratio and rank.
 #'
-#' Take a list of compiled DEGs from different cell types, identify what the cell-types are using the Fisher's exact method, and then convert into a signature matrix for both the adjusted p-value and odds ratio.
+#' Take a list of compiled differentially expressed genes from different cell-types, identify what the cell-types are using the Fisher's exact test, and then convert into a signature matrix for both the adjusted p-value and odds ratio.
 #' 
 #' @rdname generes_to_heatmap
 #' @name generes_to_heatmap
