@@ -9,8 +9,8 @@
 #'
 #' @param pbmc Processed seurat object without named cells.
 #' @param theSpecies "human" or "mouse" -- it will determine which CT marker database to use -- there are some differences.
-#' @param naming_preference Once top CT markers are identified, naming_preferences will then extract CT markers within a more appropriate tissue type etc.
-#' @param rda_path Path to precomputed cell-type gmt files (rda objects).
+#' @param naming_preference Once top CT markers are identified, naming_preferences will then extract CT markers within a more appropriate tissue type.
+#' @param rda_path Path to pre-computed cell-type .gmt files (rda objects).
 #' @param toSave If scMappR is allowed to write files and directories.
 #'
 #' @return \code{gsva_cellIdentify} A list containing the top cell-type marker for a cell-type using the panglao dataset as well as the cellMarker dataset, and the average expression of genes in each cluster. \cr
