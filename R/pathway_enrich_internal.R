@@ -14,7 +14,7 @@
 #' @param background_genes A list of background genes to test against.
 #' @param output_directory Path to the directory where files will be saved.
 #' @param plot_names Names of output.
-#' @param number_genes Number of genes to if there are many many DEGs.
+#' @param number_genes Number of genes to if there are many, many DEGs.
 #' @param newGprofiler Whether to use g:ProfileR or gprofiler2 (T/F).
 #' @param toSave Allow scMappR to write files in the current directory (T/F).
 #' 
