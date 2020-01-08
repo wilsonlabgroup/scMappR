@@ -71,7 +71,8 @@ pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_g
   # plot_names = names of output
   # Returns:
   # plots and pathway enrichment of bulk DE and STVs.
-
+  
+  
   if(class(DEGs) != "data.frame" & class(DEGs) == "matrix") {
     stop("DEGs must be of class data frame or matrix.")
   }
@@ -94,6 +95,8 @@ pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_g
     stop("plot_names must be a character, human, mouse, or a species compatible with gprofiler.")
   }
   if(class(number_genes) != "numeric") {
+    print(number_genes)
+    print(class(number_genes))
     stop("number_genes must be of class numeric.")
   }
   if(!is.logical(newGprofiler)) {

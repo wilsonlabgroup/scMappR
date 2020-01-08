@@ -200,7 +200,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   colnames(DEGs) <- c("gene_name", "padj", "log2fc")
   rownames(DEGs) <- DEGs$gene_name
   if(number_genes == -9) {
-    number_genes <- nrow(DEG_list)
+    number_genes <- nrow(DEGs)
   }
   if(class(case_grep) != "character" | length(case_grep) > 1) {
     print("Assuming that case_grep and control_grep are indeces of 'case' and 'control'.", quote = FALSE)
