@@ -1,6 +1,6 @@
 #' Pathway enrichment for STV's
 #' 
-#' This function runs through each list of scMappR Transformed Values (STV)'s and completes both pathway and Transcription Factor (TF) enrichment.
+#' This function runs through each list of scMappR Transformed Values (STV)'s and completes both pathway and transcription factor (TF) enrichment.
 #'
 #' This function takes a matrix of scMappR_Transformed_Values and a species (human, mouse, or a character directly compatible with g:ProfileR).
 #' Before completing pathway analysis with g:ProfileR. Enriched pathways are stored in a list and returned.
