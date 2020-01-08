@@ -9,14 +9,14 @@
 #' @rdname process_from_count
 #' @name process_from_count
 #'
-#' @param countmat_list A list of count matrices that will be be integrated using the integration-anchors features they should have the same rownames.
+#' @param countmat_list A list of count matrices that will be be integrated using the IntegrationAnchors features they should have the same rownames.
 #' @param name The output of the normalzied and fused Suerat object if you choose to keep it.
 #' @param theSpecies Gene symbols for human, mouse, or -9 if internal. If your species is not human or mouse gene symbols, make sure that you have "MT-" before your mitochondrial gene names then pick "human".
 #' @param haveUmap Write a UMAP (T/F).
 #' @param saveALL Save the Seurat object generated (T/F).
 #' @param panglao_set If the function is being used from internal (T/F).
 #' @param toSave Allows scMappR to print files and make directories locally (T/F).
-#' @param use_sctransform If you should use scRNAsform or the normalize/variablefeatures/scaledata pipeline (T/F).
+#' @param use_sctransform If you should use sctransform or the Normalize/VariableFeatures/ScaleData pipeline (T/F).
 #' 
 #' @return \code{process_from_count} A processed and integrated Seurat object that has been scaled and clustered. It can be returned as an internal object or also stored as an RData object if neccesary. \cr
 #'
