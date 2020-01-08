@@ -11,7 +11,7 @@
 #' @param genesIn A list of gene symbols (all caps) to have their cell type enrichment.
 #' @param comp The name of the comparison.
 #' @param cex The size of the genes in the column label for the heatmap.
-#' @param rd_path The directory to R data files -- if they are not in this directory, then the files will be downloaded.
+#' @param rd_path The directory to RData files -- if they are not in this directory, then the files will be downloaded.
 #' @param isMax If you are taking the single best CT marker (T/F) -- TRUE not reccomended.
 #' @param isPval If the signature matrix is raw p-value (T/F) -- TRUE not reccomended.
 #' @param cellTypes Colnames of the cell-types you will extract (passed to extract_genes_cell).
