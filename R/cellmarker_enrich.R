@@ -13,7 +13,7 @@
 #' @param gmt Either a path to an rda file containing an object called "gmt", which is a named list where each element of the list is a vector of gene symbols website for more detail on the file type (https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats). The gmt list may also be inputted.  
 #' @param fixed_length Estimated number of genes in your background.
 #' @param min_genes Minimum number of genes in the cell-type markers.
-#' @param max_genes Maximum number of genes in a cell-type marker.
+#' @param max_genes Maximum number of genes in the cell-type markers.
 #' @param isect_size Number of genes in your list and the cell-type.
 #'
 #' @return \code{cellmarker_enrich} Gene set enrichment of cell-types on your inputted gene list. \cr
