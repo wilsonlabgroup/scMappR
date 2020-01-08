@@ -1,12 +1,12 @@
 #' To Numeric.
 #'
-#' This function checks if your vector is not a character and will then converts it to a numeric.
+#' This function checks if your vector is not a character and if it is, then converts it to a numeric.
 #'
 #'
 #' @rdname toNum
 #' @name toNum
 #'
-#' @param x A vector of character, factor, or numeric.
+#' @param x A character, factor, or numeric vector.
 #'
 #' @return \code{toNum} Returns a numeric vector. \cr
 #'
