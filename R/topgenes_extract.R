@@ -1,16 +1,16 @@
 #' Extract Top Markers
 #'
-#' Internal -- Extracts strongect cell-type markers from a Seurat object.
+#' Internal -- Extracts strongest cell-type markers from a Seurat object.
 #'
 #' Internal, this function runs through a list of outputs from FindMarkers objects in Seurat
-#' at will extract genes past a padj and fold-change threshold. Then it extracts the topNum number of genes.
+#' and will extract genes past a padj and fold-change threshold. Then it extracts the topNum number of genes.
 #' if you have not used the FindMarkers function, then a list of summary statistics with 
 #' fold-change designated by avg_logFC and p-val by p_val_adj.
 #'
 #' @rdname topgenes_extract
 #' @name topgenes_extract
 #'
-#' @param generes A list of cell-tpe markers with fold-changes and P-vlaues (FindMarkers output in Seurat).
+#' @param generes A list of cell-tpe markers with fold-changes and p-vlaues (FindMarkers output in Seurat).
 #' @param padj The p-value (FDR) cutoff.
 #' @param FC The fold-change cutoff.
 #' @param topNum The number of genes to extract.
