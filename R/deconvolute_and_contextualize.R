@@ -18,20 +18,20 @@
 #' @rdname deconvolute_and_contextualize
 #' @name deconvolute_and_contextualize
 #'
-#' @param count_file Normalized deconvolute_and_contextualize.RRNA-seq count matrix where rows are gene symbols and columns are individuals. Either the object tself of the path of a TSV file.
-#' @param signature_matrix Signature matrix (reccommended odds ratios) of cell-type specificity of genes. Either the object itself or a pathway to an RData file containing an object named "wilcoxon_rank_mat_or" -- generally internal.
+#' @param count_file Normalized deconvolute_and_contextualize. RNA-seq count matrix where rows are gene symbols and columns are individuals. Either the object tself of the path of a .tsv file.
+#' @param signature_matrix Signature matrix (recommended odds ratios) of cell-type specificity of genes. Either the object itself or a pathway to a .RData file containing an object named "wilcoxon_rank_mat_or" - generally internal.
 #' @param DEG_list An object with the first column as gene symbols within the bulk dataset (doesn't have to be in signature matrix), second column is the adjusted P-value, and the third the log2FC. Path to a tsv file containing this info is also acceptable.
 #' @param case_grep Tag in the column name for cases (i.e. samples representing upregulated) OR an index of cases.
 #' @param control_grep Tag in the column name for control (i.e. samples representing downregulated) OR an index of cases.
-#' @param max_proportion_change Maximum cell-type proportion change -- may be useful if there are many rare cell-types.
+#' @param max_proportion_change Maximum cell-type proportion change. May be useful if there are many rare cell-types.
 #' @param print_plots Whether boxplots of the estimated CT proportion for the leave-one-out method of CT deconvolution should be printed (T/F).
-#' @param plot_names If plots are being printed, the prefix of their pdf files.
-#' @param theSpecies -9 if using a precomputed count matrix from scMappR, human otherwise. removes ensembl symbols if appended.
-#' @param make_scale Convert the lowest odds ratio to 1 and scales accordingly -- strongly not reccomended and will produce warning if used.
-#' @param FC_coef Making scMappR Transformed Values STV's based on fold-change (TRUE) or rank := (-log10(Pval)) (FALSE) rank. After testing, we strongly reccomend to keep true(T/F).
+#' @param plot_names If plots are being printed, the pre-fix of their .pdf files.
+#' @param theSpecies -9 if using a precomputed count matrix from scMappR, human otherwise. Removes ensembl symbols if appended.
+#' @param make_scale Convert the lowest odds ratio to 1 and scales accordingly -- strongly not recommended and will produce warning if used.
+#' @param FC_coef Making STVs based on fold-change (TRUE) or rank := (-log10(Pval)) (FALSE) rank. After testing, we strongly recommend to keep true (T/F).
 #' @param sig_matrix_size Number of genes in signature matrix for cell-type deconvolution.
-#' @param sig_distort Exponential change of odds ratios. Strongly not reccomended and will produce warnings if changed from default.
-#' @param drop_unkown_celltype Whether or not to remove "unknown" cell-types from the signature matrix(T/F).
+#' @param sig_distort Exponential change of odds ratios. Strongly not recomended and will produce warnings if changed from default.
+#' @param drop_unkown_celltype Whether or not to remove "unknown" cell-types from the signature matrix (T/F).
 #' @param toSave Allow scMappR to write files in the current directory (T/F).
 #' 
 #' @return \code{deconvolute_and_contextualize} ScMappR transformed Values for every gene in every cell-type, cell-type composition with, allgenes included, average gene expression of each cell-type usng leave one out approach for each gene, and the processed signature matrix. Optional: boxplots of estimated CT proportions for each gene using a leave-one-out method. \cr
