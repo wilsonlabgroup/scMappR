@@ -11,7 +11,7 @@
 #'
 #' @param gene_lists A named list of vectors containing cell-type markers (mouse or human gene-symbols) which will be named as a cell-type via the Fisher's exact test method.
 #' @param theSpecies The species of the gene symbols: "human" or "mouse".
-#' @param cell_marker_path If local, path to Cell-Type marker rda files, otherwise, we will try to download datafiles.
+#' @param cell_marker_path If local, path to cell-type marker rda files, otherwise, we will try to download data files.
 #' @param naming_preference Either -9 if there is no expected cell-type or one of the categories from get_naming_preference_options(). This is useful if you previously have an idea of which cell-type you were going to enrich.
 #'
 #' @return \code{human_mouse_ct_marker_enrich} list: The top cell-type for each cell-type markers list, as well as a matrix the top 5 most likely cell-type makers for each gene list (with OddsRatio and P-value). \cr
