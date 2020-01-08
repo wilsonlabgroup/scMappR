@@ -1,12 +1,12 @@
 #' To Character.
 #'
-#' This function checks if your vector is not a character and will then converts it to a character.
+#' This function checks if your vector is not a character and if not, will  convert it to a character.
 #'
 #'
 #' @rdname tochr
 #' @name tochr
 #'
-#' @param x A vector of character, factor, or numeric
+#' @param x A character, factor or numeric vector.
 #'
 #' @return \code{tochr} Returns a character vector. \cr
 #'
