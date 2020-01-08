@@ -8,11 +8,11 @@
 #' @rdname DeconRNAseq_CRAN
 #' @name DeconRNAseq_CRAN
 #'
-#' @param datasets normalized RNA-seq dataset
-#' @param signatures signature matrix of odds ratios
-#' @param proportions if cell-type proportion is already inputted - always NULL for scMappR
-#' @param checksig check to see if plotting is significant - always false for scMappR
-#' @param known.prop if proportions were known - always false for scMappR
+#' @param datasets Normalized RNA-seq dataset
+#' @param signatures Signature matrix of odds ratios
+#' @param proportions If cell-type proportion is already inputted - always NULL for scMappR
+#' @param checksig Check to see if plotting is significant - always false for scMappR
+#' @param known.prop If proportions were known - always false for scMappR
 #' @param use.scale Scale and center value - always TRUE for scMappR
 #' @param fig Make figures - always FALSE for scMappR
 #' 
