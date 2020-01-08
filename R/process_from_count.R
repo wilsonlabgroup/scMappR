@@ -2,8 +2,8 @@
 #'
 #' This function processes a list of count matrices (same species/gene symbols in each list) and converts them to a Seurat object.
 #' 
-#' This function takes a list of count matrices and returns a seurat object of the count matrices integrated using Seurat V3 (with sctransform and integration-anchors).
-#' Different options are used when the function is being ran internally (i.e. reprocessing count matrices from PanglaoDB) or if it is running from custom scNRA-seq data.
+#' This function takes a list of count matrices and returns a Seurat object of the count matrices integrated using Seurat v3 (with sctransform and IntegrationAnchors).
+#' Different options are used when the function is being ran internally (i.e. reprocessing count matrices from PanglaoDB) or if it is running from custom scRNA-seq data.
 #' For larger scRNA-seq datasets (~20k + cells), it is likely that this function will be required to run on an hpc.
 #'
 #' @rdname process_from_count
