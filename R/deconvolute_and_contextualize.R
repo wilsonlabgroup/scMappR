@@ -4,14 +4,13 @@
 #'
 #' This function completes the cell-type contextualization in scMappR -- reranking every DEG based on their fold change, likelihood the gene is in each detected cell-type, average cell-type proportion, and ratio of cell-type proportion between case and control.
 #' If a gene is upregulated then it is being controlled by control/case, otherwise it is case/control.
-#' This function expects that the genes within the count file, signature matrix, and DEG_list have the same logos.
-#' It first takes the most "sig_matrix_size" variable genes and completes cell-type deconvolution with it using the DeconRNA-seq package before extracting cell-types with an average of greater than 0.1% of the cell-type proportions.
-#' This function then signature matrix to only investigate those cell-types for the rest of the analysis. This is because cell-types that are too rare often end with fold-changes between case and control that are unreliable.
-#' Then, it takes a leave-one-out approach to cell-type deconvolution such that estimated cell-type proportions are computed for every gene where they are not in the signature or bulk matrix.
-#' These values are additionally plotted so you can see which genes are contributing the most highly to estimating cell-type proportions in your bulk sample.
-#' Once these values are computed, cell-type means can cell-type ratios between cases and controls for each gene are computed. 
-#' Then, for every gene, scMappR is applied, the example for upreguatled genes is here: val <- cell-preferences * cell-type_proprtion * cell-type_proportion_fold-change * sign*2^abs(gene_DE$log2fc).
-#' Once these values are computed, they are returned.
+#' STV's are generated for genes that are in both the count matrix and in the list of DEGs. It does not have to also be in the signature matrix.
+#' First, this function will estimate cell-type proportions with all genes included before estimating changes in cell-type proportion between case/control using a t-test.
+#' Then, it takes a leave-one-out approach to cell-type deconvolution such that estimated cell-type proportions are computed for every inputted DEG.
+#' Optionally, the differences between cell-type proprtion before and after a gene is removed is plotted in boxplots.
+#' Then, for every gene, STV's are computed with the following formula (the example for upreguatled genes)
+#' val <- cell-preferences * cell-type_proprtion * cell-type_proportion_fold-change * sign*2^abs(gene_DE$log2fc).
+#' A matrix of STV's for all DEGs are returned.
 #'
 #'
 #'
