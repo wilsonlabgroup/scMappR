@@ -1,8 +1,8 @@
 #' Internal -- get gene symbol from Panglao.db matrix.
 #'
-#' Internal -- removes ensembl signature appended to signature matrix from panglao and figure out species by prefix ensembl of the ensembl I.D that is appended to gene names.
+#' Internal -- removes Ensembl signature appended to signature matrix from Panglao and figure out species by pre-fix Ensembl of the Ensembl ID that is appended to gene names.
 #'
-#' Internal: This function removes the ENGMUS/ENGS tag from panglao created gene names (symbol-ENGS).
+#' Internal: This function removes the ENGMUS/ENGS tag from Panglao created gene names (symbol-ENGS).
 #' From the ENSG/ENSMUS, this function determines if the species is mouse/human and returns the gene symbols.  
 #' 
 #' @rdname get_gene_symbol
