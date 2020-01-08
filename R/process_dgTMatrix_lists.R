@@ -15,13 +15,13 @@
 #' @param name The name of the outputted signature matrices, cell-type preferences, and seurat objects if you choose to save them.
 #' @param species_name Mouse or human symbols, -9 if internal as panglao objects have gene symbol and ensembl strapped together.
 #' @param naming_preference For cell-type naming, see if cell-types given the inputted tissues are more likely to be named within one of the categories of get_naming_preference_options().
-#' @param panglao_set If the inputted matrices are from panglao (i.e. if they're internal).
-#' @param haveUMAP Save the umaps -- only use if the package is downloaded with pip.
-#' @param saveSCObject Save the seurat object as an RData object (T/F).
-#' @param internal Was this used as part of the internal processing of panglao datasets (T/F).
+#' @param panglao_set If the inputted matrices are from Panglao (i.e. if they're internal).
+#' @param haveUMAP Save the UMAPs -- only use if the package is downloaded with pip.
+#' @param saveSCObject Save the Seurat object as an RData object (T/F).
+#' @param internal Was this used as part of the internal processing of Panglao datasets (T/F).
 #' @param toSave Allow scMappR to write files in the current directory (T/F)
 #' @param rda_path If saved, directory to where data from scMappR_data is downloaded.
-#' @param use_sctransform If you should use scRNAsform or the normalize/variablefeatures/scaledata pipeline (T/F).
+#' @param use_sctransform If you should use sctransform or the Normalize/VariableFeatures/ScaleData pipeline (T/F).
 #'
 #' @return \code{process_dgTMatrix_lists} Signature matrices populated with rank and odds-ratio. If toSave is considered TRUE, then cell-type names from GSVA and the cell-type names are printed. saveSCObject = TRUE will also save the Seurat object. \cr
 #'
