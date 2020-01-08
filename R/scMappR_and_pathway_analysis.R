@@ -200,7 +200,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   colnames(DEGs) <- c("gene_name", "padj", "log2fc")
   rownames(DEGs) <- DEGs$gene_name
   if(number_genes == -9) {
-    number_genes <- nrow(DEGs)
+    number_genes <- as.numeric(nrow(DEGs))
   }
   if(class(case_grep) != "character" | length(case_grep) > 1) {
     print("Assuming that case_grep and control_grep are indeces of 'case' and 'control'.", quote = FALSE)
@@ -417,6 +417,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     warning("There is not a reported stable internet (WIFI = FALSE) and therefore pathway analysis with g:Prof")
     return("Done!")
   }
+
   up_and_down_together <- pathway_enrich_internal(  DEGs, theSpecies, scMappR_vals, background_genes, output_directory, plot_names, number_genes = number_genes, toSave=TRUE,path=path, newGprofiler = newGprofiler)
   if(up_and_downregulated == TRUE)  {
     print("Splitting genes by up- and down-regulated and then repeating analysis", quote = FALSE)
