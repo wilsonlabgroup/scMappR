@@ -1,6 +1,6 @@
 #' Cell-type naming with GSVA
 #'
-#' This function computes the mean expression of every cell-typ before predicting the most likely cell-type using the GSVA method.
+#' This function computes the mean expression of every cell-type before predicting the most likely cell-type using the GSVA method.
 #'
 #' This function inputs a Seurat object and uses the average normalized expression of each gene in each cluster to identify cell-types using the GSVA method.
 #'
