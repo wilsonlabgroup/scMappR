@@ -1,6 +1,6 @@
 #' Single cell-type gene preferences
 #'
-#' Measure enrichment of individual cell-types in a signautre matrix.
+#' Measure enrichment of individual cell-types in a signature matrix.
 #'  
 #' Internal function as part of tissue_scMappR_internal().
 #' This function takes genes preferentially expressed within a gene list, each cell-type
@@ -13,8 +13,8 @@
 #' @rdname single_gene_preferences
 #' @name single_gene_preferences
 #'
-#' @param hg_short A list with two objects: a "preferences" and a "genesIn". preferences is a list of gene symbols over-represented ine ach cell-type and genesIn were all the inputted genes.
-#' @param hg_full The same as hg_short but fore very gene in the signature matrix.
+#' @param hg_short A list with two objects: a "preferences" and a "genesIn". preferences is a list of gene symbols over-represented in each cell-type and genesIn were all the inputted genes.
+#' @param hg_full The same as hg_short but for every gene in the signature matrix.
 #' @param study_name Name of output table.
 #' @param outDir Directory where table is outputted.
 #' @param toSave Allow scMappR to write files in the current directory (T/F).
