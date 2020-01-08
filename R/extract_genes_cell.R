@@ -10,10 +10,10 @@
 #' @name extract_genes_cell
 #'
 #' @param geneHeat The heatmap of ranks from your scRNA-seq dataset with your genes subsetted.
-#' @param cellTypes The cell-types that you're interested in extracting. They need to be colnames (not-case sensitive).
-#' @param val How associated a gene is with a particualr cell type to include in your list - default is slightly.
-#' @param isMax If you are taking the single best CT marker (T/F) -- TRUE not reccomended.
-#' @param isPvalue If the signature matrix is raw p-value (T/F) -- TRUE not reccomended.
+#' @param cellTypes The cell-types that you're interested in extracting. They need to be colnames (not case sensitive).
+#' @param val How associated a gene is with a particualr cell type to include in your list - default is slightly associated.
+#' @param isMax If you are taking the single best CT marker (T/F) -- TRUE not recommended.
+#' @param isPvalue If the signature matrix is raw p-value (T/F) -- TRUE not recommended.
 #' 
 #'
 #' @return \code{extract_genes_cell} A list of genes above the threshold for each sample. \cr
