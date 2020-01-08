@@ -2,7 +2,7 @@
 #'
 #' This function identifies genes with similar cell-type markers and if those markers are driving enrichment.
 #'
-#' This function takes significantly enriched cell-types from the single)CT_enrich before testing to see if the genes driving their enrichment are overlapping to a significant proportion.
+#' This function takes significantly enriched cell-types from the single CT_enrich before testing to see if the genes driving their enrichment are overlapping to a significant proportion using Fisher's exact test.
 #' To save computational time and to not complete this with an incredible number of permutations, scMappR stops at overlapping 5 cell-types.
 #'
 #'
