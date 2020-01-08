@@ -1,8 +1,8 @@
 #' Fisher's Exact Cell-Type Identification.
 #'
-#' This function uses the cellmarker and panglao datasets to identify cell-type Differentially Expressed Genes.
+#' This function uses the CellMarker and Panglao datasets to identify cell-type differentially expressed genes.
 #' 
-#' Complete a fishers exact test of an input list of genes against a gene set saved in an *.RData object.
+#' Complete a Fisher's exact test of an input list of genes against a gene set saved in an *.RData object.
 #' The RData object is storing a named list of genes called "gmt".
 #'
 #' @rdname cellmarker_enrich
