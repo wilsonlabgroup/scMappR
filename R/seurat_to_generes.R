@@ -2,13 +2,13 @@
 #'
 #' Takes processed Seurat matrix and identifies cell-type markers with FindMarkers.
 #'
-#' Internal: This function runs the FindMarkers function from seurat in a loop, will use the seurat v2 or seurat v3 object after identifying which seurat object is inputted. 
+#' Internal: This function runs the FindMarkers function from seurat in a loop, will use the Seurat v2 or Seurat v3 object after identifying which Seurat object is inputted. 
 #' It then takes the output of the FindMarkers and puts it in a list, returning it.
 #' 
 #' @rdname seurat_to_generes
 #' @name seurat_to_generes
 #'
-#' @param pbmc Processed seurat object.
+#' @param pbmc Processed Seurat object.
 #' 
 #'  
 #'
