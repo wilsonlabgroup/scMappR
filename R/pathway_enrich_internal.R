@@ -2,7 +2,7 @@
 #' 
 #' This function completes pathway enrichment of STVs and bulk gene list.
 #'
-#' Internal: Pathway analysis of Differentially expressed genes (DEGs) and scMappR Transcription Values (STVs) for each cell-type. Returns RData objects of differential analysis as well as plots of the top bulk pathways.
+#' Internal: Pathway analysis of differentially expressed genes (DEGs) and scMappR Transformed Values (STVs) for each cell-type. Returns .RData objects of differential analysis as well as plots of the top bulk pathways.
 #' It is a wrapper for making barplots, bulk pathway analysis, and gProfiler_STV.
 #' 
 #' @rdname pathway_enrich_internal
