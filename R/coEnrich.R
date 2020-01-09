@@ -50,7 +50,7 @@
 #' }
 #' @export
 #' 
-coEnrich <- function(sig, gene_list_heatmap, background_heatmap, study_name, outDir, toSave = FALSE) {
+coEnrich <- function(sig, gene_list_heatmap, background_heatmap, study_name, outDir, toSave = FALSE, path = NULL) {
   # Internal
   # this function takes significantly enriched cell-types from the single CT enrich before testing to see
   # if the genes driving their enrichment are overlapping
@@ -154,7 +154,7 @@ coEnrich <- function(sig, gene_list_heatmap, background_heatmap, study_name, out
   multi_comps$p_val <- toNum(multi_comps$p_val)
   multi_comps$pFDR <- p.adjust(multi_comps$p_val, "fdr")
   if(toSave == TRUE) {
-  utils::write.table(multi_comps, file = paste0(outDir, "/",study_name, "cell_co_preferences.tsv"), quote = FALSE, row.names = FALSE, col.names = T, sep = "\t")
+  utils::write.table(multi_comps, file = paste0(path,"/",outDir, "/",study_name, "cell_co_preferences.tsv"), quote = FALSE, row.names = FALSE, col.names = T, sep = "\t")
   } else {
     warning("You are not allowing scMappR to save files. We strongly reccomend you switch toSave = TRUE")
   }
