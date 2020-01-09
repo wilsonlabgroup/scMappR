@@ -78,19 +78,11 @@ tissue_by_celltype_enrichment <- function(gene_list, species, name = "CT_Tissue_
   if(class(isect_size) != "numeric" ) {
     stop("isect_size must be of class numeric.")
   }
-  if(!(any(is.logical(toSave), is.logical(return_gmt)))) {
-    stop("toSave and return_gmt must both be of class logical.")
+  if(!(any(is.logical(return_gmt)))) {
+    stop("return_gmt must be of class logical.")
   }
   
-  if(toSave == TRUE) {
-    if(is.null(path)) {
-      stop("scMappR is given write permission by setting toSave = TRUE but no directory has been selected (path = NULL). Pick a directory or set path to './' for current working directory")
-    }
-    if(!dir.exists(path)) {
-      stop("The selected directory does not seem to exist, please check set path.")
-    }
-  }
-  
+
   if(species == "human") { # downloading human CT markers
   #
   thefiles <- list.files(path = rda_path, "human_tissue_celltype_scMappR.rda")

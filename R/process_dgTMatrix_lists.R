@@ -45,7 +45,7 @@
 #' data(sm)
 #' toProcess <- list(example = sm)
 #' tst1 <- process_dgTMatrix_lists(toProcess, name = "testPropcess", species_name = -9,
-#'  naming_preference = "eye", rda_path = "~/scMappR/data", panglao_set = "TRUE")
+#'  naming_preference = "eye", rda_path = "~/scMappR/data", panglao_set = TRUE)
 #' 
 #' }
 #' @export

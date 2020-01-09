@@ -10,7 +10,8 @@ coEnrich(
   background_heatmap,
   study_name,
   outDir,
-  toSave = FALSE
+  toSave = FALSE,
+  path = NULL
 )
 }
 \arguments{
