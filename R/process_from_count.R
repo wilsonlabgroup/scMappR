@@ -166,7 +166,11 @@ process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = 
     
     if(use_sctransform == FALSE) { # alternative to using scTransform, use the traditional NormalizeData, FindVariableFeatures, and SaleData parameters. 
                                    # This should be faster and cost less memory
-      
+    
+    mean <- mean(pbmc$percent.mt.adj)
+    x<- stats::sd(pbmc$percent.mt.adj)
+    toremove <- mean + (2*x)  
+        
     if(toremove > 0) {
       pbmc <- pbmc[,which(pbmc$percent.mt.adj < toremove)]
       pbmc <- Seurat::NormalizeData(object = pbmc, normalization.method = "LogNormalize",
@@ -189,6 +193,10 @@ process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = 
     
     
     } else {
+      
+      mean <- mean(pbmc$percent.mt.adj)
+      x<- stats::sd(pbmc$percent.mt.adj)
+      toremove <- mean + (2*x)
       
       if(toremove > 0){
         pbmc <- pbmc[,which(pbmc$percent.mt.adj < toremove)]
