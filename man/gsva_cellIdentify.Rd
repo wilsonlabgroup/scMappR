@@ -38,7 +38,8 @@ This function inputs a Seurat object and uses the average normalized expression 
 data(sm)
 toProcess <- list(example = sm)
 tst1 <- process_from_count(toProcess, "testProcess")
-cellnames <- gsva_cellIdentify(tst1, theSpecies = "mouse", naming_preference = "brain", rda_path = "")
+cellnames <- gsva_cellIdentify(tst1, theSpecies = "mouse",
+ naming_preference = "brain", rda_path = "")
 
 }
  
