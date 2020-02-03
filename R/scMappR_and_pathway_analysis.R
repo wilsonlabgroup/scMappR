@@ -1,10 +1,10 @@
-#' Generate STV, visualize, and enrich.
+#' Generate cellWeighted_Foldchange, visualize, and enrich.
 #' 
-#' This function generates scMappR Transformed Variables (STVs), visualizes them in a heatmap, and completes pathway enrichment of STVs and bulk gene list.
+#' This function generates cell weighted Fold-changes (cellWeighted_Foldchange), visualizes them in a heatmap, and completes pathway enrichment of cellWeighted_Foldchanges and bulk gene list.
 #'
-#' This function generates STVs for every cell-type (see deconvolute_and_contextualize), as well as the relative cell-type proportions (which will be reutrned and pushed through).
-#' Then, it generates heatmaps of all STVs, STVs overlapping with the signature matrix, the entire signature matrix, the cell-type preference values from the signature matrix that overlap with inputted differentially expressed genes.
-#' Then, if you have Wifi, it will complete g:ProfileR of the reordered STVs as well as a the ordered list of genes.
+#' This function generates cellWeighted_Foldchanges for every cell-type (see deconvolute_and_contextualize), as well as the relative cell-type proportions (which will be reutrned and pushed through).
+#' Then, it generates heatmaps of all cellWeighted_Foldchanges, cellWeighted_Foldchanges overlapping with the signature matrix, the entire signature matrix, the cell-type preference values from the signature matrix that overlap with inputted differentially expressed genes.
+#' Then, if you have Wifi, it will complete g:ProfileR of the reordered cellWeighted_Foldchanges as well as a the ordered list of genes.
 #' This function is a wrapper for deconvolute_and_contextualize and pathway_enrich_internal.
 #' 
 #' @rdname scMappR_and_pathway_analysis
@@ -31,7 +31,7 @@
 #' @param newGprofiler Whether to use g:ProfileR or gprofiler2 (T/F).
 #' @param path If toSave == TRUE, path to the directory where files will be saved.
 #' 
-#' @return \code{scMappR_and_pathway_analysis} A directory with: STVs in RData file, Cell Type proportions (RData file), cell-type proportions leave one out (RData file), heatmap of STVs (all), heatmap of STVs (within signature), heatmap of signature (all), heatmap of signature (overlapping with DEG_list), Pathway enrichment for DEG list(all), RData file and Biological Processes, Pathway enrichment of STVs for each cell-type, RData file and biological processes. \cr
+#' @return \code{scMappR_and_pathway_analysis} A directory with: cellWeighted_Foldchanges in RData file, Cell Type proportions (RData file), cell-type proportions leave one out (RData file), heatmap of cellWeighted_Foldchanges (all), heatmap of cellWeighted_Foldchanges (within signature), heatmap of signature (all), heatmap of signature (overlapping with DEG_list), Pathway enrichment for DEG list(all), RData file and Biological Processes, Pathway enrichment of cellWeighted_Foldchanges for each cell-type, RData file and biological processes. \cr
 #' 
 #' @importFrom ggplot2 ggplot aes geom_boxplot geom_text theme coord_flip labs element_text
 #' @importFrom gplots heatmap.2
@@ -73,9 +73,9 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   
   
   
-  # This function generates STVs for every cell-type (see deconvolute_and_contextualize) as well as the relative cell-type proportions (which will be reutrned and pushed through)
-  # Then, it generates heatmaps of all STVs, STVs overlapping with the signature matrix, the signature matrix, the signature matrix overlapping with STVs
-  # Then, if you have WIFI, it will complete g:ProfilR of the reordered STVs as well as a the ordered list of genes.
+  # This function generates cellWeighted_Foldchanges for every cell-type (see deconvolute_and_contextualize) as well as the relative cell-type proportions (which will be reutrned and pushed through)
+  # Then, it generates heatmaps of all cellWeighted_Foldchanges, cellWeighted_Foldchanges overlapping with the signature matrix, the signature matrix, the signature matrix overlapping with cellWeighted_Foldchanges
+  # Then, if you have WIFI, it will complete g:ProfilR of the reordered cellWeighted_Foldchanges as well as a the ordered list of genes.
   # This function is a wrapper for deconvolute_and_contextualize, as well as pathway_enrich_internal  
   
   # Args:
@@ -112,16 +112,16 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   
   # Returns: 
   # a directory with:
-  # STVs in RData file
+  # cellWeighted_Foldchanges in RData file
   # Cell Type proportions (RData file)
   # cell-type proportions leave one out (RData file)
-  # heatmap of STVs (all)
-  # heatmap of STVs (within signature)
+  # heatmap of cellWeighted_Foldchanges (all)
+  # heatmap of cellWeighted_Foldchanges (within signature)
   # heatmap of signature (all)
   # heatmap of signature (overlapping with DEG_list)
   # Pathway enrichment for DEG list(all)
   # RData file and Biological Processes
-  # Pathway enrichment of STVs for each cell-type
+  # Pathway enrichment of cellWeighted_Foldchanges for each cell-type
   # RData file and biological processes
   
   # load in the count matrix
@@ -265,60 +265,60 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     }
   }
   
-  # Identify scMappR Transformed Values 
+  # Identify cell weighted Fold-changes 
   if(toSave == FALSE) {
     print_plots <- FALSE
   }  
-  STVs <- deconvolute_and_contextualize(count_file, signature_matrix, DEG_list, case_grep , control_grep, max_proportion_change = max_proportion_change, print_plots = print_plots, plot_names = plot_names, theSpecies = theSpecies, sig_matrix_size = sig_matrix_size, drop_unkown_celltype = drop_unkown_celltype, toSave = toSave, path = path)
+  cellWeighted_Foldchanges <- deconvolute_and_contextualize(count_file, signature_matrix, DEG_list, case_grep , control_grep, max_proportion_change = max_proportion_change, print_plots = print_plots, plot_names = plot_names, theSpecies = theSpecies, sig_matrix_size = sig_matrix_size, drop_unkown_celltype = drop_unkown_celltype, toSave = toSave, path = path)
 
   # Computing t-test for changes in cell-type proportion
   ttest_decon <- function(x) {
     # This function takes the cell-type proporitons of cases and controls and completes t-tests to see if there are significant changes.  
-    Cases <- STVs$cellType_Proportions[grep(case_grep, rownames(STVs$cellType_Proportions)),x] # proportion of cell-typeof cases
-    Control <- STVs$cellType_Proportions[grep(control_grep, rownames(STVs$cellType_Proportions)),x] #controls
+    Cases <- cellWeighted_Foldchanges$cellType_Proportions[grep(case_grep, rownames(cellWeighted_Foldchanges$cellType_Proportions)),x] # proportion of cell-typeof cases
+    Control <- cellWeighted_Foldchanges$cellType_Proportions[grep(control_grep, rownames(cellWeighted_Foldchanges$cellType_Proportions)),x] #controls
     case_control <- stats::t.test(Cases,Control)# t test
     case_control$p.value # p val
     case_control$statistic # t stat
     case_mean <- mean(Cases) # mean cases
     control_mean <- mean(Control) # mean control
-    theName <- colnames(STVs$cellType_Proportions)[x] # cell-type
+    theName <- colnames(cellWeighted_Foldchanges$cellType_Proportions)[x] # cell-type
     toReturn <- c(unname(case_control$p.value), unname(case_control$statistic),case_mean, control_mean )
     return(toReturn)
   } 
-  stacked <- lapply(1:ncol(STVs$cellType_Proportions), ttest_decon)
+  stacked <- lapply(1:ncol(cellWeighted_Foldchanges$cellType_Proportions), ttest_decon)
   proportion_T <- do.call("rbind",stacked) # t test of proportions of each cell-type and staack
-  rownames(proportion_T) <- colnames(STVs$cellType_Proportions)
+  rownames(proportion_T) <- colnames(cellWeighted_Foldchanges$cellType_Proportions)
   colnames(proportion_T) <- c("P.Value", "T.Statistic", "CaseMean", "ControlMean")
   
-  STVs$ProportionT.test <- proportion_T
+  cellWeighted_Foldchanges$ProportionT.test <- proportion_T
   
   print(paste0("Making scMappR output directory named", output_directory, "."))
   if(toSave == FALSE) {
-    warning("toSave == FALSE therefore files cannot be saved. Switching toSave = TRUE is strongly reccomended. Returning STVs and no pathway analysis.")
-    print("toSave == FALSE therefore files cannot be saved. Switching toSave = TRUE is strongly reccomended. Returning STVs and no pathway analysis.", quote = FALSE)
-    return(STVs)    
+    warning("toSave == FALSE therefore files cannot be saved. Switching toSave = TRUE is strongly reccomended. Returning cellWeighted_Foldchanges and no pathway analysis.")
+    print("toSave == FALSE therefore files cannot be saved. Switching toSave = TRUE is strongly reccomended. Returning cellWeighted_Foldchanges and no pathway analysis.", quote = FALSE)
+    return(cellWeighted_Foldchanges)    
   }
   dir.create(paste0(path,"/",output_directory))
   
-  scMappR_vals <- STVs$scMappR_transformed_values # scMappR values
-  T_test_outs <- STVs$ProportionT.test
+  scMappR_vals <- cellWeighted_Foldchanges$scMappR_transformed_values # scMappR values
+  T_test_outs <- cellWeighted_Foldchanges$ProportionT.test
   print("Writing summary of cell-type proportion changes between case and control." , quote = FALSE)
   utils::write.table(T_test_outs, file = paste0(path,"/",output_directory, "/", plot_names, "_cell_proportion_changes_summary.tsv"), quote = FALSE, row.names = TRUE, col.names = TRUE, sep = "\t")
   
   print(scMappR_vals)
-  save(scMappR_vals, file = paste0(path,"/",output_directory, "/",plot_names, "_STVs.RData"))
+  save(scMappR_vals, file = paste0(path,"/",output_directory, "/",plot_names, "_cellWeighted_Foldchanges.RData"))
   
-  cell_proportions_all <- STVs$cellType_Proportions # all gene CT proportion
+  cell_proportions_all <- cellWeighted_Foldchanges$cellType_Proportions # all gene CT proportion
   save(cell_proportions_all, file = paste0(path,"/",output_directory, "/",plot_names, "_celltype_proportions.RData"))
   
-  leave_one_out_proportions <- STVs$leave_one_out_proportions # leave one out avg CT proportions
+  leave_one_out_proportions <- cellWeighted_Foldchanges$leave_one_out_proportions # leave one out avg CT proportions
   save(cell_proportions_all, file = paste0(path,"/",output_directory, "/",plot_names, "_leaveOneOut_gene_proportions.RData"))
   
-  signature_mat <- STVs$processed_signature_matrix # processed_signaure_matrix
+  signature_mat <- cellWeighted_Foldchanges$processed_signature_matrix # processed_signaure_matrix
   save(signature_mat, file = paste0(path,"/",output_directory, "/",plot_names, "_leaveOneOut_gene_proportions.RData"))
   if(nrow(DEG_list) == 1) {
-    warning("You only have 1 DEG, no heatmaps can be made. Returning STV")
-    print("You only have 1 DEG, no heatmaps can be made. Returning STV",quote = FALSE)
+    warning("You only have 1 DEG, no heatmaps can be made. Returning cellWeighted_Foldchange")
+    print("You only have 1 DEG, no heatmaps can be made. Returning cellWeighted_Foldchange",quote = FALSE)
     return(scMappR_vals)
     }
   myheatcol <- grDevices::colorRampPalette(c("lightblue", "white", "orange"))(256)
@@ -330,10 +330,10 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   scMappR_vals_up <- as.matrix(scMappR_vals[apply(scMappR_vals,1, sum) > 0,])
   scMappR_vals_down <- as.matrix(scMappR_vals[apply(scMappR_vals,1, sum) < 0,])
   grDevices::pdf(paste0(path,"/",output_directory,"/",plot_names,"_cell_proportions_heatmap.pdf")) 
-  gplots::heatmap.2(as.matrix(STVs$cellType_Proportions), Rowv = TRUE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+  gplots::heatmap.2(as.matrix(cellWeighted_Foldchanges$cellType_Proportions), Rowv = TRUE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
   grDevices::dev.off()
   if(nrow(scMappR_vals_up) > 2 & ncol(scMappR_vals_up) > 2) {
-    grDevices::pdf(paste0(path,"/",output_directory, "/", plot_names,"_STVs_upregulated_DEGs_heatmap.pdf"))
+    grDevices::pdf(paste0(path,"/",output_directory, "/", plot_names,"_cellWeighted_Foldchanges_upregulated_DEGs_heatmap.pdf"))
     gplots::heatmap.2(as.matrix(abs(scMappR_vals_up)), Rowv = TRUE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
     grDevices::dev.off()
   } else {
@@ -343,7 +343,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   }
   print(dim(scMappR_vals_down))
   if(nrow(scMappR_vals_down) > 2 & ncol(scMappR_vals_down) > 2) {
-  grDevices::pdf(paste0(path,"/",output_directory, "/", plot_names,"_STVs_downregulated_DEGs_heatmap.pdf"))
+  grDevices::pdf(paste0(path,"/",output_directory, "/", plot_names,"_cellWeighted_Foldchanges_downregulated_DEGs_heatmap.pdf"))
   gplots::heatmap.2(as.matrix(abs(scMappR_vals_down)), Rowv = TRUE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
   grDevices::dev.off()
   } else {
@@ -359,14 +359,14 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   celltype_preferred_degs <- intersect(rownames(scMappR_vals), rownames(signature_matrix)) # intersect DEGs and Genes in signature matrix
   
   if(length(celltype_preferred_degs) < 3) {
-    warning("Fewer than 3 genes are both De and in the signature matrix. Therefore, these heatmaps will not be generated. Furthermore, there is insufficient re-ranking of genes for different pathway analyses to be neccesary. Therefore, here, STVs are more representative of a scaling factor for each cell-type.")
-    print("Fewer than 3 genes are both De and in the signature matrix. Therefore, these heatmaps will not be generated. Furthermore, there is insufficient re-ranking of genes for different pathway analyses to be neccesary. Therefore, here, STVs are more representative of a scaling factor for each cell-type.", quote = FALSE)
+    warning("Fewer than 3 genes are both De and in the signature matrix. Therefore, these heatmaps will not be generated. Furthermore, there is insufficient re-ranking of genes for different pathway analyses to be neccesary. Therefore, here, cellWeighted_Foldchanges are more representative of a scaling factor for each cell-type.")
+    print("Fewer than 3 genes are both De and in the signature matrix. Therefore, these heatmaps will not be generated. Furthermore, there is insufficient re-ranking of genes for different pathway analyses to be neccesary. Therefore, here, cellWeighted_Foldchanges are more representative of a scaling factor for each cell-type.", quote = FALSE)
     
-    return(list(STVs = STVs))
+    return(list(cellWeighted_Foldchanges = cellWeighted_Foldchanges))
 
   } else {
     
-    # generating the heatmaps for STVs and signature matrix odds ratios that overlap with one another
+    # generating the heatmaps for cellWeighted_Foldchanges and signature matrix odds ratios that overlap with one another
     up_signature <- intersect(rownames(scMappR_vals_up), celltype_preferred_degs)
     down_signature <- intersect(rownames(scMappR_vals_down), celltype_preferred_degs)
     
@@ -387,7 +387,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     grDevices::dev.off()
     
     
-    grDevices::pdf(paste0(path,"/",output_directory, "/", plot_names,"celltype_specific_STVs_upregulated_heatmap.pdf"))
+    grDevices::pdf(paste0(path,"/",output_directory, "/", plot_names,"celltype_specific_cellWeighted_Foldchanges_upregulated_heatmap.pdf"))
     gplots::heatmap.2(as.matrix(scMappR_vals_up1[rev(colnames(pl$carpet)),pl$colInd]),Colv=F, Rowv = FALSE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
     grDevices::dev.off()
     } else {
@@ -404,7 +404,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     grDevices::dev.off()
     
     
-    grDevices::pdf(paste0(path,"/",output_directory, "/", plot_names,"celltype_specific_STVs_downregulated_heatmap.pdf"))
+    grDevices::pdf(paste0(path,"/",output_directory, "/", plot_names,"celltype_specific_cellWeighted_Foldchanges_downregulated_heatmap.pdf"))
     gplots::heatmap.2(as.matrix(abs(scMappR_vals_down1[rev(colnames(pl2$carpet)),pl2$colInd])),Colv=F, Rowv = FALSE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
     grDevices::dev.off()
     }  else {
@@ -431,13 +431,13 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     
     upDEGs <- DEGs[upGenes,]
     downDEGs <- DEGs[downGenes,]
-    upSTVs <- scMappR_vals[upGenes,]
-    DownSTVs <- scMappR_vals[downGenes,]
+    upcellWeighted_Foldchanges <- scMappR_vals[upGenes,]
+    DowncellWeighted_Foldchanges <- scMappR_vals[downGenes,]
     print("Pathway analysis of upregulated genes")
-    up_only <- pathway_enrich_internal(  upDEGs, theSpecies, upSTVs, background_genes, upDir, plot_names, number_genes = number_genes, toSave=TRUE, path = path, newGprofiler = newGprofiler)
+    up_only <- pathway_enrich_internal(  upDEGs, theSpecies, upcellWeighted_Foldchanges, background_genes, upDir, plot_names, number_genes = number_genes, toSave=TRUE, path = path, newGprofiler = newGprofiler)
     print("Pathway analysis of downregulated genes")
-    down_only <- pathway_enrich_internal(  downDEGs, theSpecies, DownSTVs, background_genes, downDir, plot_names, number_genes = number_genes, toSave=TRUE, path = path, newGprofiler = newGprofiler)    
+    down_only <- pathway_enrich_internal(  downDEGs, theSpecies, DowncellWeighted_Foldchanges, background_genes, downDir, plot_names, number_genes = number_genes, toSave=TRUE, path = path, newGprofiler = newGprofiler)    
   }
   
-  return(list(STVs = STVs, paths = up_and_down_together$biological_pathways, TFs = up_and_down_together$transcription_factors))
+  return(list(cellWeighted_Foldchanges = cellWeighted_Foldchanges, paths = up_and_down_together$biological_pathways, TFs = up_and_down_together$transcription_factors))
 }

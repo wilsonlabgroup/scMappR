@@ -1,16 +1,16 @@
-#' Pathway enrichment for STV's and bulk gene list
+#' Pathway enrichment for cellWeighted_Foldchange's and bulk gene list
 #' 
-#' This function completes pathway enrichment of STVs and bulk gene list.
+#' This function completes pathway enrichment of cellWeighted_Foldchanges and bulk gene list.
 #'
-#' Internal: Pathway analysis of differentially expressed genes (DEGs) and scMappR Transformed Values (STVs) for each cell-type. Returns .RData objects of differential analysis as well as plots of the top bulk pathways.
-#' It is a wrapper for making barplots, bulk pathway analysis, and gProfiler_STV.
+#' Internal: Pathway analysis of differentially expressed genes (DEGs) and cell weighted Fold-changes (cellWeighted_Foldchanges) for each cell-type. Returns .RData objects of differential analysis as well as plots of the top bulk pathways.
+#' It is a wrapper for making barplots, bulk pathway analysis, and gProfiler_cellWeighted_Foldchange.
 #' 
 #' @rdname pathway_enrich_internal
 #' @name pathway_enrich_internal
 #' 
 #' @param DEGs Differentially expressed genes (gene_name, padj, log2fc).
 #' @param theSpecies Human, mouse, or a charcter that is compatible with gProfileR.
-#' @param scMappR_vals scMappR Transformed Values of differentially expressed genes.
+#' @param scMappR_vals cell weighted Fold-changes of differentially expressed genes.
 #' @param background_genes A list of background genes to test against.
 #' @param output_directory Path to the directory where files will be saved.
 #' @param plot_names Names of output.
@@ -19,7 +19,7 @@
 #' @param toSave Allow scMappR to write files in the current directory (T/F).
 #' @param path If toSave == TRUE, path to the directory where files will be saved.
 #' 
-#' @return \code{pathway_enrich_internal} Plots and pathway enrichment of bulk DEGs and STVs. \cr
+#' @return \code{pathway_enrich_internal} Plots and pathway enrichment of bulk DEGs and cellWeighted_Foldchanges. \cr
 #' 
 #' @importFrom ggplot2 ggplot aes geom_boxplot geom_text theme coord_flip labs element_text
 #' @importFrom gplots heatmap.2
@@ -60,17 +60,17 @@
 #' @export
 #' 
 pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_genes, output_directory, plot_names, number_genes = -9,  newGprofiler = FALSE, toSave = FALSE, path = NULL) {
-  # Internal: Pathway analysis od DEGs and STVs for each cell-type. Returns RData objects of differential analysis as well as plots of the top bulk pathways.
-  # It is a wrapper for making barplots, bulk pathway analysis, and gProfiler_STV
+  # Internal: Pathway analysis od DEGs and cellWeighted_Foldchanges for each cell-type. Returns RData objects of differential analysis as well as plots of the top bulk pathways.
+  # It is a wrapper for making barplots, bulk pathway analysis, and gProfiler_cellWeighted_Foldchange
   # Args:
   # DEGs = differentially expressed genes
   # theSpecies: human/mouse or something compatible with g:ProfileR
-  # scMappR_vals: matrix of of STVs for each cell-type.
+  # scMappR_vals: matrix of of cellWeighted_Foldchanges for each cell-type.
   # background genes = the genes in the count dataset
   # output directory = path to the directory where files will be saved
   # plot_names = names of output
   # Returns:
-  # plots and pathway enrichment of bulk DE and STVs.
+  # plots and pathway enrichment of bulk DE and cellWeighted_Foldchanges.
   
   
   if(class(DEGs) != "data.frame" & class(DEGs) == "matrix") {
@@ -175,8 +175,8 @@ pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_g
   save(ordered_back_all, file = paste0(path,"/",output_directory, "/",plot_names,"_bulk_pathways.RData"))
   save(ordered_back_all_tf, file = paste0(path,"/",output_directory, "/",plot_names,"_bulk_transcription_factors.RData"))
   
-  print("Compelting pathway analysis of STVs.", quote = FALSE)
-  paths <- gProfiler_STV(scMappR_vals,species =  theSpecies, background = background_genes, gene_cut = number_genes, newGprofiler = newGprofiler) # re-rodered pathway analysis
+  print("Compelting pathway analysis of cellWeighted_Foldchanges.", quote = FALSE)
+  paths <- gProfiler_cellWeighted_Foldchange(scMappR_vals,species =  theSpecies, background = background_genes, gene_cut = number_genes, newGprofiler = newGprofiler) # re-rodered pathway analysis
   
   biological_pathways <- paths$BP # Biological pathways
   transcription_factors <- paths$TF # Transcription factors

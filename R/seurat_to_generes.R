@@ -9,7 +9,7 @@
 #' @name seurat_to_generes
 #'
 #' @param pbmc Processed Seurat object.
-#' 
+#' @param test statistical test for calling CT markers -- must be in Seurat
 #'  
 #'
 #' @return \code{seurat_to_generes} A list of genes where their over-representation in the i'th cell-type is computed. Each element contains the gene name, adjusted p-value, and the log2Fold-Change of each gene being present in that cell-type. \cr
@@ -41,7 +41,7 @@
 
 
 
-seurat_to_generes <- function(pbmc){
+seurat_to_generes <- function(pbmc, test = "wilcox"){
   # Internal: This function runs the FindMarkers function from seurat in a loop, will use the seurat v2 or seurat v3 object 
   # after identifying which seurat object is inputted. It then takes the output of the FindMarkers and puts it in a list, returning it
   # Args:
@@ -62,7 +62,7 @@ seurat_to_generes <- function(pbmc){
     # if it's V2
     for(i in sort(unique(pbmc@ident))) {
       
-      de_genes <- try(Seurat::FindMarkers(pbmc, ident.1 = i, test.use = "wilcox"))
+      de_genes <- try(Seurat::FindMarkers(pbmc, ident.1 = i, test.use = test))
       if(class(de_genes) == "try-error" | class(de_genes) == "NULL" ) {
         
         next
@@ -79,7 +79,7 @@ seurat_to_generes <- function(pbmc){
   }
   for(i in sort(unique(pbmc@active.ident))) {
     # if object is Seurat V3
-    de_genes <- try(Seurat::FindMarkers(pbmc, ident.1 = i, test.use = "wilcox"))
+    de_genes <- try(Seurat::FindMarkers(pbmc, ident.1 = i, test.use = test))
     if(class(de_genes) == "try-error" | class(de_genes) == "NULL" ) {
       
       next

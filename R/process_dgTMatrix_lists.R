@@ -18,10 +18,11 @@
 #' @param panglao_set If the inputted matrices are from Panglao (i.e. if they're internal).
 #' @param haveUMAP Save the UMAPs -- only use if the package is downloaded with pip.
 #' @param saveSCObject Save the Seurat object as an RData object (T/F).
+#' @param use_sctransform If you should use sctransform or the Normalize/VariableFeatures/ScaleData pipeline (T/F).
+#' @param test_ctname statistical test for calling CT markers -- must be in Seurat
 #' @param internal Was this used as part of the internal processing of Panglao datasets (T/F).
 #' @param toSave Allow scMappR to write files in the current directory (T/F)
 #' @param rda_path If saved, directory to where data from scMappR_data is downloaded.
-#' @param use_sctransform If you should use sctransform or the Normalize/VariableFeatures/ScaleData pipeline (T/F).
 #' @param path If toSave == TRUE, path to the directory where files will be saved.
 #' 
 #' @return \code{process_dgTMatrix_lists} Signature matrices populated with rank and odds-ratio. If toSave is considered TRUE, then cell-type names from GSVA and the cell-type names are printed. saveSCObject = TRUE will also save the Seurat object. \cr
@@ -51,7 +52,7 @@
 #' @export
 #' 
 
-process_dgTMatrix_lists <- function(dgTMatrix_list, name, species_name, naming_preference = -9,rda_path="",  panglao_set = FALSE ,haveUMAP = FALSE, saveSCObject = FALSE, internal = FALSE, toSave = FALSE, path = NULL, use_sctransform = FALSE) {
+process_dgTMatrix_lists <- function(dgTMatrix_list, name, species_name, naming_preference = -9,rda_path="",  panglao_set = FALSE ,haveUMAP = FALSE, saveSCObject = FALSE, internal = FALSE, toSave = FALSE, path = NULL, use_sctransform = FALSE, test_ctname = "wilcox") {
   
   # This function is a one line wrapper to process count matrices into a signature matrix
   # It combines process from count, two methods of identifying cell-type identitt (gsva and fisher's test)
@@ -148,7 +149,7 @@ process_dgTMatrix_lists <- function(dgTMatrix_list, name, species_name, naming_p
     print("toSave == FALSE therefore files cannot be saved. Switching toSave = TRUE is strongly reccomended.", quote = FALSE)
     
   }
-  generes <- seurat_to_generes(pbmc = pbmc)
+  generes <- seurat_to_generes(pbmc = pbmc, test = test_ctname)
   # identify cell-type marker for every cluster identified
   gene_out <- generes_to_heatmap(generes, species = species_name, naming_preference = naming_preference, internal = internal, rda_path = rda_path)
   # generate signature matrices and identify cell-types with the fisher's test method

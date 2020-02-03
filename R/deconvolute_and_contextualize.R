@@ -1,16 +1,16 @@
-#' Generate scMappR Transformed Values (STVs)
+#' Generate cell weighted Fold-Changes (cwFold-changes)
 #' 
-#' This function takes a count matrix, signature matrix, and differentially expressed genes (DEGs) before generating STVs for each cell-type.
+#' This function takes a count matrix, signature matrix, and differentially expressed genes (DEGs) before generating cwFold-chagnes for each cell-type.
 #'
 #' This function completes the cell-type contextualization in scMappR -- reranking every DEG based on their fold change, likelihood the gene is in each detected cell-type, average cell-type proportion, and ratio of cell-type proportion between case and control.
 #' If a gene is upregulated then it is being controlled by control/case, otherwise it is case/control.
-#' STV's are generated for genes that are in both the count matrix and in the list of DEGs. It does not have to also be in the signature matrix.
+#' cwFold-change's are generated for genes that are in both the count matrix and in the list of DEGs. It does not have to also be in the signature matrix.
 #' First, this function will estimate cell-type proportions with all genes included before estimating changes in cell-type proportion between case/control using a t-test.
 #' Then, it takes a leave-one-out approach to cell-type deconvolution such that estimated cell-type proportions are computed for every inputted DEG.
 #' Optionally, the differences between cell-type proprtion before and after a gene is removed is plotted in boxplots.
-#' Then, for every gene, STV's are computed with the following formula (the example for upreguatled genes)
+#' Then, for every gene, cwFold-change's are computed with the following formula (the example for upreguatled genes)
 #' val <- cell-preferences * cell-type_proprtion * cell-type_proportion_fold-change * sign*2^abs(gene_DE$log2fc).
-#' A matrix of STV's for all DEGs are returned.
+#' A matrix of cwFold-change's for all DEGs are returned.
 #'
 #'
 #'
@@ -27,14 +27,14 @@
 #' @param plot_names If plots are being printed, the pre-fix of their .pdf files.
 #' @param theSpecies -9 if using a precomputed count matrix from scMappR, human otherwise. Removes ensembl symbols if appended.
 #' @param make_scale Convert the lowest odds ratio to 1 and scales accordingly -- strongly not recommended and will produce warning if used.
-#' @param FC_coef Making STVs based on fold-change (TRUE) or rank := (-log10(Pval)) (FALSE) rank. After testing, we strongly recommend to keep true (T/F).
+#' @param FC_coef Making cwFold-changes based on fold-change (TRUE) or rank := (-log10(Pval)) (FALSE) rank. After testing, we strongly recommend to keep true (T/F).
 #' @param sig_matrix_size Number of genes in signature matrix for cell-type deconvolution.
 #' @param sig_distort Exponential change of odds ratios. Strongly not recomended and will produce warnings if changed from default.
 #' @param drop_unkown_celltype Whether or not to remove "unknown" cell-types from the signature matrix (T/F).
 #' @param toSave Allow scMappR to write files in the current directory (T/F).
 #' @param path If toSave == TRUE, path to the directory where files will be saved.
 #' 
-#' @return \code{deconvolute_and_contextualize} ScMappR transformed Values for every gene in every cell-type, cell-type composition with, allgenes included, average gene expression of each cell-type usng leave one out approach for each gene, and the processed signature matrix. Optional: boxplots of estimated CT proportions for each gene using a leave-one-out method. \cr
+#' @return \code{deconvolute_and_contextualize} cell weighted fold-changes for every gene in every cell-type, cell-type composition with, allgenes included, average gene expression of each cell-type usng leave one out approach for each gene, and the processed signature matrix. Optional: boxplots of estimated CT proportions for each gene using a leave-one-out method. \cr
 #' 
 #' @importFrom ggplot2 ggplot aes geom_boxplot geom_text theme coord_flip labs element_text
 #' @importFrom gplots heatmap.2
@@ -105,7 +105,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   #make_scale
   # convert the lowest odds ratio to 1 and scales accordingly -- strongly not suggested and will produce warning if used
   #FC_coef
-  # making scMappR Transformed Values STV's based on rank (-log10(Pval)) instead of fold change
+  # making cell weighted fold-changes cwFold-change's based on rank (-log10(Pval)) instead of fold change
   #sig_matrix_size 
   # number of genes in signature matrix for cell-type deconvolution
   #sig_distort
@@ -113,7 +113,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   # drop_unkown_celltype
   # whether or not to remove "unknown" cell-types from the signature matrix
   # Returns:
-  # ScMappR transformed Values for every gene in every cell-type, cell-type composition with, allgenes included, average gene expression of each cell-type usng leave one out approach for each gene, and the processed signature matrix
+  # cell weighted fold-changes for every gene in every cell-type, cell-type composition with, allgenes included, average gene expression of each cell-type usng leave one out approach for each gene, and the processed signature matrix
   #optional: boxplots of estimated CT proportions for each gene using a leave-one-out method
   
   # load required packages
@@ -388,12 +388,12 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   # time to make the formula
   
   values_with_preferences <- function(gene, FC_coef = fc_co) {
-    # Internal: Makes scMappR Transformed Variables (STVs): combines fold change of DEG, likelihood DEG is in cell-type, cell-type proportion with DEG left out, and odds-ratio of cell-type proportions 
+    # Internal: Makes scMappR Transformed Variables (cwFold-changes): combines fold change of DEG, likelihood DEG is in cell-type, cell-type proportion with DEG left out, and odds-ratio of cell-type proportions 
     # Args:
-    # gene: the gene symbol to generate a STV for
-    # FC_coef: if the STV is based on Fold-Change (reccomended) or Rank
+    # gene: the gene symbol to generate a cwFold-change for
+    # FC_coef: if the cwFold-change is based on Fold-Change (reccomended) or Rank
     # Returns:
-    # STVs for every cell-type within a single gene.
+    # cwFold-changes for every cell-type within a single gene.
     #print(gene)
     if(gene %in% rownames(scaled_odds_ratio)) {
       scaled_pref <- scaled_odds_ratio[gene,] # extract gene from signature
@@ -486,7 +486,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
     }
     
   }
-  l <- list(scMappR_transformed_values = all_reordered, 
+  l <- list(cellWeighted_Foldchange = all_reordered, 
             cellType_Proportions = proportions,
             leave_one_out_proportions = cmeaned_stacked,
             processed_signature_matrix = scaled_odds_ratio)   
@@ -494,4 +494,5 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   
   
 }
+
 
