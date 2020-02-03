@@ -19,7 +19,7 @@ testthat::test_that('Bulk samples, signature matrices, correct DEGs and index na
                                       output_directory = "tester",
                                       sig_matrix_size = 3000, up_and_downregulated = FALSE, 
                                       internet = FALSE)
-  AllNames <- c("scMappR_transformed_values", "cellType_Proportions", "leave_one_out_proportions" ,
+  AllNames <- c("cellWeighted_Foldchange", "cellType_Proportions", "leave_one_out_proportions" ,
                 "processed_signature_matrix", "ProportionT.test"  )
     
   testthat::expect_true(all(names(toOut) == AllNames))
