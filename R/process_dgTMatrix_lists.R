@@ -124,6 +124,15 @@ process_dgTMatrix_lists <- function(dgTMatrix_list, name, species_name, naming_p
   if(species_name == -9) {
     spec=get_gene_symbol(sm)
     species_name <- spec$species
+    for(z in 1:length(dgTMatrix_list)) {
+      sm_z <- dgTMatrix_list[[z]]
+      Row_name <- get_gene_symbol(sm_z)
+      row_name_use <- Row_name$rowname
+      row_name_use_1 <- row_name_use[!duplicated(row_name_use)]
+      sm_z <- sm_z[!duplicated(row_name_use),]
+      rownames(sm_z) <- row_name_use_1
+      dgTMatrix_list[[z]] <- sm_z
+    }
   } 
   naming_preferences <- c("brain", "epithelial", "endothelial", "blood", "connective","eye", "epidermis", "Digestive", "Immune", "pancreas", "liver", "reproductive", "kidney", "respiratory") 
   if(!naming_preference %in% naming_preferences) {
@@ -133,6 +142,7 @@ process_dgTMatrix_lists <- function(dgTMatrix_list, name, species_name, naming_p
       stop("Naming preferences not in options (case sensitive) and isn't a non-choice (-9), please try again.")
     }
   }
+  
   pbmc <- process_from_count(countmat_list = dgTMatrix_list, name = name, theSpecies = species_name, panglao_set = panglao_set, haveUmap = haveUMAP, saveALL  = saveSCObject, toSave=toSave, use_sctransform = use_sctransform, path = path)
   # process from the count matrices to the Seurat object -- see process_from_count for details
   print(class(pbmc))
