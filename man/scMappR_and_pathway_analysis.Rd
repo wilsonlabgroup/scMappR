@@ -2,7 +2,7 @@
 % Please edit documentation in R/scMappR_and_pathway_analysis.R
 \name{scMappR_and_pathway_analysis}
 \alias{scMappR_and_pathway_analysis}
-\title{Generate STV, visualize, and enrich.}
+\title{Generate cellWeighted_Foldchange, visualize, and enrich.}
 \usage{
 scMappR_and_pathway_analysis(
   count_file,
@@ -69,15 +69,15 @@ scMappR_and_pathway_analysis(
 \item{path}{If toSave == TRUE, path to the directory where files will be saved.}
 }
 \value{
-\code{scMappR_and_pathway_analysis} A directory with: STVs in RData file, Cell Type proportions (RData file), cell-type proportions leave one out (RData file), heatmap of STVs (all), heatmap of STVs (within signature), heatmap of signature (all), heatmap of signature (overlapping with DEG_list), Pathway enrichment for DEG list(all), RData file and Biological Processes, Pathway enrichment of STVs for each cell-type, RData file and biological processes. \cr
+\code{scMappR_and_pathway_analysis} A directory with: cellWeighted_Foldchanges in RData file, Cell Type proportions (RData file), cell-type proportions leave one out (RData file), heatmap of cellWeighted_Foldchanges (all), heatmap of cellWeighted_Foldchanges (within signature), heatmap of signature (all), heatmap of signature (overlapping with DEG_list), Pathway enrichment for DEG list(all), RData file and Biological Processes, Pathway enrichment of cellWeighted_Foldchanges for each cell-type, RData file and biological processes. \cr
 }
 \description{
-This function generates scMappR Transformed Variables (STVs), visualizes them in a heatmap, and completes pathway enrichment of STVs and bulk gene list.
+This function generates cell weighted Fold-changes (cellWeighted_Foldchange), visualizes them in a heatmap, and completes pathway enrichment of cellWeighted_Foldchanges and bulk gene list.
 }
 \details{
-This function generates STVs for every cell-type (see deconvolute_and_contextualize), as well as the relative cell-type proportions (which will be reutrned and pushed through).
-Then, it generates heatmaps of all STVs, STVs overlapping with the signature matrix, the entire signature matrix, the cell-type preference values from the signature matrix that overlap with inputted differentially expressed genes.
-Then, if you have Wifi, it will complete g:ProfileR of the reordered STVs as well as a the ordered list of genes.
+This function generates cellWeighted_Foldchanges for every cell-type (see deconvolute_and_contextualize), as well as the relative cell-type proportions (which will be reutrned and pushed through).
+Then, it generates heatmaps of all cellWeighted_Foldchanges, cellWeighted_Foldchanges overlapping with the signature matrix, the entire signature matrix, the cell-type preference values from the signature matrix that overlap with inputted differentially expressed genes.
+Then, if you have Wifi, it will complete g:ProfileR of the reordered cellWeighted_Foldchanges as well as a the ordered list of genes.
 This function is a wrapper for deconvolute_and_contextualize and pathway_enrich_internal.
 }
 \examples{

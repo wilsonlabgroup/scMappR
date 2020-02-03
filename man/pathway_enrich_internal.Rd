@@ -2,7 +2,7 @@
 % Please edit documentation in R/pathway_enrich_internal.R
 \name{pathway_enrich_internal}
 \alias{pathway_enrich_internal}
-\title{Pathway enrichment for STV's and bulk gene list}
+\title{Pathway enrichment for cellWeighted_Foldchange's and bulk gene list}
 \usage{
 pathway_enrich_internal(
   DEGs,
@@ -22,7 +22,7 @@ pathway_enrich_internal(
 
 \item{theSpecies}{Human, mouse, or a charcter that is compatible with gProfileR.}
 
-\item{scMappR_vals}{scMappR Transformed Values of differentially expressed genes.}
+\item{scMappR_vals}{cell weighted Fold-changes of differentially expressed genes.}
 
 \item{background_genes}{A list of background genes to test against.}
 
@@ -39,14 +39,14 @@ pathway_enrich_internal(
 \item{path}{If toSave == TRUE, path to the directory where files will be saved.}
 }
 \value{
-\code{pathway_enrich_internal} Plots and pathway enrichment of bulk DEGs and STVs. \cr
+\code{pathway_enrich_internal} Plots and pathway enrichment of bulk DEGs and cellWeighted_Foldchanges. \cr
 }
 \description{
-This function completes pathway enrichment of STVs and bulk gene list.
+This function completes pathway enrichment of cellWeighted_Foldchanges and bulk gene list.
 }
 \details{
-Internal: Pathway analysis of differentially expressed genes (DEGs) and scMappR Transformed Values (STVs) for each cell-type. Returns .RData objects of differential analysis as well as plots of the top bulk pathways.
-It is a wrapper for making barplots, bulk pathway analysis, and gProfiler_STV.
+Internal: Pathway analysis of differentially expressed genes (DEGs) and cell weighted Fold-changes (cellWeighted_Foldchanges) for each cell-type. Returns .RData objects of differential analysis as well as plots of the top bulk pathways.
+It is a wrapper for making barplots, bulk pathway analysis, and gProfiler_cellWeighted_Foldchange.
 }
 \examples{
 \donttest{

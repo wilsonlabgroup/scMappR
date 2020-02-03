@@ -55,24 +55,14 @@ of those enriched cell-types is then computed.
 \examples{
 \donttest{
 
-data(PBMC_example)
-bulk_DE_cors <- PBMC_example$bulk_DE_cors
-bulk_normalized <- PBMC_example$bulk_normalized
-odds_ratio_in <- PBMC_example$odds_ratio_in
-case_grep <- "_female"
-control_grep <- "_male"
-max_proportion_change <- 10
-print_plots <- FALSE
-theSpecies <- "human"
-toOut <- scMappR_and_pathway_analysis(bulk_normalized, odds_ratio_in, 
-                                      bulk_DE_cors, case_grep = case_grep,
-                                      control_grep = control_grep, rda_path = "", 
-                                      max_proportion_change = 10, print_plots = TRUE, 
-                                       plot_names = "tst1", theSpecies = "human", 
-                                       output_directory = "tester",
-                                       sig_matrix_size = 3000, up_and_downregulated = FALSE, 
-                                       internet = FALSE)
-
+data(POA_example) # region to preoptic area
+Signature <- POA_example$POA_Rank_signature # signature matrix
+rowname <- get_gene_symbol(Signature) # get signature
+rownames(Signature) <- rowname$rowname
+genes <- rownames(Signature)[1:60]
+rda_path1 = "" # data directory (if it exists)
+internal <- tissue_scMappR_internal(genes, "mouse", output_directory = "scMappR_TesInternal",
+                                   tissue = "hypothalamus", toSave = TRUE, path = "./")
 
  }
 }

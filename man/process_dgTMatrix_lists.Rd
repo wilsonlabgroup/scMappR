@@ -16,7 +16,8 @@ process_dgTMatrix_lists(
   internal = FALSE,
   toSave = FALSE,
   path = NULL,
-  use_sctransform = FALSE
+  use_sctransform = FALSE,
+  test_ctname = "wilcox"
 )
 }
 \arguments{
@@ -43,6 +44,8 @@ process_dgTMatrix_lists(
 \item{path}{If toSave == TRUE, path to the directory where files will be saved.}
 
 \item{use_sctransform}{If you should use sctransform or the Normalize/VariableFeatures/ScaleData pipeline (T/F).}
+
+\item{test_ctname}{statistical test for calling CT markers -- must be in Seurat}
 }
 \value{
 \code{process_dgTMatrix_lists} Signature matrices populated with rank and odds-ratio. If toSave is considered TRUE, then cell-type names from GSVA and the cell-type names are printed. saveSCObject = TRUE will also save the Seurat object. \cr

@@ -2,7 +2,7 @@
 % Please edit documentation in R/deconvolute_and_contextualize.R
 \name{deconvolute_and_contextualize}
 \alias{deconvolute_and_contextualize}
-\title{Generate scMappR Transformed Values (STVs)}
+\title{Generate cell weighted Fold-Changes (cwFold-changes)}
 \usage{
 deconvolute_and_contextualize(
   count_file,
@@ -44,7 +44,7 @@ deconvolute_and_contextualize(
 
 \item{make_scale}{Convert the lowest odds ratio to 1 and scales accordingly -- strongly not recommended and will produce warning if used.}
 
-\item{FC_coef}{Making STVs based on fold-change (TRUE) or rank := (-log10(Pval)) (FALSE) rank. After testing, we strongly recommend to keep true (T/F).}
+\item{FC_coef}{Making cwFold-changes based on fold-change (TRUE) or rank := (-log10(Pval)) (FALSE) rank. After testing, we strongly recommend to keep true (T/F).}
 
 \item{sig_matrix_size}{Number of genes in signature matrix for cell-type deconvolution.}
 
@@ -57,21 +57,21 @@ deconvolute_and_contextualize(
 \item{path}{If toSave == TRUE, path to the directory where files will be saved.}
 }
 \value{
-\code{deconvolute_and_contextualize} ScMappR transformed Values for every gene in every cell-type, cell-type composition with, allgenes included, average gene expression of each cell-type usng leave one out approach for each gene, and the processed signature matrix. Optional: boxplots of estimated CT proportions for each gene using a leave-one-out method. \cr
+\code{deconvolute_and_contextualize} cell weighted fold-changes for every gene in every cell-type, cell-type composition with, allgenes included, average gene expression of each cell-type usng leave one out approach for each gene, and the processed signature matrix. Optional: boxplots of estimated CT proportions for each gene using a leave-one-out method. \cr
 }
 \description{
-This function takes a count matrix, signature matrix, and differentially expressed genes (DEGs) before generating STVs for each cell-type.
+This function takes a count matrix, signature matrix, and differentially expressed genes (DEGs) before generating cwFold-chagnes for each cell-type.
 }
 \details{
 This function completes the cell-type contextualization in scMappR -- reranking every DEG based on their fold change, likelihood the gene is in each detected cell-type, average cell-type proportion, and ratio of cell-type proportion between case and control.
 If a gene is upregulated then it is being controlled by control/case, otherwise it is case/control.
-STV's are generated for genes that are in both the count matrix and in the list of DEGs. It does not have to also be in the signature matrix.
+cwFold-change's are generated for genes that are in both the count matrix and in the list of DEGs. It does not have to also be in the signature matrix.
 First, this function will estimate cell-type proportions with all genes included before estimating changes in cell-type proportion between case/control using a t-test.
 Then, it takes a leave-one-out approach to cell-type deconvolution such that estimated cell-type proportions are computed for every inputted DEG.
 Optionally, the differences between cell-type proprtion before and after a gene is removed is plotted in boxplots.
-Then, for every gene, STV's are computed with the following formula (the example for upreguatled genes)
+Then, for every gene, cwFold-change's are computed with the following formula (the example for upreguatled genes)
 val <- cell-preferences * cell-type_proprtion * cell-type_proportion_fold-change * sign*2^abs(gene_DE$log2fc).
-A matrix of STV's for all DEGs are returned.
+A matrix of cwFold-change's for all DEGs are returned.
 }
 \examples{
 
