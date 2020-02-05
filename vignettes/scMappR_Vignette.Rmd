@@ -1,0 +1,555 @@
+---
+title: "Single Cell Mapper (scMappR) Vignette"
+author: "Dustin Sokolowski"
+date: "February 05 2020"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 4
+---
+
+## Install and load scMappR
+Currently, there is only  a development version. scMappR relies on the following dependencies which should be downloaded/updated with scMappR automatically. Please ensure that these packages are not open when installing scMappR. \
+
+  * ggplot2 - CRAN
+  * gplots - CRAN
+  * graphics - CRAN
+  * Seurat - CRAN
+  * GSVA - Bioconductor
+  * stats - CRAN
+  * utils - CRAN
+  * downloader - CRAN
+  * pcaMethods - Bioconductor
+  * grDevices - CRAN
+  * gProfileR - CRAN
+  * limSolve - CRAN 
+	
+
+Install GSVA and pcaMethods from bioconductor first, as `devtools::install_githb()` will automatically install CRAN. 
+
+1. Github (Development Version)
+
+
+```{r install_developter, eval=FALSE}
+
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+if (!requireNamespace("devtools", quietly = TRUE))
+    install.packages("devtools")
+
+BiocManager::install("pcaMethods")
+BiocManager::install("GSVA")
+
+devtools::install_github("DustinSokolowski/scMappR")
+
+
+
+```
+
+
+2. CRAN (Stable Release) -- Currently not available
+
+
+```{r install_cran, eval=FALSE}
+
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+if (!requireNamespace("devtools", quietly = TRUE))
+    install.packages("devtools")
+
+BiocManager::install("pcaMethods")
+BiocManager::install("GSVA")
+
+install.packages("scMappR")
+
+```
+
+## Downloading Files.
+
+Before using scMappR, we strongly recommend that you download data files from "https://github.com/DustinSokolowski/scMappR_Data". As a default, it is assumed that these rda files have been downloaded and stored in ~/scMappR/data. These data files can be downloaded anywhere as long as the 'rda_data' parameter is changed to this directory when using scMappR. When data are not downloaded, the Downloader R package will temporarily download data files they are required within functions. Naturally, stable internet is required for this.
+
+## Printing results.
+
+Many of the functions in scMappR print files or even generate directories. To return the full output of scMappR, please change the 'toSave' parameters from `FALSE` to `TRUE` in any of the functions being used. Otherwise, the functions in scMappR will only return a small portion of what scMappR has to offer. Due to CRAN packages not allowing for their packages to print files/make directories, toSave is set to `FALSE` as default.
+
+When `toSave == TRUE`, it is also required to set the directory where files can be saved. In this vignette, it is assumed that there is a directory called `vignette_dir` in the working directory. To change the directory where files are saved, change the `path` argument.
+
+## Introduction of the primary functionalists highlighted in the vignette.
+
+* `tissue_scMappR_custom()`: This function visualizes signature matrix, clusters subsetted genes, completes enrichment of individual cell-types and co-enrichment. 
+* `tissue_scMappR_internal()`: This function loops through every signature matrix in a particular tissue and generates heatmaps, cell-type preferences, and co-enrichment.
+* `scMappR_and_pathway_analysis()`: This function generates cell-weighted fold changes (cellWeighted_Foldchanges), visualizes them in a heatmap, and completes pathway enrichment of cellWeighted_Foldchanges and bulk gene list.
+* `tissue_by_celltype_enrichment()`: This function completes a fishers exact test of an input list of genes against one of the two curated tissue by cell-type marker datasets from scMappR.
+* `process_dgTMatrix_lists()`: This function takes a list of count matrices, processes them, calls cell-types, and generates signature matrices.
+
+```{r library_scMappR, include=TRUE, echo = FALSE}
+
+library(scMappR)
+
+```
+
+
+## Cell-type markers in a list of genes.
+Given a tissue and an unranked list of genes (i.e. without a count matrix or summary statistics), the `tissue_scMappR_custom()` and `tissue_scMappR_internal()` functions visualizes cell-type markers contained within the gene-list and tests for the enrichment of cell-types within that tissue. When there is no custom signature matrix, providing a tissue present in "https://github.com/DustinSokolowski/scMappR_Data/blob/master/Signature_matrices_Pval.rda" will complete cell-type specific gene visualization and enrichment for every signature matrix in the tissue.
+
+### No custom signature matrix:
+  
+#### Example
+
+``` {r  scMappR_internal_example, eval = FALSE} 
+
+data(POA_example) # region to preoptic area
+
+Signature <- POA_example$POA_Rank_signature # signature matrix 
+
+rowname <- get_gene_symbol(Signature) # get signature
+
+rownames(Signature) <- rowname$rowname
+
+genes <- rownames(Signature)[1:60]
+
+rda_path1 = "" # data directory (if it exists)
+
+internal <- tissue_scMappR_internal(genes, "mouse", output_directory = "scMappR_Test_Internal", tissue = "hypothalamus", rda_path = rda_path1, toSave = TRUE, path = "vignette_dir")
+
+
+```
+
+#### Output
+
+This function returns a list "internal". Using the example of `internal[[4]]`, the prophetic area of the hypothalamus, you can see four objects. 
+
+##### background_heatmap
+  * genesIn: genes in the signature matrix is tested. \
+  * genesNoIn: genes not in the signature matrix (empty). \
+  * geneHeat: Gene x cell-type matrix containing the cell-type rank of each gene in the signature matrix. \
+  * preferences: Cell-type marker genes sorted into each cell-type. 
+   
+
+##### gene_list_heatmap
+  * genesIn: Inputted genes that are also in the signature matrix. 
+  * genesNoIn: Inputted genes not in the signature matrix. 
+  * geneHeat: Gene x cell-type matrix containing the cell-type rank for inputted genes overlaying with genes in the signature matrix. 
+  * preferences: Inputted genes overlaying with signature matrix sorted into the cell-types where they're preferentially expressed.
+  
+##### single_celltype_preferences
+  * Output of the Fisher's exact test for cell-type enrichment of inputted genes with every cell-type. 
+
+##### group_celltype_preference
+  * Identification and statistical enrichment of groups of cell-types containing the same cell-type marker genes.
+  
+#### Saved directory
+
+When `toSave == TRUE`, a directory is generated with visualization of each signature matrix, the signature matrix subsetted by input genes, and statistical enrichment.
+
+
+### Custom signature matrix
+tissue_scMappR_custom() assumes a custom signature matrix, or an inputted gene x cell-type matrix that is filled with the cell-type preferences of each gene (Rank is recommended but any value will suffice). If the value filling the matrix is not rank, you will need to change the gene_cutoff from 1 to whatever cutoff you need. Furthermore, if is_pvalue == TRUE, tissue_scMappR_custom() will transform the p-values into ranks rank := -1log10(Padj)*sign(FC). We strongly recommend that you generate these ranks before using tissue_scMappR_custom(); however, we assume that all fold changes are positive and therefore sign(FC) = 1.
+
+#### Example
+
+```{r scMappR_custom_example, eval = FALSE} 
+
+# Acquiring the gene list
+data(POA_example)
+
+Signature <- POA_example$POA_Rank_signature
+
+rowname <- get_gene_symbol(Signature)
+
+rownames(Signature) <- rowname$rowname
+
+genes <- rownames(Signature)[1:200]
+ 
+#running tisue_scMappR_custom
+internal <- tissue_scMappR_custom(genes,Signature,output_directory = "scMappR_Test_custom", toSave = F)
+
+
+```
+
+#### Output
+
+The output is identical to that found in tissue_scMappR_internal() but with only one study, or the example shown above. \
+
+If you choose to set toSave = TRUE. This function will return a directory with a number of relevant files. 
+
+### Saved Outputs
+  
+  * _celltype_preferences.tsv: Enrichment of inputted genes on each cell-type.
+  * _cell_co_preferences.tsv: Identification and enrichment of cell-types being enriched by the same genes (cell-type markers in common).
+  * _custom_background_heatmap.pdf: Heatmap of all cell-type markers in each cell-type in the entire signature matrix.
+  * _custom_background_preferences.pdf: All cell-type markers sorted into each cell-type.
+  * _custom_genelist_heatmap.pdf: Heatmap of cell-type markers intersected with inputted gene list.
+  * _custom_genelist_preferences.pdf: Cell-type markers intersected with inputted gene list sorted into each cell-type.
+  
+#### Saved directory
+
+When `toSave == TRUE`, a directory is generated with visualization of each signature matrix, the signature matrix subsetted by input genes, and statistical enrichment.
+
+
+
+## cell-weighted Fold Changes (cwFold-changes) Generation
+
+The scMappR_and_pathway_analysis() function generates cellWeighted_Foldchanges based on an inputted signature matrix, normalized RNA-seq count matrix, and list of differentially-expressed genes (DEGs) before creating cell-weighted Fold Changes (cwFold-changes) (cellWeighted_Foldchanges), visualizing these cellWeighted_Foldchange's against the cell-type preferences of these DEGs, that are also cell-type markers, visualizing cellWeighted_Foldchange's regardless of if the cellWeighted_Foldchange is cell-type markers, and if allowed, pathway enrichment of DEGs re-ranked by cell-type. \ 
+The example below has `toSave = FALSE`, `up_and_downregulated = FALSE` and `internet = FALSE`. When running scMappR yourself, it is strongly recommended to set all to `TRUE`. toSave = TRUE allows for the printing of folders, images, and files onto a desktop/cluster. up_and_downregulated = TRUE repeats pathway analysis for up and down-regulated genes separately. internet = TRUE allows for the completion of pathway analysis altogether.
+
+#### Example
+
+```{r scMappR_and_pathway_analysis, eval=FALSE}
+
+data(PBMC_scMappR) # load data example of PBMC bulk- and cell-sorted RNA-seq data
+
+bulk_DE_cors <- PBMC_example$bulk_DE_cors # 59 sex-specific DEGs in bulk PBMC (up-regulated = female-biased)
+
+bulk_normalized <- PBMC_example$bulk_normalized # log CPM normalized bulk RNA-seq data
+
+odds_ratio_in <- PBMC_example$odds_ratio_in # signature matrix developed from cell-sorted RNA-seq
+
+case_grep <- "_female" # flag for 'cases' (up-regulated), index is also acceptable
+
+control_grep <- "_male" # flag for 'control' (down-regulated), index is also acceptable
+
+max_proportion_change <- 10 # maximum cell-type proportion change -- this is good for cell-types that are uncomon in population and small absolute changes may yield large relative changes
+
+theSpecies <- "human" # these RNA-seq data have human gene symbols (and are also from human)
+
+# When running scMappR, it is strongly recommended to use scMappR_and_pathway analysis with the parameters below.
+toOut <- scMappR_and_pathway_analysis(bulk_normalized, odds_ratio_in, 
+                                      bulk_DE_cors, case_grep = case_grep,
+                                      control_grep = control_grep, rda_path = "", 
+                                      max_proportion_change = 10, print_plots = TRUE, 
+                                      plot_names = "scMappR_vignette_", theSpecies = "human", 
+                                      output_directory = "scMappR_vignette_",
+                                      sig_matrix_size = 3000, up_and_downregulated = TRUE, 
+                                      internet = TRUE, toSave = TRUE, path = "vignette_dir")
+
+
+```
+
+#### Output
+
+Without anything saved, there are still a multitude of relevant outputs to scMappR_and_pathway_analysis. It returns a list containing: \
+  * cellWeighted_Foldchanges: A gene by cell-type matrix of cellWeighted_Foldchanges.
+  * cellType_Proportions: A sample by cell-type matrix of cell-type proportions estimated with DeconRNA-seq.
+  * leave_one_out_proportions: A gene by cell-type matrix containing the mean cell-type proportions of each cell-type after that gene was removed.
+  * processed_signature_matrix: Only necessary when removing unknown cell-types or scaling (not recommended). Returns signature matrix with changes from `deconvolute_and_contextualize.
+  * ProportionT.test: output of t-test's to measure cell-type proportion differences in case/control.
+
+```{r load_vignette_example, include=FALSE, echo=FALSE}
+
+data(PBMC_scMappR) # load data example of PBMC bulk- and cell-sorted RNA-seq data
+
+bulk_DE_cors <- PBMC_example$bulk_DE_cors # 59 sex-specific DEGs in bulk PBMC (up-regulated = female-biased)
+
+bulk_normalized <- PBMC_example$bulk_normalized # log CPM normalized bulk RNA-seq data
+
+odds_ratio_in <- PBMC_example$odds_ratio_in # signature matrix developed from cell-sorted RNA-seq
+
+case_grep <- "_female" # flag for 'cases' (up-regulated), index is also acceptable
+
+control_grep <- "_male" # flag for 'control' (down-regulated), index is also acceptable
+
+max_proportion_change <- 10 # maximum cell-type proportion change -- this is good for cell-types that are uncomon in population and small absolute changes may yield large relative changes
+
+theSpecies <- "human" # these RNA-seq data have human gene symbols (and are also from human)
+
+# When running scMappR, it is strongly recommended to use scMappR_and_pathway analysis with the parameters below.
+toOut <- scMappR_and_pathway_analysis(bulk_normalized, odds_ratio_in, 
+                                      bulk_DE_cors, case_grep = case_grep,
+                                      control_grep = control_grep, rda_path = "", 
+                                      max_proportion_change = 10, print_plots = TRUE, 
+                                      plot_names = "scMappR_vignette_", theSpecies = "human", 
+                                      output_directory = "scMappR_vignette_",
+                                      sig_matrix_size = 3000, up_and_downregulated = FALSE, 
+                                      internet = FALSE, toSave = FALSE, path = "vignette_dir")
+
+
+
+```
+
+
+```{r toOut_results}
+
+#cell-weighted Fold Changes (cwFold-changes)
+toOut$cellWeighted_Foldchanges[1:4,1:4]
+
+#cell-type proportions
+toOut$cellType_Proportions[1:4,1:4]
+
+# mean cell-type proportions changed by removing gene
+toOut$leave_one_out_proportions[1:4,1:4]
+
+# Signature matrix (potentially after some internal processing)
+toOut$processed_signature_matrix[1:4,1:4]
+
+# t.test output of signature matrix
+toOut$ProportionT.test[1:4,]
+
+
+```
+
+### Saved outputs
+
+
+Assuming `toSave = T` and `up_and_downregulated = T`, `scMappR_and_pathway_analysis()` will also generate a folder in your current directory with a considerable amount of data/figures.
+
+
+ Here, we will walk through the output of the above example sorting by name and working downwards.
+  * scMappR_vignette_celltype_specific_cellWeighted_Foldchangess_upregulated_heatmap.pdf: Row-normalized cellWeighted_Foldchanges of upregulated genes that are also cell-type specific (in the signature matrix).
+  * scMappR_vignette_celltype_specific_cellWeighted_Foldchangess_downregulated_heatmap.pdf: Row-normalized cellWeighted_Foldchanges of downregulated genes that are also cell-type specific (in the signature matrix).
+  * scMappR_vignette__cellWeighted_Foldchangess_upregulated_DEGs_heatmap.pdf: row-normalized cellWeighted_Foldchanges of upregulated genes.
+  * scMappR_vignette__cellWeighted_Foldchangess_downregulated_DEGs_heatmap.pdf: row-normalized cellWeighted_Foldchanges of downregulated genes.
+  * scMappR_vignette_reordered_transcription_factors.Rdata: .Rdata file containing a list of outputs from g:profileR or gprofiler2 that are transcription factors enriched after re-ordering.
+  * scMappR_vignette_reordered_pathways: .Rdata file containing list of outputs from g
+  :profileR or gprofiler2 that are  GO:BP, REAC, and KEGG enrichments after re-ordering.
+  * scMappR_vignette_leaveOneOut_gene_proportions.RData: Average cell-type proportion when gene is removed.
+  * scMappR_vignette_celltype_specific_preferences_upregulated_DEGs_heatmap.pdf: Row-normalized .pdf of signature matrix intersecting with upregulated DEGs.
+  * scMappR_vignette_celltype_specific_preferences_downregulated_DEGs_heatmap.pdf: Row-normalized .pdf of signature matrix intersecting with downregulated DEGs.  
+ * scMappR_vignette_celltype_proportions.Rdata: Data matrix of cell-type proportions for each sample.
+ * scMappR_vignette_cell_proportions_heatmap.pdf: Row-normalized heatmap of cell-type proportions.
+ * scMappR_vignette_cell_proportion_changes_summary.tsv: Table of t-tests to interrogate differences in cell-type proportions.
+ * scMappR_vignette_bulk_transcription_factors.Rdata: g:ProfileR enrichment of bulk transcription factors.
+ * scMappR_vignette_bulk_pathways.Rdata: g:ProfileR enrichment of bulk GO:BP, REAC, and KEGG.
+ * scMappR_vignette_all_CT_markers_in_background.pdf: Signature matrix of all genes in the background.
+ * Bulk_TF_enrichment.pdf: Barplot of bulk transcription factor enrichment.
+ * Bulk_pathway_enrichment.pdf: Barplot of bulk pathway enrichment.
+ * upregulated: Directory with the same pathway analysis specifically for upregulated genes.
+ * downregulated: Directory with the same pathway analysis specifically for downregulated genes.
+ * TF_barplot: Directory with .pdfs of re-ranked TF enrichment.
+ * BP_barplot: Directory with .pdfs of re-ranked GO:BP, KEGG, and REAC enrichment.
+ 
+  
+## Tissue by cell-type enrichment.
+
+scMappR allows for gene-set enrichment of every cell-type marker, sorted by cell-type, tissue, and study, curated while preprocessing all of the signature matrices for the functions within scMappR. The dataset may be downloaded from https://github.com/DustinSokolowski/scMappR_Data, processed into a gmt file using a number of packages (qusage, activepathways etc.) and then used with traditional gene-set-enrichment tools (GSEA, GSVA, g:ProfileR). Additionally, scMappR contains the "tissue_by_celltype_enrichment.R" function, that enriches a gene list against all cell-type markers using a Fisher's exact test. 
+
+
+#### Example
+
+Here, we will investigate the tissue x cell-type enrichment of the top 100 genes in the Preoptic area signature matrix. 
+#### NOTE: Fix dimensions of plot or don't plot it at all.
+
+```{r tissue_ct_enrichment_example, fig.show='hide'}
+
+data(POA_example)
+POA_generes <- POA_example$POA_generes
+POA_OR_signature <- POA_example$POA_OR_signature
+POA_Rank_signature <- POA_example$POA_Rank_signature
+Signature <- POA_Rank_signature
+rowname <- get_gene_symbol(Signature)
+rownames(Signature) <- rowname$rowname
+genes <- rownames(Signature)[1:100]
+
+enriched <- tissue_by_celltype_enrichment(gene_list = genes, 
+species = "mouse",p_thresh = 0.05, isect_size = 3)
+
+print(enriched[1:5,1:5])
+
+
+```
+
+### Three types of outputs.
+
+  * tissue x CT enrichment: Always returned when using the `tissue_by_celltype_enrichment()` function. This function returns gene set enrichment compatible with `plotBP()` for all cell-type markers significantly enriched via the function.
+  * gmt_file: Since the bank of signature matrices is updated monthly, it is recommended to periodically download a new human_tissue_celltype_scMappR.rda and mouse_tissue_celltype_scMappR.rda from https://github.com/DustinSokolowski/scMappR_Data. When internet is available, setting "rda_path" to "" will download the most updated pathway files directly using the downloader package. Here, if `return_gmt == TRUE`, then this downloaded gmt will be returned with the enrichment.
+  * if `toSave == TRUE`, then the -log10(P_adj) of the top 10 tissue/cell-types that are enriched are plotted.
+  
+## Processing scRNA-seq count data into a signature matrix.
+
+scMappR inputs a list of count matrices (of class list, dCGMatrix, or matrix) and re-processes it using the standard Seurat V3 vignette (+ removal of cells with > 2 standard deviations of mt contamination than mean). Then, it finds cell-type markers and identifies potential cell-type names using the GSVA and fisher's exact methods on the CellMarker and Panglao databases. Finally, it creates a signature matrix of odds ratios and ranks. There are options to save the Seurat object, gsva cell-type identities and list of cell-type markers.
+
+```{r process_scRNAseq_count, eval = FALSE}
+
+data(sm)
+
+toProcess <- list(example = sm)
+
+tst1 <- process_dgTMatrix_lists(toProcess, name = "testPropcess", species_name = -9, naming_preference = "eye", rda_path = "",  toSave = TRUE, saveSCObject = TRUE, path = "vignette_dir")
+
+
+
+```
+
+
+```{r load_processing_vignette_example, include=FALSE,echo=FALSE}
+
+data(sm)
+
+toProcess <- list(example = sm)
+
+tst1 <- process_dgTMatrix_lists(toProcess, name = "testPropcess", species_name = -9, naming_preference = "eye", rda_path = "", toSave = FALSE)
+
+```
+
+
+```{r processed_scRNAseq_look}
+
+#P value
+head(tst1$wilcoxon_rank_mat_t[,1:3])
+
+#Odds Ratio
+head(tst1$wilcoxon_rank_mat_or[,1:3])
+
+# Cell-type markers
+head(tst1$generes[[1]])
+
+```
+
+It is recommended to set `toSave == TRUE`, allowing for important data objects to be saved. Here, the above function is repeated with `toSave == TRUE` and `saveSCObject == TRUE`, and the outputted files will be briefly discussed.
+
+Here, the following objects are saved.
+
+  * testProcess_generes.Rdata: list of cell-type markers for every cluster.
+  * testProcess_or_heatmap.Rdata: signature matrix of odds ratios named from Fisher's exact test.
+  * testProcess_pval_heatmap.Rdata: signature matrix of ranks named from Fisher's exact test.
+  * testProcess_custom.Rdata: Processed (and integrated if necessary) Seurat object.
+  * testProcess_gsva_cellname_avg_expression.Rdata: list of cell-type markers from CelllMarker and Panglao using the GSVA method as well as the average expression of each gene in each cell-type.
+  
+### Processing scRNA-seq count data when cell-types are already named.
+
+It may be common to generate a signature matrix when clusters and cell-types have already been given for every cell. These examples follow how to make this signature matrix from:
+
+1) A Seurat object with named cell-types
+2) A Count matrix with named cell-types.
+
+
+### Signature matrix from Seurat object with named cell-type
+
+
+
+
+Generating the Seurat Object for example and making up cell-types. This example will be used from 1-2.
+
+
+```{r Seurat_Object_Generation, eval = FALSE}
+
+
+data(sm)
+
+toProcess <- list(sm = sm)
+
+seurat_example <- process_from_count(toProcess, "test_vignette",theSpecies  = -9)
+
+levels(seurat_example@active.ident) <- c("Myoblast", "Neutrophil", "cardiomyoblast", "Mesothelial")
+
+```
+
+
+
+1) A Seurat object with named cell-types. Markers for each cell-type are stored in the `generes` object and each signature matrix is in `gene_out`.
+
+```{r from_seurat_object, eval = FALSE}
+
+    generes <- seurat_to_generes(pbmc = seurat_example, test = "wilcox")
+
+    gene_out <- generes_to_heatmap(generes, make_names = FALSE)
+
+```
+
+2) A count matrix with named cell-types.
+
+```{r from_count_and_genes, eval = FALSE}
+
+#Create the cell-type ids and matrix
+Cell_type_id <- seurat_example@active.ident
+
+count_file <- sm
+
+rownames_example <- get_gene_symbol(count_file)
+
+rownames(count_file) <- rownames_example$rowname
+
+# make seurat object
+seurat_example <- process_from_count(count_file, "test_vignette",theSpecies  = "mouse")
+
+# Intersect column names (cell-types) with labelled CTs
+
+inters <- intersect(colnames(seurat_example), names(Cell_type_id))
+
+seurat_example_inter <- seurat_example[,inters]
+
+Cell_type_id_inter <- Cell_type_id[inters]
+
+seurat_example_inter@active.ident <- Cell_type_id_inter
+
+# Making signature matrices
+
+    generes <- seurat_to_generes(pbmc = seurat_example_inter, test = "wilcox")
+
+    gene_out <- generes_to_heatmap(generes, make_names = FALSE)
+
+```
+
+
+
+
+## Manually making graphics.
+
+scMappR generates heatmaps and barplots. The barplots are generated with `plotBP` and `make_TF_barplot`. The plotting code for `plotBP` is provided. Inputs are a matrix called `ordered_back_all` of -log10(padj) and term names with the column names log10 and term_name respectively.
+
+### Barplots 
+
+
+
+```{r plot_barplot, eval=FALSE}
+
+# making an example matrix
+term_name <- c("one", "two", "three")
+log10 <- c(1.5, 4, 2.1)
+
+ordered_back_all <- as.data.frame(cbind(term_name,log10))
+
+#plotting
+ g <- ggplot2::ggplot(ordered_back_all, ggplot2::aes(x = stats::reorder(term_name, 
+        log10), y = log10)) + ggplot2::geom_bar(stat = "identity", 
+        fill = "turquoise") + ggplot2::coord_flip() + ggplot2::labs(y = "-log10(Padj)", 
+        x = "Gene Ontology")
+    y <- g + ggplot2::theme(axis.text.x = ggplot2::element_text(face = NULL, 
+        color = "black", size = 12, angle = 35), axis.text.y = ggplot2::element_text(face = NULL, 
+        color = "black", size = 12, angle = 35), axis.title = ggplot2::element_text(size = 16, 
+        color = "black"))
+    
+print(y)
+
+```
+
+### Heatmaps
+
+Here, the heatmaps are for plotting cwFold-changes and cell-type proportions. The same heatmap is used so just an example of one is given.
+
+```{r heatmap_identification, eval=FALSE}
+
+# Generating a heatmap
+
+# Acquiring the gene list
+data(POA_example)
+
+Signature <- POA_example$POA_Rank_signature
+
+rowname <- get_gene_symbol(Signature)
+
+rownames(Signature) <- rowname$rowname
+
+genes <- rownames(Signature)[1:200]
+ 
+#running tisue_scMappR_custom
+internal <- tissue_scMappR_custom(genes,Signature,output_directory = "scMappR_Test_custom", toSave = F)
+
+toPlot <- internal$gene_list_heatmap$geneHeat
+
+
+#Plotting the heatmap
+
+cex = 0.2 # size of genes
+
+myheatcol <- grDevices::colorRampPalette(c("lightblue", "white", "orange"))(256)
+    gplots::heatmap.2(toPlot, Rowv = TRUE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+    
+
+
+```
+
+
+
+
+
