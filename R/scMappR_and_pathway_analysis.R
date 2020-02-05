@@ -431,12 +431,22 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     
     upDEGs <- DEGs[upGenes,]
     downDEGs <- DEGs[downGenes,]
-    upcellWeighted_Foldchanges <- scMappR_vals[upGenes,]
-    DowncellWeighted_Foldchanges <- scMappR_vals[downGenes,]
+    
+    if(length(upGenes) > 2) {
     print("Pathway analysis of upregulated genes")
+    upcellWeighted_Foldchanges <- scMappR_vals[upGenes,]
     up_only <- pathway_enrich_internal(  upDEGs, theSpecies, upcellWeighted_Foldchanges, background_genes, upDir, plot_names, number_genes = number_genes, toSave=TRUE, path = path, newGprofiler = newGprofiler)
+    } else {
+      warning("There are fewer than three upregulated DEGs.")
+    }
     print("Pathway analysis of downregulated genes")
+    if(length(downGenes) > 2) {
+    DowncellWeighted_Foldchanges <- scMappR_vals[downGenes,]
     down_only <- pathway_enrich_internal(  downDEGs, theSpecies, DowncellWeighted_Foldchanges, background_genes, downDir, plot_names, number_genes = number_genes, toSave=TRUE, path = path, newGprofiler = newGprofiler)    
+    } else {
+      warning("There are fewer than three downregulated DEGs.")
+      
+    }
   }
   
   return(list(cellWeighted_Foldchanges = cellWeighted_Foldchanges, paths = up_and_down_together$biological_pathways, TFs = up_and_down_together$transcription_factors))
