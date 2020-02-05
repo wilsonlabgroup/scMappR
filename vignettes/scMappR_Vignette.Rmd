@@ -110,6 +110,11 @@ genes <- rownames(Signature)[1:60]
 
 rda_path1 = "" # data directory (if it exists)
 
+# Identify tissues available for tissue_scMappR_internal
+data(scMappR_tissues)
+
+"Hypothalamus" %in% toupper(scMappR_tissues)
+
 internal <- tissue_scMappR_internal(genes, "mouse", output_directory = "scMappR_Test_Internal", tissue = "hypothalamus", rda_path = rda_path1, toSave = TRUE, path = "vignette_dir")
 
 
@@ -191,7 +196,7 @@ When `toSave == TRUE`, a directory is generated with visualization of each signa
 ## cell-weighted Fold Changes (cwFold-changes) Generation
 
 The scMappR_and_pathway_analysis() function generates cellWeighted_Foldchanges based on an inputted signature matrix, normalized RNA-seq count matrix, and list of differentially-expressed genes (DEGs) before creating cell-weighted Fold Changes (cwFold-changes) (cellWeighted_Foldchanges), visualizing these cellWeighted_Foldchange's against the cell-type preferences of these DEGs, that are also cell-type markers, visualizing cellWeighted_Foldchange's regardless of if the cellWeighted_Foldchange is cell-type markers, and if allowed, pathway enrichment of DEGs re-ranked by cell-type. \ 
-The example below has `toSave = FALSE`, `up_and_downregulated = FALSE` and `internet = FALSE`. When running scMappR yourself, it is strongly recommended to set all to `TRUE`. toSave = TRUE allows for the printing of folders, images, and files onto a desktop/cluster. up_and_downregulated = TRUE repeats pathway analysis for up and down-regulated genes separately. internet = TRUE allows for the completion of pathway analysis altogether.
+The example below has `toSave = FALSE`, `up_and_downregulated = FALSE` and `internet = FALSE`. When running scMappR yourself, it is strongly recommended to set all to `TRUE`. toSave = TRUE allows for the printing of folders, images, and files onto a desktop/cluster. up_and_downregulated = TRUE repeats pathway analysis for up and down-regulated genes separately. internet = TRUE allows for the completion of pathway analysis altogether. Tissue-types are available in `data(scMappR_tissues)`, and the signature matrices themselves from https://github.com/DustinSokolowski/scMappR_Data/blob/master/Signature_matrices_OR.rda
 
 #### Example
 
