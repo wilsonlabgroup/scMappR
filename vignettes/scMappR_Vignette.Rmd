@@ -361,7 +361,7 @@ print(enriched[1:5,1:5])
   
 ## Processing scRNA-seq count data into a signature matrix.
 
-scMappR inputs a list of count matrices (of class list, dCGMatrix, or matrix) and re-processes it using the standard Seurat V3 vignette (+ removal of cells with > 2 standard deviations of mt contamination than mean). Then, it finds cell-type markers and identifies potential cell-type names using the GSVA and fisher's exact methods on the CellMarker and Panglao databases. Finally, it creates a signature matrix of odds ratios and ranks. There are options to save the Seurat object, gsva cell-type identities and list of cell-type markers.
+scMappR inputs a list of count matrices (of class list, dCGMatrix, or matrix) and re-processes it using the standard Seurat V3 vignette (+ removal of cells with > 2 standard deviations of mt contamination than mean). Then, it finds cell-type markers and identifies potential cell-type names using the GSVA and fisher's exact methods on the CellMarker and Panglao databases. Finally, it creates a signature matrix of odds ratios and ranks. There are options to save the Seurat object, gsva cell-type identities and list of cell-type markers. To identify what naming-preferences options are available, download and load https://github.com/DustinSokolowski/scMappR_Data/blob/master/cell_preferences_categorized.rda.
 
 ```{r process_scRNAseq_count, eval = FALSE}
 
