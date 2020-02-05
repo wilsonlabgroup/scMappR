@@ -61,8 +61,10 @@ rowname <- get_gene_symbol(Signature) # get signature
 rownames(Signature) <- rowname$rowname
 genes <- rownames(Signature)[1:60]
 rda_path1 = "" # data directory (if it exists)
+
+# set toSave = TRUE and path = output directory of your choice
 internal <- tissue_scMappR_internal(genes, "mouse", output_directory = "scMappR_TesInternal",
-                                   tissue = "hypothalamus", toSave = TRUE, path = "./")
+                                   tissue = "hypothalamus", toSave = FALSE, path = "./") 
 
  }
 }
