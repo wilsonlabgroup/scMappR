@@ -124,7 +124,7 @@ data(scMappR_tissues)
 "Hypothalamus" %in% toupper(scMappR_tissues)
 
 internal <- tissue_scMappR_internal(genes, "mouse", output_directory = "scMappR_Test_Internal", 
-tissue = "hypothalamus", rda_path = rda_path1, toSave = TRUE, path = "vignette_dir")
+tissue = "hypothalamus", rda_path = rda_path1, toSave = TRUE, path = tempdir())
 
 
 ```
@@ -235,7 +235,7 @@ toOut <- scMappR_and_pathway_analysis(bulk_normalized, odds_ratio_in,
                                       plot_names = "scMappR_vignette_", theSpecies = "human", 
                                       output_directory = "scMappR_vignette_",
                                       sig_matrix_size = 3000, up_and_downregulated = TRUE, 
-                                      internet = TRUE, toSave = TRUE, path = "vignette_dir")
+                                      internet = TRUE, toSave = TRUE, path = tempdir())
 
 
 ```
@@ -281,7 +281,7 @@ toOut <- scMappR_and_pathway_analysis(bulk_normalized, odds_ratio_in,
                                       plot_names = "scMappR_vignette_", theSpecies = "human", 
                                       output_directory = "scMappR_vignette_",
                                       sig_matrix_size = 3000, up_and_downregulated = FALSE, 
-                                      internet = FALSE, toSave = FALSE, path = "vignette_dir")
+                                      internet = FALSE, toSave = FALSE, path = tempdir())
 
 
 
@@ -386,7 +386,7 @@ toProcess <- list(example = sm)
 
 tst1 <- process_dgTMatrix_lists(toProcess, name = "testPropcess", species_name = -9,
 naming_preference = "eye", rda_path = "", 
-toSave = TRUE, saveSCObject = TRUE, path = "vignette_dir")
+toSave = TRUE, saveSCObject = TRUE, path = tempdir())
 
 
 
