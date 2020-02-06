@@ -75,7 +75,7 @@ Before using scMappR, we strongly recommend that you download data files from "h
 
 Many of the functions in scMappR print files or even generate directories. To return the full output of scMappR, please change the 'toSave' parameters from `FALSE` to `TRUE` in any of the functions being used. Otherwise, the functions in scMappR will only return a small portion of what scMappR has to offer. Due to CRAN packages not allowing for their packages to print files/make directories, toSave is set to `FALSE` as default.
 
-When `toSave == TRUE`, it is also required to set the directory where files can be saved. In this vignette, it is assumed that there is a directory called `vignette_dir` in the working directory. To change the directory where files are saved, change the `path` argument.
+When `toSave == TRUE`, it is also required to set the directory where files can be saved. In this vignette, it is assumed that there is a directory called `vignette_dir` in the working directory. To change the directory where files are saved, change the `path` argument. This vignette sets `path` to `tempdir()`. When using scMappR, change `tempdir()` to the directories where files should be saved.
 
 ## Introduction of the primary functionalists highlighted in the vignette.
 
