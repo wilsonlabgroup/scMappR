@@ -85,13 +85,7 @@ When `toSave == TRUE`, it is also required to set the directory where files can 
 * `tissue_by_celltype_enrichment()`: This function completes a fishers exact test of an input list of genes against one of the two curated tissue by cell-type marker datasets from scMappR.
 * `process_dgTMatrix_lists()`: This function takes a list of count matrices, processes them, calls cell-types, and generates signature matrices.
 
-```{r library_scMappR, include=FALSE, echo = FALSE}
-
-library(scMappR)
-
-```
-
-```{r library_scMappR_eval, eval=FALSE}
+```{r library_scMappR, warning=FALSE, echo = FALSE}
 
 library(scMappR)
 
@@ -249,7 +243,7 @@ Without anything saved, there are still a multitude of relevant outputs to scMap
   * processed_signature_matrix: Only necessary when removing unknown cell-types or scaling (not recommended). Returns signature matrix with changes from `deconvolute_and_contextualize.
   * ProportionT.test: output of t-test's to measure cell-type proportion differences in case/control.
 
-```{r load_vignette_example, include=FALSE, echo=FALSE}
+```{r load_vignette_example, include=FALSE, echo=FALSE,warning=FALSE}
 
 data(PBMC_scMappR) # load data example of PBMC bulk- and cell-sorted RNA-seq data
 
