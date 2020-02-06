@@ -160,13 +160,13 @@ pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_g
   save(ordered_back_all, file = paste0(path, "/", output_directory,"/Bulk_pathway_enrichment.RData"))
   save(ordered_back_all_tf, file = paste0(path, "/", output_directory,"/Bulk_TF_enrichment.RData"))
   #plotting paths
-  grDevices::pdf(file = paste0(path, "/", output_directory,"/Bulk_pathway_enrichment.pdf"))
+  grDevices::png(file = paste0(path, "/", output_directory,"/Bulk_pathway_enrichment.png"))
   bulk_bp <- plotBP(ordered_back_all)
   print(bulk_bp)
   grDevices::dev.off()
   
   #plotting TFs
-  grDevices::pdf(file = paste0(path,"/",output_directory,"/Bulk_TF_enrichment.pdf"))
+  grDevices::png(file = paste0(path,"/",output_directory,"/Bulk_TF_enrichment.png"))
   bulk_bp <- make_TF_barplot(ordered_back_all_tf, top_tf = 10)
   print(bulk_bp)
   grDevices::dev.off()
@@ -190,7 +190,7 @@ pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_g
   dir.create(BP_dir)
   for(i in 1:length(biological_pathways)) {
     # printing top 10 pathways for each celltype
-    grDevices::pdf(file = paste0(BP_dir,"/",plot_names,"_",names(biological_pathways)[i],"_BP.pdf"))
+    grDevices::png(file = paste0(BP_dir,"/",plot_names,"_",names(biological_pathways)[i],"_BP.png"))
     BP <- plotBP(biological_pathways[[i]], top_bp = 10)
     print(BP)
     grDevices::dev.off()
@@ -198,7 +198,7 @@ pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_g
   dir.create(TF_dir)
   for(i in 1:length(transcription_factors)) {
     # printing top 10 transcriptionfactors for ech celltype
-    grDevices::pdf(file = paste0(TF_dir,"/",plot_names,"_",names(transcription_factors)[i],"_TF.pdf"))
+    grDevices::png(file = paste0(TF_dir,"/",plot_names,"_",names(transcription_factors)[i],"_TF.png"))
     TF  <- make_TF_barplot(transcription_factors[[i]], top_tf = 10)
     print(TF)
     grDevices::dev.off()
