@@ -392,31 +392,6 @@ toSave = TRUE, saveSCObject = TRUE, path = tempdir())
 
 ```
 
-
-```{r load_processing_vignette_example, include=FALSE,echo=FALSE}
-
-data(sm)
-
-toProcess <- list(example = sm)
-
-tst1 <- process_dgTMatrix_lists(toProcess, name = "testPropcess", species_name = -9, naming_preference = "eye", rda_path = "", toSave = FALSE)
-
-```
-
-
-```{r processed_scRNAseq_look}
-
-#P value
-head(tst1$wilcoxon_rank_mat_t[,1:3])
-
-#Odds Ratio
-head(tst1$wilcoxon_rank_mat_or[,1:3])
-
-# Cell-type markers
-head(tst1$generes[[1]])
-
-```
-
 It is recommended to set `toSave == TRUE`, allowing for important data objects to be saved. Here, the above function is repeated with `toSave == TRUE` and `saveSCObject == TRUE`, and the outputted files will be briefly discussed.
 
 Here, the following objects are saved.
