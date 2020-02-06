@@ -431,8 +431,8 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     downDEGs <- DEGs[downGenes,]
     
     if(length(upGenes) > 2) {
-    upDir <- paste0(path,"/",output_directory,"/upregulated") 
-    dir.create(upDir)
+    upDir <- paste0(output_directory,"/upregulated") 
+    dir.create(paste0(path,"/",upDir))
     print("Pathway analysis of upregulated genes")
     upcellWeighted_Foldchanges <- scMappR_vals[upGenes,]
     up_only <- pathway_enrich_internal(  upDEGs, theSpecies, upcellWeighted_Foldchanges, background_genes, upDir, plot_names, number_genes = number_genes, toSave=TRUE, path = path, newGprofiler = newGprofiler)
@@ -441,9 +441,9 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     }
     print("Pathway analysis of downregulated genes")
     if(length(downGenes) > 2) {
-    downDir <- paste0(path,"/",output_directory, "/downregulated")
+    downDir <- paste0(output_directory, "/downregulated")
       
-    dir.create(downDir)
+    dir.create(paste0(path,"/",downDir))
     DowncellWeighted_Foldchanges <- scMappR_vals[downGenes,]
     down_only <- pathway_enrich_internal(  downDEGs, theSpecies, DowncellWeighted_Foldchanges, background_genes, downDir, plot_names, number_genes = number_genes, toSave=TRUE, path = path, newGprofiler = newGprofiler)    
     } else {

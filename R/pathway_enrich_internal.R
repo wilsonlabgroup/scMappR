@@ -29,7 +29,7 @@
 #' @importFrom stats fisher.test median p.adjust reorder t.test sd var complete.cases
 #' @importFrom utils combn read.table write.table head tail
 #' @importFrom downloader download
-#' @importFrom grDevices pdf dev.off colorRampPalette png
+#' @importFrom grDevices pdf dev.off colorRampPalette
 #' @importFrom gprofiler2 gost
 #' @importFrom gProfileR gprofiler
 #' @importFrom pcaMethods prep pca R2cum
@@ -190,7 +190,7 @@ pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_g
   dir.create(BP_dir)
   for(i in 1:length(biological_pathways)) {
     # printing top 10 pathways for each celltype
-    grDevices::png(file = paste0(BP_dir,"/",plot_names,"_",names(biological_pathways)[i],"_BP.png"))
+    grDevices::pdf(file = paste0(BP_dir,"/",plot_names,"_",names(biological_pathways)[i],"_BP.pdf"))
     BP <- plotBP(biological_pathways[[i]], top_bp = 10)
     print(BP)
     grDevices::dev.off()
@@ -198,7 +198,7 @@ pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_g
   dir.create(TF_dir)
   for(i in 1:length(transcription_factors)) {
     # printing top 10 transcriptionfactors for ech celltype
-    grDevices::png(file = paste0(TF_dir,"/",plot_names,"_",names(transcription_factors)[i],"_TF.png"))
+    grDevices::pdf(file = paste0(TF_dir,"/",plot_names,"_",names(transcription_factors)[i],"_TF.pdf"))
     TF  <- make_TF_barplot(transcription_factors[[i]], top_tf = 10)
     print(TF)
     grDevices::dev.off()
