@@ -300,7 +300,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   }
   dir.create(paste0(path,"/",output_directory))
   
-  scMappR_vals <- cellWeighted_Foldchanges$scMappR_transformed_values # scMappR values
+  scMappR_vals <- cellWeighted_Foldchanges$cellWeighted_Foldchange # scMappR values
   T_test_outs <- cellWeighted_Foldchanges$ProportionT.test
   print("Writing summary of cell-type proportion changes between case and control." , quote = FALSE)
   utils::write.table(T_test_outs, file = paste0(path,"/",output_directory, "/", plot_names, "_cell_proportion_changes_summary.tsv"), quote = FALSE, row.names = TRUE, col.names = TRUE, sep = "\t")
