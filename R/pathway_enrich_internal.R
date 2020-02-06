@@ -29,7 +29,7 @@
 #' @importFrom stats fisher.test median p.adjust reorder t.test sd var complete.cases
 #' @importFrom utils combn read.table write.table head tail
 #' @importFrom downloader download
-#' @importFrom grDevices pdf dev.off colorRampPalette
+#' @importFrom grDevices pdf dev.off colorRampPalette png
 #' @importFrom gprofiler2 gost
 #' @importFrom gProfileR gprofiler
 #' @importFrom pcaMethods prep pca R2cum
