@@ -1,11 +1,14 @@
 ---
-title: "Single Cell Mapper (scMappR) Vignette"
+title: "single cell Mapper (scMappR)"
 author: "Dustin Sokolowski"
-date: "February 05 2020"
+date: "`r Sys.Date()`"
 output: 
-  html_document:
+  rmarkdown:::html_vignette:
     toc: true
-    toc_depth: 4
+vignette: >
+  %\VignetteIndexEntry{single cell Mapper (scMappR)}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
 ---
 
 ## Install and load scMappR
@@ -82,12 +85,17 @@ When `toSave == TRUE`, it is also required to set the directory where files can 
 * `tissue_by_celltype_enrichment()`: This function completes a fishers exact test of an input list of genes against one of the two curated tissue by cell-type marker datasets from scMappR.
 * `process_dgTMatrix_lists()`: This function takes a list of count matrices, processes them, calls cell-types, and generates signature matrices.
 
-```{r library_scMappR, include=TRUE, echo = FALSE}
+```{r library_scMappR, include=FALSE, echo = FALSE}
 
 library(scMappR)
 
 ```
 
+```{r library_scMappR_eval, eval=FALSE}
+
+library(scMappR)
+
+```
 
 ## Cell-type markers in a list of genes.
 Given a tissue and an unranked list of genes (i.e. without a count matrix or summary statistics), the `tissue_scMappR_custom()` and `tissue_scMappR_internal()` functions visualizes cell-type markers contained within the gene-list and tests for the enrichment of cell-types within that tissue. When there is no custom signature matrix, providing a tissue present in "https://github.com/DustinSokolowski/scMappR_Data/blob/master/Signature_matrices_Pval.rda" will complete cell-type specific gene visualization and enrichment for every signature matrix in the tissue.
@@ -115,7 +123,8 @@ data(scMappR_tissues)
 
 "Hypothalamus" %in% toupper(scMappR_tissues)
 
-internal <- tissue_scMappR_internal(genes, "mouse", output_directory = "scMappR_Test_Internal", tissue = "hypothalamus", rda_path = rda_path1, toSave = TRUE, path = "vignette_dir")
+internal <- tissue_scMappR_internal(genes, "mouse", output_directory = "scMappR_Test_Internal", 
+tissue = "hypothalamus", rda_path = rda_path1, toSave = TRUE, path = "vignette_dir")
 
 
 ```
@@ -244,7 +253,8 @@ Without anything saved, there are still a multitude of relevant outputs to scMap
 
 data(PBMC_scMappR) # load data example of PBMC bulk- and cell-sorted RNA-seq data
 
-bulk_DE_cors <- PBMC_example$bulk_DE_cors # 59 sex-specific DEGs in bulk PBMC (up-regulated = female-biased)
+bulk_DE_cors <- PBMC_example$bulk_DE_cors # 59 sex-specific DEGs in bulk PBMC 
+# (up-regulated = female-biased)
 
 bulk_normalized <- PBMC_example$bulk_normalized # log CPM normalized bulk RNA-seq data
 
@@ -254,11 +264,16 @@ case_grep <- "_female" # flag for 'cases' (up-regulated), index is also acceptab
 
 control_grep <- "_male" # flag for 'control' (down-regulated), index is also acceptable
 
-max_proportion_change <- 10 # maximum cell-type proportion change -- this is good for cell-types that are uncomon in population and small absolute changes may yield large relative changes
+max_proportion_change <- 10 # maximum cell-type proportion change -- 
+#this is good for cell-types that are uncomon in the bulk population. 
+# If case has 0 of the cell-type and control has 1%, it is possible that the change in proportion is due to 
+# technical variability. To investigate the sudden presence of a rare cell-type, 
+# we reccommend using an RNAseq deconvolution tool, not scMappR.
 
 theSpecies <- "human" # these RNA-seq data have human gene symbols (and are also from human)
 
-# When running scMappR, it is strongly recommended to use scMappR_and_pathway analysis with the parameters below.
+# To fully utilize scMappR, 
+# set internet = TRUE and toSave = TRUE
 toOut <- scMappR_and_pathway_analysis(bulk_normalized, odds_ratio_in, 
                                       bulk_DE_cors, case_grep = case_grep,
                                       control_grep = control_grep, rda_path = "", 
@@ -369,7 +384,9 @@ data(sm)
 
 toProcess <- list(example = sm)
 
-tst1 <- process_dgTMatrix_lists(toProcess, name = "testPropcess", species_name = -9, naming_preference = "eye", rda_path = "",  toSave = TRUE, saveSCObject = TRUE, path = "vignette_dir")
+tst1 <- process_dgTMatrix_lists(toProcess, name = "testPropcess", species_name = -9,
+naming_preference = "eye", rda_path = "", 
+toSave = TRUE, saveSCObject = TRUE, path = "vignette_dir")
 
 
 
@@ -548,7 +565,8 @@ toPlot <- internal$gene_list_heatmap$geneHeat
 cex = 0.2 # size of genes
 
 myheatcol <- grDevices::colorRampPalette(c("lightblue", "white", "orange"))(256)
-    gplots::heatmap.2(toPlot, Rowv = TRUE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+    gplots::heatmap.2(toPlot, Rowv = TRUE, dendrogram = "column", col = myheatcol, scale = "row",
+trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
     
 
 
