@@ -48,7 +48,7 @@
 #' @importFrom limSolve lsei
 #'
 #' @examples 
-#' 
+#' \donttest{
 #' data(PBMC_example)
 #' bulk_DE_cors <- PBMC_example$bulk_DE_cors
 #' bulk_normalized <- PBMC_example$bulk_normalized
@@ -67,6 +67,7 @@
 #'                                        sig_matrix_size = 3000, up_and_downregulated = FALSE, 
 #'                                        internet = FALSE)
 #' 
+#' }
 #' @export
 #' 
 scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list, case_grep, control_grep, rda_path = "", max_proportion_change = -9, print_plots=T, plot_names="scMappR",theSpecies = "human", output_directory = "scMappR_analysis",sig_matrix_size = 3000, drop_unkown_celltype = TRUE, internet = TRUE, up_and_downregulated = FALSE, gene_label_size = 0.4, number_genes = -9, toSave=FALSE, newGprofiler = FALSE, path = NULL) {

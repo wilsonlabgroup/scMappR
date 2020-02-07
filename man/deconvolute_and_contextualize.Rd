@@ -74,7 +74,7 @@ val <- cell-preferences * cell-type_proprtion * cell-type_proportion_fold-change
 A matrix of cwFold-change's for all DEGs are returned.
 }
 \examples{
-
+\donttest{
 data(PBMC_example)
 bulk_DE_cors <- PBMC_example$bulk_DE_cors
 bulk_normalized <- PBMC_example$bulk_normalized
@@ -89,5 +89,6 @@ norm <- deconvolute_and_contextualize(bulk_normalized, odds_ratio_in, bulk_DE_co
                                      max_proportion_change = max_proportion_change,
                                       print_plots = print_plots, 
                                      theSpecies = theSpecies, toSave = FALSE)
-                                     
+
+}                                      
 }
