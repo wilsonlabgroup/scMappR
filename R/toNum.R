@@ -49,6 +49,7 @@ toNum <- function(x) {
   
   if(class(x) == "factor") return(as.numeric(levels(x))[x])
   if(class(x) == "numeric") return(x)
+  if(class(x) == "integer") return(as.numeric(x))
 } 
 
 

@@ -33,12 +33,14 @@
 #' @importFrom limSolve lsei
 #'
 #' @examples
+#' 
 #' data(POA_example)
 #' Signature <- POA_example$POA_Rank_signature
 #' RowName <- get_gene_symbol(Signature)
 #' rownames(Signature) <-RowName$rowname
 #' # extract genes with a -log10(Padj > 1)
 #' Signat <- extract_genes_cell(Signature)
+#' 
 #' @export
 #' 
 extract_genes_cell <- function(geneHeat, cellTypes = "ALL", val = 1, isMax = FALSE, isPvalue = FALSE) {

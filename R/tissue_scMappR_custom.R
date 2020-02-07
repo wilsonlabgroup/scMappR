@@ -36,7 +36,7 @@
 #'
 #' @examples 
 #' 
-#' 
+#' \donttest{
 #' # load in signature matrices
 #' data(POA_example)
 #' POA_generes <- POA_example$POA_generes
@@ -48,6 +48,7 @@
 #' genes <- rownames(Signature)[1:60]
 #' heatmap_test <- tissue_scMappR_custom( genes, signature_matrix = Signature,
 #'                                       output_directory =  "scMappR_test", toSave = FALSE)
+#' }
 #' @export
 #' 
 tissue_scMappR_custom <- function(gene_list, signature_matrix ,output_directory = "custom_test", toSave = FALSE, path = NULL, gene_cutoff = 1, is_pvalue = TRUE) {

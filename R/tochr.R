@@ -47,5 +47,6 @@ tochr <- function(x) {
   if(class(x) == "character") return(x)
   if(class(x) == "factor") return(as.character(levels(x))[x])
   if(class(x) == "numeric") return(as.character(x))
+  if(class(x) == "integer") return(as.character(x))
 } 
 
