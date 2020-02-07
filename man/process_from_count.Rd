@@ -47,10 +47,11 @@ Different options are used when the function is being ran internally (i.e. repro
 For larger scRNA-seq datasets (~20k + cells), it is likely that this function will be required to run on an hpc.
 }
 \examples{
-
+\donttest{
 
 data(sm)
 toProcess <- list(example = sm)
 tst1 <- process_from_count(toProcess, "testProcess")
+}
 
 }

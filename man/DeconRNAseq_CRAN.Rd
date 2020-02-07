@@ -40,11 +40,12 @@ This is the exact same function as the primary function in the Bioconductor pack
 except it is now compatible with CRAN packages.
 }
 \examples{
-
+\donttest{
 data(PBMC_example)
 bulk_DE_cors <- PBMC_example$bulk_DE_cors
 bulk_normalized <- PBMC_example$bulk_normalized
 odds_ratio_in <- PBMC_example$odds_ratio_in
 out <- DeconRNAseq_CRAN(as.data.frame(bulk_normalized), as.data.frame(odds_ratio_in))
-                                     
+}
+                                      
 }

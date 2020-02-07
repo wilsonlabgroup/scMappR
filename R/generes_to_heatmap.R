@@ -31,14 +31,15 @@
 #' @importFrom limSolve lsei
 #'
 #' @examples
-#'  
-#'  
+#' \donttest{
 #' data(POA_example)
 #'  POA_generes <- POA_example$POA_generes
 #' signature <- generes_to_heatmap(POA_generes,species = -9, make_names = FALSE)
 #' 
+#' }
+#' 
 #' @export
-
+#' 
 generes_to_heatmap <- function(generes,  
                                species = "human",  
                                naming_preference = -9, 

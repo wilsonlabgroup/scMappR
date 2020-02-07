@@ -29,16 +29,15 @@
 #' @importFrom limSolve lsei
 #'
 #' @examples
-#'  
-#' 
+#' \donttest{
 #'  # load signature
 #' data(POA_example) 
 #' POA_OR_signature <- POA_example$POA_OR_signature
 #' symbols <- get_gene_symbol(POA_OR_signature)
+#' }
 #' 
 #' @export
-
-
+#' 
 get_gene_symbol <- function(wilcoxon_rank_mat_t) {
   # internal -- removes ensembl signature appended to signature matrix from panglao
   

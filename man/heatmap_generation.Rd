@@ -55,3 +55,19 @@ This function takes an inputted signature matrix as well as a list of genes and 
  Then, if there is overlap, it prints a heatmap or barplot (depending on the number of overlapping genes).
  Then, for every cell-type, genes considered over-represented are saved in a list.
 }
+\examples{
+
+\donttest{
+# load in signature matrices
+data(POA_example)
+POA_generes <- POA_example$POA_generes
+POA_OR_signature <- POA_example$POA_OR_signature
+POA_Rank_signature <- POA_example$POA_Rank_signature
+Signature <- POA_Rank_signature
+rowname <- get_gene_symbol(Signature)
+rownames(Signature) <- rowname$rowname
+genes <- rownames(Signature)[1:100]
+heatmap_test <- heatmap_generation(genesIn = genes, "scMappR_test",
+                                   reference = Signature, which_species = "mouse")
+}
+}

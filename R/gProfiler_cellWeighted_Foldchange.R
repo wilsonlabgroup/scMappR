@@ -58,9 +58,6 @@
 #'  
 #' @export
 #' 
-
-
-
 gProfiler_cellWeighted_Foldchange <- function(cellWeighted_Foldchange_matrix, species , background , gene_cut, newGprofiler ) {
   
   # Args: 

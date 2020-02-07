@@ -33,16 +33,16 @@
 #' @importFrom limSolve lsei
 #'
 #' @examples 
-#' 
+#' \donttest{
 #' data(PBMC_example)
 #' bulk_DE_cors <- PBMC_example$bulk_DE_cors
 #' bulk_normalized <- PBMC_example$bulk_normalized
 #' odds_ratio_in <- PBMC_example$odds_ratio_in
 #' out <- DeconRNAseq_CRAN(as.data.frame(bulk_normalized), as.data.frame(odds_ratio_in))
-#'                                      
+#' }
+#'                                       
 #' @export
 #' 
-
 DeconRNAseq_CRAN <- function (datasets, signatures, proportions = NULL, checksig = FALSE,  known.prop = FALSE, use.scale = TRUE, fig = FALSE) {
   # datasets normalized RNA-seq dataset
   # Signatures signature matrix of odds ratios

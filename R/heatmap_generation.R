@@ -52,7 +52,7 @@
 #' genes <- rownames(Signature)[1:100]
 #' heatmap_test <- heatmap_generation(genesIn = genes, "scMappR_test",
 #'                                    reference = Signature, which_species = "mouse")
-#'{}
+#'}
 #' @export
 #' 
 heatmap_generation <- function(genesIn, comp,reference, cex = 0.8, rd_path = "~/scMappR/data", cellTypes = "ALL", pVal = 0.01, isPval=TRUE, isMax =FALSE,  isBackground = FALSE,  which_species = "human", toSave = FALSE, path = NULL) {
