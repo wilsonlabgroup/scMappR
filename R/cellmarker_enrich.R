@@ -33,7 +33,7 @@
 #' @importFrom limSolve lsei
 #'
 #' @examples 
-#' \dontest{
+#' \donttest{
 #' 
 #' data(POA_example)
 #' POA_generes <- POA_example$POA_generes
