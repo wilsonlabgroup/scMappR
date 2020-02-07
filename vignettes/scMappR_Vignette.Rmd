@@ -315,7 +315,7 @@ Assuming `toSave = T` and `up_and_downregulated = T`, `scMappR_and_pathway_analy
   * scMappR_vignette__cellWeighted_Foldchangess_downregulated_DEGs_heatmap.pdf: row-normalized cellWeighted_Foldchanges of downregulated genes.
   * scMappR_vignette_reordered_transcription_factors.Rdata: .Rdata file containing a list of outputs from g:profileR or gprofiler2 that are transcription factors enriched after re-ordering.
   * scMappR_vignette_reordered_pathways: .Rdata file containing list of outputs from g
-  :profileR or gprofiler2 that are  GO:BP, REAC, and KEGG enrichments after re-ordering.
+  :profileR or gprofiler2 that are  "GO:BP", "REAC", and "KEGG" enrichments after re-ordering.
   * scMappR_vignette_leaveOneOut_gene_proportions.RData: Average cell-type proportion when gene is removed.
   * scMappR_vignette_celltype_specific_preferences_upregulated_DEGs_heatmap.pdf: Row-normalized .pdf of signature matrix intersecting with upregulated DEGs.
   * scMappR_vignette_celltype_specific_preferences_downregulated_DEGs_heatmap.pdf: Row-normalized .pdf of signature matrix intersecting with downregulated DEGs.  
