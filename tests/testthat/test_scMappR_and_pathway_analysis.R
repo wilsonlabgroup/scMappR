@@ -21,7 +21,7 @@ tst1 <- scMappR_and_pathway_analysis(bulk_normalized, odds_ratio_in,
                              output_directory = "tester",
                              sig_matrix_size = 3000, up_and_downregulated = FALSE, 
                              internet = FALSE)
-testthat::expect_true(all(names(tst) == c("cellWeighted_Foldchange","cellType_Proportions","leave_one_out_proportions","processed_signature_matrix","ProportionT.test")))
+testthat::expect_true(all(names(tst1) == c("cellWeighted_Foldchange","cellType_Proportions","leave_one_out_proportions","processed_signature_matrix","ProportionT.test")))
 })
 
 testthat::test_that('Must have multiple replicates -- throw error', {
