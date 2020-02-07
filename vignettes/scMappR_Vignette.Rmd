@@ -278,7 +278,7 @@ scMappR allows for gene-set enrichment of every cell-type marker, sorted by cell
 Here, we will investigate the tissue x cell-type enrichment of the top 100 genes in the Preoptic area signature matrix. 
 #### NOTE: Fix dimensions of plot or don't plot it at all.
 
-```{r tissue_ct_enrichment_example, fig.show='hide'}
+```{r tissue_ct_enrichment_example, fig.show='hide', eval=FALSE}
 
 data(POA_example)
 POA_generes <- POA_example$POA_generes
@@ -292,7 +292,7 @@ genes <- rownames(Signature)[1:100]
 enriched <- tissue_by_celltype_enrichment(gene_list = genes, 
 species = "mouse",p_thresh = 0.05, isect_size = 3)
 
-print(enriched[1:5,1:5])
+
 
 
 ```
