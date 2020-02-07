@@ -48,6 +48,7 @@ For larger scRNA-seq datasets (~20k + cells), it is likely that this function wi
 }
 \examples{
 
+
 data(sm)
 toProcess <- list(example = sm)
 tst1 <- process_from_count(toProcess, "testProcess")

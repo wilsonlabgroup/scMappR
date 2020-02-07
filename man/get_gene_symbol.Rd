@@ -21,7 +21,7 @@ From the ENSG/ENSMUS, this function determines if the species is mouse/human and
 }
 \examples{
  
- 
+
  # load signature
 data(POA_example) 
 POA_OR_signature <- POA_example$POA_OR_signature
