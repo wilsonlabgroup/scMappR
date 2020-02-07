@@ -40,7 +40,7 @@ Complete a Fisher's exact test of an input list of genes against a gene set save
 The RData object is storing a named list of genes called "gmt".
 }
 \examples{
-\donntest{
+\dontest{
 
 data(POA_example)
 POA_generes <- POA_example$POA_generes
