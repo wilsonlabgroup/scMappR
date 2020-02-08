@@ -80,7 +80,7 @@ generes_to_heatmap <- function(generes,
   if(class(rda_path) != "character") {
     stop("rda_path must be of class character")
   }
-  if(!(any(is.logical(make_names), is.logical(internal)))) {
+  if(all(is.logical(make_names), is.logical(internal)) == FALSE) {
     stop("make_names and internal must be class logical (TRUE/FALSE)")
   }
   

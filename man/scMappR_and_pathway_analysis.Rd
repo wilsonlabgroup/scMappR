@@ -17,7 +17,7 @@ scMappR_and_pathway_analysis(
   theSpecies = "human",
   output_directory = "scMappR_analysis",
   sig_matrix_size = 3000,
-  drop_unkown_celltype = TRUE,
+  drop_unknown_celltype = TRUE,
   internet = TRUE,
   up_and_downregulated = FALSE,
   gene_label_size = 0.4,
@@ -52,7 +52,7 @@ scMappR_and_pathway_analysis(
 
 \item{sig_matrix_size}{Number of genes in signature matrix for cell-type deconvolution.}
 
-\item{drop_unkown_celltype}{Whether or not to remove "unknown" cell-types from the signature matrix.}
+\item{drop_unknown_celltype}{Whether or not to remove "unknown" cell-types from the signature matrix.}
 
 \item{internet}{Whether you have stable Wifi (T/F).}
 

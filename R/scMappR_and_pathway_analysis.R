@@ -21,7 +21,7 @@
 #' @param output_directory The name of the directory that will contain output of the analysis.
 #' @param theSpecies -9 if using a pre-computed count matrix from scMappR, human, mouse, or a specied directly compatible with g:Profiler. Removes Ensembl symbols if appended.
 #' @param sig_matrix_size Number of genes in signature matrix for cell-type deconvolution.
-#' @param drop_unkown_celltype Whether or not to remove "unknown" cell-types from the signature matrix.
+#' @param drop_unknown_celltype Whether or not to remove "unknown" cell-types from the signature matrix.
 #' @param internet Whether you have stable Wifi (T/F).
 #' @param up_and_downregulated Whether you are additionally splitting up/downregulated genes (T/F).
 #' @param gene_label_size The size of the gene label on the plot.
@@ -70,7 +70,7 @@
 #' }
 #' @export
 #' 
-scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list, case_grep, control_grep, rda_path = "", max_proportion_change = -9, print_plots=T, plot_names="scMappR",theSpecies = "human", output_directory = "scMappR_analysis",sig_matrix_size = 3000, drop_unkown_celltype = TRUE, internet = TRUE, up_and_downregulated = FALSE, gene_label_size = 0.4, number_genes = -9, toSave=FALSE, newGprofiler = FALSE, path = NULL) {
+scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list, case_grep, control_grep, rda_path = "", max_proportion_change = -9, print_plots=T, plot_names="scMappR",theSpecies = "human", output_directory = "scMappR_analysis",sig_matrix_size = 3000, drop_unknown_celltype = TRUE, internet = TRUE, up_and_downregulated = FALSE, gene_label_size = 0.4, number_genes = -9, toSave=FALSE, newGprofiler = FALSE, path = NULL) {
   
   
   
@@ -105,7 +105,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   # removes ensembl symbols
   #sig_matrix_size 
   # number of genes in signature matrix for cell-type deconvolution
-  # drop_unkown_celltype
+  # drop_unknown_celltype
   # whether or not to remove "unknown" cell-types from the signature matrix
   # WIFI: Whether you have stable WIFI -- T/F
   # up_and_downregulated: whether you are splitting up/downregulated genes -- T/F
@@ -169,7 +169,9 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   if(class(number_genes) != "numeric") {
     stop("number_genes must be of class numeric.")
   }
-  if(!any(is.logical(print_plots),is.logical(drop_unkown_celltype),is.logical(internet),is.logical(up_and_downregulated),is.logical(toSave),is.logical(newGprofiler) ))
+  if(all(is.logical(print_plots),is.logical(drop_unknown_celltype),is.logical(internet),is.logical(up_and_downregulated),is.logical(toSave),is.logical(newGprofiler) ) == FALSE) {
+   stop("print_plots, drop_unknown_celltype, internet, up_and_down_regulatedtoSave, newGprofiler: must all be class logical.") 
+  }
 
   if(toSave == TRUE) {
       if(is.null(path)) {
@@ -270,7 +272,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   if(toSave == FALSE) {
     print_plots <- FALSE
   }  
-  cellWeighted_Foldchanges <- deconvolute_and_contextualize(count_file, signature_matrix, DEG_list, case_grep , control_grep, max_proportion_change = max_proportion_change, print_plots = print_plots, plot_names = plot_names, theSpecies = theSpecies, sig_matrix_size = sig_matrix_size, drop_unkown_celltype = drop_unkown_celltype, toSave = toSave, path = path)
+  cellWeighted_Foldchanges <- deconvolute_and_contextualize(count_file, signature_matrix, DEG_list, case_grep , control_grep, max_proportion_change = max_proportion_change, print_plots = print_plots, plot_names = plot_names, theSpecies = theSpecies, sig_matrix_size = sig_matrix_size, drop_unknown_celltype = drop_unknown_celltype, toSave = toSave, path = path)
 
   # Computing t-test for changes in cell-type proportion
   ttest_decon <- function(x) {

@@ -18,7 +18,7 @@ deconvolute_and_contextualize(
   FC_coef = T,
   sig_matrix_size = 3000,
   sig_distort = 1,
-  drop_unkown_celltype = TRUE,
+  drop_unknown_celltype = TRUE,
   toSave = FALSE,
   path = NULL
 )
@@ -50,7 +50,7 @@ deconvolute_and_contextualize(
 
 \item{sig_distort}{Exponential change of odds ratios. Strongly not recomended and will produce warnings if changed from default.}
 
-\item{drop_unkown_celltype}{Whether or not to remove "unknown" cell-types from the signature matrix (T/F).}
+\item{drop_unknown_celltype}{Whether or not to remove "unknown" cell-types from the signature matrix (T/F).}
 
 \item{toSave}{Allow scMappR to write files in the current directory (T/F).}
 

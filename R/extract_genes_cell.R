@@ -67,7 +67,7 @@ extract_genes_cell <- function(geneHeat, cellTypes = "ALL", val = 1, isMax = FAL
   if(class(val) != "numeric") {
     stop("val must be of class numeric.")
   }
-  if(!(any(is.logical(isMax), is.logical(isPvalue)))) {
+  if(all(is.logical(isMax), is.logical(isPvalue)) == FALSE) {
     stop("isMax and isPvalue must be of class logical (TRUE/FALSE).")
   }
   

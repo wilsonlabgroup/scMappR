@@ -81,7 +81,7 @@ tissue_scMappR_custom <- function(gene_list, signature_matrix ,output_directory 
   if(class(gene_cutoff) != "numeric") {
     stop("gene_cutoff must be of class numeric." )
   }
-  if(!(any(is.logical(toSave), is.logical(is_pvalue)))) {
+  if(all(is.logical(toSave), is.logical(is_pvalue)) == FALSE) {
     stop("toSave and is_pvalue must be of class logical.")
   }
   

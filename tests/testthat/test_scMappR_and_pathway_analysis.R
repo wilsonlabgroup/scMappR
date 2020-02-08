@@ -14,8 +14,8 @@ case_grep <- "_female"
 control_grep <- "_male"
 
 tst1 <- scMappR_and_pathway_analysis(bulk_normalized, odds_ratio_in, 
-                             bulk_DE_cors, case_grep = case_grep,
-                             control_grep = control_grep, rda_path = "", 
+                            bulk_DE_cors, case_grep = "_female",
+                             control_grep = "_male", rda_path = "", 
                              max_proportion_change = 10, print_plots = TRUE, 
                              plot_names = "tst1", theSpecies = "human", 
                              output_directory = "tester",
@@ -42,8 +42,8 @@ testthat::test_that('Must have multiple replicates -- throw error', {
   
   
   toOut <- testthat::expect_error(scMappR_and_pathway_analysis(bulk_normalized1, odds_ratio_in, 
-                                        bulk_DE_cors, case_grep = case_grep,
-                                        control_grep = control_grep, rda_path = "", 
+                                        bulk_DE_cors, case_grep = "_female",
+                                        control_grep = "_male", rda_path = "", 
                                         max_proportion_change = 10, print_plots = TRUE, 
                                         plot_names = "tst1", theSpecies = "human", 
                                         output_directory = "tester",
@@ -70,8 +70,8 @@ testthat::test_that('Strange column names, same error', {
 
   
   toOut <- testthat::expect_error(scMappR_and_pathway_analysis(bulk_normalized, odds_ratio_in, 
-                                        bulk_DE_cors, case_grep = case_grep,
-                                        control_grep = control_grep, rda_path = "", 
+                                        bulk_DE_cors, case_grep = "_FEMALE",
+                                        control_grep = "_MALE", rda_path = "", 
                                         max_proportion_change = 10, print_plots = TRUE, 
                                         plot_names = "tst1", theSpecies = "human", 
                                         output_directory = "tester",
@@ -98,8 +98,8 @@ testthat::test_that('Case and control indexed the same, throw error.', {
   
   
   toOut <- testthat::expect_error(scMappR_and_pathway_analysis(bulk_normalized, odds_ratio_in, 
-                                        bulk_DE_cors, case_grep = case_grep,
-                                        control_grep = control_grep, rda_path = "", 
+                                        bulk_DE_cors, case_grep = 1:4,
+                                        control_grep = "_female", rda_path = "", 
                                         max_proportion_change = 10, print_plots = TRUE, 
                                         plot_names = "tst1", theSpecies = "human", 
                                         output_directory = "tester",
@@ -127,8 +127,8 @@ testthat::test_that('one cell type, throw error.', {
   
   
   toOut <- testthat::expect_error(scMappR_and_pathway_analysis(bulk_normalized, odds_ratio_in[,1], 
-                                                               bulk_DE_cors, case_grep = case_grep,
-                                                               control_grep = control_grep, rda_path = "", 
+                                                               bulk_DE_cors, case_grep = "_female",
+                                                               control_grep = "_male", rda_path = "", 
                                                                max_proportion_change = 10, print_plots = TRUE, 
                                                                plot_names = "tst1", theSpecies = "human", 
                                                                output_directory = "tester",

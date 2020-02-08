@@ -108,7 +108,7 @@ process_dgTMatrix_lists <- function(dgTMatrix_list, name, species_name, naming_p
   
   # panglao_set = FALSE ,haveUMAP = FALSE, saveSCObject = FALSE, internal = FALSE, toSave = FALSE, use_sctransform = FALSE)
 
-  if(!(any(is.logical(panglao_set),is.logical(haveUMAP),is.logical(saveSCObject),is.logical(internal),is.logical(panglao_set),is.logical(toSave),is.logical(use_sctransform)))) {
+  if(all(is.logical(panglao_set),is.logical(haveUMAP),is.logical(saveSCObject),is.logical(internal),is.logical(panglao_set),is.logical(toSave),is.logical(use_sctransform)) == FALSE) {
     stop("panglao_set, haveUMAP, saveSCObject, internal, toSave, and use_sctransform must all be of class logical.")
   }
   

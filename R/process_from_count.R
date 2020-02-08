@@ -98,7 +98,7 @@ process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = 
   }
   
   # haveUmap = FALSE, saveALL = FALSE, panglao_set = FALSE, toSave = FALSE, use_sctransform = FALSE
-  if(!(any(is.logical(haveUmap), is.logical(saveALL), is.logical(panglao_set), is.logical(toSave),is.logical(use_sctransform) ))) {
+  if(all(is.logical(haveUmap), is.logical(saveALL), is.logical(panglao_set), is.logical(toSave),is.logical(use_sctransform) ) == FALSE) {
     stop("haveUmap, saveALL, panglao_set, toSave, and use_sctransform are all logical." )
   }
   SRA_in <- countmat_list

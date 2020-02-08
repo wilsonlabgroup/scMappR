@@ -97,7 +97,7 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
     stop("rda_path must be of class character.")
   }
 
-  if(!(any(is.logical(toSave), is.logical(raw_pval), is.logical(drop_unkown_celltype)))) {
+  if(all(is.logical(toSave), is.logical(raw_pval), is.logical(drop_unkown_celltype)) == FALSE) {
     stop("toSave and raw_pval and drop_unknown_celltype must be of class logical.")
   }
   

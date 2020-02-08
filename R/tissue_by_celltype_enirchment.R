@@ -78,7 +78,7 @@ tissue_by_celltype_enrichment <- function(gene_list, species, name = "CT_Tissue_
   if(class(isect_size) != "numeric" ) {
     stop("isect_size must be of class numeric.")
   }
-  if(!(any(is.logical(return_gmt)))) {
+  if(all(is.logical(return_gmt)) == FALSE) {
     stop("return_gmt must be of class logical.")
   }
   

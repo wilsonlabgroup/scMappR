@@ -100,7 +100,7 @@ heatmap_generation <- function(genesIn, comp,reference, cex = 0.8, rd_path = "~/
   if(class(pVal) != "numeric") {
     stop("val must be of class numeric.")
   }
-  if(!(any(is.logical(isMax), is.logical(isPval),is.logical(isBackground),is.logical(toSave)))) {
+  if(all(is.logical(isMax), is.logical(isPval),is.logical(isBackground),is.logical(toSave)) == FALSE) {
     stop("isMax, isBackground, toSave, and isPval must be of class logical (TRUE/FALSE).")
   }
   if(class(rd_path) != "character") {

@@ -30,7 +30,7 @@
 #' @param FC_coef Making cwFold-changes based on fold-change (TRUE) or rank := (-log10(Pval)) (FALSE) rank. After testing, we strongly recommend to keep true (T/F).
 #' @param sig_matrix_size Number of genes in signature matrix for cell-type deconvolution.
 #' @param sig_distort Exponential change of odds ratios. Strongly not recomended and will produce warnings if changed from default.
-#' @param drop_unkown_celltype Whether or not to remove "unknown" cell-types from the signature matrix (T/F).
+#' @param drop_unknown_celltype Whether or not to remove "unknown" cell-types from the signature matrix (T/F).
 #' @param toSave Allow scMappR to write files in the current directory (T/F).
 #' @param path If toSave == TRUE, path to the directory where files will be saved.
 #' 
@@ -70,7 +70,7 @@
 #' }                                      
 #' @export
 #' 
-deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list, case_grep, control_grep, max_proportion_change = -9, print_plots=T, plot_names="scMappR",theSpecies = "human", make_scale = FALSE, FC_coef = T, sig_matrix_size = 3000, sig_distort = 1, drop_unkown_celltype = TRUE, toSave = FALSE, path = NULL) {
+deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list, case_grep, control_grep, max_proportion_change = -9, print_plots=T, plot_names="scMappR",theSpecies = "human", make_scale = FALSE, FC_coef = T, sig_matrix_size = 3000, sig_distort = 1, drop_unknown_celltype = TRUE, toSave = FALSE, path = NULL) {
   # This function completes the cell-type contextualization in scMappR -- reranking every DEG based on their fold change, likelihood the gene is in each detected cell type, average cell-type proportion, and ratio of cell-type proportion between case and control.
   # such that if a gene is upregulated, then it is being controlled by control/case, otherwise it is case/control
   # This function expects that the genes within the count file, signature matrix, and DEG_list are have the same logos
@@ -111,7 +111,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   # number of genes in signature matrix for cell-type deconvolution
   #sig_distort
   # exponential change of odds ratios. not reccomended and will produce warnings if changed from default
-  # drop_unkown_celltype
+  # drop_unknown_celltype
   # whether or not to remove "unknown" cell-types from the signature matrix
   # Returns:
   # cell weighted fold-changes for every gene in every cell-type, cell-type composition with, allgenes included, average gene expression of each cell-type usng leave one out approach for each gene, and the processed signature matrix
@@ -137,10 +137,10 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   }
 
 
-  if(!(any(is.numeric(sig_distort), is.numeric(max_proportion_change), is.numeric(sig_matrix_size)))) {
+  if(all(is.numeric(sig_distort), is.numeric(max_proportion_change), is.numeric(sig_matrix_size)) == FALSE) {
     stop("sig_distort, max_proportion_change, and sig_matrix_size must all be of class numeric" )
   }
-  if(!any(is.logical(print_plots), is.logical(make_scale), is.logical(FC_coef), is.logical(drop_unkown_celltype), is.logical(toSave))) {
+  if(all(is.logical(print_plots), is.logical(make_scale), is.logical(FC_coef), is.logical(drop_unknown_celltype), is.logical(toSave)) == FALSE) {
     stop("print_plots, make_scale, FC_coef, drop_unknown_celltype, toSave must all be of class logical." )
   }
      
@@ -210,7 +210,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   rownames(wilcoxon_rank_mat_or) <- RN_2
   # Removing unknown cell-types
   unknown <- grep("unknown",colnames(wilcoxon_rank_mat_or))
-  if(length(unknown) > 0 & drop_unkown_celltype == TRUE) {
+  if(length(unknown) > 0 & drop_unknown_celltype == TRUE) {
     print("Removing unknown cell-types")
     wilcox_or <- wilcoxon_rank_mat_or[,-unknown]
   } else {
