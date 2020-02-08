@@ -72,7 +72,9 @@ tissue_scMappR_custom <- function(gene_list, signature_matrix ,output_directory 
   if(class(gene_list) != "character") {
     stop("gene_list must be of class character.")
   }
-  if(class(signature_matrix) != "data.frame" & class(signature_matrix) != "matrix") {
+  signature_class <- class(signature_matrix) %in% c( "data.frame", "matrix")
+  
+  if(signature_class[1] == FALSE) {
     stop("signature_matrix must be of class data.frame or matrix.")
   }
   if(class(output_directory) != "character") {
@@ -81,7 +83,7 @@ tissue_scMappR_custom <- function(gene_list, signature_matrix ,output_directory 
   if(class(gene_cutoff) != "numeric") {
     stop("gene_cutoff must be of class numeric." )
   }
-  if(all(is.logical(toSave), is.logical(is_pvalue)) == FALSE) {
+  if(all(is.logical(toSave), is.logical(is_pvalue))[1] == FALSE) {
     stop("toSave and is_pvalue must be of class logical.")
   }
   

@@ -63,7 +63,8 @@ tissue_by_celltype_enrichment <- function(gene_list, species, name = "CT_Tissue_
   if(length(gene_list) < 5) {
     warning("Fewer than 5 genes, cell-type enrichment may be challenging to identify.")
   }
-  if(species != "human" & species != "mouse") { # making sure species is correct
+  species_in <- species %in% c("human", "mouse")
+  if(species_in[1] == FALSE) { # making sure species is correct
     stop("species does not equal human or mouse (case sensitive)")
   }
   if(class(name) != "character") {
@@ -78,7 +79,7 @@ tissue_by_celltype_enrichment <- function(gene_list, species, name = "CT_Tissue_
   if(class(isect_size) != "numeric" ) {
     stop("isect_size must be of class numeric.")
   }
-  if(all(is.logical(return_gmt)) == FALSE) {
+  if(all(is.logical(return_gmt))[1] == FALSE) {
     stop("return_gmt must be of class logical.")
   }
   

@@ -68,7 +68,9 @@ plotBP <- function(ordered_back_all, top_bp = 10) {
   # Returns:
   # A barplot of the number of "top_bp" pathways, ranked by -log10(Pfdr)
   
-  if(class(ordered_back_all) != "data.frame" & class(ordered_back_all) != "matrix") {
+  ordered_back_all_class <- class(ordered_back_all) %in% c("data.frame", "matrix")
+  
+  if(ordered_back_all_class[1] == FALSE) {
     stop("ordered_back_all_tf must be of class data.frame or matrix")
   }
   if(class(ordered_back_all) == "matrix") {
@@ -76,7 +78,9 @@ plotBP <- function(ordered_back_all, top_bp = 10) {
     ordered_back_all <- as.data.frame(ordered_back_all) 
     
   }
-  if(!("term_name" %in% colnames(ordered_back_all)) | !("p_value" %in% colnames(ordered_back_all)) ) {
+  term_name_p_val <- ("term_name" %in% colnames(ordered_back_all))  & ("p_value" %in% colnames(ordered_back_all))
+  
+  if(term_name_p_val[1] == FALSE) {
     stop("ordered_back_all must contain two columns, term_name and p_vale")
   }
   if(class(top_bp) != "numeric") {

@@ -127,19 +127,28 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   
   # load in the count matrix
   
-  if(class(count_file) != "character" & class(count_file) != "data.frame" & class(count_file) != "matrix" ) {
+  count_class <- class(count_file) %in% c("character", "data.frame", "matrix")
+  
+  if(count_class[1] == FALSE) {
     stop("count_file must be of class character, data.frame, or matrix.")
   }
-  if(class(signature_matrix) != "character" & class(signature_matrix) != "data.frame" & class(signature_matrix) != "matrix" ) {
+  signature_class <- class(signature_matrix) %in% c("character", "data.frame", "matrix")
+  if(signature_class[1] == FALSE) {
     stop("count_file must be of class character, data.frame, or matrix.")
   }
-  if(class(DEG_list) != "character" & class(DEG_list) != "data.frame" & class(DEG_list) != "matrix") {
+  DEG_list_class <- class(DEG_list) %in% c("character", "data.frame", "matrix") 
+  
+  if(DEG_list_class[1] == FALSE) {
     stop("DEG_list must be of class character, data.frame, or matrix.")
   }
-  if(class(case_grep) != "character" & class(case_grep) != "numeric") {
+  case_grep_class <- class(case_grep) %in% c("character", "numeric", "integer")
+  case_grep_class[1] == FALSE
+  if(case_grep_class[1] == FALSE) {
     stop("case_grep must be of class character (as a single character designating cases in column names) or of class numeric (integer matrix giving indeces of cases).")
   }
-  if(class(control_grep) != "character" & class(control_grep) != "numeric") {
+  control_grep_class <- class(control_grep) %in% c("character", "numeric", "integer")
+  
+  if(control_grep_class[1] == FALSE) {
     stop("control_grep must be of class character (as a single character designating controls in column names) or of class numeric (integer matrix giving indeces of controls).")
   }
   
@@ -205,7 +214,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   if(number_genes == -9) {
     number_genes <- as.numeric(nrow(DEGs))
   }
-  if(class(case_grep) != "character" | length(case_grep) > 1) {
+  if((class(case_grep) != "character" | length(case_grep) > 1)[1]) {
     print("Assuming that case_grep and control_grep are indeces of 'case' and 'control'.", quote = FALSE)
     print("Appending 'scMappR_case' to cases and 'scMappR_control to controls.", quote = FALSE  )
     colnames(count_file)[case_grep] <- paste0("scMappR_case_", colnames(count_file)[case_grep])
@@ -215,7 +224,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   }
   cases <- grep(case_grep, colnames(count_file))
   control <- grep(control_grep, colnames(count_file))
-  if(any(length(cases) < 2, length(control) < 2)) {
+  if(any(length(cases) < 2, length(control) < 2)[1]) {
     stop("There is fewer than two cases or controls, please check 'case_grep' or 'control_grep'.")
   }
   
@@ -335,7 +344,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   grDevices::pdf(paste0(path,"/",output_directory,"/",plot_names,"_cell_proportions_heatmap.pdf")) 
   gplots::heatmap.2(as.matrix(cellWeighted_Foldchanges$cellType_Proportions), Rowv = TRUE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
   grDevices::dev.off()
-  if(nrow(scMappR_vals_up) > 2 & ncol(scMappR_vals_up) > 2) {
+  if((nrow(scMappR_vals_up) > 2 & ncol(scMappR_vals_up) > 2)[1]) {
     grDevices::pdf(paste0(path,"/",output_directory, "/", plot_names,"_cellWeighted_Foldchanges_upregulated_DEGs_heatmap.pdf"))
     gplots::heatmap.2(as.matrix(abs(scMappR_vals_up)), Rowv = TRUE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
     grDevices::dev.off()
@@ -345,7 +354,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     
   }
   print(dim(scMappR_vals_down))
-  if(nrow(scMappR_vals_down) > 2 & ncol(scMappR_vals_down) > 2) {
+  if((nrow(scMappR_vals_down) > 2 & ncol(scMappR_vals_down) > 2)[1]) {
   grDevices::pdf(paste0(path,"/",output_directory, "/", plot_names,"_cellWeighted_Foldchanges_downregulated_DEGs_heatmap.pdf"))
   gplots::heatmap.2(as.matrix(abs(scMappR_vals_down)), Rowv = TRUE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
   grDevices::dev.off()
@@ -401,7 +410,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     
     # Downregulated DEG Heatmap
     
-    if(nrow(signature_mat_down) > 2 & ncol(signature_mat_down) > 2) {
+    if((nrow(signature_mat_down) > 2 & ncol(signature_mat_down) > 2)[1]) {
     grDevices::pdf(paste0(path,"/",output_directory, "/",plot_names,"_celltype_specific_preferences_downregulated_DEGs_heatmap.pdf"))
     pl2 <- gplots::heatmap.2(as.matrix(signature_mat_down), Rowv = TRUE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
     grDevices::dev.off()

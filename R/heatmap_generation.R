@@ -89,8 +89,8 @@ heatmap_generation <- function(genesIn, comp,reference, cex = 0.8, rd_path = "~/
     warning("cex < 0, setting to 0.001 (essentially invisible)") 
     cex <- 0.001
   }
-
-  if(class(reference) != "data.frame" & class(reference) != "matrix") {
+  reference_class <- reference %in% c("data.frame", "matrix")
+  if(reference_class[1] == FALSE) {
     stop("Reference must be of class data.frame or matrix.")
   }
   # cellTypes = "ALL", pVal = 0.01, isPval=TRUE, isMax =FALSE,  isBackground = FALSE,  which_species = "human", toSave = FALSE

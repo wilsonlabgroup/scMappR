@@ -67,12 +67,14 @@ process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = 
   if(!is.character(name)) {
     stop("Name is not a character for your outputs, please change the parameter and try again.")
   }
+  countmat_list_class1 <- class(countmat_list) %in% c("dgCMatrix", "matrix", "list")
   
-  if(class(countmat_list) != "dgCMatrix" & class(countmat_list) != "matrix" & class(countmat_list) != "list") {
+  if(countmat_list_class1[1] == FALSE) {
     stop("countmat_list must be of class dgCMatrix, matrix, or list.")
   }  
+  countmat_list_class2 <- class(countmat_list) %in% c("dgCMatrix", "matrix")
   
-  if(class(countmat_list) == "dgCMatrix" | class(countmat_list) == "matrix") {
+  if(countmat_list_class2[1]) {
     print("'dgTMatrix_list' is of class dgCMatrix or matrix, converting to a named list.", quote = F)
     countmat_list <- list(name = countmat_list)
     names(countmat_list) <- name
@@ -134,7 +136,7 @@ process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = 
     # otherwise adjust the gene names so that mito genes are detected
     mt.genes_m <- c("Tf", "Rnr1","Tv","Rnr2","Tl1","Nd1","Ti","Tq","Tm","Nd2","Tw","Ta","Tn","Tc","Ty","Co1","Ts1","Td","Co2","Tk","Atp8","Atp6","Co3","Tg","Nd3","Tr","Nd4l","Nd4","Ts2","Tl2","Nd5","Nd6","Te","Cytb","Tt","Tp")
     print(length(num_MT))
-    if(length(num_MT) == 0 & theSpecies =="human") {
+    if((length(num_MT) == 0 & theSpecies =="human")[1]) {
       # convert gene names if there are none with the mitochondiral designation.
       mt.genes <- toupper(mt.genes_m)
       mito.genes <- which(RN_2 %in% mt.genes)
@@ -143,7 +145,7 @@ process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = 
       mito.genes <- RN_2[mito.genes]
     }
     
-    if(length(num_MT) == 0 & theSpecies =="mouse") {
+    if((length(num_MT) == 0 & theSpecies =="mouse")[1]) {
       # convert gene names mouse if there are none with the mitochondrial designation
       mt.genes <- mt.genes_m
       mito.genes <- which(RN_2 %in% mt.genes)
@@ -261,7 +263,7 @@ process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = 
   }
   pbmc <- Seurat::FindNeighbors(object = pbmc, dims = 1:20, verbose = FALSE)
   pbmc <- Seurat::FindClusters(object = pbmc, verbose = FALSE)
-  if(saveALL == TRUE & toSave == TRUE) {
+  if((saveALL == TRUE & toSave == TRUE)[1]) {
     # Save the seurat object before scaling
     save(pbmc, file = paste0(path,"/",name, "_custom.Rdata"))
   }
@@ -273,7 +275,7 @@ process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = 
          from the scMappR github if you can't get it to work by chaging memory options" )
     
   }
-  if(saveALL == TRUE & toSave == TRUE) {
+  if((saveALL == TRUE & toSave == TRUE)[1]) {
     
     save(pbmc, file = paste0(path,"/",name, "_custom.Rdata"))
   } else {

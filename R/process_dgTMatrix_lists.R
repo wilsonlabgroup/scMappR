@@ -80,12 +80,14 @@ process_dgTMatrix_lists <- function(dgTMatrix_list, name, species_name, naming_p
     stop("Name is not a character for your outputs, please change the parameter and try again.")
   }
   
-  
-  if(!(class(dgTMatrix_list) %in% c("dgCMatrix", "matrix", "list"))) {
+  dgTMatrix_list_class1 <- class(dgTMatrix_list) %in% c("dgCMatrix", "matrix", "list")
+  if(dgTMatrix_list_class1[1] == FALSE) {
     stop("'dgTMatrix_list' is not dgCMatrix, matrix, or list. Please input data in appropriate class.")
   }
   
-  if(class(dgTMatrix_list) == "dgCMatrix" | class(dgTMatrix_list) == "matrix") {
+  dgTMatrix_list_class2 <- class(dgTMatrix_list) %in% c("dgCMatrix", "matrix")
+  
+  if(dgTMatrix_list_class2[1]) {
     print("'dgTMatrix_list' is of class dgCMatrix or matrix, converting to a named list.", quote = F)
     dgTMatrix_list <- list(name = dgTMatrix_list)
     names(dgTMatrix_list) <- name

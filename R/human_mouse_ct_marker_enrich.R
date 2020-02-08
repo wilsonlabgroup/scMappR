@@ -72,7 +72,8 @@ human_mouse_ct_marker_enrich <- function(gene_lists, theSpecies = "human",cell_m
     stop("Naming preferences not in options (case sensitive) and isn't a non-choice (-9), please try again.")
     }
   }
-  if(class(gene_lists) != "list" & class(gene_lists) != "character") {
+  gene_lists_class <- class(gene_lists) %in% c("list", "character")
+  if(gene_lists_class[1] == FALSE) {
     stop("gene_lists obect must be of class list or a character vector of gene symbols.")
   }
   if(!(theSpecies %in% c("human", "mouse"))) {
@@ -187,30 +188,30 @@ human_mouse_ct_marker_enrich <- function(gene_lists, theSpecies = "human",cell_m
         
       }
       marker_sets[[i]] <- marker_list 
-      if(nrow(outCellMarker) == 0 & nrow(outPanglao) == 0) {
+      if((nrow(outCellMarker) == 0 & nrow(outPanglao) == 0)[1]) {
         cellTypes[i] <- "unknown"
         # if none of that works out it's unknown
       }
       
-      if(nrow(outGOMouse) == 0 & nrow(outGOMouse) == 0 & nrow(outGOMouse) > 0) {
+      if((nrow(outGOMouse) == 0 & nrow(outGOMouse) == 0 & nrow(outGOMouse) > 0)[1]) {
         thenames <- sub( "\\%.*", "", outGOMouse$name)
         cellTypes[i] <- paste0("Ontology ", thenames[1])
         # define by top gene ontology if no other marker is present
         
       }
       
-      if(nrow(outCellMarker) > 0 & nrow(outPanglao) == 0) {
+      if((nrow(outCellMarker) > 0 & nrow(outPanglao) == 0)[1]) {
         thenames <- sub('.*\\:', '', outCellMarker$name)
         cellTypes[i] <- thenames[1]
         # define by cellmarker alone if none of the others are present
       }
       
-      if(nrow(outCellMarker) == 0 & nrow(outPanglao) > 0) {
+      if((nrow(outCellMarker) == 0 & nrow(outPanglao) > 0)[1]) {
         thenames <- gsub("_panglao","",outPanglao$name)
         cellTypes[i] <- thenames[1]
         # define by panglao if it's the only dataset with a marker
       }
-      if(nrow(outCellMarker) > 0 & nrow(outPanglao) > 0) {
+      if((nrow(outCellMarker) > 0 & nrow(outPanglao) > 0)[1]) {
         thenamesCM <- sub('.*\\:', '', outCellMarker$name)
         thenamesP <- gsub("_panglao","",outPanglao$name)
         cellTypes[i] <- paste0(thenamesCM[1], "_and_", thenamesP[1])
@@ -292,26 +293,26 @@ human_mouse_ct_marker_enrich <- function(gene_lists, theSpecies = "human",cell_m
       }
       marker_list <- list(CellMarker = outCellMarker, Panglao = outPanglao, Ontology = outGoHuman)
       marker_sets[[i]] <- marker_list 
-      if(nrow(outCellMarker) == 0 & nrow(outPanglao) == 0 & nrow(outGoHuman) == 0) {
+      if((nrow(outCellMarker) == 0 & nrow(outPanglao) == 0 & nrow(outGoHuman) == 0)[1]) {
         cellTypes[i] <- "unknown"
       }
       
-      if(nrow(outCellMarker) == 0 & nrow(outPanglao) == 0 & nrow(outGoHuman) > 0) {
+      if((nrow(outCellMarker) == 0 & nrow(outPanglao) == 0 & nrow(outGoHuman) > 0)[1]) {
         thenames <- sub( "\\%.*", "", outGoHuman$name)
         cellTypes[i] <- paste0("Ontology ", thenames[1])
         
       }
       
-      if(nrow(outCellMarker) > 0 & nrow(outPanglao) == 0) {
+      if((nrow(outCellMarker) > 0 & nrow(outPanglao) == 0)[1]) {
         thenames <- sub('.*\\:', '', outCellMarker$name)
         cellTypes[i] <- thenames[1]
       }
       
-      if(nrow(outCellMarker) == 0 & nrow(outPanglao) > 0) {
+      if((nrow(outCellMarker) == 0 & nrow(outPanglao) > 0)[1]) {
         thenames <- gsub("_panglao","",outPanglao$name)
         cellTypes[i] <- thenames[1]
       }
-      if(nrow(outCellMarker) > 0 & nrow(outPanglao) > 0) {
+      if((nrow(outCellMarker) > 0 & nrow(outPanglao) > 0)[1]) {
         thenamesCM <- sub('.*\\:', '', outCellMarker$name)
         thenamesP <- gsub("_panglao","",outPanglao$name)
         cellTypes[i] <- paste0(thenamesCM[1], "_and_", thenamesP[1])

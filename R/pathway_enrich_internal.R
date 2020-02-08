@@ -72,12 +72,13 @@ pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_g
   # Returns:
   # plots and pathway enrichment of bulk DE and cellWeighted_Foldchanges.
   
-  
-  if(class(DEGs) != "data.frame" & class(DEGs) == "matrix") {
+  DEGs_class <- class(DEGs) %in% c("data.frame", "matrix")
+  if(DEGs_class[1] == FALSE) {
     stop("DEGs must be of class data frame or matrix.")
   }
   
-  if(class(scMappR_vals) != "data.frame" & class(scMappR_vals) != "matrix") {
+  scMappR_vals_class <- class(scMappR_vals) %in% c("data.frame", "matrix")
+  if(scMappR_vals_class[1] == FALSE) {
     stop("scMappR_vals must be a data.frame or matrix.")
   }
   if(class(background_genes) != "character") {

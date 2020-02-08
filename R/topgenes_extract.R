@@ -60,7 +60,7 @@ topgenes_extract <- function(generes,  padj = 0.05, FC = 1.5, topNum = 30) {
   if(class(generes) != "list") {
     stop("generes must be of class list.")
   }
-  if(all(is.numeric(padj), is.numeric(FC), is.numeric(topNum)) == FALSE) {
+  if(all(is.numeric(padj), is.numeric(FC), is.numeric(topNum))[1] == FALSE) {
     stop("padj, FC, and topNum must all be of class numeric.")
   }
   

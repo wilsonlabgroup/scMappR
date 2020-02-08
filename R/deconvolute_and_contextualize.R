@@ -119,28 +119,33 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   
   # load required packages
 
-
-  if(class(count_file) != "character" & class(count_file) != "data.frame" & class(count_file) != "matrix" ) {
+  count_class <- class(count_file) %in% c("character", "data.frame", "matrix")
+  if(count_class[1] == FALSE ) {
     stop("count_file must be of class character, data.frame, or matrix.")
   }
-  if(class(signature_matrix) != "character" & class(signature_matrix) != "data.frame" & class(signature_matrix) != "matrix" ) {
+  signature_class <- class(signature_matrix) %in% c("character", "data.frame", "matrix")
+  if(signature_class[1] == FALSE) {
     stop("count_file must be of class character, data.frame, or matrix.")
   }
-  if(class(DEG_list) != "character" & class(DEG_list) != "data.frame" & class(DEG_list) != "matrix") {
+  DEG_list_class <- class(DEG_list) %in% c("character", "data.frame", "matrix") 
+  if(DEG_list_class[1] == FALSE) {
     stop("DEG_list must be of class character, data.frame, or matrix.")
   }
-  if(class(case_grep) != "character" & class(case_grep) != "numeric") {
+  case_grep_class <- class(case_grep) %in% c("character", "numeric", "integer")
+  if(case_grep_class[1] == FALSE) {
     stop("case_grep must be of class character (as a single character designating cases in column names) or of class numeric (integer matrix giving indeces of cases).")
   }
-  if(class(control_grep) != "character" & class(control_grep) != "numeric") {
+  control_grep_class <- class(control_grep) %in% c("character", "numeric", "integer")
+  
+  if(control_grep_class == FALSE) {
     stop("control_grep must be of class character (as a single character designating controls in column names) or of class numeric (integer matrix giving indeces of controls).")
   }
 
 
-  if(all(is.numeric(sig_distort), is.numeric(max_proportion_change), is.numeric(sig_matrix_size)) == FALSE) {
+  if(all(is.numeric(sig_distort), is.numeric(max_proportion_change), is.numeric(sig_matrix_size))[1] == FALSE) {
     stop("sig_distort, max_proportion_change, and sig_matrix_size must all be of class numeric" )
   }
-  if(all(is.logical(print_plots), is.logical(make_scale), is.logical(FC_coef), is.logical(drop_unknown_celltype), is.logical(toSave)) == FALSE) {
+  if(all(is.logical(print_plots), is.logical(make_scale), is.logical(FC_coef), is.logical(drop_unknown_celltype), is.logical(toSave))[1] == FALSE) {
     stop("print_plots, make_scale, FC_coef, drop_unknown_celltype, toSave must all be of class logical." )
   }
      
@@ -210,7 +215,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   rownames(wilcoxon_rank_mat_or) <- RN_2
   # Removing unknown cell-types
   unknown <- grep("unknown",colnames(wilcoxon_rank_mat_or))
-  if(length(unknown) > 0 & drop_unknown_celltype == TRUE) {
+  if((length(unknown) > 0 & drop_unknown_celltype == TRUE)[1]) {
     print("Removing unknown cell-types")
     wilcox_or <- wilcoxon_rank_mat_or[,-unknown]
   } else {
@@ -428,8 +433,8 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   colnames(vals_out_mat) <- colnames(wilcox_or)
   all_reordered <-  vals_out_mat
   comp <- plot_names
-  
-  if(print_plots == T & toSave == TRUE) {
+  printing <- print_plots == TRUE & toSave == TRUE
+  if(printing[1] == TRUE) {
     # If you want to print arplots
     boxplot_values <- function(cmeaned_stacked, names) {
       #Internal: get the values of cell-type proportions with a leave-one-out method and trint in boxplot
