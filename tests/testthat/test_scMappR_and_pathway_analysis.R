@@ -92,13 +92,13 @@ testthat::test_that('Case and control indexed the same, throw error.', {
   colnames(odds_ratio_in) <- paste0("celltype_", 1:5)
   max_proportion_change <- 10
   print_plots <- FALSE  
-  case_grep <- c(1,2,3,4)
+  case_grep <- c(1:5)
   control_grep <- "_female"
   
   
   
   toOut <- testthat::expect_error(scMappR_and_pathway_analysis(bulk_normalized, odds_ratio_in, 
-                                        bulk_DE_cors, case_grep = 1:4,
+                                        bulk_DE_cors, case_grep = 1:5,
                                         control_grep = "_female", rda_path = "", 
                                         max_proportion_change = 10, print_plots = TRUE, 
                                         plot_names = "tst1", theSpecies = "human", 
