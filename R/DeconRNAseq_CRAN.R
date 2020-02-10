@@ -51,11 +51,11 @@ DeconRNAseq_CRAN <- function (datasets, signatures, proportions = NULL, checksig
   # known.prop if proportions were known - always false for scMappR
   # use.scale Scale and center value - always TRUE for scMappR
   # fig Make figures - always FALSE for scMappR
-  if (is.null(datasets)) 
+  if (is.null(datasets))
     stop(" Missing the mixture dataset, please provide a tab-delimited text file for mixture samples.")
-  if (is.null(signatures)) 
+  if (is.null(signatures))
     stop(" Missing the signature dataset, please provide a tab-delimited text file for pure tissue/cell types.")
-  if (is.null(proportions) && known.prop) 
+  if (is.null(proportions) && known.prop)
     stop(" Missing the known proprotions, please provide a tab-delimited text file containing known fractions for pure tissue/cell types.")
   x.signature <- signatures
   x.data <- datasets
@@ -63,13 +63,13 @@ DeconRNAseq_CRAN <- function (datasets, signatures, proportions = NULL, checksig
     stop("signature datasets must be a dataframe")
   if (sum(is.na(x.signature)) > 0) 
     stop("signature data cannot have NAs. please exclude or impute missing values.")
-  if (is.data.frame(x.data) == FALSE) 
+  if (is.data.frame(x.data) == FALSE)
     stop("mixture datasets must be a dataframe")
   if (sum(is.na(x.data)) > 0) 
     stop("mixture data cannot have NAs. please exclude or impute missing values.")
   numofg <- nrow(x.signature)
   Numofx <- ncol(x.signature)
-  if (numofg < Numofx) 
+  if (numofg < Numofx)
     stop("The number of genes is less than the number of cell types, which means less independent equations than unknowns.")
   x.data.temp <- pcaMethods::prep(x.data, scale = "none", center = TRUE)
   x.data.pca <- pcaMethods::pca(x.data.temp, method = "svd", center = FALSE, 

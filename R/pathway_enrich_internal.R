@@ -72,30 +72,31 @@ pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_g
   # Returns:
   # plots and pathway enrichment of bulk DE and cellWeighted_Foldchanges.
   
-  DEGs_class <- class(DEGs) %in% c("data.frame", "matrix")
+  DEGs_class <- class(DEGs)[1] %in% c("data.frame", "matrix")
   if(DEGs_class[1] == FALSE) {
     stop("DEGs must be of class data frame or matrix.")
   }
   
-  scMappR_vals_class <- class(scMappR_vals) %in% c("data.frame", "matrix")
+  scMappR_vals_class <- class(scMappR_vals)[1] %in% c("data.frame", "matrix")
   if(scMappR_vals_class[1] == FALSE) {
     stop("scMappR_vals must be a data.frame or matrix.")
   }
-  if(class(background_genes) != "character") {
+  if(!is.character(background_genes)) {
     stop("background_genes must be a character vector of gene names.")
   }
     
-  if(class(theSpecies) != "character") {
+  if(!is.character(theSpecies)) {
     stop("the species must be a character, human, mouse, or a species compatible with gprofiler.")
   }
   
-  if(class(output_directory) != "character") {
+  if(!is.character(output_directory)) {
     stop("output_directory must be a character, human, mouse, or a species compatible with gprofiler.")
   }
-  if(class(plot_names) != "character") {
+  
+  if(!is.character(plot_names)) {
     stop("plot_names must be a character, human, mouse, or a species compatible with gprofiler.")
   }
-  if(class(number_genes) != "numeric") {
+  if(!is.numeric(number_genes)) {
     print(number_genes)
     print(class(number_genes))
     stop("number_genes must be of class numeric.")

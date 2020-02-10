@@ -64,7 +64,7 @@ coEnrich <- function(sig, gene_list_heatmap, background_heatmap, study_name, out
   # Returns:
   # Enrichment of cell-types that are expressed by the same genes, from 2-5 sets of cell-types.
   
-  if(any(is.null(sig), is.null(gene_list_heatmap), is.null(background_heatmap), is.null(study_name), is.null(outDir))) {
+  if((any(is.null(sig), is.null(gene_list_heatmap), is.null(background_heatmap), is.null(study_name), is.null(outDir)))[1]) {
     stop("One of the arguments is NULL suggesting that this function is not being run internally.")
   } 
   if(!is.logical(toSave)) {
@@ -80,7 +80,7 @@ coEnrich <- function(sig, gene_list_heatmap, background_heatmap, study_name, out
     }
   }
   
-  if(nrow(sig) > 5) {
+  if((nrow(sig) > 5)[1]) {
     sig <- sig[1:5,]
   }
   l <- nrow(sig)

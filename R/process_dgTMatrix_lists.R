@@ -80,12 +80,12 @@ process_dgTMatrix_lists <- function(dgTMatrix_list, name, species_name, naming_p
     stop("Name is not a character for your outputs, please change the parameter and try again.")
   }
   
-  dgTMatrix_list_class1 <- class(dgTMatrix_list) %in% c("dgCMatrix", "matrix", "list")
+  dgTMatrix_list_class1 <- class(dgTMatrix_list)[1] %in% c("dgCMatrix", "matrix", "list")
   if(dgTMatrix_list_class1[1] == FALSE) {
     stop("'dgTMatrix_list' is not dgCMatrix, matrix, or list. Please input data in appropriate class.")
   }
   
-  dgTMatrix_list_class2 <- class(dgTMatrix_list) %in% c("dgCMatrix", "matrix")
+  dgTMatrix_list_class2 <- class(dgTMatrix_list)[1] %in% c("dgCMatrix", "matrix")
   
   if(dgTMatrix_list_class2[1]) {
     print("'dgTMatrix_list' is of class dgCMatrix or matrix, converting to a named list.", quote = F)
@@ -104,7 +104,8 @@ process_dgTMatrix_lists <- function(dgTMatrix_list, name, species_name, naming_p
       stop("species_name is not 'human' 'mouse' or '-9' (case sensitive), please try again with this filled.")
     }
   }
-  if(class(rda_path) != "character" ) {
+  
+  if(!is.character(rda_path)) {
     stop("rda_path must be of class character.")
   }
   

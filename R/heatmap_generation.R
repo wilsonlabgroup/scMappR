@@ -76,34 +76,38 @@ heatmap_generation <- function(genesIn, comp,reference, cex = 0.8, rd_path = "~/
   # a list of genes that do/don't intersect with the signature matrix as well as a list of which cell-type these over-represented genes live in.
   
   print(paste0("Assumes inputted gene symbols are of ", which_species, " origin."))
-  if(class(genesIn) != "character") {
+  
+  if(!is.character(genesIn)) {
     stop("Inputted gene list is not character vector")
   }
-  if(class(comp) != "character") {
+  if(!is.character(comp)) {
     stop("comp must be of class caracter.")
   }
-  if(class(cex) != "numeric") {
+  
+  if(!is.numeric(cex)) {
     stop("cex must be a numeric between 0 and 1")
   }
   if(cex < 0) {
     warning("cex < 0, setting to 0.001 (essentially invisible)") 
     cex <- 0.001
   }
-  reference_class <- class(reference) %in% c("data.frame", "matrix")
+  reference_class <- class(reference)[1] %in% c("data.frame", "matrix")
   if(reference_class[1] == FALSE) {
     stop("Reference must be of class data.frame or matrix.")
   }
   # cellTypes = "ALL", pVal = 0.01, isPval=TRUE, isMax =FALSE,  isBackground = FALSE,  which_species = "human", toSave = FALSE
-  if(class(cellTypes) != "character") {
+ 
+  if(!is.character(cellTypes)) {
     stop("cellTypes should be of class character -- either column names of cell-types to include or 'ALL' -- ALL is reccomended.")
   }
-  if(class(pVal) != "numeric") {
+  if(!is.numeric(pVal)) {
     stop("val must be of class numeric.")
   }
   if(all(is.logical(isMax), is.logical(isPval),is.logical(isBackground),is.logical(toSave)) == FALSE) {
     stop("isMax, isBackground, toSave, and isPval must be of class logical (TRUE/FALSE).")
   }
-  if(class(rd_path) != "character") {
+  
+  if(!is.character(rd_path)) {
     stop("rd_path must be of class character.")
   }
     
@@ -120,8 +124,8 @@ heatmap_generation <- function(genesIn, comp,reference, cex = 0.8, rd_path = "~/
     }
   }
   
-  if(class(reference) == "data.frame") reference <- as.matrix(reference)
-  if(class(reference) == "matrix") { # then you have a custom signature matrix or it's pre-loaded into R
+  if(is.data.frame(reference)) reference <- as.matrix(reference)
+  if(is.matrix(reference)) { # then you have a custom signature matrix or it's pre-loaded into R
     wilcoxon_rank_mat_t <- reference  
   }
     wilcoxon_rank_mat_t <- wilcoxon_rank_mat_t[!duplicated(rownames(wilcoxon_rank_mat_t)),]

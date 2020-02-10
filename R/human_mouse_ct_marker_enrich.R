@@ -72,7 +72,7 @@ human_mouse_ct_marker_enrich <- function(gene_lists, theSpecies = "human",cell_m
     stop("Naming preferences not in options (case sensitive) and isn't a non-choice (-9), please try again.")
     }
   }
-  gene_lists_class <- class(gene_lists) %in% c("list", "character")
+  gene_lists_class <- class(gene_lists)[1] %in% c("list", "character")
   if(gene_lists_class[1] == FALSE) {
     stop("gene_lists obect must be of class list or a character vector of gene symbols.")
   }
@@ -81,7 +81,8 @@ human_mouse_ct_marker_enrich <- function(gene_lists, theSpecies = "human",cell_m
       stop("theSpecies is not 'human' 'mouse' or '-9' (case sensitive), please try again with this filled.")
     }
   }
-  if(class(cell_marker_path) != "character") {
+  
+  if(!is.character(cell_marker_path)) {
     stop("cell_marker_path must be of class character.")
   }
   
@@ -92,7 +93,7 @@ human_mouse_ct_marker_enrich <- function(gene_lists, theSpecies = "human",cell_m
   marker_sets <- list()
   
   
-  if(class(topGenes)== "character") {
+  if(is.character(topGenes)) {
     topGenes1 <- list()
     topGenes1[[1]] <- topGenes
     topGenes <- topGenes1
@@ -138,19 +139,20 @@ human_mouse_ct_marker_enrich <- function(gene_lists, theSpecies = "human",cell_m
 
       outCellMarker <- cellmarker_enrich(topGenes[[i]], 0.05,gmt_cellmarker, fixed_length = 15000)
       # get the cell type from 'cellmarkers' dataset
-      if(class(outCellMarker$name) == "factor") {
+      
+      
         outCellMarker$name <- tochr(outCellMarker$name)
-      }
+      
       outPanglao <- cellmarker_enrich(topGenes[[i]], 0.05, gmt_panglao, fixed_length = 15000)
       # get the cell type from 'panglao' dataset
-      if(class(outPanglao$name) == "factor") {
+ 
         outPanglao$name <- tochr(outPanglao$name)
-      }
+      
       outGOMouse <- cellmarker_enrich(topGenes[[i]], 0.05, gmt_gobp, fixed_length = 22000)
       # get the cell type from gene ontology
-      if(class(outGOMouse$name) == "factor") {
+
         outGOMouse$name <- tochr(outGOMouse$name)
-      }
+      
       
       marker_list <- list(CellMarker = outCellMarker, Panglao = outPanglao, Ontology = outGOMouse)
       # concatenate all of the CT markers from the appropriate dataset
@@ -250,17 +252,17 @@ human_mouse_ct_marker_enrich <- function(gene_lists, theSpecies = "human",cell_m
         gmt_subtype <- gmt_list$gmt_subtype
       }      
       outCellMarker <- cellmarker_enrich(topGenes[[i]], 0.05, gmt_cellmarker, fixed_length = 15000)
-      if(class(outCellMarker$name) == "factor") {
-        outCellMarker$name <- tochr(outCellMarker$name)
-      }
+      
+      outCellMarker$name <- tochr(outCellMarker$name)
+      
       outPanglao <- cellmarker_enrich(topGenes[[i]], 0.05, gmt_panglao, fixed_length = 15000)
-      if(class(outPanglao$name) == "factor") {
-        outPanglao$name <- tochr(outPanglao$name)
-      }
+      
+      outPanglao$name <- tochr(outPanglao$name)
+      
       outGoHuman <- cellmarker_enrich(topGenes[[i]], 0.05, gmt_gobp, fixed_length = 22000)
-      if(class(outGoHuman$name) == "factor") {
+      
         outGoHuman$name <- tochr(outGoHuman$name)
-      }
+      
       if(naming_preference != -9) {
         
         if(length(thefiles) == 0) {

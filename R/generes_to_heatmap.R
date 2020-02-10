@@ -60,7 +60,7 @@ generes_to_heatmap <- function(generes,
   # A list containing a signature matrix by rank := -1*log10(Pfdr) and by fold-change (only increasing). 
   # additionally it returns the top (up to) 30 CT markers for each cell-type, as well as the name of each cell-type (from the signature methods method)
   
-  if(class(generes) != "list") {
+  if(!(is.list(generes))) {
     stop("generes object must be a list.")
   }
   
@@ -77,10 +77,11 @@ generes_to_heatmap <- function(generes,
     stop("Naming preferences not in options (case sensitive) and isn't a non-choice (-9), please try again.")
     }
   }
-  if(class(rda_path) != "character") {
+  
+  if(!(is.character(rda_paths))) {
     stop("rda_path must be of class character")
   }
-  if(all(is.logical(make_names), is.logical(internal)) == FALSE) {
+  if(all(is.logical(make_names), is.logical(internal))[1] == FALSE) {
     stop("make_names and internal must be class logical (TRUE/FALSE)")
   }
   

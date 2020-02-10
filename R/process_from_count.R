@@ -67,12 +67,12 @@ process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = 
   if(!is.character(name)) {
     stop("Name is not a character for your outputs, please change the parameter and try again.")
   }
-  countmat_list_class1 <- class(countmat_list) %in% c("dgCMatrix", "matrix", "list")
+  countmat_list_class1 <- class(countmat_list)[1] %in% c("dgCMatrix", "matrix", "list")
   
   if(countmat_list_class1[1] == FALSE) {
     stop("countmat_list must be of class dgCMatrix, matrix, or list.")
   }  
-  countmat_list_class2 <- class(countmat_list) %in% c("dgCMatrix", "matrix")
+  countmat_list_class2 <- class(countmat_list)[1] %in% c("dgCMatrix", "matrix")
   
   if(countmat_list_class2[1]) {
     print("'dgTMatrix_list' is of class dgCMatrix or matrix, converting to a named list.", quote = F)
@@ -268,7 +268,7 @@ process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = 
     save(pbmc, file = paste0(path,"/",name, "_custom.Rdata"))
   }
   pbmc <- try(Seurat::ScaleData(object = pbmc)) # scale data
-  if(class(pbmc) == "try-error") {
+  if(class(pbmc)[1] == "try-error") {
     stop("Data scaling did not finish, this can often be due to a memory error (as of November 2019). 
         the Seurat object up to this point has been saved.
         SCTransform can lead to this memory issue. consider the 'process from count no sctransform'

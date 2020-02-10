@@ -58,17 +58,19 @@ extract_genes_cell <- function(geneHeat, cellTypes = "ALL", val = 1, isMax = FAL
     # isPvalue: if the signature matrix is simply a raw P-value: not reccomended
   #Returns: a list of genes above the threshold for each sample.
 
-  geneHeat_class <- class(geneHeat) %in% c("data.frame", "matrix")
+  geneHeat_class <- class(geneHeat)[1] %in% c("data.frame", "matrix")
   if(geneHeat_class[1] == FALSE ) {
     stop("geneHeat should be a data.frame or matrix of ranks from your scRNA-seq dataset.")
   }
-  if(class(cellTypes) != "character") {
+  
+  if(is.character(cellTypes)) {
     stop("cellTypes should be of class character -- either column names of cell-types to include or 'ALL' -- ALL is reccomended.")
   }
-  if(class(val) != "numeric") {
+  
+  if(is.numeric(val)) {
     stop("val must be of class numeric.")
   }
-  if(all(is.logical(isMax), is.logical(isPvalue)) == FALSE) {
+  if(all(is.logical(isMax), is.logical(isPvalue))[1] == FALSE) {
     stop("isMax and isPvalue must be of class logical (TRUE/FALSE).")
   }
   
@@ -76,7 +78,8 @@ colnames(geneHeat) <- toupper(colnames(geneHeat))
 cellTypes <- toupper(cellTypes)
 
 geneHeat <- geneHeat[rowSums(geneHeat) > 1,] # extract genes with any CT specificity
-if(class(geneHeat) == "numeric" | class(geneHeat) == "character" ) {
+
+if(any(is.character(geneHeat), is.numeric(geneHeat))[1] ) {
   geneHeat <- data.frame(t(geneHeat))
 }  
 

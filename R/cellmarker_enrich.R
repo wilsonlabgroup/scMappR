@@ -66,30 +66,34 @@ cellmarker_enrich <- function(gene_list, p_thresh, gmt = "cellmarker_list.Rdata"
   
   # Returns: 
   # gene set enrichment of cell-types on your inputted gene list
-  if(class(gene_list) != "character") {
+  
+  if(!is.character(gene_list)) {
     stop("gene_list should be a character vector of gene symbols and it is not of class 'character")
   }
-  if(class(p_thresh) != "numeric") {
+  
+  if(!is.numeric(p_thresh)) {
     stop("p_thresh is not of class numeric")
   }
-  if(p_thresh < 0 | p_thresh > 1) {
+  if((p_thresh < 0 | p_thresh > 1)[1]) {
     stop("p_thresh should be between 0 and 1")
   }
-  if(!all(is.numeric(fixed_length), is.numeric(min_genes), is.numeric(max_genes), is.numeric(isect_size))) {
+  if((!all(is.numeric(fixed_length), is.numeric(min_genes), is.numeric(max_genes), is.numeric(isect_size)))[1]) {
     stop("One of these variables: 'fixed_length', 'min_genes', 'max_genes', 'isect_size', are not of class numeric.")
   }
-  if(class(gmt) != "character" & class(gmt) != "list") {
+
+  if(!(any(is.character(gmt), is.list(gmt)))) {
     stop("gmt object must be a character or list object.")
   }
   toTest_n <- gene_list
-  if(class(gmt) == "character") {
+  
+  if(is.character(gmt)) {
     load(gmt) # load the gmt object
   }
   theRows <- c()
   for(i in 1:length(gmt)) {
     
     test <-gmt[[i]]
-    if(length(test) < min_genes | length(test) > max_genes) {
+    if((length(test) < min_genes | length(test) > max_genes)[1]) {
       next
     }
     ints <- intersect(toTest_n, test) # intersect your inputted genes with the study

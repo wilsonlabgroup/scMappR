@@ -54,7 +54,8 @@
 tissue_by_celltype_enrichment <- function(gene_list, species, name = "CT_Tissue_example", p_thresh = 0.05, rda_path = "~/scMappR/data/",  isect_size = 3, return_gmt= FALSE) {
   gmt <- "" # no visible binding 
   if(is.null(species)) stop("please select 'human' or 'mouse' as a species.")
-  if(class(gene_list) != "character") {
+  
+  if(!is.character(gene_list)) {
     stop("Gene list is not a character vector.")
   }
   if(length(gene_list) == 0) {
@@ -67,16 +68,20 @@ tissue_by_celltype_enrichment <- function(gene_list, species, name = "CT_Tissue_
   if(species_in[1] == FALSE) { # making sure species is correct
     stop("species does not equal human or mouse (case sensitive)")
   }
-  if(class(name) != "character") {
+  
+  if(!is.character(name)) {
     stop("name must be of class character.")
   }
-  if(class(rda_path) != "character") {
+  
+  if(!is.character(rda_path)) {
     stop("rda_path must be of class character.")
   }
-  if(class(p_thresh) != "numeric" ) {
+  
+  if(!is.numeric(p_thresh) ) {
     stop("p_thresh must be of class numeric.")
   }
-  if(class(isect_size) != "numeric" ) {
+  
+  if(!is.numeric(isect_size) ) {
     stop("isect_size must be of class numeric.")
   }
   if(all(is.logical(return_gmt))[1] == FALSE) {

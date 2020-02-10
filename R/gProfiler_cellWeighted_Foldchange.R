@@ -67,13 +67,15 @@ gProfiler_cellWeighted_Foldchange <- function(cellWeighted_Foldchange_matrix, sp
   # Returns:
   # A List of significantly enriched pathways and TFs (correction_method = FDR, hier_sorting = moderate), for every cell-type
   
-  if(class(cellWeighted_Foldchange_matrix) != "data.frame") {
+  
+  if(!is.data.frame(cellWeighted_Foldchange_matrix)) {
     stop("cellWeighted_Foldchange_matrix much be a class == data.frame of scMappR Transformed Values from the deconvolute_and_contextualize function.")
   }
-  if(class(background) != "character") {
+  if(!is.character(background)) {
     stop("background must be class == character of gene symbols as a background for gprofiler")
   }
-  if(class(gene_cut) != "numeric") {
+  
+  if(!is.numeric(gene_cut)) {
     stop("gene_cut must be a positive integer giving the numer of top genes for gprofiler or -9 if not used.")
   }
   if(!(is.logical(newGprofiler))) {

@@ -66,11 +66,11 @@ make_TF_barplot <- function(ordered_back_all_tf, top_tf = 5) {
   # Returns:
   # The top "top_5" TF names, ordered by -log10(Pfdr)
   
-  ordered_back_all_tf_class <- class(ordered_back_all_tf) %in% c("data.frame", "matrix")
+  ordered_back_all_tf_class <- class(ordered_back_all_tf)[1] %in% c("data.frame", "matrix")
   if(ordered_back_all_tf_class[1] == FALSE) {
     stop("ordered_back_all_tf must be of class data.frame or matrix")
   }
-  if(class(ordered_back_all_tf) == "matrix") {
+  if(is.matrix(ordered_back_all_tf)) {
     warning("converting ordered_back_all_tf matrix to dataframe") 
       ordered_back_all_tf <- as.data.frame(ordered_back_all_tf) 
     
@@ -79,7 +79,8 @@ make_TF_barplot <- function(ordered_back_all_tf, top_tf = 5) {
   if(term_name_p_val[1] == FALSE ) {
     stop("ordered_back_all_tf must contain two columns, term_name and p_vale")
   }
-  if(class(top_tf) != "numeric") {
+  
+  if(!is.numeric(top_tf)) {
     stop("top_tf must be of class numeric.")
   }
   

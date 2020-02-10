@@ -69,18 +69,21 @@ tissue_scMappR_custom <- function(gene_list, signature_matrix ,output_directory 
   # tsv files with gene set enrichment for single cell-types and co-enrichment
   # It also returns the object of the single cell-type preferences
   
-  if(class(gene_list) != "character") {
+  
+  if(!is.character(gene_list)) {
     stop("gene_list must be of class character.")
   }
-  signature_class <- class(signature_matrix) %in% c( "data.frame", "matrix")
+  signature_class <- class(signature_matrix)[1] %in% c( "data.frame", "matrix")
   
   if(signature_class[1] == FALSE) {
     stop("signature_matrix must be of class data.frame or matrix.")
   }
-  if(class(output_directory) != "character") {
+  
+  if(!is.character(output_directory)) {
     stop("output_directory must be of class character.")
   }
-  if(class(gene_cutoff) != "numeric") {
+  
+  if(!is.numeric(gene_cutoff)) {
     stop("gene_cutoff must be of class numeric." )
   }
   if(all(is.logical(toSave), is.logical(is_pvalue))[1] == FALSE) {
@@ -114,7 +117,8 @@ tissue_scMappR_custom <- function(gene_list, signature_matrix ,output_directory 
   background_heatmap <- heatmap_generation(background_genes, comp = paste0(outDir, "/", study_names,"_background"), reference = background, isBackground = TRUE, pVal = gene_cutoff, isPval = is_pvalue, toSave = toSave, path = path)  
   # heatmap generation of the entire signature matrix
   gene_list_heatmap <- heatmap_generation(gene_list, comp = paste0(outDir, "/", study_names,"_genelist"), reference = background, pVal = gene_cutoff, isPval = is_pvalue, toSave = toSave, path = path)
-  if(class(gene_list_heatmap) == "character") {
+  
+  if(is.character(gene_list_heatmap)) {
     warning("0 or 1 input genes were cell-type specific. No downstream analysis available.")
     warning("With 0 genes being cell-type specific, I would make sure that they are the same gene symbols.")
     stop("0 or 1 input genes were cell-type specific. No downstream analysis available.")

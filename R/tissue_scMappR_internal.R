@@ -72,7 +72,7 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
   # RData file containing cell-type preferences
   # tsv files with gene set enrichment for single cell-types and co-enrichment
   
-  if(class(gene_list) != "character") {
+  if(!is.character(gene_list)) {
     stop("The 'gene_list' argumet must be a character vector of gene symbols.")
   }
   if(!(species %in% c("mouse", "human"))) {
@@ -80,20 +80,23 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
   }
   
 
-  if(class(output_directory) != "character") {
+  if(!is.character(output_directory)) {
     stop("output_directory must be of class character.")
   }
-  if(class(genecex) != "numeric") {
+  
+  if(!is.numeric(genecex)) {
     stop("genecex must be of class numeric.")
   }
   if(genecex < 0) {
     warning("making genecex low positive value as it is currently < 0.")
     genecex <- 0.001
   }
-  if(class(cluster) != "character") {
+
+  
+  if(!is.character(cluster)) {
     stop("cluster must be of class character.")
   }
-  if(class(rda_path) != "character") {
+  if(!is.character(rda_path)) {
     stop("rda_path must be of class character.")
   }
 
@@ -268,7 +271,7 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
     gene_list_heatmap <- heatmap_generation(gene_list, comp = paste0(outDir, "/", study_names[i],"_genelist"), reference = study_ref, cex = genecex, which_species = species, isPval = raw_pval, toSave = toSave, path = path)
     
     # get the heatmap of genes overlapping with the signature matrix and the inputted gene list
-    if(class(gene_list_heatmap) == "character") {
+    if(is.character(gene_list_heatmap)) {
       print("not enough genes were present to do downsteam analysis in: ")
       print(study_names[i])
       single_cell_studies[[i]] <- gene_list_heatmap

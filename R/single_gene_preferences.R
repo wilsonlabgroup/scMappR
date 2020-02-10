@@ -70,19 +70,23 @@ single_gene_preferences <- function(hg_short, hg_full, study_name, outDir, toSav
   # outputDir = directory where table is outputted
   # Returns:
   # A gene-set enrichment table of individual cell-type enrichment
-  if(class(hg_full) != "list") {
+  
+  if(!is.list(hg_full)) {
     stop("hg_full must be of class list.")
   }
-  if(class(hg_short) != "list") {
+  if(!is.list(hg_short)) {
     stop("hg_short must be of class list.")
   }
-  if(class(study_name) != "character") {
+  
+  if(!is.character(study_name)) {
     stop("study_name must be of class character.")
   }
-  if(class(outDir) != "character") {
+  
+  if(!is.character(outDir)) {
     stop("outDir must be of class character.")
   }
-  if(class(toSave) != "logical") {
+  
+  if(!is.logical(toSave)) {
     stop("toSave must be of class logical.")
   }
   

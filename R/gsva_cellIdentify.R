@@ -52,8 +52,8 @@ gsva_cellIdentify <- function(pbmc, theSpecies, naming_preference = -9, rda_path
   # rda_path Path to precomputed cell-type gmt files (rda objects).
   # Returns: 
   # A list containing the top cell-type marker for a cell-type using the panglao dataset as well as the cellMarker dataset
-  
-  if(class(pbmc) != "Seurat") {
+  not_seurat <- class(pbmc)[1] != "Seurat"
+  if((not_seurat[1] == FALSE)[1]) {
     stop("pbmc must be of class 'Seurat'")
   }
 
@@ -70,10 +70,12 @@ gsva_cellIdentify <- function(pbmc, theSpecies, naming_preference = -9, rda_path
       stop("theSpecies is not 'human' 'mouse' or '-9' (case sensitive), please try again with this filled.")
     }
   }
-  if(class(rda_path) != "character") {
+  
+  if(!is.character(rda_path)) {
     stop("rda_path must be of class character.")
   }
-  if(class(toSave) != "logical") {
+  
+  if(!is.logical(toSave)) {
     stop("toSave must be of class logical.")
   }
   

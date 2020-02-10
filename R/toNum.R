@@ -40,16 +40,16 @@ toNum <- function(x) {
   # x = vector that is character, factor, or numeric
   # Returns
   # Vector as a numeric 
-  if(!(class(x) %in% c("character", "factor", "numeric"))) {
+  if(!(class(x)[1] %in% c("character", "factor", "numeric"))) {
     stop("x must be in class character, factor, or numeric")
   }
   
   
-  if(class(x) == "character") return(as.numeric(x))
+  if(is.character(x)) return(as.numeric(x))
   
-  if(class(x) == "factor") return(as.numeric(levels(x))[x])
-  if(class(x) == "numeric") return(x)
-  if(class(x) == "integer") return(as.numeric(x))
+  if(is.factor(x)) return(as.numeric(levels(x))[x])
+  if(is.numeric(x)) return(x)
+  if(class(x)[1] == "integer") return(as.numeric(x))
 } 
 
 

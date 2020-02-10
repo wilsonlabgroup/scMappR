@@ -48,8 +48,8 @@ seurat_to_generes <- function(pbmc, test = "wilcox"){
   # pbmc -- a processed suerat object
   # Returns:
   # A list of genes where their over-representation in the i'th cell-type is computed. Each element contains the gene name, adjusted p-value, and the log2FC of each gene being present in that cell-type.
-  
-  if(class(pbmc) != "Seurat") {
+  isSeurat <- class(pbmc)[1] != "Seurat"
+  if(isSeurat[1] == FALSE) {
     stop("pbmc object must be of class Seurat.")
   }
   
@@ -58,12 +58,14 @@ seurat_to_generes <- function(pbmc, test = "wilcox"){
   
   generes <- list()
   count <-1
-  if(class(id) != "try-error") {
+  isError <- class(id)[1] == "try-error"
+  if(isError == FALSE) {
     # if it's V2
     for(i in sort(unique(pbmc@ident))) {
       
       de_genes <- try(Seurat::FindMarkers(pbmc, ident.1 = i, test.use = test))
-      if(class(de_genes) == "try-error" | class(de_genes) == "NULL" ) {
+      worked <- any(class(de_genes)[1] == "try-error", is.null(de_genes))
+      if(worked[1]) {
         
         next
       }
@@ -80,7 +82,9 @@ seurat_to_generes <- function(pbmc, test = "wilcox"){
   for(i in sort(unique(pbmc@active.ident))) {
     # if object is Seurat V3
     de_genes <- try(Seurat::FindMarkers(pbmc, ident.1 = i, test.use = test))
-    if(class(de_genes) == "try-error" | class(de_genes) == "NULL" ) {
+    worked <- any(class(de_genes)[1] == "try-error", is.null(de_genes))
+    
+    if(worked[1]) {
       
       next
     }

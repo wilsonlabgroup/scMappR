@@ -127,26 +127,26 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   
   # load in the count matrix
   
-  count_class <- class(count_file) %in% c("character", "data.frame", "matrix")
+  count_class <- class(count_file)[1] %in% c("character", "data.frame", "matrix")
   
   if(count_class[1] == FALSE) {
     stop("count_file must be of class character, data.frame, or matrix.")
   }
-  signature_class <- class(signature_matrix) %in% c("character", "data.frame", "matrix")
+  signature_class <- class(signature_matrix)[1] %in% c("character", "data.frame", "matrix")
   if(signature_class[1] == FALSE) {
     stop("count_file must be of class character, data.frame, or matrix.")
   }
-  DEG_list_class <- class(DEG_list) %in% c("character", "data.frame", "matrix") 
+  DEG_list_class <- class(DEG_list)[1] %in% c("character", "data.frame", "matrix") 
   
   if(DEG_list_class[1] == FALSE) {
     stop("DEG_list must be of class character, data.frame, or matrix.")
   }
-  case_grep_class <- class(case_grep) %in% c("character", "numeric", "integer")
+  case_grep_class <- class(case_grep)[1] %in% c("character", "numeric", "integer")
   case_grep_class[1] == FALSE
   if(case_grep_class[1] == FALSE) {
     stop("case_grep must be of class character (as a single character designating cases in column names) or of class numeric (integer matrix giving indeces of cases).")
   }
-  control_grep_class <- class(control_grep) %in% c("character", "numeric", "integer")
+  control_grep_class <- class(control_grep)[1] %in% c("character", "numeric", "integer")
   
   if(control_grep_class[1] == FALSE) {
     stop("control_grep must be of class character (as a single character designating controls in column names) or of class numeric (integer matrix giving indeces of controls).")
@@ -157,25 +157,31 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
       stop("species_name is not 'human' 'mouse' or '-9' (case sensitive), please try again with this filled.")
     }
   }
-  if(class(rda_path) != "character") {
+
+  if(!is.character(rda_path)) {
     stop("rda_path must be of class list.")
   }
-  if(class(max_proportion_change) != "numeric") {
+  
+  if(!is.character(max_proportion_change)) {
     stop("max_proportion_change must be of class numeric.")
   }
-  if(class(plot_names) != "character" ) {
+  
+  if(!is.character(plot_names) ) {
     stop("plot_names must be of class character.")
   }
-  if(class(output_directory) != "character") {
+  
+  if(!is.character(output_directory)) {
     stop("output_directory must be of class character.")
   }
-  if(class(sig_matrix_size) != "numeric") {
+  if(!is.numeric(sig_matrix_size) ) {
     stop("sig_matrix_size is not numeric.")
   }
-  if(class(gene_label_size) != "numeric") {
+  
+  if(!is.numeric(gene_label_size)) {
     stop("gene_label_size must be of class numeric.")
   }
-  if(class(number_genes) != "numeric") {
+  
+  if(!is.numeric(number_genes)) {
     stop("number_genes must be of class numeric.")
   }
   if(all(is.logical(print_plots),is.logical(drop_unknown_celltype),is.logical(internet),is.logical(up_and_downregulated),is.logical(toSave),is.logical(newGprofiler) ) == FALSE) {
@@ -192,7 +198,8 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   }
 
   theSpecies <- tolower(theSpecies)
-  if(class(count_file) == "character") {
+  
+  if(is.character(count_file)) {
     norm_counts_i <- utils::read.table(count_file, header = TRUE, as.is = TRUE, sep = "\t")
     warning("reading in a count file where the first column is expected to be the row names.")    
     rownames(norm_counts_i) <- norm_counts_i[,1]
@@ -203,7 +210,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   # get the background for later pathway analysis
   background_genes <-  rownames(norm_counts_i)  
   # list of differential expression
-  if(class(DEG_list) == "character") {
+  if(is.character(DEG_list)) {
     DEGs <- utils::read.table(DEG_list, header = FALSE, as.is = TRUE, sep = "\t")
   } else {
     DEGs <- as.data.frame(DEG_list)
@@ -214,21 +221,26 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   if(number_genes == -9) {
     number_genes <- as.numeric(nrow(DEGs))
   }
-  if((class(case_grep) != "character" | length(case_grep) > 1)[1]) {
-    print("Assuming that case_grep and control_grep are indeces of 'case' and 'control'.", quote = FALSE)
-    print("Appending 'scMappR_case' to cases and 'scMappR_control to controls.", quote = FALSE  )
+  if((!(is.character(case_grep)) | length(case_grep) > 1)[1]) {
+    print("Assuming that case_grep are indeces of 'control'.", quote = FALSE)
+    print("Appending 'scMappR_control to controls.", quote = FALSE  )
     colnames(count_file)[case_grep] <- paste0("scMappR_case_", colnames(count_file)[case_grep])
-    colnames(count_file)[control_grep] <- paste0("scMappR_control_", colnames(count_file)[control_grep])
-    control_grep <- "scMappR_control"
     case_grep <- "scMappR_case"
   }
+  if((!(is.character(control_grep)) | length(control_grep) > 1)[1]) {
+    print("Assuming that control_grep indeces of  'control'.", quote = FALSE)
+    print("Appending 'scMappR_control to controls.", quote = FALSE  )
+    colnames(count_file)[control_grep] <- paste0("scMappR_control_", colnames(count_file)[control_grep])
+    control_grep <- "scMappR_control"
+  }
+  
   cases <- grep(case_grep, colnames(count_file))
   control <- grep(control_grep, colnames(count_file))
   if(any(length(cases) < 2, length(control) < 2)[1]) {
     stop("There is fewer than two cases or controls, please check 'case_grep' or 'control_grep'.")
   }
   
-  if(class(signature_matrix) == "character") {
+  if(is.character(signature_matrix)) {
     # assuming that the signature matrix is an RData file containg an object named wilcoxon_rank_mat_or (internal, generally)
     wilcoxon_rank_mat_or <- ""
     load(signature_matrix)

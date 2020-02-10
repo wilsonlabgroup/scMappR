@@ -119,41 +119,41 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   
   # load required packages
 
-  count_class <- class(count_file) %in% c("character", "data.frame", "matrix")
-  if(count_class[1] == FALSE ) {
+  count_class <- class(count_file)[1] %in% c("character", "data.frame", "matrix")
+  if((count_class[1] == FALSE )[1]) {
     stop("count_file must be of class character, data.frame, or matrix.")
   }
-  signature_class <- class(signature_matrix) %in% c("character", "data.frame", "matrix")
-  if(signature_class[1] == FALSE) {
+  signature_class <- class(signature_matrix)[1] %in% c("character", "data.frame", "matrix")
+  if((signature_class[1] == FALSE)[1]) {
     stop("count_file must be of class character, data.frame, or matrix.")
   }
-  DEG_list_class <- class(DEG_list) %in% c("character", "data.frame", "matrix") 
-  if(DEG_list_class[1] == FALSE) {
+  DEG_list_class <- class(DEG_list)[1] %in% c("character", "data.frame", "matrix") 
+  if((DEG_list_class[1] == FALSE)[1]) {
     stop("DEG_list must be of class character, data.frame, or matrix.")
   }
-  case_grep_class <- class(case_grep) %in% c("character", "numeric", "integer")
-  if(case_grep_class[1] == FALSE) {
+  case_grep_class <- class(case_grep)[1] %in% c("character", "numeric", "integer")
+  if((case_grep_class[1] == FALSE)[1]) {
     stop("case_grep must be of class character (as a single character designating cases in column names) or of class numeric (integer matrix giving indeces of cases).")
   }
-  control_grep_class <- class(control_grep) %in% c("character", "numeric", "integer")
+  control_grep_class <- class(control_grep)[1] %in% c("character", "numeric", "integer")
   
-  if(control_grep_class == FALSE) {
+  if((control_grep_class == FALSE)[1]) {
     stop("control_grep must be of class character (as a single character designating controls in column names) or of class numeric (integer matrix giving indeces of controls).")
   }
 
 
-  if(all(is.numeric(sig_distort), is.numeric(max_proportion_change), is.numeric(sig_matrix_size))[1] == FALSE) {
+  if((all(is.numeric(sig_distort), is.numeric(max_proportion_change), is.numeric(sig_matrix_size))[1] == FALSE)[1]) {
     stop("sig_distort, max_proportion_change, and sig_matrix_size must all be of class numeric" )
   }
-  if(all(is.logical(print_plots), is.logical(make_scale), is.logical(FC_coef), is.logical(drop_unknown_celltype), is.logical(toSave))[1] == FALSE) {
+  if((all(is.logical(print_plots), is.logical(make_scale), is.logical(FC_coef), is.logical(drop_unknown_celltype), is.logical(toSave))[1] == FALSE)[1]) {
     stop("print_plots, make_scale, FC_coef, drop_unknown_celltype, toSave must all be of class logical." )
   }
      
-  if(class(plot_names) != "character") {
+  if(is.character(plot_names)[1] == FALSE) {
     stop("plot_names must be of class character.")
   }
-  if(!(theSpecies %in% c("human", "mouse"))) {
-    if(theSpecies != -9) {
+  if((!(theSpecies %in% c("human", "mouse")))[1]) {
+    if((theSpecies != -9)) {
       stop("species_name is not 'human' 'mouse' or '-9' (case sensitive), please try again with this filled.")
     }
   }
@@ -169,8 +169,9 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
     
   rowVars <- function(x) return(apply(x, 1, stats::var)) # get variance of rows, used later
   colMedians <- function(x) return(apply(x, 2, stats::median)) # medians of cols, used later
-  # load in normalized count matrices, signature matrix, and DEGs
-  if(class(count_file) == "character") {
+  # load in normalized count matrices, signature matrix, and 0
+  
+  if(is.character(count_file)) {
     warning("reading count file table, assuming first column is the gene symbols -- not reccomended.")
     norm_counts_i <- utils::read.table(count_file, header = T, as.is = T, sep = "\t")
     rownames(norm_counts_i) <- norm_counts_i[,1]
@@ -178,14 +179,14 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   } else {
     norm_counts_i <- count_file
   }
-  if(class(signature_matrix) == "character") {
+  if(is.character(signature_matrix)) {
     warning("loading in signature matrix from Rdata file -- not reccomeneded.")
     load(signature_matrix)
     
   } else {
     wilcoxon_rank_mat_or <- signature_matrix
   }
-  if(class(DEG_list) == "character") {
+  if(is.character(DEG_list)) {
     DEGs <- utils::read.table(DEG_list, header = FALSE, as.is = T, sep = "\t")
   } else {
     DEGs <- as.data.frame(DEG_list)
@@ -227,7 +228,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   #### Make two wilcox_or matrices -- one with the top "3,000" most variable genes and the other full one 
   #############
   wilcox_or[wilcox_or < 0 ] <- 0
-  if(nrow(wilcox_or) > sig_matrix_size) {
+  if((nrow(wilcox_or) > sig_matrix_size)[1]) {
     print(paste0("For deconvolution, we're using the top ", sig_matrix_size," most vairable signatures"))
     RVar <- rowVars(wilcox_var)
     wilcox_or_var <- wilcox_or[order(RVar, decreasing = T), ]
@@ -239,11 +240,11 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
     warning("Changed signature matrix distortion from 1 which is not reccomended.")
     wilcox_or_signature <- wilcox_or_signature^sig_distort
   }
-  if(length(unique(colnames(wilcox_or_signature))) < length(colnames(wilcox_or_signature))) {
+  if((length(unique(colnames(wilcox_or_signature))) < length(colnames(wilcox_or_signature)))[1]) {
     warning("cell-type naming is not unique, appending unique identifier (1:ncol(signature))")
     colnames(wilcox_or_signature) <- paste0(colnames(wilcox_or_signature), "_", 1:ncol(wilcox_or_signature))
   }
-  if(class(norm_counts_i) == "matrix") norm_counts_i <- as.data.frame(norm_counts_i)
+  if(is.matrix(norm_counts_i)) norm_counts_i <- as.data.frame(norm_counts_i)
   
   # cell-type deconvolution with all genes included
   all_genes_in <- DeconRNAseq_CRAN(norm_counts_i, wilcox_or_signature)
@@ -275,8 +276,8 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
     stop("None of your DEGs overlap with genes in your count matrix")
   }
   
-  if(class(bulk_in) != "data.frame") bulk_in <- as.data.frame(bulk_in)
-  if(class(wilcox_or) != "data.frame") wilcox_or <- as.data.frame(wilcox_or)
+  if(!is.data.frame(bulk_in)) bulk_in <- as.data.frame(bulk_in)
+  if(!is.data.frame(wilcox_or)) wilcox_or <- as.data.frame(wilcox_or)
   
   
   deconvolute_gene_removed <- function(x, bulk = bulk_in, signature = wilcox_or_signature) {
@@ -321,7 +322,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
     rownames(tester) <- colnames(bulk_in)
     cases <- grep(case_grep, rownames(tester))
     control <- grep(control_grep, rownames(tester))
-    if(any(length(cases) < 2, length(control) < 2)) {
+    if((any(length(cases) < 2, length(control) < 2))[1]) {
       stop("There is fewer than two cases or controls, please check 'case_grep' or 'control_grep'.")
     }
     cases_Med <- colMedians(tester[cases,])
@@ -361,7 +362,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   print("Done")
   cmeaned_no0 <- as.data.frame(cmeaned_stacked[,colSums(cmeaned_stacked) > 0 ])
   # again, keep cell-types that have proportions
-  if(length(colnames(cmeaned_stacked)) != length(unique(colnames(cmeaned_stacked)))) {
+  if((length(colnames(cmeaned_stacked)) != length(unique(colnames(cmeaned_stacked))))[1]) {
     # add a unique identifier for each cell-type if there are multiple cell-types with the same name
     print("adding code for non-unique cell-types")
     colnames(fold_changes) <- colnames(wilcox_or) <- colnames(means) <- colnames(cmeaned_stacked) <- paste0(n,"_",1:ncol(cmeaned_stacked))
@@ -378,7 +379,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   }
   # remove duplicated DEGs
   dup_gene_names <- which(duplicated(DEGs$gene_name))
-  if(length(dup_gene_names) > 0) {
+  if((length(dup_gene_names) > 0)[1]) {
     dup_gene_names <- DEGs$gene_name[dup_gene_names]
     warning("Duplicated gene names:")
     print(dup_gene_names, quote = FALSE)
@@ -411,7 +412,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
     prop_fc <- fold_changes[gene, ] # relative ratio of case/control in gene
     up <- gene_DE$log2fc > 0 # if gene is upregualted 
     sign <- -1
-    if(up == T) { # if it's upregulated 
+    if((up == T)[1]) { # if it's upregulated 
       prop_fc <- 1/prop_fc # flip so the ratio is control/case
       sign <- 1
     } 
