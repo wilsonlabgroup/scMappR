@@ -52,7 +52,7 @@ gsva_cellIdentify <- function(pbmc, theSpecies, naming_preference = -9, rda_path
   # rda_path Path to precomputed cell-type gmt files (rda objects).
   # Returns: 
   # A list containing the top cell-type marker for a cell-type using the panglao dataset as well as the cellMarker dataset
-  not_seurat <- class(pbmc)[1] != "Seurat"
+  not_seurat <- class(pbmc)[1] == "Seurat"
   if((not_seurat[1] == FALSE)[1]) {
     stop("pbmc must be of class 'Seurat'")
   }
