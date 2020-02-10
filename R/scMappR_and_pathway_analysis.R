@@ -237,7 +237,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   cases <- grep(case_grep, colnames(count_file))
   control <- grep(control_grep, colnames(count_file))
   inter_case_control <- intersect(cases, control)
-  if(length(inter_case_control) == 0) {
+  if(length(inter_case_control) != 0) {
     stop("Samples in 'case' and 'control' overlap. Please check column names.")
   }
   if(any(length(cases) < 2, length(control) < 2)[1]) {
