@@ -30,7 +30,7 @@ coEnrich(
 \item{path}{If toSave == TRUE, path to the directory where files will be saved.}
 }
 \value{
-\code{coEnrich} Enrichment of cell-types that are expressed by the same genes, from 2-5 sets of cell-types. \cr
+\code{coEnrich} Enrichment of cell-types that are expressed by the same genes, up to 4 sets of cell-types. \cr
 }
 \description{
 This function identifies genes with similar cell-type markers and if those markers are driving enrichment.

@@ -17,7 +17,7 @@
 #' @param toSave Allow scMappR to write files in the current directory (T/F).
 #' @param path If toSave == TRUE, path to the directory where files will be saved.
 #'
-#' @return \code{coEnrich} Enrichment of cell-types that are expressed by the same genes, from 2-5 sets of cell-types. \cr
+#' @return \code{coEnrich} Enrichment of cell-types that are expressed by the same genes, up to 4 sets of cell-types. \cr
 #'
 #' @importFrom ggplot2 ggplot aes geom_boxplot geom_text theme coord_flip labs element_text
 #' @importFrom gplots heatmap.2
@@ -84,6 +84,7 @@ coEnrich <- function(sig, gene_list_heatmap, background_heatmap, study_name, out
     sig <- sig[1:5,]
   }
   l <- nrow(sig)
+
   multi_comps <- c()
   for(y in 2:l) {
     # for combinations of 2-# enriched cell types (max= 5)
@@ -120,33 +121,6 @@ coEnrich <- function(sig, gene_list_heatmap, background_heatmap, study_name, out
         row <- c(name,p,OR, paste0(name_in, collapse = ","))
         multi_comps <- rbind(multi_comps, row)
       }
-    }
-    if(y == l ) { # if you're on the the max nmber of co-enriched celltypes you do the same thing but without the combination step since it's the max number
-      co_up <- function(x) return(length(x[x>=1])==y)
-      
-      thecomps <- sig$cell_type
-      geneList_comb <- gene_list_heatmap$geneHeat
-      colnames(geneList_comb) <- toupper(colnames(geneList_comb))
-      geneList_comb1 <- geneList_comb[,thecomps]
-      background_comb <- background_heatmap$geneHeat
-      colnames(background_comb) <- toupper(colnames(background_comb))
-      
-      inter <- intersect(rownames(background_heatmap), rownames(geneList_comb))
-      background_comb1 <- background_comb[!(rownames(background_comb) %in% inter), which(colnames(background_comb) %in% thecomps)] # remove enriched CT
-      
-      bin_aa <- apply(geneList_comb1,1,co_up)
-      name_in <- names(bin_aa)[bin_aa == T]
-      aa <- sum(bin_aa)
-      ab <- nrow(geneList_comb1) - aa
-      ba <- sum(apply(background_comb1,1,co_up))
-      bb <- nrow(background_comb1) - ba
-      m <- matrix(c(aa, ba, ab, bb), nrow = 2)
-      fisherTest <- stats::fisher.test(m)
-      OR <- fisherTest$estimate
-      p <- fisherTest$p.value
-      name <- paste0(thecomps,collapse=":" )
-      row <- c(name,p,OR, paste0(name_in, collapse = ","))
-      multi_comps <- rbind(multi_comps, row)
     }
   }
   colnames(multi_comps) <- c("cell_types", "p_val", "OR", "genes")
