@@ -48,7 +48,7 @@ seurat_to_generes <- function(pbmc, test = "wilcox"){
   # pbmc -- a processed suerat object
   # Returns:
   # A list of genes where their over-representation in the i'th cell-type is computed. Each element contains the gene name, adjusted p-value, and the log2FC of each gene being present in that cell-type.
-  isSeurat <- class(pbmc)[1] != "Seurat"
+  isSeurat <- class(pbmc)[1] == "Seurat"
   if(isSeurat[1] == FALSE) {
     stop("pbmc object must be of class Seurat.")
   }
