@@ -63,11 +63,11 @@ extract_genes_cell <- function(geneHeat, cellTypes = "ALL", val = 1, isMax = FAL
     stop("geneHeat should be a data.frame or matrix of ranks from your scRNA-seq dataset.")
   }
   
-  if(is.character(cellTypes)) {
+  if(!is.character(cellTypes)) {
     stop("cellTypes should be of class character -- either column names of cell-types to include or 'ALL' -- ALL is reccomended.")
   }
   
-  if(is.numeric(val)) {
+  if(!is.numeric(val)) {
     stop("val must be of class numeric.")
   }
   if(all(is.logical(isMax), is.logical(isPvalue))[1] == FALSE) {

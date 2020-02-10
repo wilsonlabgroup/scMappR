@@ -78,7 +78,7 @@ generes_to_heatmap <- function(generes,
     }
   }
   
-  if(!(is.character(rda_paths))) {
+  if(!(is.character(rda_path))) {
     stop("rda_path must be of class character")
   }
   if(all(is.logical(make_names), is.logical(internal))[1] == FALSE) {

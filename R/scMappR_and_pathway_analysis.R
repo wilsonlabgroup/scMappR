@@ -162,7 +162,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     stop("rda_path must be of class list.")
   }
   
-  if(!is.character(max_proportion_change)) {
+  if(!is.numeric(max_proportion_change)) {
     stop("max_proportion_change must be of class numeric.")
   }
   
