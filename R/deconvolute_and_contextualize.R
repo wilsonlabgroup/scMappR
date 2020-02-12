@@ -302,6 +302,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
       if(any(signature_var == 0)[1]) { 
         # if the DEG we removed is the only cell-type marker
         signature_rem <- signature
+        bulk_rem <- bulk
       }
     } else {
       signature_rem <- signature
