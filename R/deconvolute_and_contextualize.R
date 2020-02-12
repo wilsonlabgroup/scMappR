@@ -245,7 +245,8 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
     colnames(wilcox_or_signature) <- paste0(colnames(wilcox_or_signature), "_", 1:ncol(wilcox_or_signature))
   }
   if(is.matrix(norm_counts_i)) norm_counts_i <- as.data.frame(norm_counts_i)
-  
+
+
   # cell-type deconvolution with all genes included
   all_genes_in <- DeconRNAseq_CRAN(norm_counts_i, wilcox_or_signature)
   
@@ -287,7 +288,9 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
     # bulk: the bulk RNA-seq dataset
     # signature: the signature matrix
     #Returns: estimated CT propotions with that gene removed
+
     if(x %in% rownames(bulk)) { # remove from bulk
+      
       bulk_rem <- bulk[-which(rownames(bulk) == x),]
     } else {
       warning(paste0(x, " is not in your bulk matrix, remove gene and rerun or check gene symbol matching in general."))
@@ -295,6 +298,11 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
     }
     if(x %in% rownames(signature)) { # remove from signature
       signature_rem <- signature[-which(rownames(signature) == x),]
+      signature_var <- apply(signature_rem, 2, stats::var)
+      if(any(signature_var == 0)[1]) { 
+        # if the DEG we removed is the only cell-type marker
+        signature_rem <- signature
+      }
     } else {
       signature_rem <- signature
     }

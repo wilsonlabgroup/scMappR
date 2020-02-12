@@ -297,6 +297,15 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   if(toSave == FALSE) {
     print_plots <- FALSE
   }  
+  print("Keeping genes in signature matrix that overlap with count matrix.", quote = FALSE)
+  signature_matrix <- signature_matrix[rownames(signature_matrix) %in% rownames(count_file),]
+  signature_vars <- apply(signature_matrix, 2, stats::var)
+  signature_matrix <- signature_matrix[signature_vars > 0,]
+  print("cell-types with markers that overlap with inputted count matrix", quote = FALSE)
+  print(colnames(signature_matrix), quote = FALSE)
+  
+  
+  
   cellWeighted_Foldchanges <- deconvolute_and_contextualize(count_file, signature_matrix, DEG_list, case_grep , control_grep, max_proportion_change = max_proportion_change, print_plots = print_plots, plot_names = plot_names, theSpecies = theSpecies, sig_matrix_size = sig_matrix_size, drop_unknown_celltype = drop_unknown_celltype, toSave = toSave, path = path)
 
   # Computing t-test for changes in cell-type proportion
