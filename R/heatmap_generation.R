@@ -129,6 +129,7 @@ heatmap_generation <- function(genesIn, comp,reference, cex = 0.8, rd_path = "~/
     wilcoxon_rank_mat_t <- reference  
   }
     wilcoxon_rank_mat_t <- wilcoxon_rank_mat_t[!duplicated(rownames(wilcoxon_rank_mat_t)),]
+    wilcoxon_rank_mat_t <- wilcoxon_rank_mat_t[apply(wilcoxon_rank_mat_t, 1, stats::var) > 0,apply(wilcoxon_rank_mat_t, 2, stats::var) > 0 ]
     if(length(grep("-", rownames(wilcoxon_rank_mat_t))) / length(rownames(wilcoxon_rank_mat_t)) > 0.75) {  
       print("Detected signature matrix from scMappR catelogue", quote = FALSE)
       RN_2 <- get_gene_symbol(wilcoxon_rank_mat_t)

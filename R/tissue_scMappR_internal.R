@@ -250,6 +250,7 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
     }
     
     background_genes <- rownames(study_ref)
+
     background_heatmap <- heatmap_generation(background_genes, comp = paste0(outDir, "/", study_names[i],"_background"), reference = study_ref, isBackground = TRUE, cex = genecex, which_species = species, isPval = raw_pval, toSave=toSave, path = path)  
     # get the heatmap of all of the genes in the signature matrix
     print("Number of DEGs that are cell-type markers in current signature matrix: ", quote = FALSE)
@@ -267,7 +268,7 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
       }
       next
      }
-      
+
     gene_list_heatmap <- heatmap_generation(gene_list, comp = paste0(outDir, "/", study_names[i],"_genelist"), reference = study_ref, cex = genecex, which_species = species, isPval = raw_pval, toSave = toSave, path = path)
     
     # get the heatmap of genes overlapping with the signature matrix and the inputted gene list

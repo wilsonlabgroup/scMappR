@@ -300,7 +300,8 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   print("Keeping genes in signature matrix that overlap with count matrix.", quote = FALSE)
   signature_matrix <- signature_matrix[rownames(signature_matrix) %in% rownames(count_file),]
   signature_vars <- apply(signature_matrix, 2, stats::var)
-  signature_matrix <- signature_matrix[signature_vars > 0,]
+  signature_rowvars <- apply(signature_matrix, 1, stats::var)
+  signature_matrix <- signature_matrix[signature_rowvars > 0,signature_vars > 0]
   print("cell-types with markers that overlap with inputted count matrix", quote = FALSE)
   print(colnames(signature_matrix), quote = FALSE)
   
