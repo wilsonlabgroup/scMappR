@@ -288,7 +288,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
     # bulk: the bulk RNA-seq dataset
     # signature: the signature matrix
     #Returns: estimated CT propotions with that gene removed
-    print(x)
+    #print(x)
     if(x %in% rownames(bulk)) { # remove from bulk
       
       bulk_rem <- bulk[-which(rownames(bulk) == x),]
