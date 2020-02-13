@@ -15,7 +15,7 @@ vignette: >
 Currently, there is only  a development version. scMappR relies on the following dependencies which should be downloaded/updated with scMappR automatically. Please ensure that these packages are not open when installing scMappR. \
 
   * ggplot2 - CRAN
-  * gplots - CRAN
+  * pheatmap - CRAN
   * graphics - CRAN
   * Seurat - CRAN
   * GSVA - Bioconductor

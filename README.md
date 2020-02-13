@@ -15,7 +15,7 @@ Single-cell mapper (scMappR) is an R package that allows users to better underst
 Currently, there is only  a development version. scMappR relies on the following dependencies which should be downlaoded/updated with scMappR automatically. Please ensure that these packages are not open when installing scMappR. 
 
   * ggplot2 - CRAN
-  * gplots - CRAN
+  * pheatmap - CRAN
   * graphics - CRAN
   * Seurat - CRAN
   * GSVA - Bioconductor
