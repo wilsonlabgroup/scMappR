@@ -17,7 +17,7 @@
 #' @return \code{generes_to_heatmap} A list containing a signature matrix by rank := -1*log10(Pfdr) and by fold-change (only increasing). Additionally it returns the top (up to) 30 CT markers for each cell-type, as well as the name of each cell-type (from the signature methods method). \cr
 #'
 #' @importFrom ggplot2 ggplot aes geom_boxplot geom_text theme coord_flip labs element_text
-#' @importFrom gplots heatmap.2
+#' @importFrom pheatmap pheatmap
 #' @importFrom graphics barplot plot
 #' @importFrom Seurat AverageExpression CreateSeuratObject PercentageFeatureSet SCTransform SelectIntegrationFeatures PrepSCTIntegration FindIntegrationAnchors IntegrateData DefaultAssay RunPCA RunUMAP FindNeighbors FindClusters ScaleData FindMarkers
 #' @importFrom GSVA gsva

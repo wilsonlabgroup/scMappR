@@ -469,8 +469,7 @@ toPlot <- internal$gene_list_heatmap$geneHeat
 cex = 0.2 # size of genes
 
 myheatcol <- grDevices::colorRampPalette(c("lightblue", "white", "orange"))(256)
-    gplots::heatmap.2(toPlot, Rowv = TRUE, dendrogram = "column", col = myheatcol, scale = "row",
-trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+    pheatmap::pheatmap(as.matrix(toPlot), color = myheatcol, scale = "row", fontsize_row = cex, fontsize_col = 10)
     
 
 

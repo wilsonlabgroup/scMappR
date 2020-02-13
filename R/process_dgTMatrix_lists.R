@@ -28,7 +28,7 @@
 #' @return \code{process_dgTMatrix_lists} Signature matrices populated with rank and odds-ratio. If toSave is considered TRUE, then cell-type names from GSVA and the cell-type names are printed. saveSCObject = TRUE will also save the Seurat object. \cr
 #'
 #' @importFrom ggplot2 ggplot aes geom_boxplot geom_text theme coord_flip labs element_text
-#' @importFrom gplots heatmap.2
+#' @importFrom pheatmap pheatmap
 #' @importFrom graphics barplot plot
 #' @importFrom Seurat AverageExpression CreateSeuratObject PercentageFeatureSet SCTransform SelectIntegrationFeatures PrepSCTIntegration FindIntegrationAnchors IntegrateData DefaultAssay RunPCA RunUMAP FindNeighbors FindClusters ScaleData FindMarkers
 #' @importFrom GSVA gsva

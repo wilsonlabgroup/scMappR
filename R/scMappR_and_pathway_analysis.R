@@ -34,7 +34,7 @@
 #' @return \code{scMappR_and_pathway_analysis} A directory with: cellWeighted_Foldchanges in RData file, Cell Type proportions (RData file), cell-type proportions leave one out (RData file), heatmap of cellWeighted_Foldchanges (all), heatmap of cellWeighted_Foldchanges (within signature), heatmap of signature (all), heatmap of signature (overlapping with DEG_list), Pathway enrichment for DEG list(all), RData file and Biological Processes, Pathway enrichment of cellWeighted_Foldchanges for each cell-type, RData file and biological processes. \cr
 #' 
 #' @importFrom ggplot2 ggplot aes geom_boxplot geom_text theme coord_flip labs element_text
-#' @importFrom gplots heatmap.2
+#' @importFrom pheatmap pheatmap
 #' @importFrom graphics barplot plot
 #' @importFrom Seurat AverageExpression CreateSeuratObject PercentageFeatureSet SCTransform SelectIntegrationFeatures PrepSCTIntegration FindIntegrationAnchors IntegrateData DefaultAssay RunPCA RunUMAP FindNeighbors FindClusters ScaleData FindMarkers
 #' @importFrom GSVA gsva
@@ -367,11 +367,13 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   scMappR_vals_up <- as.matrix(scMappR_vals[apply(scMappR_vals,1, sum) > 0,])
   scMappR_vals_down <- as.matrix(scMappR_vals[apply(scMappR_vals,1, sum) < 0,])
   grDevices::pdf(paste0(path,"/",output_directory,"/",plot_names,"_cell_proportions_heatmap.pdf")) 
-  gplots::heatmap.2(as.matrix(cellWeighted_Foldchanges$cellType_Proportions), Rowv = TRUE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+  #gplots::heatmap.2(as.matrix(cellWeighted_Foldchanges$cellType_Proportions), Rowv = TRUE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+  pheatmap::pheatmap(as.matrix(cellWeighted_Foldchanges$cellType_Proportions), color = myheatcol, scale = "row", fontsize_row = cex, fontsize_col = 10)
   grDevices::dev.off()
   if((nrow(scMappR_vals_up) > 2 & ncol(scMappR_vals_up) > 2)[1]) {
     grDevices::pdf(paste0(path,"/",output_directory, "/", plot_names,"_cellWeighted_Foldchanges_upregulated_DEGs_heatmap.pdf"))
-    gplots::heatmap.2(as.matrix(abs(scMappR_vals_up)), Rowv = TRUE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+    pheatmap::pheatmap(as.matrix(abs(scMappR_vals_up)), color = myheatcol, scale = "row", fontsize_row = cex, fontsize_col = 10)
+    #gplots::heatmap.2(as.matrix(abs(scMappR_vals_up)), Rowv = TRUE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
     grDevices::dev.off()
   } else {
     warning("There were fewer than two upregulated DEGs, therefore a heatmap could not be made.")
@@ -381,7 +383,9 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   print(dim(scMappR_vals_down))
   if((nrow(scMappR_vals_down) > 2 & ncol(scMappR_vals_down) > 2)[1]) {
   grDevices::pdf(paste0(path,"/",output_directory, "/", plot_names,"_cellWeighted_Foldchanges_downregulated_DEGs_heatmap.pdf"))
-  gplots::heatmap.2(as.matrix(abs(scMappR_vals_down)), Rowv = TRUE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+  #gplots::heatmap.2(as.matrix(abs(scMappR_vals_down)), Rowv = TRUE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+  pheatmap::pheatmap(as.matrix(abs(scMappR_vals_down)), color = myheatcol, scale = "row", fontsize_row = cex, fontsize_col = 10)
+  
   grDevices::dev.off()
   } else {
     warning("There were fewer than two downregulated DEGs, therefore a heatmap could not be made.")
@@ -390,7 +394,9 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   }
   
   grDevices::pdf(paste0(path,"/",output_directory, "/",plot_names,"_all_CT_markers_in_background.pdf"))
-  gplots::heatmap.2(as.matrix(signature_mat), Rowv = TRUE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+  #gplots::heatmap.2(as.matrix(signature_mat), Rowv = TRUE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+  pheatmap::pheatmap(as.matrix(signature_mat), color = myheatcol, scale = "row", fontsize_row = cex, fontsize_col = 10)
+  
   grDevices::dev.off()
   
   celltype_preferred_degs <- intersect(rownames(scMappR_vals), rownames(signature_matrix)) # intersect DEGs and Genes in signature matrix
@@ -419,13 +425,17 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     # Upregulated DEG Heatmap
     if(nrow(signature_mat_up) > 2 & ncol(signature_mat_up) > 2) {
     grDevices::pdf(paste0(path,"/",output_directory, "/",plot_names,"_celltype_specific_preferences_upregulated_DEGs_heatmap.pdf"))
-    pl <- gplots::heatmap.2(as.matrix(signature_mat_up), Rowv = TRUE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+    #pl <- gplots::heatmap.2(as.matrix(signature_mat_up), Rowv = TRUE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+    pl <- pheatmap::pheatmap(as.matrix(scMappR_vals_up1), color = myheatcol, scale = "row", fontsize_row = cex, fontsize_col = 10)
+    
     #print(pl)
     grDevices::dev.off()
     
     
     grDevices::pdf(paste0(path,"/",output_directory, "/", plot_names,"celltype_specific_cellWeighted_Foldchanges_upregulated_heatmap.pdf"))
-    gplots::heatmap.2(as.matrix(scMappR_vals_up1[rev(colnames(pl$carpet)),pl$colInd]),Colv=F, Rowv = FALSE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+    #gplots::heatmap.2(as.matrix(scMappR_vals_up1[rev(colnames(pl$carpet)),pl$colInd]),Colv=F, Rowv = FALSE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+    tst <- pheatmap::pheatmap(as.matrix(signature_mat_up)[pl$tree_row$order,pl$tree_col$order], color = myheatcol, scale = "row", fontsize_row = cex, fontsize_col = 10, cluster_cols = FALSE, cluster_rows = FALSE)
+    
     grDevices::dev.off()
     } else {
       warning("There were fewer than two cell-type specific, upregulated DEGs, therefore a heatmap could not be made.")
@@ -437,12 +447,14 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     
     if((nrow(signature_mat_down) > 2 & ncol(signature_mat_down) > 2)[1]) {
     grDevices::pdf(paste0(path,"/",output_directory, "/",plot_names,"_celltype_specific_preferences_downregulated_DEGs_heatmap.pdf"))
-    pl2 <- gplots::heatmap.2(as.matrix(signature_mat_down), Rowv = TRUE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+    pl2 <- pheatmap::pheatmap(as.matrix(scMappR_vals_down1), color = myheatcol, scale = "row", fontsize_row = cex, fontsize_col = 10)
     grDevices::dev.off()
     
     
     grDevices::pdf(paste0(path,"/",output_directory, "/", plot_names,"celltype_specific_cellWeighted_Foldchanges_downregulated_heatmap.pdf"))
-    gplots::heatmap.2(as.matrix(abs(scMappR_vals_down1[rev(colnames(pl2$carpet)),pl2$colInd])),Colv=F, Rowv = FALSE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+    #gplots::heatmap.2(as.matrix(abs(scMappR_vals_down1[rev(colnames(pl2$carpet)),pl2$colInd])),Colv=F, Rowv = FALSE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+    tst <- pheatmap::pheatmap(as.matrix(signature_mat_down)[pl2$tree_row$order,pl2$tree_col$order], color = myheatcol, scale = "row", fontsize_row = cex, fontsize_col = 10, cluster_cols = FALSE, cluster_rows = FALSE)
+    
     grDevices::dev.off()
     }  else {
       warning("There were fewer than two cell-type specific, downregulated DEGs, therefore a heatmap could not be made.")

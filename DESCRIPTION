@@ -7,7 +7,7 @@ Description: Statistical tools to interrogate the cell-type specificity of any g
 Depends: R (>= 3.6.0)
 Imports: 
 	ggplot2, 
-	gplots, 
+	pheatmap, 
 	graphics, 
 	Seurat, 
 	GSVA, 
@@ -24,7 +24,7 @@ URL:
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.0.2
-Packaged: 2019-11-18
+Packaged: 2020-02-13
 Suggests: 
   testthat,
   knitr,
