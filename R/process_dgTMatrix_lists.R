@@ -19,6 +19,7 @@
 #' @param haveUMAP Save the UMAPs -- only use if the package is downloaded with pip.
 #' @param saveSCObject Save the Seurat object as an RData object (T/F).
 #' @param use_sctransform If you should use sctransform or the Normalize/VariableFeatures/ScaleData pipeline (T/F).
+#' @param features.to.integrate Character vector of genes to include after using the integration anchors feature, default = NULL meaning it's the same genes used in the integration anchorset.
 #' @param test_ctname statistical test for calling CT markers -- must be in Seurat
 #' @param internal Was this used as part of the internal processing of Panglao datasets (T/F).
 #' @param toSave Allow scMappR to write files in the current directory (T/F)
@@ -52,7 +53,7 @@
 #' @export
 #' 
 
-process_dgTMatrix_lists <- function(dgTMatrix_list, name, species_name, naming_preference = -9,rda_path="",  panglao_set = FALSE ,haveUMAP = FALSE, saveSCObject = FALSE, internal = FALSE, toSave = FALSE, path = NULL, use_sctransform = FALSE, test_ctname = "wilcox") {
+process_dgTMatrix_lists <- function(dgTMatrix_list, name, species_name, naming_preference = -9,rda_path="",  panglao_set = FALSE ,haveUMAP = FALSE, saveSCObject = FALSE, internal = FALSE, toSave = FALSE, path = NULL, use_sctransform = FALSE, test_ctname = "wilcox", features.to.integrate = NULL) {
   
   # This function is a one line wrapper to process count matrices into a signature matrix
   # It combines process from count, two methods of identifying cell-type identitt (gsva and fisher's test)
@@ -115,6 +116,10 @@ process_dgTMatrix_lists <- function(dgTMatrix_list, name, species_name, naming_p
     stop("panglao_set, haveUMAP, saveSCObject, internal, toSave, and use_sctransform must all be of class logical.")
   }
   
+  if(!(any(is.null(features.to.integrate), is.character(features.to.integrate))[1])) {
+    stop("features.to.integrate must be NULL or a character vector of gene names in the count matrices")
+  }
+  
   if(toSave == TRUE) {
     if(is.null(path)) {
       stop("scMappR is given write permission by setting toSave = TRUE but no directory has been selected (path = NULL). Pick a directory or set path to './' for current working directory")
@@ -123,6 +128,8 @@ process_dgTMatrix_lists <- function(dgTMatrix_list, name, species_name, naming_p
       stop("The selected directory does not seem to exist, please check set path.")
     }
   }
+  
+  
     
   if(species_name == -9) {
     spec=get_gene_symbol(sm)
@@ -146,7 +153,7 @@ process_dgTMatrix_lists <- function(dgTMatrix_list, name, species_name, naming_p
     }
   }
   
-  pbmc <- process_from_count(countmat_list = dgTMatrix_list, name = name, theSpecies = species_name, panglao_set = panglao_set, haveUmap = haveUMAP, saveALL  = saveSCObject, toSave=toSave, use_sctransform = use_sctransform, path = path)
+  pbmc <- process_from_count(countmat_list = dgTMatrix_list, name = name, theSpecies = species_name, panglao_set = panglao_set, haveUmap = haveUMAP, saveALL  = saveSCObject, toSave=toSave, use_sctransform = use_sctransform, path = path, features.to.integrate = features.to.integrate)
   # process from the count matrices to the Seurat object -- see process_from_count for details
   print(class(pbmc))
   #print(head(pbmc))

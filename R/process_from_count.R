@@ -15,6 +15,7 @@
 #' @param haveUmap Write a UMAP (T/F).
 #' @param saveALL Save the Seurat object generated (T/F).
 #' @param panglao_set If the function is being used from internal (T/F).
+#' @param features.to.integrate Character vector of genes to include after using the integration anchors feature, default = NULL meaning it's the same genes used in the integration anchorset.
 #' @param toSave Allows scMappR to print files and make directories locally (T/F).
 #' @param use_sctransform If you should use sctransform or the Normalize/VariableFeatures/ScaleData pipeline (T/F).
 #' @param path If toSave == TRUE, path to the directory where files will be saved.
@@ -45,7 +46,7 @@
 #' 
 #' @export
 #' 
-process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = FALSE, saveALL = FALSE, panglao_set = FALSE, toSave = FALSE, path = NULL, use_sctransform = FALSE) {
+process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = FALSE, saveALL = FALSE, panglao_set = FALSE, toSave = FALSE, path = NULL, use_sctransform = FALSE, features.to.integrate = NULL) {
   # This function takes a list of count matrices and returns a seurat object of the count matrices integrated using Seurat V3 and the interation anchors
   # Different options are used for if the function is internal for PanglaoDB dataset reprocessing or being used for a custom set of count matrices.
   # For larger scRNA-seq datasets (~20k + cells), it is likely that this function will be required to run on an hpc.
@@ -103,6 +104,11 @@ process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = 
   if(all(is.logical(haveUmap), is.logical(saveALL), is.logical(panglao_set), is.logical(toSave),is.logical(use_sctransform) ) == FALSE) {
     stop("haveUmap, saveALL, panglao_set, toSave, and use_sctransform are all logical." )
   }
+  
+  if(!(any(is.null(features.to.integrate), is.character(features.to.integrate))[1])) {
+    stop("features.to.integrate must be NULL or a character vector of gene names in the count matrices")
+  }
+  
   SRA_in <- countmat_list
   
   shrt <- names(SRA_in)
@@ -250,7 +256,7 @@ process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = 
     object.list <- Seurat::PrepSCTIntegration(object.list = each_sra, anchor.features = object.features, 
                                               verbose = FALSE)
     immune.anchors <- Seurat::FindIntegrationAnchors(object.list = object.list, anchor.features = object.features, normalization.method = "SCT")
-    immune.combined <- Seurat::IntegrateData(anchorset = immune.anchors, dims = 1:20, normalization.method = "SCT")
+    immune.combined <- Seurat::IntegrateData(anchorset = immune.anchors, dims = 1:20, normalization.method = "SCT", features.to.integrate = features.to.integrate)
     
     Seurat::DefaultAssay(immune.combined) <- "integrated"
     pbmc <- immune.combined
@@ -258,7 +264,7 @@ process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = 
     } else {
       
       pancreas.anchors <- Seurat::FindIntegrationAnchors(object.list = each_sra, dims = 1:20)
-      pancreas.integrated <- Seurat::IntegrateData(anchorset = pancreas.anchors, dims = 1:20)
+      pancreas.integrated <- Seurat::IntegrateData(anchorset = pancreas.anchors, dims = 1:20, features.to.integrate = features.to.integrate)
       pancreas.integrated <- Seurat::ScaleData(pancreas.integrated, verbose = FALSE)
       pbmc <- pancreas.integrated
       
