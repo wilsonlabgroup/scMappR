@@ -17,8 +17,7 @@ process_dgTMatrix_lists(
   toSave = FALSE,
   path = NULL,
   use_sctransform = FALSE,
-  test_ctname = "wilcox",
-  features.to.integrate = NULL
+  test_ctname = "wilcox"
 )
 }
 \arguments{
@@ -47,8 +46,6 @@ process_dgTMatrix_lists(
 \item{use_sctransform}{If you should use sctransform or the Normalize/VariableFeatures/ScaleData pipeline (T/F).}
 
 \item{test_ctname}{statistical test for calling CT markers -- must be in Seurat}
-
-\item{features.to.integrate}{Character vector of genes to include after using the integration anchors feature, default = NULL meaning it's the same genes used in the integration anchorset.}
 }
 \value{
 \code{process_dgTMatrix_lists} Signature matrices populated with rank and odds-ratio. If toSave is considered TRUE, then cell-type names from GSVA and the cell-type names are printed. saveSCObject = TRUE will also save the Seurat object. \cr
