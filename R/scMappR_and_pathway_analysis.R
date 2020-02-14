@@ -353,6 +353,9 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   save(cell_proportions_all, file = paste0(path,"/",output_directory, "/",plot_names, "_leaveOneOut_gene_proportions.RData"))
   
   signature_mat <- cellWeighted_Foldchanges$processed_signature_matrix # processed_signaure_matrix
+  sigmat_row <- apply(signature_mat, 1, stats::var)
+  sigmat_col <- apply(signature_mat, 2, stats::var)
+  signature_mat <- signature_mat[which(sigmat_row) > 0, which(sigmat_col) > 0]
   save(signature_mat, file = paste0(path,"/",output_directory, "/",plot_names, "_leaveOneOut_gene_proportions.RData"))
   if(nrow(DEG_list) == 1) {
     warning("You only have 1 DEG, no heatmaps can be made. Returning cellWeighted_Foldchange")
@@ -364,6 +367,8 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   # generate heatmaps for DEGs
   cex = gene_label_size
   
+  scMappR_vals_vars <- apply(scMappR_vals,1,stats::var)
+  scMappR_vals <- scMappR_vals[scMappR_vals_vars > 0,]
   
   scMappR_vals_up <- as.matrix(scMappR_vals[apply(scMappR_vals,1, sum) > 0,])
   scMappR_vals_down <- as.matrix(scMappR_vals[apply(scMappR_vals,1, sum) < 0,])
@@ -373,6 +378,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   grDevices::dev.off()
   if((nrow(scMappR_vals_up) > 2 & ncol(scMappR_vals_up) > 2)[1]) {
     grDevices::pdf(paste0(path,"/",output_directory, "/", plot_names,"_cellWeighted_Foldchanges_upregulated_DEGs_heatmap.pdf"))
+    
     pheatmap::pheatmap(as.matrix(abs(scMappR_vals_up)), color = myheatcol, scale = "row", fontsize_row = cex, fontsize_col = 10)
     #gplots::heatmap.2(as.matrix(abs(scMappR_vals_up)), Rowv = TRUE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
     grDevices::dev.off()
