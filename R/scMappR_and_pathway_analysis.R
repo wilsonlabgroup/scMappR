@@ -355,7 +355,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   signature_mat <- cellWeighted_Foldchanges$processed_signature_matrix # processed_signaure_matrix
   sigmat_row <- apply(signature_mat, 1, stats::var)
   sigmat_col <- apply(signature_mat, 2, stats::var)
-  signature_mat <- signature_mat[which(sigmat_row) > 0, which(sigmat_col) > 0]
+  signature_mat <- signature_mat[which(sigmat_row > 0), which(sigmat_col > 0)]
   save(signature_mat, file = paste0(path,"/",output_directory, "/",plot_names, "_leaveOneOut_gene_proportions.RData"))
   if(nrow(DEG_list) == 1) {
     warning("You only have 1 DEG, no heatmaps can be made. Returning cellWeighted_Foldchange")
