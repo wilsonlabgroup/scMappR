@@ -2,12 +2,12 @@
 % Please edit documentation in R/plotBP.R
 \name{plotBP}
 \alias{plotBP}
-\title{Plot g:ProfileR Barplot}
+\title{Plot gProfileR Barplot}
 \usage{
 plotBP(ordered_back_all, top_bp = 10)
 }
 \arguments{
-\item{ordered_back_all}{Output of the g:ProfileR function.}
+\item{ordered_back_all}{Output of the gProfileR function.}
 
 \item{top_bp}{The number of pathways you want to plot.}
 }
@@ -15,10 +15,10 @@ plotBP(ordered_back_all, top_bp = 10)
 \code{plotBP} A barplot of the number of "top_bp" pathways, ranked by -log10(Pfdr). \cr
 }
 \description{
-Make a barplot of the top biological factors enriched by g:ProfileR.
+Make a barplot of the top biological factors enriched by gProfileR.
 }
 \details{
-This function takes a g:ProfileR output and prints the top "top_bp" most significantly
+This function takes a gProfileR output and prints the top "top_bp" most significantly
 enriched p-values before plotting the rank of their p-values.
 }
 \examples{

@@ -248,29 +248,28 @@ Assuming `toSave = T` and `up_and_downregulated = T`, `scMappR_and_pathway_analy
   * scMappR_vignette_celltype_specific_cellWeighted_Foldchangess_downregulated_heatmap.pdf: Row-normalized cellWeighted_Foldchanges of downregulated genes that are also cell-type specific (in the signature matrix).
   * scMappR_vignette__cellWeighted_Foldchangess_upregulated_DEGs_heatmap.pdf: row-normalized cellWeighted_Foldchanges of upregulated genes.
   * scMappR_vignette__cellWeighted_Foldchangess_downregulated_DEGs_heatmap.pdf: row-normalized cellWeighted_Foldchanges of downregulated genes.
-  * scMappR_vignette_reordered_transcription_factors.Rdata: .Rdata file containing a list of outputs from g:profileR or gprofiler2 that are transcription factors enriched after re-ordering.
-  * scMappR_vignette_reordered_pathways: .Rdata file containing list of outputs from g
-  :profileR or gprofiler2 that are  "GO:BP", "REAC", and "KEGG" enrichments after re-ordering.
+  * scMappR_vignette_reordered_transcription_factors.Rdata: .Rdata file containing a list of outputs from gprofiler or gprofiler2 that are transcription factors enriched after re-ordering.
+  * scMappR_vignette_reordered_pathways: .Rdata file containing list of outputs from gprofileR or gprofiler2 that are  "GOBP", "REAC", and "KEGG" enrichments after re-ordering.
   * scMappR_vignette_leaveOneOut_gene_proportions.RData: Average cell-type proportion when gene is removed.
   * scMappR_vignette_celltype_specific_preferences_upregulated_DEGs_heatmap.pdf: Row-normalized .pdf of signature matrix intersecting with upregulated DEGs.
   * scMappR_vignette_celltype_specific_preferences_downregulated_DEGs_heatmap.pdf: Row-normalized .pdf of signature matrix intersecting with downregulated DEGs.  
  * scMappR_vignette_celltype_proportions.Rdata: Data matrix of cell-type proportions for each sample.
  * scMappR_vignette_cell_proportions_heatmap.pdf: Row-normalized heatmap of cell-type proportions.
  * scMappR_vignette_cell_proportion_changes_summary.tsv: Table of t-tests to interrogate differences in cell-type proportions.
- * scMappR_vignette_bulk_transcription_factors.Rdata: g:ProfileR enrichment of bulk transcription factors.
- * scMappR_vignette_bulk_pathways.Rdata: g:ProfileR enrichment of bulk GO:BP, REAC, and KEGG.
+ * scMappR_vignette_bulk_transcription_factors.Rdata: gprofiler enrichment of bulk transcription factors.
+ * scMappR_vignette_bulk_pathways.Rdata: gprofiler enrichment of bulk GOBP, REAC, and KEGG.
  * scMappR_vignette_all_CT_markers_in_background.pdf: Signature matrix of all genes in the background.
  * Bulk_TF_enrichment.pdf: Barplot of bulk transcription factor enrichment.
  * Bulk_pathway_enrichment.pdf: Barplot of bulk pathway enrichment.
  * upregulated: Directory with the same pathway analysis specifically for upregulated genes.
  * downregulated: Directory with the same pathway analysis specifically for downregulated genes.
  * TF_barplot: Directory with .pdfs of re-ranked TF enrichment.
- * BP_barplot: Directory with .pdfs of re-ranked GO:BP, KEGG, and REAC enrichment.
+ * BP_barplot: Directory with .pdfs of re-ranked GOBP, KEGG, and REAC enrichment.
  
   
 ## Tissue by cell-type enrichment.
 
-scMappR allows for gene-set enrichment of every cell-type marker, sorted by cell-type, tissue, and study, curated while preprocessing all of the signature matrices for the functions within scMappR. The dataset may be downloaded from https://github.com/DustinSokolowski/scMappR_Data, processed into a gmt file using a number of packages (qusage, activepathways etc.) and then used with traditional gene-set-enrichment tools (GSEA, GSVA, g:ProfileR). Additionally, scMappR contains the "tissue_by_celltype_enrichment.R" function, that enriches a gene list against all cell-type markers using a Fisher's exact test. 
+scMappR allows for gene-set enrichment of every cell-type marker, sorted by cell-type, tissue, and study, curated while preprocessing all of the signature matrices for the functions within scMappR. The dataset may be downloaded from https://github.com/DustinSokolowski/scMappR_Data, processed into a gmt file using a number of packages (qusage, activepathways etc.) and then used with traditional gene-set-enrichment tools (GSEA, GSVA, gprofiler). Additionally, scMappR contains the "tissue_by_celltype_enrichment.R" function, that enriches a gene list against all cell-type markers using a Fisher's exact test. 
 
 
 #### Example

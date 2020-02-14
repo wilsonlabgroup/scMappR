@@ -46,7 +46,7 @@ scMappR_and_pathway_analysis(
 
 \item{plot_names}{The prefix of plot pdf files.}
 
-\item{theSpecies}{-9 if using a pre-computed count matrix from scMappR, human, mouse, or a specied directly compatible with g:Profiler. Removes Ensembl symbols if appended.}
+\item{theSpecies}{-9 if using a pre-computed count matrix from scMappR, human, mouse, or a specied directly compatible with gProfileR. Removes Ensembl symbols if appended.}
 
 \item{output_directory}{The name of the directory that will contain output of the analysis.}
 
@@ -64,7 +64,7 @@ scMappR_and_pathway_analysis(
 
 \item{toSave}{Allow scMappR to write files in the current directory (T/F).}
 
-\item{newGprofiler}{Whether to use g:ProfileR or gprofiler2 (T/F).}
+\item{newGprofiler}{Whether to use gProfileR or gprofiler2 (T/F).}
 
 \item{path}{If toSave == TRUE, path to the directory where files will be saved.}
 }
@@ -77,7 +77,7 @@ This function generates cell weighted Fold-changes (cellWeighted_Foldchange), vi
 \details{
 This function generates cellWeighted_Foldchanges for every cell-type (see deconvolute_and_contextualize), as well as the relative cell-type proportions (which will be reutrned and pushed through).
 Then, it generates heatmaps of all cellWeighted_Foldchanges, cellWeighted_Foldchanges overlapping with the signature matrix, the entire signature matrix, the cell-type preference values from the signature matrix that overlap with inputted differentially expressed genes.
-Then, if you have Wifi, it will complete g:ProfileR of the reordered cellWeighted_Foldchanges as well as a the ordered list of genes.
+Then, if you have Wifi, it will complete gProfileR of the reordered cellWeighted_Foldchanges as well as a the ordered list of genes.
 This function is a wrapper for deconvolute_and_contextualize and pathway_enrich_internal.
 }
 \examples{

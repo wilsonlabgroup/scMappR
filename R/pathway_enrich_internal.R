@@ -15,7 +15,7 @@
 #' @param output_directory Path to the directory where files will be saved.
 #' @param plot_names Names of output.
 #' @param number_genes Number of genes to if there are many, many DEGs.
-#' @param newGprofiler Whether to use g:ProfileR or gprofiler2 (T/F).
+#' @param newGprofiler Whether to use gProfileR or gprofiler2 (T/F).
 #' @param toSave Allow scMappR to write files in the current directory (T/F).
 #' @param path If toSave == TRUE, path to the directory where files will be saved.
 #' 
@@ -64,7 +64,7 @@ pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_g
   # It is a wrapper for making barplots, bulk pathway analysis, and gProfiler_cellWeighted_Foldchange
   # Args:
   # DEGs = differentially expressed genes
-  # theSpecies: human/mouse or something compatible with g:ProfileR
+  # theSpecies: human/mouse or something compatible with gProfileR
   # scMappR_vals: matrix of of cellWeighted_Foldchanges for each cell-type.
   # background genes = the genes in the count dataset
   # output directory = path to the directory where files will be saved

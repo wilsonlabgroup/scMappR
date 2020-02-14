@@ -4,7 +4,7 @@
 #'
 #' This function generates cellWeighted_Foldchanges for every cell-type (see deconvolute_and_contextualize), as well as the relative cell-type proportions (which will be reutrned and pushed through).
 #' Then, it generates heatmaps of all cellWeighted_Foldchanges, cellWeighted_Foldchanges overlapping with the signature matrix, the entire signature matrix, the cell-type preference values from the signature matrix that overlap with inputted differentially expressed genes.
-#' Then, if you have Wifi, it will complete g:ProfileR of the reordered cellWeighted_Foldchanges as well as a the ordered list of genes.
+#' Then, if you have Wifi, it will complete gProfileR of the reordered cellWeighted_Foldchanges as well as a the ordered list of genes.
 #' This function is a wrapper for deconvolute_and_contextualize and pathway_enrich_internal.
 #' 
 #' @rdname scMappR_and_pathway_analysis
@@ -19,7 +19,7 @@
 #' @param print_plots Whether boxplots of the estimated CT proportion for the leave-one-out method of CT deconvolution should be printed. The same name of the plots will be completed for top pathways.
 #' @param plot_names The prefix of plot pdf files.
 #' @param output_directory The name of the directory that will contain output of the analysis.
-#' @param theSpecies -9 if using a pre-computed count matrix from scMappR, human, mouse, or a specied directly compatible with g:Profiler. Removes Ensembl symbols if appended.
+#' @param theSpecies -9 if using a pre-computed count matrix from scMappR, human, mouse, or a specied directly compatible with gProfileR. Removes Ensembl symbols if appended.
 #' @param sig_matrix_size Number of genes in signature matrix for cell-type deconvolution.
 #' @param drop_unknown_celltype Whether or not to remove "unknown" cell-types from the signature matrix.
 #' @param internet Whether you have stable Wifi (T/F).
@@ -28,7 +28,7 @@
 #' @param number_genes The number of genes to cut-off for pathway analysis (good with many DEGs).
 #' @param toSave Allow scMappR to write files in the current directory (T/F).
 #' @param rda_path If downloaded, path to where data from scMappR_data is stored. 
-#' @param newGprofiler Whether to use g:ProfileR or gprofiler2 (T/F).
+#' @param newGprofiler Whether to use gProfileR or gprofiler2 (T/F).
 #' @param path If toSave == TRUE, path to the directory where files will be saved.
 #' 
 #' @return \code{scMappR_and_pathway_analysis} A directory with: cellWeighted_Foldchanges in RData file, Cell Type proportions (RData file), cell-type proportions leave one out (RData file), heatmap of cellWeighted_Foldchanges (all), heatmap of cellWeighted_Foldchanges (within signature), heatmap of signature (all), heatmap of signature (overlapping with DEG_list), Pathway enrichment for DEG list(all), RData file and Biological Processes, Pathway enrichment of cellWeighted_Foldchanges for each cell-type, RData file and biological processes. \cr

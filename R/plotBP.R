@@ -1,15 +1,15 @@
-#' Plot g:ProfileR Barplot
+#' Plot gProfileR Barplot
 #' 
-#' Make a barplot of the top biological factors enriched by g:ProfileR.
+#' Make a barplot of the top biological factors enriched by gProfileR.
 #'
-#' This function takes a g:ProfileR output and prints the top "top_bp" most significantly
+#' This function takes a gProfileR output and prints the top "top_bp" most significantly
 #' enriched p-values before plotting the rank of their p-values.
 #'
 #'
 #' @rdname plotBP
 #' @name plotBP
 #'
-#' @param ordered_back_all Output of the g:ProfileR function.
+#' @param ordered_back_all Output of the gProfileR function.
 #' @param top_bp The number of pathways you want to plot.
 #' 
 #' @return \code{plotBP} A barplot of the number of "top_bp" pathways, ranked by -log10(Pfdr). \cr
@@ -63,7 +63,7 @@ plotBP <- function(ordered_back_all, top_bp = 10) {
   # This function takes a g:ProfleR output and prints the top "top_bp" most significantly
   # enriched P-values before plotting the rank of their P-values
   # Args:
-  # ordered_back_all: output of the g:ProfileR function
+  # ordered_back_all: output of the gProfileR function
   # The number of pathways you want to plot
   # Returns:
   # A barplot of the number of "top_bp" pathways, ranked by -log10(Pfdr)
@@ -104,7 +104,7 @@ plotBP <- function(ordered_back_all, top_bp = 10) {
   }
   ordered_back_all$p_value <- toNum(ordered_back_all$p_value)
   ordered_back_all$term_name <- tolower(tochr(ordered_back_all$term_name))
-  ordered_back_all$log10 <- -1*log10(ordered_back_all$p_value) # ranks of g:profileR
+  ordered_back_all$log10 <- -1*log10(ordered_back_all$p_value) # ranks of gProfileR
   ordered_back_all <- ordered_back_all[order(ordered_back_all$log10, decreasing = TRUE),]
   if(nrow(ordered_back_all) > top_bp) {
     ordered_back_all <- ordered_back_all[1:top_bp,]
