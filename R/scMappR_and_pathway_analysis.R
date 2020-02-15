@@ -431,7 +431,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
 
     # Upregulated DEG Heatmap
     if(nrow(signature_mat_up) > 2 & ncol(signature_mat_up) > 2) {
-    grDevices::pdf(paste0(path,"/",output_directory, "/",plot_names,"_celltype_specific_preferences_upregulated_DEGs_heatmap.pdf"))
+    grDevices::pdf(paste0(path,"/",output_directory, "/",plot_names,"_celltype_specific_upregulated_cwFoldChange_heatmap.pdf"))
     #pl <- gplots::heatmap.2(as.matrix(signature_mat_up), Rowv = TRUE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
     pl <- pheatmap::pheatmap(as.matrix(scMappR_vals_up1), color = myheatcol, scale = "row", fontsize_row = cex, fontsize_col = 10)
     
@@ -439,7 +439,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     grDevices::dev.off()
     
     
-    grDevices::pdf(paste0(path,"/",output_directory, "/", plot_names,"celltype_specific_cellWeighted_Foldchanges_upregulated_heatmap.pdf"))
+    grDevices::pdf(paste0(path,"/",output_directory, "/", plot_names,"celltype_specific_preferences_upregulated_DEGs_heatmap.pdf"))
     #gplots::heatmap.2(as.matrix(scMappR_vals_up1[rev(colnames(pl$carpet)),pl$colInd]),Colv=F, Rowv = FALSE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
     tst <- pheatmap::pheatmap(as.matrix(signature_mat_up)[pl$tree_row$order,pl$tree_col$order], color = myheatcol, scale = "row", fontsize_row = cex, fontsize_col = 10, cluster_cols = FALSE, cluster_rows = FALSE)
     
@@ -453,12 +453,12 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     # Downregulated DEG Heatmap
     
     if((nrow(signature_mat_down) > 2 & ncol(signature_mat_down) > 2)[1]) {
-    grDevices::pdf(paste0(path,"/",output_directory, "/",plot_names,"_celltype_specific_preferences_downregulated_DEGs_heatmap.pdf"))
+    grDevices::pdf(paste0(path,"/",output_directory, "/",plot_names,"_celltype_specific_cellWeighted_Foldchanges_downregulated_heatmap.pdf"))
     pl2 <- pheatmap::pheatmap(as.matrix(scMappR_vals_down1), color = myheatcol, scale = "row", fontsize_row = cex, fontsize_col = 10)
     grDevices::dev.off()
     
     
-    grDevices::pdf(paste0(path,"/",output_directory, "/", plot_names,"celltype_specific_cellWeighted_Foldchanges_downregulated_heatmap.pdf"))
+    grDevices::pdf(paste0(path,"/",output_directory, "/", plot_names,"_celltype_specific_preferences_downregulated_DEGs_heatmap.pdf"))
     #gplots::heatmap.2(as.matrix(abs(scMappR_vals_down1[rev(colnames(pl2$carpet)),pl2$colInd])),Colv=F, Rowv = FALSE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
     tst <- pheatmap::pheatmap(as.matrix(signature_mat_down)[pl2$tree_row$order,pl2$tree_col$order], color = myheatcol, scale = "row", fontsize_row = cex, fontsize_col = 10, cluster_cols = FALSE, cluster_rows = FALSE)
     
