@@ -370,6 +370,24 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   scMappR_vals_vars <- apply(scMappR_vals,1,stats::var)
   scMappR_vals <- scMappR_vals[scMappR_vals_vars > 0,]
   
+  inter <- intersect(rownames(scMappR_vals),rownames(signature_mat))
+  
+  #Absolute value plotting of scMappR vals
+  if(length(inter) > 3) {
+  scMappR_intersect <- scMappR_vals[inter,]
+  scMappR_pref <- scMappR_vals[inter,]
+  
+  grDevices::pdf(paste0(path,"/",output_directory,"/",plot_names,"_cwFC_absoluteVals_heatmap.pdf")) 
+  pl_abs <- pheatmap::pheatmap(abs(as.matrix(scMappR_intersect)), color = myheatcol, scale = "row", fontsize_row = cex, fontsize_col = 10)
+  dev.off()
+  
+  grDevices::pdf(paste0(path,"/",output_directory,"/",plot_names,"_DEG_preferences_heatmap.pdf")) 
+  pheatmap::pheatmap(as.matrix(scMappR_pref[pl_abs$tree_row$order,pl_abs$tree_col$order]), color = myheatcol, scale = "row", fontsize_row = cex, fontsize_col = 10)
+  dev.off()
+  
+
+  }
+  
   scMappR_vals_up <- as.matrix(scMappR_vals[apply(scMappR_vals,1, sum) > 0,])
   scMappR_vals_down <- as.matrix(scMappR_vals[apply(scMappR_vals,1, sum) < 0,])
   grDevices::pdf(paste0(path,"/",output_directory,"/",plot_names,"_cell_proportions_heatmap.pdf")) 
