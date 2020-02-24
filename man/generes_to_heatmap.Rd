@@ -8,7 +8,7 @@ generes_to_heatmap(
   generes,
   species = "human",
   naming_preference = -9,
-  rda_path = "~/scMappR/data",
+  rda_path = "",
   make_names = TRUE,
   internal = FALSE
 )

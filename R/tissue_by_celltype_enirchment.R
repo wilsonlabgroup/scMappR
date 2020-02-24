@@ -53,7 +53,7 @@
 #' @export
 #' 
 
-tissue_by_celltype_enrichment <- function(gene_list, species, name = "CT_Tissue_example", p_thresh = 0.05, rda_path = "~/scMappR/data/",  isect_size = 3, return_gmt= FALSE) {
+tissue_by_celltype_enrichment <- function(gene_list, species, name = "CT_Tissue_example", p_thresh = 0.05, rda_path = "",  isect_size = 3, return_gmt= FALSE) {
   gmt <- "" # no visible binding 
   if(is.null(species)) stop("please select 'human' or 'mouse' as a species.")
   

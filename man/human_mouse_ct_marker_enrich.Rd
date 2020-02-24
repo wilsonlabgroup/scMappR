@@ -7,7 +7,7 @@
 human_mouse_ct_marker_enrich(
   gene_lists,
   theSpecies = "human",
-  cell_marker_path = "~/scMappR/data",
+  cell_marker_path = "",
   naming_preference = -9
 )
 }

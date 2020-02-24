@@ -9,7 +9,7 @@ heatmap_generation(
   comp,
   reference,
   cex = 0.8,
-  rd_path = "~/scMappR/data",
+  rd_path = "",
   cellTypes = "ALL",
   pVal = 0.01,
   isPval = TRUE,

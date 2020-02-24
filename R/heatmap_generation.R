@@ -59,7 +59,7 @@
 #'
 #' @export
 #' 
-heatmap_generation <- function(genesIn, comp,reference, cex = 0.8, rd_path = "~/scMappR/data", cellTypes = "ALL", pVal = 0.01, isPval=TRUE, isMax =FALSE,  isBackground = FALSE,  which_species = "human", toSave = FALSE, path = NULL) {
+heatmap_generation <- function(genesIn, comp,reference, cex = 0.8, rd_path = "", cellTypes = "ALL", pVal = 0.01, isPval=TRUE, isMax =FALSE,  isBackground = FALSE,  which_species = "human", toSave = FALSE, path = NULL) {
   # This function takes an inputted signature matrix as well as a list of genes and overlaps them. Then, if there is overlap, it prints a heatmap or barplot (depending on the number of overlapping genes)
   # Then, for every cell-type, genes considered over-represented are saved in a list
   

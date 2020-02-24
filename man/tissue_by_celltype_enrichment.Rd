@@ -9,7 +9,7 @@ tissue_by_celltype_enrichment(
   species,
   name = "CT_Tissue_example",
   p_thresh = 0.05,
-  rda_path = "~/scMappR/data/",
+  rda_path = "",
   isect_size = 3,
   return_gmt = FALSE
 )
@@ -31,8 +31,8 @@ tissue_by_celltype_enrichment(
 }
 \value{
 List with the following elements:
-\item{enriched} {Data frame of enriched cell-types from tissues.}
-\item{gmt} {Cell-markers in enriched cell-types from tissues.}
+\item{enriched}{Data frame of enriched cell-types from tissues.}
+\item{gmt}{Cell-markers in enriched cell-types from tissues.}
 }
 \description{
 This function uses a Fisher's-exact-test to rank gene-set enrichment.

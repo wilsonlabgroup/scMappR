@@ -49,7 +49,7 @@
 #'  }
 #' @export
 #' 
-human_mouse_ct_marker_enrich <- function(gene_lists, theSpecies = "human",cell_marker_path = "~/scMappR/data", naming_preference = -9) {
+human_mouse_ct_marker_enrich <- function(gene_lists, theSpecies = "human",cell_marker_path = "", naming_preference = -9) {
   # Fisher's exact test method of cell-type identification using the Panglao and CellMarker databases. It extracts significant pathways (pFDR < 0.05).
   # Then, if naming_preference != -9, it will extract the enriched cell-types within the cell-types identified with the naming preferences option.
   # as a final step, if an enriched cell-type is neuronal, it will complete a fisher's test of neuronal subtypes and replace the cell-marker with the most enrichriched neuronal subtype

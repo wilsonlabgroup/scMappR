@@ -54,12 +54,12 @@
 #' 
 #' # set toSave = TRUE and path = output directory of your choice
 #' internal <- tissue_scMappR_internal(genes, "mouse", output_directory = "scMappR_TesInternal",
-#'                                    tissue = "hypothalamus", toSave = FALSE, path = "./") 
+#'                                    tissue = "hypothalamus", toSave = FALSE) 
 #' 
 #'  }
 #' @export
 #' 
-tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,rda_path = "~/scMappR/data", cluster = "Pval", genecex = 0.01, raw_pval = FALSE, path = NULL, toSave = FALSE, drop_unkown_celltype = FALSE) {
+tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,rda_path = "", cluster = "Pval", genecex = 0.01, raw_pval = FALSE, path = NULL, toSave = FALSE, drop_unkown_celltype = FALSE) {
   
   # This function takes a list of genes and a tissue available in 'get_tissues' function and generates heatmaps of cell-type preferences
   # it then completes cell-type enrichment of each individual cell-type, then, if more than two cell-types are signficiantly enriched, co-enrichemnt 

@@ -47,7 +47,7 @@
 generes_to_heatmap <- function(generes,  
                                species = "human",  
                                naming_preference = -9, 
-                               rda_path = "~/scMappR/data", 
+                               rda_path = "", 
                                make_names = TRUE, 
                                internal = FALSE) {
   # take an list of compiled DEGs from different cell types, identify what the cell-types are using the fisher's exact method, and then convert into a signature matrix for both the adjusted p-value and odds ratio

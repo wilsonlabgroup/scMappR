@@ -9,7 +9,7 @@ tissue_scMappR_internal(
   species,
   output_directory,
   tissue,
-  rda_path = "~/scMappR/data",
+  rda_path = "",
   cluster = "Pval",
   genecex = 0.01,
   raw_pval = FALSE,
@@ -68,7 +68,7 @@ rda_path1 = "" # data directory (if it exists)
 
 # set toSave = TRUE and path = output directory of your choice
 internal <- tissue_scMappR_internal(genes, "mouse", output_directory = "scMappR_TesInternal",
-                                   tissue = "hypothalamus", toSave = FALSE, path = "./") 
+                                   tissue = "hypothalamus", toSave = FALSE) 
 
  }
 }
