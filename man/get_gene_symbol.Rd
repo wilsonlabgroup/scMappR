@@ -20,11 +20,11 @@ Internal: This function removes the ENGMUS/ENGS tag from Panglao created gene na
 From the ENSG/ENSMUS, this function determines if the species is mouse/human and returns the gene symbols.
 }
 \examples{
-\donttest{
+
  # load signature
 data(POA_example) 
 POA_OR_signature <- POA_example$POA_OR_signature
 symbols <- get_gene_symbol(POA_OR_signature)
-}
+
 
 }

@@ -36,11 +36,11 @@ Convert a list of cell-type markers from FindMarkers in Seurat to a signature ma
 Take a list of compiled differentially expressed genes from different cell-types, identify what the cell-types are using the Fisher's exact test, and then convert into a signature matrix for both the adjusted p-value and odds ratio.
 }
 \examples{
-\donttest{
+
 data(POA_example)
  POA_generes <- POA_example$POA_generes
 signature <- generes_to_heatmap(POA_generes,species = -9, make_names = FALSE)
 
-}
+
 
 }

@@ -29,10 +29,10 @@ fold-change designated by avg_logFC and p-val by p_val_adj.
 }
 \examples{
  
- \donttest{
+ 
  # load generes object
  data(POA_example)
  topGenes <- topgenes_extract(POA_example$POA_generes)
-}
+
 
 }

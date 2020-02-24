@@ -81,7 +81,7 @@ Then, if you have Wifi, it will complete gProfileR of the reordered cellWeighted
 This function is a wrapper for deconvolute_and_contextualize and pathway_enrich_internal.
 }
 \examples{
-\donttest{
+
 data(PBMC_example)
 bulk_DE_cors <- PBMC_example$bulk_DE_cors
 bulk_normalized <- PBMC_example$bulk_normalized
@@ -100,5 +100,5 @@ toOut <- scMappR_and_pathway_analysis(bulk_normalized, odds_ratio_in,
                                        sig_matrix_size = 3000, up_and_downregulated = FALSE, 
                                        internet = FALSE)
 
-}
+
 }

@@ -34,7 +34,7 @@ This function takes a signature matrix and
 extracts cell-type markers above a p-value or fold-change threshold.
 }
 \examples{
-\donttest{
+
 
 data(POA_example)
 Signature <- POA_example$POA_Rank_signature
@@ -43,6 +43,6 @@ rownames(Signature) <-RowName$rowname
 # extract genes with a -log10(Padj > 1)
 Signat <- extract_genes_cell(Signature)
 
-}
+
 
 }
