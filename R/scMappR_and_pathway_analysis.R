@@ -31,7 +31,10 @@
 #' @param newGprofiler Whether to use gProfileR or gprofiler2 (T/F).
 #' @param path If toSave == TRUE, path to the directory where files will be saved.
 #' 
-#' @return \code{scMappR_and_pathway_analysis} A directory with: cellWeighted_Foldchanges in RData file, Cell Type proportions (RData file), cell-type proportions leave one out (RData file), heatmap of cellWeighted_Foldchanges (all), heatmap of cellWeighted_Foldchanges (within signature), heatmap of signature (all), heatmap of signature (overlapping with DEG_list), Pathway enrichment for DEG list(all), RData file and Biological Processes, Pathway enrichment of cellWeighted_Foldchanges for each cell-type, RData file and biological processes. \cr
+#' @return List with the following elements:
+#' \item{cellWeighted_Foldchanges} {Cellweighted Fold-changes for all differentially expressed genes.}
+#' \item{paths} {Enriched biological pathways for each cell-type}
+#' \item{TFs} {Enirched TFs for each cell-type}
 #' 
 #' @importFrom ggplot2 ggplot aes geom_boxplot geom_text theme coord_flip labs element_text
 #' @importFrom pheatmap pheatmap

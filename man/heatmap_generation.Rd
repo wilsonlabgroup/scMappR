@@ -48,7 +48,11 @@ heatmap_generation(
 \item{path}{If toSave == TRUE, path to the directory where files will be saved.}
 }
 \value{
-\code{heatmap_generation} A heatmap/barplot of p-value or odds-ratio of cell-type specific genes intersecting with the gene list. A list of genes that do/don't intersect with the signature matrix as well as a list of which cell-type these over-represented genes live in. \cr
+List with the following elements:
+\item{genesIn} {Vector of genes intersecting gene list and signature matrix.}
+\item{genesNoIn} {Vector of inputted genes not in signature matrix.}
+\item{geneHeat} {Signature matrix subsetted by inputted gene list}
+\item{preferences} {Cell-markers mapping to cell-types.}
 }
 \description{
 This function takes an inputted signature matrix as well as a list of genes and overlaps them.

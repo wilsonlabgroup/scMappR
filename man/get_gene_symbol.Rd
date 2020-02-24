@@ -10,7 +10,9 @@ get_gene_symbol(wilcoxon_rank_mat_t)
 \item{wilcoxon_rank_mat_t}{Matrix where row names are "GeneSymbol-Ensembl" (human or mouse).}
 }
 \value{
-\code{seurat_to_generes} A list containing the gene-symbols only as well as if the species is mouse or human. \cr
+List with the following elements:
+\item{rowname} {Genes in the signature matrix excluding the ensemble name.}
+\item{species} {"mouse" or "human" depending on appended ensembl symbols.}
 }
 \description{
 Internal -- removes Ensembl signature appended to signature matrix from Panglao and figure out species by pre-fix Ensembl of the Ensembl ID that is appended to gene names.

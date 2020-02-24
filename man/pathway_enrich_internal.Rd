@@ -39,7 +39,9 @@ pathway_enrich_internal(
 \item{path}{If toSave == TRUE, path to the directory where files will be saved.}
 }
 \value{
-\code{pathway_enrich_internal} Plots and pathway enrichment of bulk DEGs and cellWeighted_Foldchanges. \cr
+List with the following elements:
+\item{BPs} {Enriched biological pathways for each cell-type.}
+\item{TFs} {Enriched transcription factors for each cell-type.}
 }
 \description{
 This function completes pathway enrichment of cellWeighted_Foldchanges and bulk gene list.

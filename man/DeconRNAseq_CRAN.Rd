@@ -30,7 +30,7 @@ DeconRNAseq_CRAN(
 \item{fig}{Make figures - always FALSE for scMappR}
 }
 \value{
-\code{DeconRNAseq_CRAN} Estimated cell-type proportions with DeconRNAse \cr
+\code{DeconRNAseq_CRAN} Estimated cell-type proportions with DeconRNAseq. \cr
 }
 \description{
 This function runs DeconRNAseq with default parameters such that it is compatible with CRAN and scMappR

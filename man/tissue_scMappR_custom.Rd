@@ -30,7 +30,11 @@ tissue_scMappR_custom(
 \item{is_pvalue}{If signature matrix is p-value before rank is applied (not recommended ) (T/F).}
 }
 \value{
-\code{tissue_scMappR_custom} A list containing the entire signature matrix, the matrix subsetted for your genes, enrichment of each cell-type, and co-enrichment. \cr
+List with the following elements:
+\item{background_heatmap} {Data frame of the entire gene by cell-type signature matrix inputted.}
+\item{gene_list_heatmap} {Data frame of inputted signature matrix subsetted by input genes.}
+\item{single_celltype_preferences} {Data frame of enriched cell-types.}
+\item{group_celtype_preference} {Data frame of groups of cell-types enriched by the same genes.}
 }
 \description{
 This function visualizes signature matrix, clusters subsetted genes, completes enrichment of individual cell-types and co-enrichment.

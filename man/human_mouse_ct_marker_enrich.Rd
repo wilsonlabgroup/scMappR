@@ -21,7 +21,9 @@ human_mouse_ct_marker_enrich(
 \item{naming_preference}{Either -9 if there is no expected cell-type or one of the categories from get_naming_preference_options(). This is useful if you previously have an idea of which cell-type you were going to enrich.}
 }
 \value{
-\code{human_mouse_ct_marker_enrich} list: The top cell-type for each cell-type markers list, as well as a matrix the top 5 most likely cell-type makers for each gene list (with OddsRatio and P-value). \cr
+List with the following elements:
+\item{cellTypes} {most likely marker for each cell-type from each database.}
+\item{marker_sets} {all enriched cell-types for each cluster from each dataset.}
 }
 \description{
 This function completes the Fisher's exact test cell-type naming for all cell-types.

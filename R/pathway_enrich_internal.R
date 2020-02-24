@@ -19,7 +19,9 @@
 #' @param toSave Allow scMappR to write files in the current directory (T/F).
 #' @param path If toSave == TRUE, path to the directory where files will be saved.
 #' 
-#' @return \code{pathway_enrich_internal} Plots and pathway enrichment of bulk DEGs and cellWeighted_Foldchanges. \cr
+#' @return List with the following elements:
+#' \item{BPs} {Enriched biological pathways for each cell-type.}
+#' \item{TFs} {Enriched transcription factors for each cell-type.}
 #' 
 #' @importFrom ggplot2 ggplot aes geom_boxplot geom_text theme coord_flip labs element_text
 #' @importFrom pheatmap pheatmap

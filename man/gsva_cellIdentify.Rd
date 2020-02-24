@@ -24,7 +24,10 @@ gsva_cellIdentify(
 \item{toSave}{If scMappR is allowed to write files and directories.}
 }
 \value{
-\code{gsva_cellIdentify} A list containing the top cell-type marker for a cell-type using the panglao dataset as well as the cellMarker dataset, and the average expression of genes in each cluster. \cr
+List with the following elements:
+\item{cellMarker} {Most likely cell-types predicted from cellMarker database.}
+\item{panglao} {Most likely cell-types predicted from panglao database.}
+\item{avg_expression} {Average expression of each gene in each cell-type.}
 }
 \description{
 This function computes the mean expression of every cell-type before predicting the most likely cell-type using the GSVA method.

@@ -14,8 +14,12 @@
 #' @param internal If this function is pre-processing from Panglao (T/F).
 #' @param rda_path Path to output direcotry, if toSave is true.
 #'
-#' @return \code{generes_to_heatmap} A list containing a signature matrix by rank := -1*log10(Pfdr) and by fold-change (only increasing). Additionally it returns the top (up to) 30 CT markers for each cell-type, as well as the name of each cell-type (from the signature methods method). \cr
-#'
+#' @return List with the following elements:
+#' \item{pVal} {A dataframe containing the signature matrix of ranks (-log10(Padj) * sign(fold-change)).}
+#' \item{OR} {A dataframe containing the signature matrix of odds ratios.}
+#' \item{cellname} {A vector of the cell-labels returned from the GSVA method.}
+#' \item{topGenes} {the top 30 mos expressed genes in each cell-type.}
+#' 
 #' @importFrom ggplot2 ggplot aes geom_boxplot geom_text theme coord_flip labs element_text
 #' @importFrom pheatmap pheatmap
 #' @importFrom graphics barplot plot

@@ -14,8 +14,10 @@
 #' @param cell_marker_path If local, path to cell-type marker rda files, otherwise, we will try to download data files.
 #' @param naming_preference Either -9 if there is no expected cell-type or one of the categories from get_naming_preference_options(). This is useful if you previously have an idea of which cell-type you were going to enrich.
 #'
-#' @return \code{human_mouse_ct_marker_enrich} list: The top cell-type for each cell-type markers list, as well as a matrix the top 5 most likely cell-type makers for each gene list (with OddsRatio and P-value). \cr
-#'
+#' @return List with the following elements:
+#' \item{cellTypes} {most likely marker for each cell-type from each database.}
+#' \item{marker_sets} {all enriched cell-types for each cluster from each dataset.}
+#' 
 #' @importFrom ggplot2 ggplot aes geom_boxplot geom_text theme coord_flip labs element_text
 #' @importFrom pheatmap pheatmap
 #' @importFrom graphics barplot plot

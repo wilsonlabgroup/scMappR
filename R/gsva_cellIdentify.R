@@ -13,7 +13,10 @@
 #' @param rda_path Path to pre-computed cell-type .gmt files (rda objects).
 #' @param toSave If scMappR is allowed to write files and directories.
 #'
-#' @return \code{gsva_cellIdentify} A list containing the top cell-type marker for a cell-type using the panglao dataset as well as the cellMarker dataset, and the average expression of genes in each cluster. \cr
+#' @return List with the following elements:
+#' \item{cellMarker} {Most likely cell-types predicted from cellMarker database.}
+#' \item{panglao} {Most likely cell-types predicted from panglao database.}
+#' \item{avg_expression} {Average expression of each gene in each cell-type.}
 #'
 #' @importFrom ggplot2 ggplot aes geom_boxplot geom_text theme coord_flip labs element_text
 #' @importFrom pheatmap pheatmap

@@ -15,7 +15,9 @@
 #' @param return_gmt Return .gmt file -- reccomended if downloading from online as it may have updated (T/F).
 #' @param name Name of the pdf to be printed.
 #' 
-#' @return \code{tissue_by_celltype_enrichment} Gene set enrichment of cell-types on your inputted gene list, a plot of cell-type enrichment (can be saved), and the gmt file will cell-type markers (optionally). \cr
+#' @return List with the following elements:
+#' \item{enriched} {Data frame of enriched cell-types from tissues.}
+#' \item{gmt} {Cell-markers in enriched cell-types from tissues.}
 #'
 #' @importFrom ggplot2 ggplot aes geom_boxplot geom_text theme coord_flip labs element_text
 #' @importFrom pheatmap pheatmap

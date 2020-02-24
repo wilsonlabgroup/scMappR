@@ -16,7 +16,7 @@
 #' @param isPvalue If the signature matrix is raw p-value (T/F) -- TRUE not recommended.
 #' 
 #'
-#' @return \code{extract_genes_cell} A list of genes above the threshold for each sample. \cr
+#' @return \code{extract_genes_cell} A vector of genes above the threshold for each sample. \cr
 #'
 #' @importFrom ggplot2 ggplot aes geom_boxplot geom_text theme coord_flip labs element_text
 #' @importFrom pheatmap pheatmap

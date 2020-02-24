@@ -16,7 +16,7 @@
 #' @param use.scale Scale and center value - always TRUE for scMappR
 #' @param fig Make figures - always FALSE for scMappR
 #' 
-#' @return \code{DeconRNAseq_CRAN} Estimated cell-type proportions with DeconRNAse \cr
+#' @return \code{DeconRNAseq_CRAN} Estimated cell-type proportions with DeconRNAseq. \cr
 #' 
 #' @importFrom ggplot2 ggplot aes geom_boxplot geom_text theme coord_flip labs element_text
 #' @importFrom pheatmap pheatmap

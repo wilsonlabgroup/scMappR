@@ -57,7 +57,11 @@ deconvolute_and_contextualize(
 \item{path}{If toSave == TRUE, path to the directory where files will be saved.}
 }
 \value{
-\code{deconvolute_and_contextualize} cell weighted fold-changes for every gene in every cell-type, cell-type composition with, allgenes included, average gene expression of each cell-type usng leave one out approach for each gene, and the processed signature matrix. Optional: boxplots of estimated CT proportions for each gene using a leave-one-out method. \cr
+List with the following elements:
+\item{cellWeighted_Foldchange} {data frame of cellweightedFold changes for each gene.}
+\item{cellType_Proportions} {data frame of cell-type proportions from DeconRNA-seq.}
+\item{leave_one_out_proportions} {data frame of average cell-type proportions for case and control when gene is removed.}
+\item{processed_signature_matrix} {signature matrix used in final analysis.}
 }
 \description{
 This function takes a count matrix, signature matrix, and differentially expressed genes (DEGs) before generating cwFold-chagnes for each cell-type.

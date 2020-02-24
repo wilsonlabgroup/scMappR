@@ -24,7 +24,7 @@ extract_genes_cell(
 \item{isPvalue}{If the signature matrix is raw p-value (T/F) -- TRUE not recommended.}
 }
 \value{
-\code{extract_genes_cell} A list of genes above the threshold for each sample. \cr
+\code{extract_genes_cell} A vector of genes above the threshold for each sample. \cr
 }
 \description{
 Extracting cell-type markers from a signature matrix.

@@ -48,7 +48,10 @@ process_dgTMatrix_lists(
 \item{test_ctname}{statistical test for calling CT markers -- must be in Seurat}
 }
 \value{
-\code{process_dgTMatrix_lists} Signature matrices populated with rank and odds-ratio. If toSave is considered TRUE, then cell-type names from GSVA and the cell-type names are printed. saveSCObject = TRUE will also save the Seurat object. \cr
+List with the following elements:
+\item{wilcoxon_rank_mat_t} {A dataframe containing the signature matrix of ranks (-log10(Padj) * sign(fold-change)).}
+\item{wilcoxon_rank_mat_or} {A dataframe containing the signature matrix of odds-ratios.}
+\item{generes} {All cell-type markers for each cell-type with p-value and fold changes.}
 }
 \description{
 This function takes a list of count matrices, processes them, calls cell-types, and generates signature matrices.

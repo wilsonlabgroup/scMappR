@@ -14,7 +14,9 @@
 #' @param gene_cut The top number of genes in pathway analysis.
 #' @param newGprofiler Using gProfileR or gprofiler2, (T/F).
 #' 
-#' @return \code{gProfiler_cellWeighted_Foldchange} A List of significantly enriched pathways and TFs (correction_method = FDR, hier_sorting = moderate), for every cell-type. \cr
+#' @return List with the following elements:
+#' \item{BP} {gprofiler enrichment of biological pathways for each cell-type}
+#' \item{TF} {gprofiler enrichment of transcription factors for eachc cell-type.}
 #' 
 #' @importFrom ggplot2 ggplot aes geom_boxplot geom_text theme coord_flip labs element_text
 #' @importFrom pheatmap pheatmap
