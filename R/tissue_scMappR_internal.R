@@ -174,7 +174,7 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
   hm <- names(scMappR_list) # get all the available pvalue signautres
   hm_tissue <- grep(toupper(tissue), toupper(hm))
   if(length(hm_tissue) == 0) {
-    stop(print(paste0(tissue, " is not currently an available tissue for scMappR. Please check spelling or try a different tissue.")))
+    stop(paste0(tissue, " is not currently an available tissue for scMappR. Please check spelling or try a different tissue."))
   }
   input_studies <- hm[hm_tissue]
   study_names <- input_studies
@@ -182,7 +182,7 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
     dir.create(paste0(path,"/",outDir))
   } else {
     warning("toSave == FALSE and therefore a directory cannot be made. Switching toSave = TRUE is reccomended.")
-    print("toSave == FALSE and therefore a directory cannot be made. Switching toSave = TRUE is reccomended.", quote = FALSE)
+    message("toSave == FALSE and therefore a directory cannot be made. Switching toSave = TRUE is reccomended.", quote = FALSE)
     
   }
   single_cell_studies <- list()
@@ -191,7 +191,7 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
     wilcoxon_rank_mat_t <- scMappR_list[[study_names[i]]]
     
     if(length(grep("-", rownames(wilcoxon_rank_mat_t))) / length(rownames(wilcoxon_rank_mat_t)) > 0.75) {  
-      print("Detected signature matrix from scMappR catelogue", quote = FALSE)
+      message("Detected signature matrix from scMappR catelogue", quote = FALSE)
       RN_2 <- get_gene_symbol(wilcoxon_rank_mat_t)
       
       rownames(wilcoxon_rank_mat_t) <- RN_2$rowname
@@ -243,7 +243,7 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
     
     unknown <- grep(toupper("unknown"),toupper(colnames(study_ref)))
     if(length(unknown) > 0 & drop_unkown_celltype == TRUE) {
-      print("Removing unknown cell-types")
+      message("Removing unknown cell-types")
       study_ref <- study_ref[,-unknown]
     } else {
       study_ref <- study_ref
@@ -253,13 +253,13 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
 
     background_heatmap <- heatmap_generation(background_genes, comp = paste0(outDir, "/", study_names[i],"_background"), reference = study_ref, isBackground = TRUE, cex = genecex, which_species = species, isPval = raw_pval, toSave=toSave, path = path)  
     # get the heatmap of all of the genes in the signature matrix
-    print("Number of DEGs that are cell-type markers in current signature matrix: ", quote = FALSE)
-    print(length(intersect(gene_list, rownames(study_ref))))
+    message("Number of DEGs that are cell-type markers in current signature matrix: ", quote = FALSE)
+    message(length(intersect(gene_list, rownames(study_ref))))
     theL <- length(intersect(gene_list, rownames(study_ref)))
     if(theL < 3) {
-      print(paste0("Your gene list contains fewer than 3 overlapping genes with ",study_names[i],". Therefore no heatmap was saved and enrichment cannot be done."), quote = FALSE)
-      print(paste0("Subsetted CT marker preferences of these genes are saved in ",paste0(outDir, "/", study_names[i],"_genelist")), quote = FALSE)
-      print(intersect(gene_list, rownames(study_ref)))
+      message(paste0("Your gene list contains fewer than 3 overlapping genes with ",study_names[i],". Therefore no heatmap was saved and enrichment cannot be done."), quote = FALSE)
+      message(paste0("Subsetted CT marker preferences of these genes are saved in ",paste0(outDir, "/", study_names[i],"_genelist")), quote = FALSE)
+      message(intersect(gene_list, rownames(study_ref)))
       subsetted_genes <- study_ref[intersect(gene_list, rownames(study_ref)),]
       if(toSave==TRUE) {
       save(subsetted_genes, file = paste0(path, "/",outDir, "/", study_names[i],"_subsetted.RData"))
@@ -273,8 +273,8 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
     
     # get the heatmap of genes overlapping with the signature matrix and the inputted gene list
     if(is.character(gene_list_heatmap)) {
-      print("not enough genes were present to do downsteam analysis in: ")
-      print(study_names[i])
+      message("not enough genes were present to do downsteam analysis in: ")
+      message(study_names[i])
       single_cell_studies[[i]] <- gene_list_heatmap
       next
     }
@@ -286,7 +286,7 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
     
     if(nrow(sig) <2 ) { 
       #if there are fewer than 2 enriched cell-types
-      print("co-enrichment cannot be measured as one or fewer CTs are enriched")
+      message("co-enrichment cannot be measured as one or fewer CTs are enriched")
       coCTpreferences <- "co-enrichment cannot be measured as one or fewer CTs are enriched"
       output <- list(background_heatmap = background_heatmap, gene_list_heatmap = gene_list_heatmap, single_celltype_preferences = singleCTpreferences, group_celtype_preference = coCTpreferences)
       single_cell_studies[[i]] <- output 

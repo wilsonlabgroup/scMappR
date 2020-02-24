@@ -73,8 +73,8 @@ seurat_to_generes <- function(pbmc, test = "wilcox"){
       generes[[count]] <- de_genes
       names(generes)[count] <- i
       count <- count+1
-      print("DE")
-      print(i)
+      message("DE")
+      message(i)
     }
     
     
@@ -92,8 +92,8 @@ seurat_to_generes <- function(pbmc, test = "wilcox"){
     generes[[count]] <- de_genes
     names(generes)[count] <- i
     count <- count+1
-    print("DE")
-    print(i)
+    message("DE")
+    message(i)
   }
   return(generes)
 }

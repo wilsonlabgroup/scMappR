@@ -33,7 +33,7 @@
 #' @importFrom limSolve lsei
 #'
 #' @examples
-#' \donttest{
+#' 
 #' 
 #' data(POA_example)
 #' Signature <- POA_example$POA_Rank_signature
@@ -42,7 +42,7 @@
 #' # extract genes with a -log10(Padj > 1)
 #' Signat <- extract_genes_cell(Signature)
 #' 
-#' }
+#' 
 #' 
 #' @export
 #' 

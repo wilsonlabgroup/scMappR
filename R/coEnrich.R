@@ -93,7 +93,7 @@ coEnrich <- function(sig, gene_list_heatmap, background_heatmap, study_name, out
       # find combinations of cell-types
       co_up <- function(x) return(length(x[x>=1])==y)
       #score genes significantly enriched in both cell types = 1
-      print(y)
+      message(y)
       for(j in 1:ncol(comps)) {
         # for that comparison
         thecomps <- toupper(comps[,j]) # take comparison

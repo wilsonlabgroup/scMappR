@@ -88,7 +88,7 @@ process_dgTMatrix_lists <- function(dgTMatrix_list, name, species_name, naming_p
   dgTMatrix_list_class2 <- class(dgTMatrix_list)[1] %in% c("dgCMatrix", "matrix")
   
   if(dgTMatrix_list_class2[1]) {
-    print("'dgTMatrix_list' is of class dgCMatrix or matrix, converting to a named list.", quote = F)
+    message("'dgTMatrix_list' is of class dgCMatrix or matrix, converting to a named list.", quote = F)
     dgTMatrix_list <- list(name = dgTMatrix_list)
     names(dgTMatrix_list) <- name
   }
@@ -142,18 +142,18 @@ process_dgTMatrix_lists <- function(dgTMatrix_list, name, species_name, naming_p
   naming_preferences <- c("brain", "epithelial", "endothelial", "blood", "connective","eye", "epidermis", "Digestive", "Immune", "pancreas", "liver", "reproductive", "kidney", "respiratory") 
   if(!naming_preference %in% naming_preferences) {
     if(naming_preference != -9) {
-      print("Naming preference options")
-      print(naming_preferences)
+      message("Naming preference options")
+      message(naming_preferences)
       stop("Naming preferences not in options (case sensitive) and isn't a non-choice (-9), please try again.")
     }
   }
   
   pbmc <- process_from_count(countmat_list = dgTMatrix_list, name = name, theSpecies = species_name, panglao_set = panglao_set, haveUmap = haveUMAP, saveALL  = saveSCObject, toSave=toSave, use_sctransform = use_sctransform, path = path)
   # process from the count matrices to the Seurat object -- see process_from_count for details
-  print(class(pbmc))
-  #print(head(pbmc))
-  print(naming_preference)
-  print(class(naming_preference))
+  message(class(pbmc))
+  #message(head(pbmc))
+  message(naming_preference)
+  message(class(naming_preference))
   gsva_cellIdentity_out <- gsva_cellIdentify(pbmc, theSpecies = species_name, naming_preference = naming_preference, rda_path = rda_path, toSave=toSave)
   # identify cell-type identify using the gsva method
   if(toSave == TRUE) {
@@ -161,7 +161,7 @@ process_dgTMatrix_lists <- function(dgTMatrix_list, name, species_name, naming_p
       
   } else {
     warning("toSave == FALSE therefore files cannot be saved. Switching toSave = TRUE is strongly reccomended.")
-    print("toSave == FALSE therefore files cannot be saved. Switching toSave = TRUE is strongly reccomended.", quote = FALSE)
+    message("toSave == FALSE therefore files cannot be saved. Switching toSave = TRUE is strongly reccomended.", quote = FALSE)
     
   }
   generes <- seurat_to_generes(pbmc = pbmc, test = test_ctname)
@@ -179,7 +179,7 @@ process_dgTMatrix_lists <- function(dgTMatrix_list, name, species_name, naming_p
     l <- list(wilcoxon_rank_mat_t = wilcoxon_rank_mat_t, wilcoxon_rank_mat_or = wilcoxon_rank_mat_or,generes=generes)
   } else {
     warning("toSave == FALSE therefore files cannot be saved. Switching toSave = TRUE is strongly reccomended.")
-    print("toSave == FALSE therefore files cannot be saved. Switching toSave = TRUE is strongly reccomended.", quote = FALSE)
+    message("toSave == FALSE therefore files cannot be saved. Switching toSave = TRUE is strongly reccomended.", quote = FALSE)
     
     l <- list(wilcoxon_rank_mat_t = wilcoxon_rank_mat_t, wilcoxon_rank_mat_or = wilcoxon_rank_mat_or,generes=generes)
     

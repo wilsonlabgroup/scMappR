@@ -29,12 +29,12 @@
 #' @importFrom limSolve lsei
 #'
 #' @examples
-#' \donttest{
+#' 
 #'  # load signature
 #' data(POA_example) 
 #' POA_OR_signature <- POA_example$POA_OR_signature
 #' symbols <- get_gene_symbol(POA_OR_signature)
-#' }
+#' 
 #' 
 #' @export
 #' 

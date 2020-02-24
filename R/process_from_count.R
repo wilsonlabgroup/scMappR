@@ -75,7 +75,7 @@ process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = 
   countmat_list_class2 <- class(countmat_list)[1] %in% c("dgCMatrix", "matrix")
   
   if(countmat_list_class2[1]) {
-    print("'dgTMatrix_list' is of class dgCMatrix or matrix, converting to a named list.", quote = F)
+    message("'dgTMatrix_list' is of class dgCMatrix or matrix, converting to a named list.", quote = F)
     countmat_list <- list(name = countmat_list)
     names(countmat_list) <- name
   }
@@ -137,7 +137,7 @@ process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = 
     # If they are in the right format then continue on, 
     # otherwise adjust the gene names so that mito genes are detected
     mt.genes_m <- c("Tf", "Rnr1","Tv","Rnr2","Tl1","Nd1","Ti","Tq","Tm","Nd2","Tw","Ta","Tn","Tc","Ty","Co1","Ts1","Td","Co2","Tk","Atp8","Atp6","Co3","Tg","Nd3","Tr","Nd4l","Nd4","Ts2","Tl2","Nd5","Nd6","Te","Cytb","Tt","Tp")
-    print(length(num_MT))
+    message(length(num_MT))
     if((length(num_MT) == 0 & theSpecies =="human")[1]) {
       # convert gene names if there are none with the mitochondiral designation.
       mt.genes <- toupper(mt.genes_m)
@@ -237,7 +237,7 @@ process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = 
     
     each_sra[[count]] <- pbmc
     count <- count + 1
-    print(count)
+    message(count)
     
   }
   names(each_sra) <- shrt

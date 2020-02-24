@@ -36,7 +36,7 @@
 #'
 #' @examples 
 #' 
-#' \donttest{
+#' 
 #' # load in signature matrices
 #' data(POA_example)
 #' POA_generes <- POA_example$POA_generes
@@ -48,7 +48,7 @@
 #' genes <- rownames(Signature)[1:60]
 #' heatmap_test <- tissue_scMappR_custom( genes, signature_matrix = Signature,
 #'                                       output_directory =  "scMappR_test", toSave = FALSE)
-#' }
+#' 
 #' @export
 #' 
 tissue_scMappR_custom <- function(gene_list, signature_matrix ,output_directory = "custom_test", toSave = FALSE, path = NULL, gene_cutoff = 1, is_pvalue = TRUE) {
@@ -106,7 +106,7 @@ tissue_scMappR_custom <- function(gene_list, signature_matrix ,output_directory 
     dir.create(paste0(path,"/",outDir))
   } else {
     warning("toSave == FALSE and therefore a directory cannot be made. Switching toSave = TRUE is reccomended.")
-    print("toSave == FALSE and therefore a directory cannot be made. Switching toSave = TRUE is reccomended.", quote = FALSE)
+    message("toSave == FALSE and therefore a directory cannot be made. Switching toSave = TRUE is reccomended.")
     
   }
   single_cell_studies <- list()
@@ -136,7 +136,7 @@ tissue_scMappR_custom <- function(gene_list, signature_matrix ,output_directory 
   
   if(nrow(sig) <2 ) {
     # if fewer than two cell-types are enriched
-    print("co-enrichment cannot be measured as one or fewer CTs are enriched")
+    message("co-enrichment cannot be measured as one or fewer CTs are enriched")
     coCTpreferences <- "co-enrichment cannot be measured as one or fewer CTs are enriched"
     output <- list(background_heatmap = background_heatmap, gene_list_heatmap = gene_list_heatmap, single_celltype_preferences = singleCTpreferences, group_celtype_preference = coCTpreferences)
     single_cell_studies <- output 

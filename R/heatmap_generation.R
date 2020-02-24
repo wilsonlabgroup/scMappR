@@ -40,7 +40,7 @@
 #'
 #' @examples
 #' 
-#' \donttest{
+#' 
 #' # load in signature matrices
 #' data(POA_example)
 #' POA_generes <- POA_example$POA_generes
@@ -52,7 +52,7 @@
 #' genes <- rownames(Signature)[1:100]
 #' heatmap_test <- heatmap_generation(genesIn = genes, "scMappR_test",
 #'                                    reference = Signature, which_species = "mouse")
-#'}
+#'
 #' @export
 #' 
 heatmap_generation <- function(genesIn, comp,reference, cex = 0.8, rd_path = "~/scMappR/data", cellTypes = "ALL", pVal = 0.01, isPval=TRUE, isMax =FALSE,  isBackground = FALSE,  which_species = "human", toSave = FALSE, path = NULL) {
@@ -75,7 +75,7 @@ heatmap_generation <- function(genesIn, comp,reference, cex = 0.8, rd_path = "~/
   # A heatmap/barplot of p-value or odds-ratio of cell-type specific genes intersecting with the gene list
   # a list of genes that do/don't intersect with the signature matrix as well as a list of which cell-type these over-represented genes live in.
   
-  print(paste0("Assumes inputted gene symbols are of ", which_species, " origin."))
+  message(paste0("Assumes inputted gene symbols are of ", which_species, " origin."))
   
   if(!is.character(genesIn)) {
     stop("Inputted gene list is not character vector")
@@ -131,7 +131,7 @@ heatmap_generation <- function(genesIn, comp,reference, cex = 0.8, rd_path = "~/
     wilcoxon_rank_mat_t <- wilcoxon_rank_mat_t[!duplicated(rownames(wilcoxon_rank_mat_t)),]
     wilcoxon_rank_mat_t <- wilcoxon_rank_mat_t[apply(wilcoxon_rank_mat_t, 1, stats::var) > 0,apply(wilcoxon_rank_mat_t, 2, stats::var) > 0 ]
     if(length(grep("-", rownames(wilcoxon_rank_mat_t))) / length(rownames(wilcoxon_rank_mat_t)) > 0.75) {  
-      print("Detected signature matrix from scMappR catelogue", quote = FALSE)
+      message("Detected signature matrix from scMappR catelogue")
       RN_2 <- get_gene_symbol(wilcoxon_rank_mat_t)
       
       rownames(wilcoxon_rank_mat_t) <- RN_2$rowname
@@ -179,7 +179,7 @@ heatmap_generation <- function(genesIn, comp,reference, cex = 0.8, rd_path = "~/
   
   
   if(any(duplicated(colnames(wilcoxon_rank_mat_t)))) { # if cell-types are named the same (i.e. two clusters have the same tag then convert)
-    print("Cell-types not uniquely named, appending tag to make all cell-types unique")
+    message("Cell-types not uniquely named, appending tag to make all cell-types unique")
     colnames(wilcoxon_rank_mat_t) <- paste0(colnames(wilcoxon_rank_mat_t),"_tag",1:ncol(wilcoxon_rank_mat_t))
     
   }
@@ -190,17 +190,17 @@ heatmap_generation <- function(genesIn, comp,reference, cex = 0.8, rd_path = "~/
   genes_noInter <- genesIn[!(genesIn %in% genesInter)]
   geneHeat <- c()
   if(isBackground == TRUE) {
-    print("Preferential expression in background set: ")
+    message("Preferential expression in background set: ")
   }
   if(isBackground == FALSE) {
-    print("Preferential expression in inputted gene list: ")
+    message("Preferential expression in inputted gene list: ")
   }
   if(length(whichGenesInter) == 0) { # if no genes inputted are preferentially expressed
-    print("No input genes are preferentially expressed")
+    message("No input genes are preferentially expressed")
     stop("No_downstram_analysis")
   }
   if(length(whichGenesInter) == 1) { # if only 1 gene is
-    print("One input gene is preferentially expressed")
+    message("One input gene is preferentially expressed")
     if(toSave == TRUE) {
     grDevices::pdf(paste0(path,"/",comp,"_barplot.pdf"))
     graphics::barplot(wilcoxon_rank_mat_t[whichGenesInter,], las = 2, main = rownames(wilcoxon_rank_mat_t)[whichGenesInter])
@@ -211,7 +211,7 @@ heatmap_generation <- function(genesIn, comp,reference, cex = 0.8, rd_path = "~/
     stop("No_downstream_analysis")
   }
   if(length(whichGenesInter) > 1) { # if > 1 genes are
-    print("At least one input gene is preferentially expressed")
+    message("At least one input gene is preferentially expressed")
     # make the heatmap
     if(toSave == TRUE) {
     myheatcol <- grDevices::colorRampPalette(c("lightblue", "white", "orange"))(256)

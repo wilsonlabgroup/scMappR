@@ -207,17 +207,17 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   
   if(length(toInter)==0) { 
     # if there isn't overlap in the genes in the signature matrices and count matrix
-    print("Rownames of signature matrix")
-    print(utils::head(RN_2))
-    print("Rownames of count matrix")
-    print(utils::head(norm_counts_i))
+    message("Rownames of signature matrix")
+    message(utils::head(RN_2))
+    message("Rownames of count matrix")
+    message(utils::head(norm_counts_i))
     stop("There is no overlap between the signature and count matrix. Please make sure that gene symbols are row names and they are gene symbols of te same species.")
   }
   rownames(wilcoxon_rank_mat_or) <- RN_2
   # Removing unknown cell-types
   unknown <- grep("unknown",colnames(wilcoxon_rank_mat_or))
   if((length(unknown) > 0 & drop_unknown_celltype == TRUE)[1]) {
-    print("Removing unknown cell-types")
+    message("Removing unknown cell-types")
     wilcox_or <- wilcoxon_rank_mat_or[,-unknown]
   } else {
     wilcox_or <- wilcoxon_rank_mat_or
@@ -229,7 +229,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   #############
   wilcox_or[wilcox_or < 0 ] <- 0
   if((nrow(wilcox_or) > sig_matrix_size)[1]) {
-    print(paste0("For deconvolution, we're using the top ", sig_matrix_size," most vairable signatures"))
+    message(paste0("For deconvolution, we're using the top ", sig_matrix_size," most vairable signatures"))
     RVar <- rowVars(wilcox_var)
     wilcox_or_var <- wilcox_or[order(RVar, decreasing = T), ]
     wilcox_or_signature <- wilcox_or_var[1:sig_matrix_size,]
@@ -259,8 +259,8 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   # keep cell-type of genes with > 0.1% of the population
   proportions <- proportions[,colMeans(proportions) > 0.001]
   
-  print("your bulk data contains the following cell types")
-  print(colnames(proportions), quote = FALSE)
+  message("your bulk data contains the following cell types")
+  message(colnames(proportions))
   #convert to correct datatypes for downstream analysis
   wilcox_or <- wilcox_or[,colnames(proportions)]
   wilcox_or_df <- as.data.frame(wilcox_or)
@@ -271,7 +271,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   
   
   genesIn <- DEGs$gene_name[DEGs$gene_name %in% rownames(bulk_in)]
-  print(length(genesIn))
+  message(length(genesIn))
   
   if(length(genesIn) == 0) {
     stop("None of your DEGs overlap with genes in your count matrix")
@@ -288,7 +288,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
     # bulk: the bulk RNA-seq dataset
     # signature: the signature matrix
     #Returns: estimated CT propotions with that gene removed
-    #print(x)
+    #message(x)
     if(x %in% rownames(bulk)) { # remove from bulk
       
       bulk_rem <- bulk[-which(rownames(bulk) == x),]
@@ -313,7 +313,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
     
     proportions <- testMine$out.all # get proprotions
     
-    #print(x)
+    #message(x)
     return(proportions)
   }
   
@@ -350,7 +350,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
     return(l) 
   }
   
-  print("Leave one out cell proporitons: ")
+  message("Leave one out cell proporitons: ")
   iterated_pull <- lapply(iterated, proportion_pull)
   pull_means <- function(x) return(x$Mean)
   pull_fc <- function(x) return(x$FC) 
@@ -358,8 +358,8 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   means <- do.call("rbind",lapply(iterated_pull, pull_means))
   fold_changes <- do.call("rbind",lapply(iterated_pull, pull_fc))
   if( max_proportion_change != -9) { # if there is a maximum of cell-type proprotion changes, cap it at your max
-    print("converting maximum CT proportion change to have a maximum odds-ratio of")
-    print(max_proportion_change)
+    message("converting maximum CT proportion change to have a maximum odds-ratio of")
+    message(max_proportion_change)
     fold_changes[fold_changes > max_proportion_change] <- max_proportion_change
     fold_changes[fold_changes < (1/max_proportion_change)] <- (1/max_proportion_change)
   }
@@ -368,12 +368,12 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   cmeaned <- lapply(iterated, colMeans) 
   cmeaned_stacked <- do.call("rbind", cmeaned)
   n <- colnames(cmeaned_stacked)
-  print("Done")
+  message("Done")
   cmeaned_no0 <- as.data.frame(cmeaned_stacked[,colSums(cmeaned_stacked) > 0 ])
   # again, keep cell-types that have proportions
   if((length(colnames(cmeaned_stacked)) != length(unique(colnames(cmeaned_stacked))))[1]) {
     # add a unique identifier for each cell-type if there are multiple cell-types with the same name
-    print("adding code for non-unique cell-types")
+    message("adding code for non-unique cell-types")
     colnames(fold_changes) <- colnames(wilcox_or) <- colnames(means) <- colnames(cmeaned_stacked) <- paste0(n,"_",1:ncol(cmeaned_stacked))
   } else {
     colnames(fold_changes) <- colnames(wilcox_or) <- colnames(means) <- colnames(cmeaned_stacked) <- n
@@ -391,7 +391,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   if((length(dup_gene_names) > 0)[1]) {
     dup_gene_names <- DEGs$gene_name[dup_gene_names]
     warning("Duplicated gene names:")
-    print(dup_gene_names, quote = FALSE)
+    message(dup_gene_names)
     warning("Some gene names are duplicated -- keeping the first duplicate in the list. Check if there should be duplicate gene symbols in your dataset.")
   }
   DEGs <- DEGs[!duplicated(DEGs$gene_name),]
@@ -410,7 +410,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
     # FC_coef: if the cwFold-change is based on Fold-Change (reccomended) or Rank
     # Returns:
     # cwFold-changes for every cell-type within a single gene.
-    #print(gene)
+    #message(gene)
     if(gene %in% rownames(scaled_odds_ratio)) {
       scaled_pref <- scaled_odds_ratio[gene,] # extract gene from signature
     } else {
@@ -434,9 +434,9 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
     }
     return(val)
   }
-  print("Adjusting Coefficients:")
+  message("Adjusting Coefficients:")
   vals_out <- lapply(toInter_InGene$gene_name, values_with_preferences)
-  print("Done")
+  message("Done")
   vals_out_mat <- do.call("rbind", vals_out)
   rownames(vals_out_mat) <- toInter_InGene$gene_name
   
@@ -482,7 +482,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
       grDevices::pdf(paste0(path,"/","deconvolute_generemove_quantseq_",names,".pdf"))
       g <- ggplot2::ggplot(all_stack, ggplot2::aes(factor(cell_type), proportion)) + ggplot2::geom_boxplot()  + ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, hjust = 1, size = 8))
       # generate barplot for every cell-type combined
-      print(g)
+      message(g)
       grDevices::dev.off()
       
       for(i in unique(all_stack$cell_type)) {
@@ -494,9 +494,9 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
         
         grDevices::pdf(paste0(path,"/","deconvolute_generemov_quantseq_", i,"_",names,".pdf"))
                 # generate barplot for one cell-type at a time
-        print(g)
+        message(g)
         grDevices::dev.off()
-        print(i)
+        message(i)
       }
       return("Done!")
     }

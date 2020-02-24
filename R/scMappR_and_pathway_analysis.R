@@ -48,7 +48,7 @@
 #' @importFrom limSolve lsei
 #'
 #' @examples 
-#' \donttest{
+#' 
 #' data(PBMC_example)
 #' bulk_DE_cors <- PBMC_example$bulk_DE_cors
 #' bulk_normalized <- PBMC_example$bulk_normalized
@@ -67,7 +67,7 @@
 #'                                        sig_matrix_size = 3000, up_and_downregulated = FALSE, 
 #'                                        internet = FALSE)
 #' 
-#' }
+#' 
 #' @export
 #' 
 scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list, case_grep, control_grep, rda_path = "", max_proportion_change = -9, print_plots=T, plot_names="scMappR",theSpecies = "human", output_directory = "scMappR_analysis",sig_matrix_size = 3000, drop_unknown_celltype = TRUE, internet = TRUE, up_and_downregulated = FALSE, gene_label_size = 0.4, number_genes = -9, toSave=FALSE, newGprofiler = FALSE, path = NULL) {
@@ -222,14 +222,14 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     number_genes <- as.numeric(nrow(DEGs))
   }
   if((!(is.character(case_grep)) | length(case_grep) > 1)[1]) {
-    print("Assuming that case_grep are indeces of 'control'.", quote = FALSE)
-    print("Appending 'scMappR_control to controls.", quote = FALSE  )
+    message("Assuming that case_grep are indeces of 'control'.")
+    message("Appending 'scMappR_control to controls.")
     colnames(count_file)[case_grep] <- paste0("scMappR_case_", colnames(count_file)[case_grep])
     case_grep <- "scMappR_case"
   }
   if((!(is.character(control_grep)) | length(control_grep) > 1)[1]) {
-    print("Assuming that control_grep indeces of  'control'.", quote = FALSE)
-    print("Appending 'scMappR_control to controls.", quote = FALSE  )
+    message("Assuming that control_grep indeces of  'control'.")
+    message("Appending 'scMappR_control to controls.")
     colnames(count_file)[control_grep] <- paste0("scMappR_control_", colnames(count_file)[control_grep])
     control_grep <- "scMappR_control"
   }
@@ -288,7 +288,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
       signature_matrix1 <- signature_matrix[intersected_genes,]
       bioMart_orthologs1 <- bioMart_orthologs[intersected_genes,]
       rownames(signature_matrix1) <- bioMart_orthologs1[,theSpecies] # replacing rownames with the species you want
-      print(dim(signature_matrix1))
+      message(dim(signature_matrix1))
       signature_matrix <- signature_matrix1
     }
   }
@@ -297,13 +297,13 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   if(toSave == FALSE) {
     print_plots <- FALSE
   }  
-  print("Keeping genes in signature matrix that overlap with count matrix.", quote = FALSE)
+  message("Keeping genes in signature matrix that overlap with count matrix.")
   signature_matrix <- signature_matrix[rownames(signature_matrix) %in% rownames(count_file),]
   signature_vars <- apply(signature_matrix, 2, stats::var)
   signature_rowvars <- apply(signature_matrix, 1, stats::var)
   signature_matrix <- signature_matrix[signature_rowvars > 0,signature_vars > 0]
-  print("cell-types with markers that overlap with inputted count matrix", quote = FALSE)
-  print(colnames(signature_matrix), quote = FALSE)
+  message("cell-types with markers that overlap with inputted count matrix")
+  message(colnames(signature_matrix))
   
   
   
@@ -330,20 +330,20 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   
   cellWeighted_Foldchanges$ProportionT.test <- proportion_T
   
-  print(paste0("Making scMappR output directory named", output_directory, "."))
+  message(paste0("Making scMappR output directory named", output_directory, "."))
   if(toSave == FALSE) {
     warning("toSave == FALSE therefore files cannot be saved. Switching toSave = TRUE is strongly reccomended. Returning cellWeighted_Foldchanges and no pathway analysis.")
-    print("toSave == FALSE therefore files cannot be saved. Switching toSave = TRUE is strongly reccomended. Returning cellWeighted_Foldchanges and no pathway analysis.", quote = FALSE)
+    message("toSave == FALSE therefore files cannot be saved. Switching toSave = TRUE is strongly reccomended. Returning cellWeighted_Foldchanges and no pathway analysis.")
     return(cellWeighted_Foldchanges)    
   }
   dir.create(paste0(path,"/",output_directory))
   
   scMappR_vals <- cellWeighted_Foldchanges$cellWeighted_Foldchange # scMappR values
   T_test_outs <- cellWeighted_Foldchanges$ProportionT.test
-  print("Writing summary of cell-type proportion changes between case and control." , quote = FALSE)
+  message("Writing summary of cell-type proportion changes between case and control.")
   utils::write.table(T_test_outs, file = paste0(path,"/",output_directory, "/", plot_names, "_cell_proportion_changes_summary.tsv"), quote = FALSE, row.names = TRUE, col.names = TRUE, sep = "\t")
   
-  print(scMappR_vals)
+  message(scMappR_vals)
   save(scMappR_vals, file = paste0(path,"/",output_directory, "/",plot_names, "_cellWeighted_Foldchanges.RData"))
   
   cell_proportions_all <- cellWeighted_Foldchanges$cellType_Proportions # all gene CT proportion
@@ -359,7 +359,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   save(signature_mat, file = paste0(path,"/",output_directory, "/",plot_names, "_leaveOneOut_gene_proportions.RData"))
   if(nrow(DEG_list) == 1) {
     warning("You only have 1 DEG, no heatmaps can be made. Returning cellWeighted_Foldchange")
-    print("You only have 1 DEG, no heatmaps can be made. Returning cellWeighted_Foldchange",quote = FALSE)
+    message("You only have 1 DEG, no heatmaps can be made. Returning cellWeighted_Foldchange")
     return(scMappR_vals)
     }
   myheatcol <- grDevices::colorRampPalette(c("lightblue", "white", "orange"))(256)
@@ -402,10 +402,10 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     grDevices::dev.off()
   } else {
     warning("There were fewer than two upregulated DEGs, therefore a heatmap could not be made.")
-    print("There were fewer than two upregulated DEGs, therefore a heatmap could not be made.", quote = FALSE)
+    message("There were fewer than two upregulated DEGs, therefore a heatmap could not be made.")
     
   }
-  print(dim(scMappR_vals_down))
+  message(dim(scMappR_vals_down))
   if((nrow(scMappR_vals_down) > 2 & ncol(scMappR_vals_down) > 2)[1]) {
   grDevices::pdf(paste0(path,"/",output_directory, "/", plot_names,"_cellWeighted_Foldchanges_downregulated_DEGs_heatmap.pdf"))
   #gplots::heatmap.2(as.matrix(abs(scMappR_vals_down)), Rowv = TRUE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
@@ -414,7 +414,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   grDevices::dev.off()
   } else {
     warning("There were fewer than two downregulated DEGs, therefore a heatmap could not be made.")
-    print("There were fewer than two downregulated DEGs, therefore a heatmap could not be made.", quote = FALSE)
+    message("There were fewer than two downregulated DEGs, therefore a heatmap could not be made.")
     
   }
   
@@ -428,7 +428,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   
   if(length(celltype_preferred_degs) < 3) {
     warning("Fewer than 3 genes are both De and in the signature matrix. Therefore, these heatmaps will not be generated. Furthermore, there is insufficient re-ranking of genes for different pathway analyses to be neccesary. Therefore, here, cellWeighted_Foldchanges are more representative of a scaling factor for each cell-type.")
-    print("Fewer than 3 genes are both De and in the signature matrix. Therefore, these heatmaps will not be generated. Furthermore, there is insufficient re-ranking of genes for different pathway analyses to be neccesary. Therefore, here, cellWeighted_Foldchanges are more representative of a scaling factor for each cell-type.", quote = FALSE)
+    message("Fewer than 3 genes are both De and in the signature matrix. Therefore, these heatmaps will not be generated. Furthermore, there is insufficient re-ranking of genes for different pathway analyses to be neccesary. Therefore, here, cellWeighted_Foldchanges are more representative of a scaling factor for each cell-type.")
     
     return(list(cellWeighted_Foldchanges = cellWeighted_Foldchanges))
 
@@ -453,7 +453,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     #pl <- gplots::heatmap.2(as.matrix(signature_mat_up), Rowv = TRUE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
     pl <- pheatmap::pheatmap(as.matrix(scMappR_vals_up1), color = myheatcol, scale = "row", fontsize_row = cex, fontsize_col = 10)
     
-    #print(pl)
+    #message(pl)
     grDevices::dev.off()
     
     
@@ -464,7 +464,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     grDevices::dev.off()
     } else {
       warning("There were fewer than two cell-type specific, upregulated DEGs, therefore a heatmap could not be made.")
-      print("There were fewer than two cell-type specific, upregulated DEGs, therefore a heatmap could not be made.", quote = FALSE)
+      message("There were fewer than two cell-type specific, upregulated DEGs, therefore a heatmap could not be made.")
       
     }
     
@@ -483,7 +483,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     grDevices::dev.off()
     }  else {
       warning("There were fewer than two cell-type specific, downregulated DEGs, therefore a heatmap could not be made.")
-      print("There were fewer than two cell-type specific, downregulated DEGs, therefore a heatmap could not be made.", quote = FALSE)
+      message("There were fewer than two cell-type specific, downregulated DEGs, therefore a heatmap could not be made.")
       
     }
   }
@@ -494,7 +494,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
 
   up_and_down_together <- pathway_enrich_internal(  DEGs, theSpecies, scMappR_vals, background_genes, output_directory, plot_names, number_genes = number_genes, toSave=TRUE,path=path, newGprofiler = newGprofiler)
   if(up_and_downregulated == TRUE)  {
-    print("Splitting genes by up- and down-regulated and then repeating analysis", quote = FALSE)
+    message("Splitting genes by up- and down-regulated and then repeating analysis")
     rownames(DEGs) <- DEGs$gene_name
     upGenes <- DEGs$gene_name[DEGs$log2fc > 0]
     downGenes <- DEGs$gene_name[DEGs$log2fc < 0]
@@ -507,13 +507,13 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     if(length(upGenes) > 2) {
     upDir <- paste0(output_directory,"/upregulated") 
     dir.create(paste0(path,"/",upDir))
-    print("Pathway analysis of upregulated genes")
+    message("Pathway analysis of upregulated genes")
     upcellWeighted_Foldchanges <- scMappR_vals[upGenes,]
     up_only <- pathway_enrich_internal(  upDEGs, theSpecies, upcellWeighted_Foldchanges, background_genes, upDir, plot_names, number_genes = number_genes, toSave=TRUE, path = path, newGprofiler = newGprofiler)
     } else {
       warning("There are fewer than three upregulated DEGs.")
     }
-    print("Pathway analysis of downregulated genes")
+    message("Pathway analysis of downregulated genes")
     if(length(downGenes) > 2) {
     downDir <- paste0(output_directory, "/downregulated")
       

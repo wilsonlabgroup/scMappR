@@ -33,7 +33,7 @@
 #' @importFrom limSolve lsei
 #'
 #' @examples 
-#' \donttest{
+#' 
 #' 
 #' data(POA_example)
 #' POA_generes <- POA_example$POA_generes
@@ -45,7 +45,7 @@
 #' genes <- rownames(Signature)[1:100]
 #' data(gmt)
 #' enriched <- cellmarker_enrich(gene_list = genes, p_thresh = 0.05, gmt = gmt)
-#' }  
+#' 
 #'  
 #' @export
 #' 

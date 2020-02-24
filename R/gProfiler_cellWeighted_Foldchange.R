@@ -90,12 +90,12 @@ gProfiler_cellWeighted_Foldchange <- function(cellWeighted_Foldchange_matrix, sp
   
   
   if(species == "human") {
-    print("Assuming species = Human", quote = FALSE)
+    message("Assuming species = Human")
     theSpecies <- "hsapiens"
     
   }
   if(species == "mouse") {
-    print("Assuming species = Mouse", quote = FALSE)
+    message("Assuming species = Mouse")
     theSpecies <- "mmusculus"
     
     
@@ -116,12 +116,12 @@ gProfiler_cellWeighted_Foldchange <- function(cellWeighted_Foldchange_matrix, sp
     # significantly enriched BPs or TFs for at least one cell-type
     
     
-    print(paste0("Re-ordering by absolute value of STVs on cell-type ", colnames(cellWeighted_Foldchange_matrix)[x]))
+    message(paste0("Re-ordering by absolute value of STVs on cell-type ", colnames(cellWeighted_Foldchange_matrix)[x]))
     cellWeighted_Foldchange_matrix1 <- cellWeighted_Foldchange_matrix[order(abs(cellWeighted_Foldchange_matrix[,x]), decreasing = TRUE) ,]
     
     cellWeighted_Foldchange_matrix1 <- rownames(cellWeighted_Foldchange_matrix1)[abs(cellWeighted_Foldchange_matrix1[,x]) > 1e-10]
     if(cutgenes != -9) {
-      print(paste0("Taking the top ", cutgenes, " genes for pathway analysis."), quote = FALSE)
+      message(paste0("Taking the top ", cutgenes, " genes for pathway analysis."))
       cellWeighted_Foldchange_matrix1 <- cellWeighted_Foldchange_matrix1[1:cutgenes]
     }
     if(NewGprofiler == FALSE) {
@@ -156,8 +156,8 @@ gProfiler_cellWeighted_Foldchange <- function(cellWeighted_Foldchange_matrix, sp
     return(list(BPs = ordered_back_all, TFs = ordered_back_all_tf))
     
   }
-  print(colnames(cellWeighted_Foldchange_matrix))
-  print(theSpecies)
+  message(colnames(cellWeighted_Foldchange_matrix))
+  message(theSpecies)
   paths <- lapply(1:ncol(cellWeighted_Foldchange_matrix), gProfiler_internal)
   
   BPs <- TFs <- list()

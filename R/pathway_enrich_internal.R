@@ -97,8 +97,8 @@ pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_g
     stop("plot_names must be a character, human, mouse, or a species compatible with gprofiler.")
   }
   if(!is.numeric(number_genes)) {
-    print(number_genes)
-    print(class(number_genes))
+    message(number_genes)
+    message(class(number_genes))
     stop("number_genes must be of class numeric.")
   }
   if(!is.logical(newGprofiler)) {
@@ -119,7 +119,7 @@ pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_g
     }
   }
   
-  print("Reordering DEGs from bulk dataset.", quote = FALSE)
+  message("Reordering DEGs from bulk dataset.")
   DEG_Names <- rownames(DEGs)[order(DEGs$padj)]
   if(theSpecies == "human") species_bulk <- "hsapiens"
   if(theSpecies == "mouse") species_bulk <- "mmusculus"
@@ -164,20 +164,20 @@ pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_g
   #plotting paths
   grDevices::png(file = paste0(path, "/", output_directory,"/Bulk_pathway_enrichment.png"))
   bulk_bp <- plotBP(ordered_back_all)
-  print(bulk_bp)
+  message(bulk_bp)
   grDevices::dev.off()
   
   #plotting TFs
   grDevices::png(file = paste0(path,"/",output_directory,"/Bulk_TF_enrichment.png"))
   bulk_bp <- make_TF_barplot(ordered_back_all_tf, top_tf = 10)
-  print(bulk_bp)
+  message(bulk_bp)
   grDevices::dev.off()
 
   
   save(ordered_back_all, file = paste0(path,"/",output_directory, "/",plot_names,"_bulk_pathways.RData"))
   save(ordered_back_all_tf, file = paste0(path,"/",output_directory, "/",plot_names,"_bulk_transcription_factors.RData"))
   
-  print("Compelting pathway analysis of cellWeighted_Foldchanges.", quote = FALSE)
+  message("Compelting pathway analysis of cellWeighted_Foldchanges.")
   paths <- gProfiler_cellWeighted_Foldchange(scMappR_vals,species =  theSpecies, background = background_genes, gene_cut = number_genes, newGprofiler = newGprofiler) # re-rodered pathway analysis
   
   biological_pathways <- paths$BP # Biological pathways
@@ -185,7 +185,7 @@ pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_g
   save(biological_pathways, file = paste0(path, "/", output_directory, "/",plot_names,"_reordered_pathways.RData"))
   save(transcription_factors, file = paste0(path, "/", output_directory, "/",plot_names,"_reordered_transcription_factors.RData"))
   
-  print("Plotting top 10 biological proccesses and TFs", quote= FALSE)
+  message("Plotting top 10 biological proccesses and TFs")
   BP_dir <- paste0(path, "/", output_directory, "/BP_barplot")
   TF_dir <- paste0(path, "/", output_directory, "/TF_barplot")
   
