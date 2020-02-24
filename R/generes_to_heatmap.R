@@ -15,10 +15,10 @@
 #' @param rda_path Path to output direcotry, if toSave is true.
 #'
 #' @return List with the following elements:
-#' \item{pVal} {A dataframe containing the signature matrix of ranks (-log10(Padj) * sign(fold-change)).}
-#' \item{OR} {A dataframe containing the signature matrix of odds ratios.}
-#' \item{cellname} {A vector of the cell-labels returned from the GSVA method.}
-#' \item{topGenes} {the top 30 mos expressed genes in each cell-type.}
+#' \item{pVal}{A dataframe containing the signature matrix of ranks (-log10(Padj) * sign(fold-change)).}
+#' \item{OR}{A dataframe containing the signature matrix of odds ratios.}
+#' \item{cellname}{A vector of the cell-labels returned from the GSVA method.}
+#' \item{topGenes}{the top 30 mos expressed genes in each cell-type.}
 #' 
 #' @importFrom ggplot2 ggplot aes geom_boxplot geom_text theme coord_flip labs element_text
 #' @importFrom pheatmap pheatmap

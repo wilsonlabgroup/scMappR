@@ -32,9 +32,9 @@
 #' @param path If toSave == TRUE, path to the directory where files will be saved.
 #' 
 #' @return List with the following elements:
-#' \item{cellWeighted_Foldchanges} {Cellweighted Fold-changes for all differentially expressed genes.}
-#' \item{paths} {Enriched biological pathways for each cell-type}
-#' \item{TFs} {Enirched TFs for each cell-type}
+#' \item{cellWeighted_Foldchanges}{Cellweighted Fold-changes for all differentially expressed genes.}
+#' \item{paths}{Enriched biological pathways for each cell-type.}
+#' \item{TFs}{Enirched TFs for each cell-type.}
 #' 
 #' @importFrom ggplot2 ggplot aes geom_boxplot geom_text theme coord_flip labs element_text
 #' @importFrom pheatmap pheatmap

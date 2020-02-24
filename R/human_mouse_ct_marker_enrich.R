@@ -15,8 +15,8 @@
 #' @param naming_preference Either -9 if there is no expected cell-type or one of the categories from get_naming_preference_options(). This is useful if you previously have an idea of which cell-type you were going to enrich.
 #'
 #' @return List with the following elements:
-#' \item{cellTypes} {most likely marker for each cell-type from each database.}
-#' \item{marker_sets} {all enriched cell-types for each cluster from each dataset.}
+#' \item{cellTypes}{most likely marker for each cell-type from each database.}
+#' \item{marker_sets}{all enriched cell-types for each cluster from each dataset.}
 #' 
 #' @importFrom ggplot2 ggplot aes geom_boxplot geom_text theme coord_flip labs element_text
 #' @importFrom pheatmap pheatmap

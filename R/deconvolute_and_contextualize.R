@@ -35,10 +35,10 @@
 #' @param path If toSave == TRUE, path to the directory where files will be saved.
 #' 
 #' @return List with the following elements:
-#' \item{cellWeighted_Foldchange} {data frame of cellweightedFold changes for each gene.}
-#' \item{cellType_Proportions} {data frame of cell-type proportions from DeconRNA-seq.}
-#' \item{leave_one_out_proportions} {data frame of average cell-type proportions for case and control when gene is removed.}
-#' \item{processed_signature_matrix} {signature matrix used in final analysis.}
+#' \item{cellWeighted_Foldchange}{data frame of cellweightedFold changes for each gene.}
+#' \item{cellType_Proportions}{data frame of cell-type proportions from DeconRNA-seq.}
+#' \item{leave_one_out_proportions}{data frame of average cell-type proportions for case and control when gene is removed.}
+#' \item{processed_signature_matrix}{signature matrix used in final analysis.}
 #'  
 #' @importFrom ggplot2 ggplot aes geom_boxplot geom_text theme coord_flip labs element_text
 #' @importFrom pheatmap pheatmap

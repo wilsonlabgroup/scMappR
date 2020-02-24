@@ -11,8 +11,8 @@ get_gene_symbol(wilcoxon_rank_mat_t)
 }
 \value{
 List with the following elements:
-\item{rowname} {Genes in the signature matrix excluding the ensemble name.}
-\item{species} {"mouse" or "human" depending on appended ensembl symbols.}
+\item{rowname}{Genes in the signature matrix excluding the ensemble name.}
+\item{species}{"mouse" or "human" depending on appended ensembl symbols.}
 }
 \description{
 Internal -- removes Ensembl signature appended to signature matrix from Panglao and figure out species by pre-fix Ensembl of the Ensembl ID that is appended to gene names.

@@ -23,10 +23,10 @@
 #' @param path If toSave == TRUE, path to the directory where files will be saved.
 #'
 #' @return List with the following elements:
-#' \item{genesIn} {Vector of genes intersecting gene list and signature matrix.}
-#' \item{genesNoIn} {Vector of inputted genes not in signature matrix.}
-#' \item{geneHeat} {Signature matrix subsetted by inputted gene list}
-#' \item{preferences} {Cell-markers mapping to cell-types.}
+#' \item{genesIn}{Vector of genes intersecting gene list and signature matrix.}
+#' \item{genesNoIn}{Vector of inputted genes not in signature matrix.}
+#' \item{geneHeat}{Signature matrix subsetted by inputted gene list}
+#' \item{preferences}{Cell-markers mapping to cell-types.}
 #' 
 #' @importFrom ggplot2 ggplot aes geom_boxplot geom_text theme coord_flip labs element_text
 #' @importFrom pheatmap pheatmap

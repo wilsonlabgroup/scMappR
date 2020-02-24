@@ -58,10 +58,10 @@ deconvolute_and_contextualize(
 }
 \value{
 List with the following elements:
-\item{cellWeighted_Foldchange} {data frame of cellweightedFold changes for each gene.}
-\item{cellType_Proportions} {data frame of cell-type proportions from DeconRNA-seq.}
-\item{leave_one_out_proportions} {data frame of average cell-type proportions for case and control when gene is removed.}
-\item{processed_signature_matrix} {signature matrix used in final analysis.}
+\item{cellWeighted_Foldchange}{data frame of cellweightedFold changes for each gene.}
+\item{cellType_Proportions}{data frame of cell-type proportions from DeconRNA-seq.}
+\item{leave_one_out_proportions}{data frame of average cell-type proportions for case and control when gene is removed.}
+\item{processed_signature_matrix}{signature matrix used in final analysis.}
 }
 \description{
 This function takes a count matrix, signature matrix, and differentially expressed genes (DEGs) before generating cwFold-chagnes for each cell-type.

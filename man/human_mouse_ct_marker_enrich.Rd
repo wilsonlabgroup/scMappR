@@ -22,8 +22,8 @@ human_mouse_ct_marker_enrich(
 }
 \value{
 List with the following elements:
-\item{cellTypes} {most likely marker for each cell-type from each database.}
-\item{marker_sets} {all enriched cell-types for each cluster from each dataset.}
+\item{cellTypes}{most likely marker for each cell-type from each database.}
+\item{marker_sets}{all enriched cell-types for each cluster from each dataset.}
 }
 \description{
 This function completes the Fisher's exact test cell-type naming for all cell-types.

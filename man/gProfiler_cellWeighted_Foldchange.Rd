@@ -25,8 +25,8 @@ gProfiler_cellWeighted_Foldchange(
 }
 \value{
 List with the following elements:
-\item{BP} {gprofiler enrichment of biological pathways for each cell-type}
-\item{TF} {gprofiler enrichment of transcription factors for eachc cell-type.}
+\item{BP}{gprofiler enrichment of biological pathways for each cell-type}
+\item{TF}{gprofiler enrichment of transcription factors for eachc cell-type.}
 }
 \description{
 This function runs through each list of cell weighted Fold changes (cwFold-changes) and completes both pathway and transcription factor (TF) enrichment.

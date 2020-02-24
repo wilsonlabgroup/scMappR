@@ -14,9 +14,9 @@
 #' @param toSave If scMappR is allowed to write files and directories.
 #'
 #' @return List with the following elements:
-#' \item{cellMarker} {Most likely cell-types predicted from cellMarker database.}
-#' \item{panglao} {Most likely cell-types predicted from panglao database.}
-#' \item{avg_expression} {Average expression of each gene in each cell-type.}
+#' \item{cellMarker}{Most likely cell-types predicted from cellMarker database.}
+#' \item{panglao}{Most likely cell-types predicted from panglao database.}
+#' \item{avg_expression}{Average expression of each gene in each cell-type.}
 #'
 #' @importFrom ggplot2 ggplot aes geom_boxplot geom_text theme coord_flip labs element_text
 #' @importFrom pheatmap pheatmap

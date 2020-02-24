@@ -49,9 +49,9 @@ process_dgTMatrix_lists(
 }
 \value{
 List with the following elements:
-\item{wilcoxon_rank_mat_t} {A dataframe containing the signature matrix of ranks (-log10(Padj) * sign(fold-change)).}
-\item{wilcoxon_rank_mat_or} {A dataframe containing the signature matrix of odds-ratios.}
-\item{generes} {All cell-type markers for each cell-type with p-value and fold changes.}
+\item{wilcoxon_rank_mat_t}{A dataframe containing the signature matrix of ranks (-log10(Padj) * sign(fold-change)).}
+\item{wilcoxon_rank_mat_or}{A dataframe containing the signature matrix of odds-ratios.}
+\item{generes}{All cell-type markers for each cell-type with p-value and fold changes.}
 }
 \description{
 This function takes a list of count matrices, processes them, calls cell-types, and generates signature matrices.

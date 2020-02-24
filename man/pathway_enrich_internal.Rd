@@ -40,8 +40,8 @@ pathway_enrich_internal(
 }
 \value{
 List with the following elements:
-\item{BPs} {Enriched biological pathways for each cell-type.}
-\item{TFs} {Enriched transcription factors for each cell-type.}
+\item{BPs}{Enriched biological pathways for each cell-type.}
+\item{TFs}{Enriched transcription factors for each cell-type.}
 }
 \description{
 This function completes pathway enrichment of cellWeighted_Foldchanges and bulk gene list.

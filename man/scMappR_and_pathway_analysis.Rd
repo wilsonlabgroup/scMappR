@@ -70,9 +70,9 @@ scMappR_and_pathway_analysis(
 }
 \value{
 List with the following elements:
-\item{cellWeighted_Foldchanges} {Cellweighted Fold-changes for all differentially expressed genes.}
-\item{paths} {Enriched biological pathways for each cell-type}
-\item{TFs} {Enirched TFs for each cell-type}
+\item{cellWeighted_Foldchanges}{Cellweighted Fold-changes for all differentially expressed genes.}
+\item{paths}{Enriched biological pathways for each cell-type.}
+\item{TFs}{Enirched TFs for each cell-type.}
 }
 \description{
 This function generates cell weighted Fold-changes (cellWeighted_Foldchange), visualizes them in a heatmap, and completes pathway enrichment of cellWeighted_Foldchanges and bulk gene list.

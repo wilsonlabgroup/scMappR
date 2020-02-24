@@ -43,10 +43,10 @@ tissue_scMappR_internal(
 }
 \value{
 List with the following elements:
-\item{background_heatmap} {Data frame of the entire gene by cell-type signature matrix inputted.}
-\item{gene_list_heatmap} {Data frame of inputted signature matrix subsetted by input genes.}
-\item{single_celltype_preferences} {Data frame of enriched cell-types.}
-\item{group_celtype_preference} {Data frame of groups of cell-types enriched by the same genes.}
+\item{background_heatmap}{Data frame of the entire gene by cell-type signature matrix inputted.}
+\item{gene_list_heatmap}{Data frame of inputted signature matrix subsetted by input genes.}
+\item{single_celltype_preferences}{Data frame of enriched cell-types.}
+\item{group_celtype_preference}{Data frame of groups of cell-types enriched by the same genes.}
 }
 \description{
 This function loops through every signature matrix in a particular tissue and generates heatmaps, cell-type preferences, and co-enrichment.

@@ -25,9 +25,9 @@ gsva_cellIdentify(
 }
 \value{
 List with the following elements:
-\item{cellMarker} {Most likely cell-types predicted from cellMarker database.}
-\item{panglao} {Most likely cell-types predicted from panglao database.}
-\item{avg_expression} {Average expression of each gene in each cell-type.}
+\item{cellMarker}{Most likely cell-types predicted from cellMarker database.}
+\item{panglao}{Most likely cell-types predicted from panglao database.}
+\item{avg_expression}{Average expression of each gene in each cell-type.}
 }
 \description{
 This function computes the mean expression of every cell-type before predicting the most likely cell-type using the GSVA method.

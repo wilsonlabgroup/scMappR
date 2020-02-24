@@ -15,8 +15,8 @@
 #' @param newGprofiler Using gProfileR or gprofiler2, (T/F).
 #' 
 #' @return List with the following elements:
-#' \item{BP} {gprofiler enrichment of biological pathways for each cell-type}
-#' \item{TF} {gprofiler enrichment of transcription factors for eachc cell-type.}
+#' \item{BP}{gprofiler enrichment of biological pathways for each cell-type}
+#' \item{TF}{gprofiler enrichment of transcription factors for eachc cell-type.}
 #' 
 #' @importFrom ggplot2 ggplot aes geom_boxplot geom_text theme coord_flip labs element_text
 #' @importFrom pheatmap pheatmap

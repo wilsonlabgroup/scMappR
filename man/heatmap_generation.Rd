@@ -49,10 +49,10 @@ heatmap_generation(
 }
 \value{
 List with the following elements:
-\item{genesIn} {Vector of genes intersecting gene list and signature matrix.}
-\item{genesNoIn} {Vector of inputted genes not in signature matrix.}
-\item{geneHeat} {Signature matrix subsetted by inputted gene list}
-\item{preferences} {Cell-markers mapping to cell-types.}
+\item{genesIn}{Vector of genes intersecting gene list and signature matrix.}
+\item{genesNoIn}{Vector of inputted genes not in signature matrix.}
+\item{geneHeat}{Signature matrix subsetted by inputted gene list}
+\item{preferences}{Cell-markers mapping to cell-types.}
 }
 \description{
 This function takes an inputted signature matrix as well as a list of genes and overlaps them.

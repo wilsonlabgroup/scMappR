@@ -26,9 +26,9 @@
 #' @param path If toSave == TRUE, path to the directory where files will be saved.
 #' 
 #' @return List with the following elements:
-#' \item{wilcoxon_rank_mat_t} {A dataframe containing the signature matrix of ranks (-log10(Padj) * sign(fold-change)).}
-#' \item{wilcoxon_rank_mat_or} {A dataframe containing the signature matrix of odds-ratios.}
-#' \item{generes} {All cell-type markers for each cell-type with p-value and fold changes.} 
+#' \item{wilcoxon_rank_mat_t}{A dataframe containing the signature matrix of ranks (-log10(Padj) * sign(fold-change)).}
+#' \item{wilcoxon_rank_mat_or}{A dataframe containing the signature matrix of odds-ratios.}
+#' \item{generes}{All cell-type markers for each cell-type with p-value and fold changes.} 
 #'
 #' @importFrom ggplot2 ggplot aes geom_boxplot geom_text theme coord_flip labs element_text
 #' @importFrom pheatmap pheatmap
