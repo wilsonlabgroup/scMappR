@@ -16,8 +16,8 @@
 #' @param name Name of the pdf to be printed.
 #' 
 #' @return List with the following elements:
-#' \item{enriched} {Data frame of enriched cell-types from tissues.}
-#' \item{gmt} {Cell-markers in enriched cell-types from tissues.}
+#' \item{enriched}{Data frame of enriched cell-types from tissues.}
+#' \item{gmt}{Cell-markers in enriched cell-types from tissues.}
 #'
 #' @importFrom ggplot2 ggplot aes geom_boxplot geom_text theme coord_flip labs element_text
 #' @importFrom pheatmap pheatmap
