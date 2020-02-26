@@ -80,7 +80,9 @@ cellTypes <- toupper(cellTypes)
 geneHeat <- geneHeat[rowSums(geneHeat) > 1,] # extract genes with any CT specificity
 
 if(any(is.character(geneHeat), is.numeric(geneHeat))[1] ) {
+  if((!is.matrix(geneHeat))[1]) {
   geneHeat <- data.frame(t(geneHeat))
+  }
 }  
 
 genes_extracted <- list()
