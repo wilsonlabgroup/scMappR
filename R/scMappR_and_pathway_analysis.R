@@ -220,6 +220,9 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   }
   
   colnames(DEGs) <- c("gene_name", "padj", "log2fc")
+  DEGs$gene_name <- tochr(DEGs$gene_name)
+  DEGs$padj <- toNum(DEGs$padj)
+  DEGs$log2fc <- toNum(DEGs$log2fc)
   rownames(DEGs) <- DEGs$gene_name
   if(number_genes == -9) {
     number_genes <- as.numeric(nrow(DEGs))
