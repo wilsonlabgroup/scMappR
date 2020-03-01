@@ -309,7 +309,10 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   message("cell-types with markers that overlap with inputted count matrix")
   message(colnames(signature_matrix))
   
-  
+  if((length(unique(colnames(signature_matrix))) < length(colnames(signature_matrix)))[1]) {
+    warning("cell-type naming is not unique, appending unique identifier (1:ncol(signature))")
+    colnames(signature_matrix) <- paste0(colnames(signature_matrix), "_", 1:ncol(signature_matrix))
+  }
   
   cellWeighted_Foldchanges <- deconvolute_and_contextualize(count_file, signature_matrix, DEG_list, case_grep , control_grep, max_proportion_change = max_proportion_change, print_plots = print_plots, plot_names = plot_names, theSpecies = theSpecies, sig_matrix_size = sig_matrix_size, drop_unknown_celltype = drop_unknown_celltype, toSave = toSave, path = path)
 
