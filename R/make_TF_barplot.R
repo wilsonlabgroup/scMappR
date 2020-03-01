@@ -72,7 +72,7 @@ make_TF_barplot <- function(ordered_back_all_tf, top_tf = 5) {
   }
   if(is.matrix(ordered_back_all_tf)) {
     warning("converting ordered_back_all_tf matrix to dataframe") 
-      ordered_back_all_tf <- as.data.frame(ordered_back_all_tf) 
+    ordered_back_all_tf <- as.data.frame(ordered_back_all_tf) 
     
   }
   term_name_p_val <- ("term_name" %in% colnames(ordered_back_all_tf))  & ("p_value" %in% colnames(ordered_back_all_tf))
@@ -95,15 +95,15 @@ make_TF_barplot <- function(ordered_back_all_tf, top_tf = 5) {
     return(y)
     
   }
- ordered_back_all_tf$p_value <- toNum(ordered_back_all_tf$p_value)
- ordered_back_all_tf$term_name <- tochr(ordered_back_all_tf$term_name)
+  ordered_back_all_tf$p_value <- toNum(ordered_back_all_tf$p_value)
+  ordered_back_all_tf$term_name <- tochr(ordered_back_all_tf$term_name)
   take1 <- function(x) return(x[1]) # take the first element of a list
   sp <- strsplit(tochr(ordered_back_all_tf$term_name), ";") # split the ane of the TF output
   tfs <- unlist(lapply(sp, take1))
   tfs <- gsub("Factor:","",gsub("-","", tochr(tfs))) # remove extra text
   ordered_back_all_tf$tf <- tochr(tfs)
   nodup <- ordered_back_all_tf[!duplicated(tochr(tfs)),] # keep the most signficant TF motif
-
+  
   ndup_1_10 <- nodup[order(nodup$p_value),]
   if(nrow(ndup_1_10) > top_tf) { # take the top TF numberof factors
     ndup_1_10 <- ndup_1_10[1:top_tf,]
@@ -114,10 +114,10 @@ make_TF_barplot <- function(ordered_back_all_tf, top_tf = 5) {
   tf <- ndup_1_10$tf
   g <- ggplot2::ggplot(ndup_1_10, ggplot2::aes(x = stats::reorder(tf, log10), y = log10)) + ggplot2::geom_bar(stat = "identity", fill = "mediumpurple") + ggplot2::coord_flip() +  ggplot2::labs(y = "-log10(Padj)", x = "TF Motif") 
   y <- g + ggplot2::theme(axis.text.x = ggplot2::element_text(face=NULL, color="black", 
-                                            size=12, angle=35),
-                 axis.text.y = ggplot2::element_text(face=NULL, color="black", 
-                                            size=12, angle=35), 
-                 axis.title=ggplot2::element_text(size=16, color = "black"))
+                                                              size=12, angle=35),
+                          axis.text.y = ggplot2::element_text(face=NULL, color="black", 
+                                                              size=12, angle=35), 
+                          axis.title=ggplot2::element_text(size=16, color = "black"))
   print(y)
   return(y)
 }
