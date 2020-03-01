@@ -173,6 +173,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
     
   rowVars <- function(x) return(apply(x, 1, stats::var)) # get variance of rows, used later
   colMedians <- function(x) return(apply(x, 2, stats::median)) # medians of cols, used later
+  colVars <- function(x) return(apply(x, 2 , stats::var))
   # load in normalized count matrices, signature matrix, and 0
   
   if(is.character(count_file)) {
@@ -250,7 +251,8 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   }
   if(is.matrix(norm_counts_i)) norm_counts_i <- as.data.frame(norm_counts_i)
 
-
+  cVar_wilcox <- colVars(wilcox_or_signature)
+  wilcox_or_signature <-   wilcox_or_signature[,cVar_wilcox > 0]
   # cell-type deconvolution with all genes included
   all_genes_in <- DeconRNAseq_CRAN(norm_counts_i, wilcox_or_signature)
   
