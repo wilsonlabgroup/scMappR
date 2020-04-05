@@ -186,7 +186,7 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
     dir.create(paste0(path,"/",outDir))
   } else {
     warning("toSave == FALSE and therefore a directory cannot be made. Switching toSave = TRUE is reccomended.")
-    message("toSave == FALSE and therefore a directory cannot be made. Switching toSave = TRUE is reccomended.", quote = FALSE)
+    message("toSave == FALSE and therefore a directory cannot be made. Switching toSave = TRUE is reccomended.")
     
   }
   single_cell_studies <- list()
@@ -195,7 +195,7 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
     wilcoxon_rank_mat_t <- scMappR_list[[study_names[i]]]
     
     if(length(grep("-", rownames(wilcoxon_rank_mat_t))) / length(rownames(wilcoxon_rank_mat_t)) > 0.75) {  
-      message("Detected signature matrix from scMappR catelogue", quote = FALSE)
+      message("Detected signature matrix from scMappR catelogue")
       RN_2 <- get_gene_symbol(wilcoxon_rank_mat_t)
       
       rownames(wilcoxon_rank_mat_t) <- RN_2$rowname
@@ -209,7 +209,7 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
       thefiles <- list.files(path = rda_path, "ortholog_human_mouse.rda")
       
       if(length(thefiles) == 0) {
-        warning(paste0("Cell-marker preferences are not present in ", rda_path, " downloading and loading data."))
+        warning(paste0("Cell-marker preferences are not present in path ", rda_path, " downloading and loading data."))
         #
         datafile <- "bioMart_ortholog_human_mouse.rda"
         metafile <- paste0(datafile)
@@ -257,12 +257,12 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
 
     background_heatmap <- heatmap_generation(background_genes, comp = paste0(outDir, "/", study_names[i],"_background"), reference = study_ref, isBackground = TRUE, cex = genecex, which_species = species, isPval = raw_pval, toSave=toSave, path = path)  
     # get the heatmap of all of the genes in the signature matrix
-    message("Number of DEGs that are cell-type markers in current signature matrix: ", quote = FALSE)
+    message("Number of DEGs that are cell-type markers in current signature matrix: ")
     message(length(intersect(gene_list, rownames(study_ref))))
     theL <- length(intersect(gene_list, rownames(study_ref)))
     if(theL < 3) {
-      message(paste0("Your gene list contains fewer than 3 overlapping genes with ",study_names[i],". Therefore no heatmap was saved and enrichment cannot be done."), quote = FALSE)
-      message(paste0("Subsetted CT marker preferences of these genes are saved in ",paste0(outDir, "/", study_names[i],"_genelist")), quote = FALSE)
+      message(paste0("Your gene list contains fewer than 3 overlapping genes with ",study_names[i],". Therefore no heatmap was saved and enrichment cannot be done."))
+      message(paste0("Subsetted CT marker preferences of these genes are saved in ",paste0(outDir, "/", study_names[i],"_genelist")))
       message(intersect(gene_list, rownames(study_ref)))
       subsetted_genes <- study_ref[intersect(gene_list, rownames(study_ref)),]
       if(toSave==TRUE) {
@@ -280,6 +280,7 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
       message("not enough genes were present to do downsteam analysis in: ")
       message(study_names[i])
       single_cell_studies[[i]] <- gene_list_heatmap
+      names(single_cell_studies)[i] <- study_names[i]
       next
     }
     singleCTpreferences <- single_gene_preferences(gene_list_heatmap, background_heatmap, study_names[i], outDir = output_directory, toSave = toSave, path = path)
@@ -294,6 +295,8 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
       coCTpreferences <- "co-enrichment cannot be measured as one or fewer CTs are enriched"
       output <- list(background_heatmap = background_heatmap, gene_list_heatmap = gene_list_heatmap, single_celltype_preferences = singleCTpreferences, group_celtype_preference = coCTpreferences)
       single_cell_studies[[i]] <- output 
+      names(single_cell_studies)[i] <- study_names[i]
+      
       next
     }
     sig <- sig[order(sig$pFDR),]
@@ -302,8 +305,9 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
     output <- list(background_heatmap = background_heatmap, gene_list_heatmap = gene_list_heatmap, single_celltype_preferences = singleCTpreferences, group_celtype_preference = coCTpreferences)
     
     single_cell_studies[[i]] <- output 
+    names(single_cell_studies)[i] <- study_names[i]
+    
   }
-  names(single_cell_studies) <- study_names
   return(single_cell_studies)
 }
 
