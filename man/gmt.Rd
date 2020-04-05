@@ -3,14 +3,16 @@
 \name{gmt}
 \alias{gmt}
 \title{gmt_example}
-\format{A list with 5 character vectors, each containing genes.
+\format{
+A list with 5 character vectors, each containing genes.
 \describe{
   \item{Astrocytes_panglao}{ astrocyte markers identified by panglao}
   \item{Schwann_panglao}{ Schwann markers identified by panglao}
   \item{Bergmann glia_panglao}{ Bergmann glia markers identified by panglao}
   \item{Kupffer_panglao}{ Kupffer markers identified by panglao}
   \item{Oligodendrocyte progenitor_panglao}{ Oligodendrocyte progenitor markers identified by panglao}
-}}
+}
+}
 \usage{
 data(gmt)
 }

@@ -3,12 +3,14 @@
 \name{PBMC_example}
 \alias{PBMC_example}
 \title{PBMC_scMappR}
-\format{A list containing three data frames, normalized count data, a signature matrix, and a list of differentially expressed genes.
+\format{
+A list containing three data frames, normalized count data, a signature matrix, and a list of differentially expressed genes.
 \describe{
   \item{bulk_normalized}{ A 3231 x 9 matrix where rows are genes, columns are samples, and the matrix is filled with CPM normalized counts.}
   \item{odds_ratio_in}{ A 2336 x 7 matrix where rows are genes, columns are cell-types and matrix is filled with the odds-ratio that a gene is in each cell-type.}
   \item{bulk_DE_cors}{A 59 x 3 matrix of sex-specific genes found between male and female PBMC samples (female biased = upregulated). row and rownames are genes, columns are gene name, FDR adjusted p-value, and log2 fold-change. DEGs were computed with DESeq2 and genes with a log2FC > 1 were kept. }
-}}
+}
+}
 \usage{
 data(PBMC_example)
 }
