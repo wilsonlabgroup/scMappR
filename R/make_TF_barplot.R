@@ -77,7 +77,7 @@ make_TF_barplot <- function(ordered_back_all_tf, top_tf = 5) {
   }
   term_name_p_val <- ("term_name" %in% colnames(ordered_back_all_tf))  & ("p_value" %in% colnames(ordered_back_all_tf))
   if(term_name_p_val[1] == FALSE ) {
-    stop("ordered_back_all_tf must contain two columns, term_name and p_vale")
+    stop("ordered_back_all_tf must contain two columns, term_name and p_value")
   }
   
   if(!is.numeric(top_tf)) {

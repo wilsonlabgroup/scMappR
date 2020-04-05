@@ -83,7 +83,7 @@ plotBP <- function(ordered_back_all, top_bp = 10) {
   term_name_p_val <- ("term_name" %in% colnames(ordered_back_all))  & ("p_value" %in% colnames(ordered_back_all))
   
   if(term_name_p_val[1] == FALSE) {
-    stop("ordered_back_all must contain two columns, term_name and p_vale")
+    stop("ordered_back_all must contain two columns, term_name and p_value")
   }
   
   if(!is.numeric(top_bp)) {
