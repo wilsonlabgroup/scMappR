@@ -169,6 +169,9 @@ process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = 
     mean <- mean(pbmc$percent.mt.adj)
     x<- stats::sd(pbmc$percent.mt.adj)
     toremove <- mean + (2*x)
+    if(is.na(toremove)) {
+      toremove <- 0
+    }
     
     if(use_sctransform == FALSE) { # alternative to using scTransform, use the traditional NormalizeData, FindVariableFeatures, and SaleData parameters. 
                                    # This should be faster and cost less memory
@@ -178,7 +181,11 @@ process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = 
     mean <- mean(pbmc$percent.mt.adj)
     x<- stats::sd(pbmc$percent.mt.adj)
     toremove <- mean + (2*x)  
+    if(is.na(toremove)) {
+      toremove <- 0
+    }
     toremove <- toNum(toremove)
+    
     } else {
       warning("percent.mt.adj was not computed in this dataset.")
       toremove <- 0
@@ -211,6 +218,9 @@ process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = 
       mean <- mean(pbmc$percent.mt.adj)
       x<- stats::sd(pbmc$percent.mt.adj)
       toremove <- mean + (2*x)
+      if(is.na(toremove)) {
+        toremove <- 0
+      }
       toremove <- toNum(toremove)
       } else {
         toremove <- 0
