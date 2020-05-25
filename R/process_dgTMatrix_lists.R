@@ -24,6 +24,7 @@
 #' @param toSave Allow scMappR to write files in the current directory (T/F)
 #' @param rda_path If saved, directory to where data from scMappR_data is downloaded.
 #' @param path If toSave == TRUE, path to the directory where files will be saved.
+#' @param genes_integrate The number of genes to include in the integration anchors feature when combining datasets -- passed into process_from_count
 #' 
 #' @return List with the following elements:
 #' \item{wilcoxon_rank_mat_t}{A dataframe containing the signature matrix of ranks (-log10(Padj) * sign(fold-change)).}
@@ -55,7 +56,7 @@
 #' @export
 #' 
 
-process_dgTMatrix_lists <- function(dgTMatrix_list, name, species_name, naming_preference = -9,rda_path="",  panglao_set = FALSE ,haveUMAP = FALSE, saveSCObject = FALSE, internal = FALSE, toSave = FALSE, path = NULL, use_sctransform = FALSE, test_ctname = "wilcox") {
+process_dgTMatrix_lists <- function(dgTMatrix_list, name, species_name, naming_preference = -9,rda_path="",  panglao_set = FALSE ,haveUMAP = FALSE, saveSCObject = FALSE, internal = FALSE, toSave = FALSE, path = NULL, use_sctransform = FALSE, test_ctname = "wilcox", genes_integrate = 2000) {
   
   # This function is a one line wrapper to process count matrices into a signature matrix
   # It combines process from count, two methods of identifying cell-type identitt (gsva and fisher's test)
@@ -151,7 +152,7 @@ process_dgTMatrix_lists <- function(dgTMatrix_list, name, species_name, naming_p
     }
   }
   
-  pbmc <- process_from_count(countmat_list = dgTMatrix_list, name = name, theSpecies = species_name, panglao_set = panglao_set, haveUmap = haveUMAP, saveALL  = saveSCObject, toSave=toSave, use_sctransform = use_sctransform, path = path)
+  pbmc <- process_from_count(countmat_list = dgTMatrix_list, name = name, theSpecies = species_name, panglao_set = panglao_set, haveUmap = haveUMAP, saveALL  = saveSCObject, toSave=toSave, use_sctransform = use_sctransform, path = path, genes_integrate = genes_integrate)
   # process from the count matrices to the Seurat object -- see process_from_count for details
   message(class(pbmc))
   #message(head(pbmc))

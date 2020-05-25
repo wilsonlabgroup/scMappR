@@ -13,7 +13,8 @@ process_from_count(
   panglao_set = FALSE,
   toSave = FALSE,
   path = NULL,
-  use_sctransform = FALSE
+  use_sctransform = FALSE,
+  genes_integrate = 2000
 )
 }
 \arguments{
@@ -34,6 +35,8 @@ process_from_count(
 \item{path}{If toSave == TRUE, path to the directory where files will be saved.}
 
 \item{use_sctransform}{If you should use sctransform or the Normalize/VariableFeatures/ScaleData pipeline (T/F).}
+
+\item{genes_integrate}{The number of genes to include in the integration anchors feature when combining datasets}
 }
 \value{
 \code{process_from_count} A processed and integrated Seurat object that has been scaled and clustered. It can be returned as an internal object or also stored as an RData object if neccesary. \cr
