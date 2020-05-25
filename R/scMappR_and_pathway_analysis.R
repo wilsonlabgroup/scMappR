@@ -353,7 +353,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   message("Writing summary of cell-type proportion changes between case and control.")
   utils::write.table(T_test_outs, file = paste0(path,"/",output_directory, "/", plot_names, "_cell_proportion_changes_summary.tsv"), quote = FALSE, row.names = TRUE, col.names = TRUE, sep = "\t")
   
-  message(scMappR_vals)
+  #message(scMappR_vals)
   save(scMappR_vals, file = paste0(path,"/",output_directory, "/",plot_names, "_cellWeighted_Foldchanges.RData"))
   
   cell_proportions_all <- cellWeighted_Foldchanges$cellType_Proportions # all gene CT proportion
