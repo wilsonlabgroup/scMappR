@@ -19,7 +19,8 @@
 #' @param use_sctransform If you should use sctransform or the Normalize/VariableFeatures/ScaleData pipeline (T/F).
 #' @param path If toSave == TRUE, path to the directory where files will be saved.
 #' @param genes_integrate The number of genes to include in the integration anchors feature when combining datasets
-#'  
+#' @param genes_include TRUE or FALSE -- include 2000 genes in signature matrix or all matrix.
+#' 
 #' @return \code{process_from_count} A processed and integrated Seurat object that has been scaled and clustered. It can be returned as an internal object or also stored as an RData object if neccesary. \cr
 #'
 #' @importFrom ggplot2 ggplot aes geom_boxplot geom_text theme coord_flip labs element_text
@@ -46,7 +47,7 @@
 #' 
 #' @export
 #' 
-process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = FALSE, saveALL = FALSE, panglao_set = FALSE, toSave = FALSE, path = NULL, use_sctransform = FALSE, genes_integrate = 2000) {
+process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = FALSE, saveALL = FALSE, panglao_set = FALSE, toSave = FALSE, path = NULL, use_sctransform = FALSE, genes_integrate = 2000, genes_include = FALSE) {
   # This function takes a list of count matrices and returns a seurat object of the count matrices integrated using Seurat V3 and the interation anchors
   # Different options are used for if the function is internal for PanglaoDB dataset reprocessing or being used for a custom set of count matrices.
   # For larger scRNA-seq datasets (~20k + cells), it is likely that this function will be required to run on an hpc.
@@ -110,7 +111,10 @@ process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = 
   if(!GI) {
     stop("genes_integrate must be of class character, numeric, or integer.")
   }
-
+  
+  if(!is.logical(genes_include)) {
+    stop("genes_include must be of class logical.")
+  }
   SRA_in <- countmat_list
   
   shrt <- names(SRA_in)
@@ -262,13 +266,23 @@ process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = 
     # If there is more than one count matrix in the list, then integrate it using the 
     # integration anchors feature using default parameters
     
+    if(genes_include) {
+      all_rownames <- list() # make a list of rownames for each matrix
+      for(i in 1:length(each_sra)) {
+        all_rownames[[i]] <- rownames(each_sra[[i]])
+      }
+      inter_rownames <- Reduce(intersect,all_rownames) # get genes intersecting
+    } else {
+     inter_ronames <- NULL 
+    }
+    
     if(use_sctransform == TRUE) {
     
     object.features <- Seurat::SelectIntegrationFeatures(object.list = each_sra, nfeatures = genes_integrate)
     object.list <- Seurat::PrepSCTIntegration(object.list = each_sra, anchor.features = object.features, 
                                               verbose = FALSE)
     immune.anchors <- Seurat::FindIntegrationAnchors(object.list = object.list, anchor.features = object.features, normalization.method = "SCT")
-    immune.combined <- Seurat::IntegrateData(anchorset = immune.anchors, dims = 1:20, normalization.method = "SCT")
+    immune.combined <- Seurat::IntegrateData(anchorset = immune.anchors, dims = 1:20, normalization.method = "SCT", features.to.integrate = inter_rownames)
     
     Seurat::DefaultAssay(immune.combined) <- "integrated"
     pbmc <- immune.combined
@@ -276,7 +290,7 @@ process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = 
     } else {
       
       pancreas.anchors <- Seurat::FindIntegrationAnchors(object.list = each_sra, dims = 1:20, anchor.features = genes_integrate)
-      pancreas.integrated <- Seurat::IntegrateData(anchorset = pancreas.anchors, dims = 1:20)
+      pancreas.integrated <- Seurat::IntegrateData(anchorset = pancreas.anchors, dims = 1:20, features.to.integrate = inter_rownames)
       pancreas.integrated <- Seurat::ScaleData(pancreas.integrated, verbose = FALSE)
       pbmc <- pancreas.integrated
       

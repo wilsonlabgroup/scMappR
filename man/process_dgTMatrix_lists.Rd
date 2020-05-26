@@ -18,7 +18,8 @@ process_dgTMatrix_lists(
   path = NULL,
   use_sctransform = FALSE,
   test_ctname = "wilcox",
-  genes_integrate = 2000
+  genes_integrate = 2000,
+  genes_include = FALSE
 )
 }
 \arguments{
@@ -49,6 +50,8 @@ process_dgTMatrix_lists(
 \item{test_ctname}{statistical test for calling CT markers -- must be in Seurat}
 
 \item{genes_integrate}{The number of genes to include in the integration anchors feature when combining datasets -- passed into process_from_count}
+
+\item{genes_include}{TRUE or FALSE -- include 2000 genes in signature matrix or all matrix.}
 }
 \value{
 List with the following elements:
