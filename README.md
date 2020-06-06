@@ -8,7 +8,7 @@
 
 ## Description
 
-Single-cell mapper (scMappR) is an R package that allows users to better understand the cell-type contributions to a list of genes. This is completed by scaling the genes within a list to the likelihood that they'll be expressed within each cell-type within a tissue. Furthermore, when a gene list is from a bulk RNA-seq, cell-type proportions can be estimated. In this instance, the summary statistics of identified differentially expressed genes are further scaled by the proportion of the cell-type in the population and normalized to the ratio of cell-type propotion in case/control. These functionalities require a signature matrix; or a gene by cell-type matrix filled with the likelihood a gene is found in each cell-type. scMappR provides pre-computed signature matrices from 330 published scRNA-seq datasets across ~150 tissues as well as the infrastructure to generate signature matrices from scRNA-seq count data. All of these functionalities can be applied using a handful of functions described below. For more details, please find out vignette at (links).
+Gene expression profiling experiments are extensively used to reveal biological mechanisms underlying complex processes. A primary output from global gene expression experiments, such as those enabled by RNA sequencing (RNA-seq), is a list of differentially expressed (DE) genes. In most cases, DE lists are obtained from heterogeneous samples, and do not necessarily indicate the cell type(s) where the DE occurred. While single cell RNA-seq (scRNA-seq) experiments reveal cell-type specific DE, bulk RNA-seq data is by far the most feasible to collect. Here we present single-cell Mapper (scMappR), a method that assigns cell type specificity to DE results obtained from bulk RNA-seq experiments. scMappR utilizes existing cell type proportion information from user selected scRNA-seq studies or a curated catalogue of re-processed scRNA-seq information. After benchmarking scMappR using RNA-seq data obtained from sorted blood cells, we asked if scMappR could reveal cell-type specific changes that occur during kidney regeneration. We found that scMappR appropriately assigned differentially expressed genes to cell-types involved in kidney regeneration, including a relatively small proportion of immune cells. This immune cell response was not readily observed in pathway analyses of the original, un-partitioned, DE list. Overall, scMappR complements traditional differential expression analysis of bulk RNA-seq.
 
 ## Installation
 
@@ -49,7 +49,7 @@ devtools::install_github("DustinSokolowski/scMappR")
 ```
 
 
-2. CRAN (Stable Release) -- Currently not available
+2. CRAN (Stable Release)
 
 
 ```{r install_cran, eval=FALSE}
