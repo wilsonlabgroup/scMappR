@@ -46,7 +46,7 @@
 #' }
 #' 
 #' @export
-#' 
+#'
 process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = FALSE, saveALL = FALSE, panglao_set = FALSE, toSave = FALSE, path = NULL, use_sctransform = FALSE, genes_integrate = 2000, genes_include = FALSE) {
   # This function takes a list of count matrices and returns a seurat object of the count matrices integrated using Seurat V3 and the interation anchors
   # Different options are used for if the function is internal for PanglaoDB dataset reprocessing or being used for a custom set of count matrices.
