@@ -273,7 +273,7 @@ process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = 
       }
       inter_rownames <- Reduce(intersect,all_rownames) # get genes intersecting
     } else {
-     inter_ronames <- NULL 
+     inter_rownames <- NULL 
     }
     
     if(use_sctransform == TRUE) {
