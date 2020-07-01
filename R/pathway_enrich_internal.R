@@ -109,7 +109,7 @@ pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_g
   
   
   if(toSave == FALSE) {
-    stop("toSave = FALSE and therefore scMappR is not allowed to print pathways. For this function to work, please set toSave = TRUE")
+    warning("toSave = FALSE and therefore scMappR is not allowed to print pathways. For this function to work fully, please set toSave = TRUE")
   }
   
   if(toSave == TRUE) {
@@ -161,6 +161,9 @@ pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_g
     ordered_back_all_tf$p_value <- ordered_back_all_tf$p.value
   }
   
+  saveWorks <- all(toSave, !is.null(path))[1]
+  
+  if(saveWorks) {
   save(ordered_back_all, file = paste0(path, "/", output_directory,"/Bulk_pathway_enrichment.RData"))
   save(ordered_back_all_tf, file = paste0(path, "/", output_directory,"/Bulk_TF_enrichment.RData"))
   #plotting paths
@@ -179,11 +182,14 @@ pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_g
   save(ordered_back_all, file = paste0(path,"/",output_directory, "/",plot_names,"_bulk_pathways.RData"))
   save(ordered_back_all_tf, file = paste0(path,"/",output_directory, "/",plot_names,"_bulk_transcription_factors.RData"))
   
+  }
   message("Compelting pathway analysis of cellWeighted_Foldchanges.")
   paths <- gProfiler_cellWeighted_Foldchange(scMappR_vals,species =  theSpecies, background = background_genes, gene_cut = number_genes, newGprofiler = newGprofiler) # re-rodered pathway analysis
   
   biological_pathways <- paths$BP # Biological pathways
   transcription_factors <- paths$TF # Transcription factors
+  
+  if(saveWorks) {
   save(biological_pathways, file = paste0(path, "/", output_directory, "/",plot_names,"_reordered_pathways.RData"))
   save(transcription_factors, file = paste0(path, "/", output_directory, "/",plot_names,"_reordered_transcription_factors.RData"))
   
@@ -206,6 +212,7 @@ pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_g
     TF  <- make_TF_barplot(transcription_factors[[i]], top_tf = 10)
     print(TF)
     grDevices::dev.off()
+  }
   }
   return(list(BPs = biological_pathways, TFs = transcription_factors))
 }

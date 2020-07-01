@@ -406,6 +406,50 @@ seurat_example_inter@active.ident <- Cell_type_id_inter
 ```
 
 
+## Pathway enrichment of cwFold-changes
+
+The scMappR manuscript describes two pathway enrichment methodologies. Pathway enrichment of the first approach represents biological pathways associated with the rank-change in expression of each cell-type. Secondly, scMappR re-ranks genes by their increase in cell-type specificity before completing an ordered pathway analysis. For example, if a gene is the 150th most DE gene in bulk and the 2nd most DE gene for a cell-type, it would have a score of 148 for that cell-type. Pathway enrichment of the second approach represents biological pathways associated with genes most influenced by scMappR. These two pathway enrichment methodologies are consolodated into a single function separate from `scMappR_and_pathway_analysis`. Specifically, they are found in `two_method_pathway_analysis.`
+
+This function requires that you input cwFold-changes computed from `scMappR_and_pathway_analysis` as well as the bulk DE genes inputted into the original analysis. An example is shown below:
+
+```{r pathway_analysis, eval = FALSE}}
+
+data(PBMC_example)
+bulk_DE_cors <- PBMC_example$bulk_DE_cors
+bulk_normalized <- PBMC_example$bulk_normalized
+odds_ratio_in <- PBMC_example$odds_ratio_in
+case_grep <- "_female"
+control_grep <- "_male"
+max_proportion_change <- 10
+print_plots <- FALSE
+theSpecies <- "human"
+toOut <- scMappR_and_pathway_analysis(bulk_normalized, odds_ratio_in, 
+                                      bulk_DE_cors, case_grep = case_grep,
+                                      control_grep = control_grep, rda_path = "", 
+                                      max_proportion_change = 10, print_plots = TRUE, 
+                                      plot_names = "tst1", theSpecies = "human", 
+                                      output_directory = "tester",
+                                      sig_matrix_size = 3000, up_and_downregulated = FALSE, 
+                                      internet = FALSE)
+
+twoOutFiles <- two_method_pathway_enrichment(bulk_DE_cors, "human", scMappR_vals = toOut$cellWeighted_Foldchange, background_genes = rownames(bulk_normalized), output_directory = "newfun_test",plot_names = "nonreranked_", toSave = FALSE, path=NULL)
+
+# The code below would save graphs and paths into the working directory.  It is commented to not make code in your working directory
+#twoOutFiles <- two_method_pathway_enrichment(bulk_DE_cors, "human", scMappR_vals = toOut$cellWeighted_Foldchange, background_genes = rownames(bulk_normalized), output_directory = "newfun_test",plot_names = "nonreranked_", toSave = TRUE, path="./")
+
+```
+
+Here, the following objects are saved.
+
+* bulk ___ enrichment (.Rdata/.png/.pdf): the bulk enrichment of the .Rdata object, and .png/.pdf of the top pathways
+* _reordered_pathways.pdf: list of pathways re-ordered by cwFold-change
+* _reordered_tfs.pdf: list of tfs re-ordered by cwFold-change
+* rank_increase_genes: a list of cell-types. Each cell-type contains three dfs: 1) the rank change of each gene between the bulk DE gene and cwFold-change. 2) the enriched bps when genes are ordered by their increase in rank after scmappR was applied. 3) the enriched tfs when genes are ordered by their increase in rank after scmappR was applied.
+* bp_reranked: folder containing the plots of most enriched bp when genes are ordered by their increase in rank after scmappR was applied.
+* bp_reranked: folder containing the plots of most enriched tf when genes are ordered by their increase in rank after scmappR was applied.
+* scatterplot_reranked: folder containing the rank differences between cwFold-change and bulk DE gene for each cell-type.
+* BP_barplot: top BPs identified by cwFold-change for each cell-type.
+* TF_barplot: top BPs identified by cwFold-change for each cell-type.
 
 
 ## Manually making graphics.

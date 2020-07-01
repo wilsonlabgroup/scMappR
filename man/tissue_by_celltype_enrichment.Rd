@@ -23,7 +23,7 @@ tissue_by_celltype_enrichment(
 
 \item{p_thresh}{The Fisher's test cut-off for a cell-marker to be enriched.}
 
-\item{rda_path}{Path to a .rda file containing an object called "gmt". Either human or mouse cell-type markers split by experiment. If the correct file isn't present they will be downloaded from https://github.com/DustinSokolowski/scMappR_Data.}
+\item{rda_path}{Path to a .rda file containing an object called "gmt". Either human or mouse cell-type markers split by experiment. If the correct file isn't present they will be downloaded from https://github.com/wilsonlabgroup/scMappR_Data.}
 
 \item{isect_size}{Number of genes in your list and the cell-type.}
 
