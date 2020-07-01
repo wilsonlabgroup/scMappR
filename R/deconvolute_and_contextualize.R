@@ -266,7 +266,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   proportions <- proportions[,colMeans(proportions) > 0.001]
   
   message("your bulk data contains the following cell types")
-  message(colnames(proportions))
+  message(paste0(colnames(proportions)))
   #convert to correct datatypes for downstream analysis
   wilcox_or <- wilcox_or[,colnames(proportions)]
   wilcox_or_df <- as.data.frame(wilcox_or)
@@ -397,7 +397,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   if((length(dup_gene_names) > 0)[1]) {
     dup_gene_names <- DEGs$gene_name[dup_gene_names]
     warning("Duplicated gene names:")
-    message(dup_gene_names)
+    message(paste(dup_gene_names))
     warning("Some gene names are duplicated -- keeping the first duplicate in the list. Check if there should be duplicate gene symbols in your dataset.")
   }
   DEGs <- DEGs[!duplicated(DEGs$gene_name),]
@@ -488,7 +488,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
       grDevices::pdf(paste0(path,"/","deconvolute_generemove_quantseq_",names,".pdf"))
       g <- ggplot2::ggplot(all_stack, ggplot2::aes(factor(cell_type), proportion)) + ggplot2::geom_boxplot()  + ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, hjust = 1, size = 8))
       # generate barplot for every cell-type combined
-      message(g)
+      print(g)
       grDevices::dev.off()
       
       for(i in unique(all_stack$cell_type)) {
@@ -500,7 +500,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
         
         grDevices::pdf(paste0(path,"/","deconvolute_generemov_quantseq_", i,"_",names,".pdf"))
                 # generate barplot for one cell-type at a time
-        message(g)
+        print(g)
         grDevices::dev.off()
         message(i)
       }

@@ -166,13 +166,13 @@ pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_g
   #plotting paths
   grDevices::png(file = paste0(path, "/", output_directory,"/Bulk_pathway_enrichment.png"))
   bulk_bp <- plotBP(ordered_back_all)
-  message(bulk_bp)
+  print(bulk_bp)
   grDevices::dev.off()
   
   #plotting TFs
   grDevices::png(file = paste0(path,"/",output_directory,"/Bulk_TF_enrichment.png"))
   bulk_bp <- make_TF_barplot(ordered_back_all_tf, top_tf = 10)
-  message(bulk_bp)
+  print(bulk_bp)
   grDevices::dev.off()
 
   
