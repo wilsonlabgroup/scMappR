@@ -118,7 +118,7 @@ gProfiler_cellWeighted_Foldchange <- function(cellWeighted_Foldchange_matrix, sp
     # significantly enriched BPs or TFs for at least one cell-type
     
     
-    message(paste0("Re-ordering by absolute value of STVs on cell-type ", paste0(colnames(cellWeighted_Foldchange_matrix)[x])))
+    message(paste0("Re-ordering by absolute value of STVs on cell-type ", paste(colnames(cellWeighted_Foldchange_matrix)[x])))
     cellWeighted_Foldchange_matrix1 <- cellWeighted_Foldchange_matrix[order(abs(cellWeighted_Foldchange_matrix[,x]), decreasing = TRUE) ,]
     
     cellWeighted_Foldchange_matrix1 <- rownames(cellWeighted_Foldchange_matrix1)[abs(cellWeighted_Foldchange_matrix1[,x]) > 1e-10]
