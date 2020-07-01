@@ -266,7 +266,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   proportions <- proportions[,colMeans(proportions) > 0.001]
   
   message("your bulk data contains the following cell types")
-  message(paste0(colnames(proportions)))
+  message(paste(colnames(proportions)))
   #convert to correct datatypes for downstream analysis
   wilcox_or <- wilcox_or[,colnames(proportions)]
   wilcox_or_df <- as.data.frame(wilcox_or)
