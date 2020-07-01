@@ -91,7 +91,7 @@ two_method_pathway_enrichment <- function(DEGs, theSpecies, scMappR_vals, backgr
   
   
   if(!toSave) {
-    stop("toSave = FALSE and therefore scMappR is not allowed to print pathways. For this function to work, please set toSave = TRUE")
+    warning("toSave = FALSE and therefore scMappR is not allowed to print files and pictures. For this function to work fully, please set toSave = TRUE")
   }
   
   if(toSave) {
