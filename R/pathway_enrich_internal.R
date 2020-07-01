@@ -92,7 +92,7 @@ pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_g
   }
   
   if(!is.character(output_directory)) {
-    stop("output_directory must be a character, human, mouse, or a species compatible with gprofiler.")
+    stop("output_directory must be a character.")
   }
   
   if(!is.character(plot_names)) {
