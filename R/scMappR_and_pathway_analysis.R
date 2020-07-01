@@ -294,7 +294,10 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
       signature_matrix1 <- signature_matrix[intersected_genes,]
       bioMart_orthologs1 <- bioMart_orthologs[intersected_genes,]
       rownames(signature_matrix1) <- bioMart_orthologs1[,theSpecies] # replacing rownames with the species you want
-      message(dim(signature_matrix1))
+      message("Number of genes: ")
+      message(nrow(signature_matrix1))
+      message("Number of cell-types: ")
+      message(ncol(signature_matrix1))
       signature_matrix <- signature_matrix1
     }
   }
@@ -420,7 +423,10 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     message("There were fewer than two upregulated DEGs, therefore a heatmap could not be made.")
     
   }
-  message(dim(scMappR_vals_down))
+  message("Number of genes: ")
+  message(nrow(scMappR_vals_down))
+  message("Number of cell-types: ")
+  message(ncol(scMappR_vals_down))
   if((nrow(scMappR_vals_down) > 2 & ncol(scMappR_vals_down) > 2)[1]) {
   grDevices::pdf(paste0(path,"/",output_directory, "/", plot_names,"_cellWeighted_Foldchanges_downregulated_DEGs_heatmap.pdf"))
   #gplots::heatmap.2(as.matrix(abs(scMappR_vals_down)), Rowv = TRUE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
