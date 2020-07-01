@@ -266,7 +266,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   proportions <- proportions[,colMeans(proportions) > 0.001]
   
   message("your bulk data contains the following cell types")
-  message(paste(colnames(proportions)))
+  message(paste(colnames(proportions), " "))
   #convert to correct datatypes for downstream analysis
   wilcox_or <- wilcox_or[,colnames(proportions)]
   wilcox_or_df <- as.data.frame(wilcox_or)
@@ -397,7 +397,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   if((length(dup_gene_names) > 0)[1]) {
     dup_gene_names <- DEGs$gene_name[dup_gene_names]
     warning("Duplicated gene names:")
-    message(paste(dup_gene_names))
+    message(paste(dup_gene_names, " "))
     warning("Some gene names are duplicated -- keeping the first duplicate in the list. Check if there should be duplicate gene symbols in your dataset.")
   }
   DEGs <- DEGs[!duplicated(DEGs$gene_name),]

@@ -158,7 +158,7 @@ gProfiler_cellWeighted_Foldchange <- function(cellWeighted_Foldchange_matrix, sp
     return(list(BPs = ordered_back_all, TFs = ordered_back_all_tf))
     
   }
-  message(colnames(cellWeighted_Foldchange_matrix))
+  message(paste(colnames(cellWeighted_Foldchange_matrix), " "))
   message(theSpecies)
   paths <- lapply(1:ncol(cellWeighted_Foldchange_matrix), gProfiler_internal)
   
