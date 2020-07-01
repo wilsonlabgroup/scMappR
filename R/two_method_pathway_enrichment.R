@@ -41,17 +41,31 @@
 #' @examples 
 #' \donttest{
 #' 
-#' data(POA_example)
-#' POA_generes <- POA_example$POA_generes
-#' POA_OR_signature <- POA_example$POA_OR_signature
-#' POA_Rank_signature <- POA_example$POA_Rank_signature
-#' Signature <- POA_Rank_signature
-#' rowname <- get_gene_symbol(Signature)
-#' rownames(Signature) <- rowname$rowname
-#' genes <- rownames(Signature)[1:100]
+#' # load data for scMappR
+#' data(PBMC_example)
+#' bulk_DE_cors <- PBMC_example$bulk_DE_cors
+#' bulk_normalized <- PBMC_example$bulk_normalized
+#' odds_ratio_in <- PBMC_example$odds_ratio_in
+#' case_grep <- "_female"
+#' control_grep <- "_male"
+#' max_proportion_change <- 10
+#' print_plots <- FALSE
+#' theSpecies <- "human"
 #' 
-#' enriched <- tissue_by_celltype_enrichment(gene_list = genes, 
-#' species = "mouse",p_thresh = 0.05, isect_size = 3)
+#' # calculate cwFold-changes
+#' toOut <- scMappR_and_pathway_analysis(bulk_normalized, odds_ratio_in, 
+#'                                       bulk_DE_cors, case_grep = case_grep,
+#'                                       control_grep = control_grep, rda_path = "", 
+#'                                       max_proportion_change = 10, print_plots = TRUE, 
+#'                                       plot_names = "tst1", theSpecies = "human", 
+#'                                       output_directory = "tester",
+#'                                       sig_matrix_size = 3000, up_and_downregulated = FALSE, 
+#'                                       internet = FALSE)
+#' 
+#' # complete pathway enrichment using both methods
+#' twoOutFiles <- two_method_pathway_enrichment(bulk_DE_cors, "human",
+#' scMappR_vals = toOut$cellWeighted_Foldchange, background_genes = rownames(bulk_normalized), 
+#' output_directory = "newfun_test",plot_names = "nonreranked_", toSave = FALSE)
 #' 
 #' }
 #'  
