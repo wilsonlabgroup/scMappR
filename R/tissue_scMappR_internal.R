@@ -139,7 +139,7 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
       #
       datafile <- "Signature_matrices_Pval.rda"
       metafile <- paste0(datafile)
-      url <- paste0("https://github.com/DustinSokolowski/scMappR_Data/blob/master/", 
+      url <- paste0("https://github.com/wilsonlabgroup/scMappR_Data/blob/master/", 
                     metafile, "?raw=true")
       destfile <- file.path(tempdir(), metafile)
       downloader::download(url, destfile = destfile, mode = "wb")
@@ -161,7 +161,7 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
       #
       datafile <- "Signature_matrices_OR.rda"
       metafile <- paste0(datafile)
-      url <- paste0("https://github.com/DustinSokolowski/scMappR_Data/blob/master/", 
+      url <- paste0("https://github.com/wilsonlabgroup/scMappR_Data/blob/master/", 
                     metafile, "?raw=true")
       destfile <- file.path(tempdir(), metafile)
       downloader::download(url, destfile = destfile, mode = "wb")
@@ -213,7 +213,7 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
         #
         datafile <- "bioMart_ortholog_human_mouse.rda"
         metafile <- paste0(datafile)
-        url <- paste0("https://github.com/DustinSokolowski/scMappR_Data/blob/master/", 
+        url <- paste0("https://github.com/wilsonlabgroup/scMappR_Data/blob/master/", 
                       metafile, "?raw=true")
         destfile <- file.path(tempdir(), metafile)
         downloader::download(url, destfile = destfile, mode = "wb")

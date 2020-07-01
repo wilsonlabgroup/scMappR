@@ -10,7 +10,7 @@
 #' @param gene_list A character vector of gene symbols with the same designation (e.g. mouse symbol - mouse, human symbol - human) as the gene set database.
 #' @param species Species of cell-type marker to use ('human' or 'mouse').
 #' @param p_thresh The Fisher's test cut-off for a cell-marker to be enriched.
-#' @param rda_path Path to a .rda file containing an object called "gmt". Either human or mouse cell-type markers split by experiment. If the correct file isn't present they will be downloaded from https://github.com/DustinSokolowski/scMappR_Data.
+#' @param rda_path Path to a .rda file containing an object called "gmt". Either human or mouse cell-type markers split by experiment. If the correct file isn't present they will be downloaded from https://github.com/wilsonlabgroup/scMappR_Data.
 #' @param isect_size Number of genes in your list and the cell-type.
 #' @param return_gmt Return .gmt file -- reccomended if downloading from online as it may have updated (T/F).
 #' @param name Name of the pdf to be printed.
@@ -99,7 +99,7 @@ tissue_by_celltype_enrichment <- function(gene_list, species, name = "CT_Tissue_
     warning("Consider setting return_gmt to true as the gmt file may have updated")
     datafile <- "human_tissue_celltype_scMappR.rda"
     metafile <- paste0(datafile)
-    url <- paste0("https://github.com/DustinSokolowski/scMappR_Data/blob/master/", 
+    url <- paste0("https://github.com/wilsonlabgroup/scMappR_Data/blob/master/", 
                   metafile, "?raw=true")
     destfile <- file.path(tempdir(), metafile)
     downloader::download(url, destfile = destfile, mode = "wb")
@@ -119,7 +119,7 @@ tissue_by_celltype_enrichment <- function(gene_list, species, name = "CT_Tissue_
       
     datafile <- "mouse_tissue_celltype_scMappR.rda"
     metafile <- paste0(datafile)
-    url <- paste0("https://github.com/DustinSokolowski/scMappR_Data/blob/master/", 
+    url <- paste0("https://github.com/wilsonlabgroup/scMappR_Data/blob/master/", 
                   metafile, "?raw=true")
     destfile <- file.path(tempdir(), metafile)
     downloader::download(url, destfile = destfile, mode = "wb")

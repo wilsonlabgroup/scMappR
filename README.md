@@ -3,7 +3,7 @@
 
 ### Dustin Sokolowski: dustin-dot-sokolowski-at-sickkids-dot-ca
 
-### Date: 04/01/2020
+### Date: 07/01/2020
 
 
 ## Description
@@ -39,10 +39,13 @@ if (!requireNamespace("BiocManager", quietly = TRUE))
 if (!requireNamespace("devtools", quietly = TRUE))
     install.packages("devtools")
 
+if (!requireNamespace("pcaMethods", quietly = TRUE))
 BiocManager::install("pcaMethods")
+
+if (!requireNamespace("GSVA", quietly = TRUE))
 BiocManager::install("GSVA")
 
-devtools::install_github("DustinSokolowski/scMappR")
+devtools::install_github("wilsonlabgroup/scMappR")
 
 
 
@@ -59,7 +62,10 @@ if (!requireNamespace("BiocManager", quietly = TRUE))
 if (!requireNamespace("devtools", quietly = TRUE))
     install.packages("devtools")
 
+if (!requireNamespace("pcaMethods", quietly = TRUE))
 BiocManager::install("pcaMethods")
+
+if (!requireNamespace("GSVA", quietly = TRUE))
 BiocManager::install("GSVA")
 
 install.packages("scMappR")
@@ -68,7 +74,7 @@ install.packages("scMappR")
 
 ## Data Download
 
-Link to data used in scMappR: https://github.com/DustinSokolowski/scMappR_Data
+Link to data used in scMappR: https://github.com/wilsonlabgroup/scMappR_Data
 
 To run scMappR locally, please download all .rda files in this data download repository. In many of the functions, the "rda_path" argument can be changed to wherever you would like to download these files to. It however assumes "~/scMappR/data".
 

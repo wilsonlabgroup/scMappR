@@ -158,7 +158,7 @@ heatmap_generation <- function(genesIn, comp,reference, cex = 0.8, rd_path = "",
         #
         datafile <- "bioMart_ortholog_human_mouse.rda"
         metafile <- paste0(datafile)
-        url <- paste0("https://github.com/DustinSokolowski/scMappR_Data/blob/master/", 
+        url <- paste0("https://github.com/wilsonlabgroup/scMappR_Data/blob/master/", 
                       metafile, "?raw=true")
         destfile <- file.path(tempdir(), metafile)
         downloader::download(url, destfile = destfile, mode = "wb")
