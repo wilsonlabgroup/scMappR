@@ -412,7 +412,7 @@ The scMappR manuscript describes two pathway enrichment methodologies. Pathway e
 
 This function requires that you input cwFold-changes computed from `scMappR_and_pathway_analysis` as well as the bulk DE genes inputted into the original analysis. An example is shown below:
 
-```{r pathway_analysis, eval = FALSE}}
+```{r pathway_analysis, eval = FALSE}
 
 data(PBMC_example)
 bulk_DE_cors <- PBMC_example$bulk_DE_cors
