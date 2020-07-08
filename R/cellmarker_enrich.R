@@ -113,13 +113,15 @@ cellmarker_enrich <- function(gene_list, p_thresh, gmt = "cellmarker_list.Rdata"
     proportion_success <- signif(intersect_size / term_size,2)
     interGenes <- paste0(ints, collapse = ",")
     theName <- names(gmt)[i]
-    theRow <- c(theName, p, term_size, intersect_size, input_length, interGenes) 
+    theRow <- c(theName, p, OR, term_size, intersect_size, input_length, interGenes) 
     theRows <- rbind(theRows, theRow)
   }
-  colnames(theRows) <- c("name","p", "term_size", "intersect_size", "input_length", "genes") # save study as gene set enrichment output
+  colnames(theRows) <- c("name","p","OR", "term_size", "intersect_size", "input_length", "genes") # save study as gene set enrichment output
   df_theRows <- as.data.frame(theRows)
   # convert cell-type enrichment matrix 
   df_theRows$p <- toNum(df_theRows$p)
+  df_theRows$OR <- toNum(df_theRows$OR)
+  
   fdr <- stats::p.adjust(df_theRows$p, "fdr")
   bonf <- stats::p.adjust(df_theRows$p, "bonferroni")
   df_theRows$fdr <- fdr
