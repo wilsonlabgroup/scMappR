@@ -265,15 +265,13 @@ process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = 
   if(length(SRA_in) > 1) {
     # If there is more than one count matrix in the list, then integrate it using the 
     # integration anchors feature using default parameters
-    
-    if(genes_include) {
+    inter_rownames <- NULL 
+    if(isTRUE(genes_include)) {
       all_rownames <- list() # make a list of rownames for each matrix
       for(i in 1:length(each_sra)) {
         all_rownames[[i]] <- rownames(each_sra[[i]])
       }
       inter_rownames <- Reduce(intersect,all_rownames) # get genes intersecting
-    } else {
-     inter_rownames <- NULL 
     }
     
     if(use_sctransform == TRUE) {
