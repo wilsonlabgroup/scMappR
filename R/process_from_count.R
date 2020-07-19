@@ -36,6 +36,7 @@
 #' @importFrom gprofiler2 gost
 #' @importFrom pcaMethods prep pca R2cum
 #' @importFrom limSolve lsei
+#' @importFrom pbapply pblapply
 #'
 #' @examples 
 #' \donttest{

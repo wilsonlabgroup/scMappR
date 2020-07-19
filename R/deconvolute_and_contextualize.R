@@ -53,6 +53,7 @@
 #' @importFrom gProfileR gprofiler
 #' @importFrom pcaMethods prep pca R2cum
 #' @importFrom limSolve lsei
+#' @importFrom pbapply pblapply
 #' 
 #' @examples 
 #' \donttest{
@@ -324,7 +325,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   }
   
   # run this with all genes
-  iterated <- lapply(genesIn, deconvolute_gene_removed)
+  iterated <- pbapply::pblapply(genesIn, deconvolute_gene_removed)
   names(iterated) <- genesIn
   proportion_pull <- function(tester) {
     #Internal: given a list of cell-type proprotions using a leave-one-out approach, pull the average
@@ -357,7 +358,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   }
   
   message("Leave one out cell proporitons: ")
-  iterated_pull <- lapply(iterated, proportion_pull)
+  iterated_pull <- pbapply::pblapply(iterated, proportion_pull)
   pull_means <- function(x) return(x$Mean)
   pull_fc <- function(x) return(x$FC) 
   # pull the means and fold-changes and bind it into a matrix
@@ -441,7 +442,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
     return(val)
   }
   message("Adjusting Coefficients:")
-  vals_out <- lapply(toInter_InGene$gene_name, values_with_preferences)
+  vals_out <- pbapply::pblapply(toInter_InGene$gene_name, values_with_preferences)
   message("Done")
   vals_out_mat <- do.call("rbind", vals_out)
   rownames(vals_out_mat) <- toInter_InGene$gene_name
