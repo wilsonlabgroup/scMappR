@@ -4,7 +4,7 @@ Version: 0.1.3
 Authors@R: 
     c(person(given = "Dustin", family = "Sokolowski", role = c("aut", "cre"), email = "dustin.sokolowski@sickkids.ca"), person(given = "Mariela", family = "Faykoo-Martinez", role = "aut", email = "mfaykoomartinez@gmail.com"), person(given = "Michael", family = "Wilson", role = "aut", email = "michael.wilson@sickkids.ca"), person(given = "Anna", family = "Goldenberg", role = "aut", email = "nyulik@gmail.com"))
 Description: Statistical tools to interrogate the cell-type specificity of any gene list given a matrix of cell-types and genes associated with those cell-types (a signature matrix). Additionally, a library of over 245 signature matrices from public data are stored. Together, there are four primary functions: (i) processing scRNA-seq count data and automated cell-type naming using 'Seurat' V3 and enrichment of CellMarker and Panglao databases, (ii) tissue-by-cell-type gene set enrichment, (iii) cell-type specific enrichment of a gene list within a particular tissue, (iv) weighted cell-type specific reranking of a list of differentially expressed genes. Reference: Sokolowski DJ, Faykoo-Martinez M, Erdman L, Hou H, Uuskula-Reimand L, Yuki K, Zhu H, Goldenberg A, Wilson MD (In Preparation).
-Depends: R (>= 3.6.0)
+Depends: R (>= 4.0.0)
 Imports: 
 	ggplot2, 
 	pheatmap, 
