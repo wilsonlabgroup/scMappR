@@ -178,16 +178,45 @@ process_dgTMatrix_lists <- function(dgTMatrix_list, name, species_name, naming_p
   wilcoxon_rank_mat_or <- gene_out$OR
   names(generes) <- colnames(wilcoxon_rank_mat_t) <- colnames(wilcoxon_rank_mat_or) <- gene_out$cellname
   # save cell-type markers and signature matrices
+  
+  # Combine all cell-type makers into a table
+  
+    # Primary cell-type names
+    OR_names <- colnames(wilcoxon_rank_mat_or)
+    OR_split <- strsplit(OR_names,"_and_")
+    for(p in 1:length(OR_split)) {
+      if(length(OR_split[[p]]) == 1) {
+        OR_split[[p]][2] <- OR_split[[p]][1]
+      }
+    }
+    OR_split_mat <- do.call("rbind",OR_split)
+    
+    # GSVA identity
+    cellmarker <- unlist(unname(gsva_cellIdentity_out$cellMarker))
+    panglao <- unlist(unname(gsva_cellIdentity_out$panglao))
+  
+    # topGenes
+    topGenes <- scMappR::topgenes_extract(generes)
+    
+    colPaste <- function(x) return(paste0(x,sep=",",collapse=""))
+    topGenes_paste <- unname(unlist(lapply(topGenes, colPaste) ))
+    cluster_num <- 1:length(topGenes_paste) - 1
+    name_together <-  cbind(cluster_num, OR_split_mat,cellmarker,panglao,topGenes_paste)
+    colnames(name_together) <- c("clusterNum", "CellMarkerFisher", "PanglaoFisher", "CellMarkerGSVA", "PanglaoGSVA", "TopGenes")
+    
+  ##
+  
   if(toSave == TRUE) {
     save(generes, file = paste0(path,"/", name, "_generes.Rdata"))
     save(wilcoxon_rank_mat_t, file= paste0(path,"/", name, "_pval_heatmap.Rdata"))
     save(wilcoxon_rank_mat_or, file= paste0(path,"/", name, "_or_heatmap.Rdata"))
-    l <- list(wilcoxon_rank_mat_t = wilcoxon_rank_mat_t, wilcoxon_rank_mat_or = wilcoxon_rank_mat_or,generes=generes)
+    save(name_together, file = paste0(path,"/",name,"_cellLabelInfo.Rdata"))
+    l <- list(wilcoxon_rank_mat_t = wilcoxon_rank_mat_t, wilcoxon_rank_mat_or = wilcoxon_rank_mat_or,generes=generes, cellLabel = name_together)
   } else {
     warning("toSave == FALSE therefore files cannot be saved. Switching toSave = TRUE is strongly reccomended.")
     message("toSave == FALSE therefore files cannot be saved. Switching toSave = TRUE is strongly reccomended.", quote = FALSE)
     
-    l <- list(wilcoxon_rank_mat_t = wilcoxon_rank_mat_t, wilcoxon_rank_mat_or = wilcoxon_rank_mat_or,generes=generes)
+    l <- list(wilcoxon_rank_mat_t = wilcoxon_rank_mat_t, wilcoxon_rank_mat_or = wilcoxon_rank_mat_or,generes=generes, cellLabel = name_together)
     
   }
   
