@@ -116,10 +116,11 @@ plotBP <- function(ordered_back_all, top_bp = 10) {
   # Plot the barplot and set the size of the text of each pathway to fit 
   g <- ggplot2::ggplot(ordered_back_all, ggplot2::aes(x = stats::reorder(term_name, log10), y = log10)) + ggplot2::geom_bar(stat = "identity", fill = "turquoise") + ggplot2::coord_flip() +  ggplot2::labs(y = "-log10(Padj)", x = "Gene Ontology") 
   y <- g + ggplot2::theme(axis.text.x = ggplot2::element_text(face=NULL, color="black", 
-                                            size=12, angle=35),
+                                            size=12, angle=0),
                  axis.text.y = ggplot2::element_text(face=NULL, color="black", 
-                                            size=12, angle=35), 
+                                            size=12, angle=0), 
                  axis.title= ggplot2::element_text(size=16, color = "black"))
+  y <- y + ggplot2::theme_classic()
   print(y)
   return(y)
 }

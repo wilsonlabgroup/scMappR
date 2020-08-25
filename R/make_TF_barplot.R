@@ -115,10 +115,11 @@ make_TF_barplot <- function(ordered_back_all_tf, top_tf = 5) {
   tf <- ndup_1_10$tf
   g <- ggplot2::ggplot(ndup_1_10, ggplot2::aes(x = stats::reorder(tf, log10), y = log10)) + ggplot2::geom_bar(stat = "identity", fill = "mediumpurple") + ggplot2::coord_flip() +  ggplot2::labs(y = "-log10(Padj)", x = "TF Motif") 
   y <- g + ggplot2::theme(axis.text.x = ggplot2::element_text(face=NULL, color="black", 
-                                                              size=12, angle=35),
+                                                              size=12, angle=0),
                           axis.text.y = ggplot2::element_text(face=NULL, color="black", 
-                                                              size=12, angle=35), 
+                                                              size=12, angle=0), 
                           axis.title=ggplot2::element_text(size=16, color = "black"))
+  y <- y + ggplot2::theme_classic()
   print(y)
   return(y)
 }
