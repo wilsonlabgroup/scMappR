@@ -7,7 +7,7 @@
 get_signature_matrices(type = "both")
 }
 \arguments{
-\item{type:}{a character vector that can be 'both', 'pVal', or 'OR'}
+\item{type}{a character vector that can be 'both', 'pVal', or 'OR'}
 }
 \value{
 \code{get_signature_matrices} Returns a list of signature matrices currently stored in scMappR_Data. \cr

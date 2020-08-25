@@ -6,7 +6,7 @@
 #' @rdname get_signature_matrices
 #' @name get_signature_matrices
 #'
-#' @param type: a character vector that can be 'both', 'pVal', or 'OR'
+#' @param type a character vector that can be 'both', 'pVal', or 'OR'
 #'
 #' @return \code{get_signature_matrices} Returns a list of signature matrices currently stored in scMappR_Data. \cr
 #'
