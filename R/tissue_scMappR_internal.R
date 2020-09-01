@@ -257,7 +257,13 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
       theSpecies <- sym$species # name of species
     }
     study_ref <- wilcoxon_rank_mat_t
-    
+    isMissing <- try(table(is.na(study_ref))[[2]], silent = TRUE)
+    if(is.numeric(isMissing)) {
+      message("detecting 'NA' values in signature matrix, converting thme to 0")
+      study_ref[is.na(study_ref)] <- 0
+      
+    }
+
     unknown <- grep(toupper("unknown"),toupper(colnames(study_ref)))
     if(length(unknown) > 0 & drop_unkown_celltype == TRUE) {
       message("Removing unknown cell-types")
