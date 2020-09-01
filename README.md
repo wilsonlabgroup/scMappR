@@ -80,6 +80,16 @@ To run scMappR locally, please download all .rda files in this data download rep
 
 If these functions do not detect these rda files, they will temporarily download them with the downloader R package; however, these rda files must already be downloaded to use the examples that are not automatically run.
 
+### Download signature matrices from scMappR_Data repo.
+
+```{r tissue_scMappR_internal, eval=FALSE }
+
+signature_matrix_download <- get_signature_matrices("all") # get all matrices and celltype labels
+
+
+```
+
+
 ## Primary Functionalities of scMappR.
 
 Below describes the primary ways scMappR can contextualize gene lists and process data. It is strongly reccomended to set `toSave = TRUE` in functions and, when appropraite, `internet = TRUE`. Otherwise scMappR will not print files/directories and many of the results will not be printed.

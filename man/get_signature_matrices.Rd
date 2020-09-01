@@ -4,21 +4,21 @@
 \alias{get_signature_matrices}
 \title{Get signature matrices.}
 \usage{
-get_signature_matrices(type = "both")
+get_signature_matrices(type = "all")
 }
 \arguments{
 \item{type}{a character vector that can be 'both', 'pVal', or 'OR'}
 }
 \value{
-\code{get_signature_matrices} Returns a list of signature matrices currently stored in scMappR_Data. \cr
+\code{get_signature_matrices} Returns the signature matrices currently stored in scMappR_Data. Associated cell-type labels from different methods for each signature matrix is also provided.\cr
 }
 \description{
-This function downloads and returns signature matrices from the scMappR_data repo.
+This function downloads and returns signature matrices and associated cel-type labels from the scMappR_data repo.
 }
 \examples{
 \donttest{
  
-signatures <- get_signature_matrices(type = "both")
+signatures <- get_signature_matrices(type = "all")
  
 }
  
