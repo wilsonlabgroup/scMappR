@@ -201,6 +201,18 @@ tissue_scMappR_internal <- function(gene_list,species, output_directory, tissue,
       
       rownames(wilcoxon_rank_mat_t) <- RN_2$rowname
       
+    } else {
+      RN_2 = list(rowname = rownames(wilcoxon_rank_mat_t))
+      uppered <- table(RN_2$rowname == toupper(RN_2$rowname))[2][[1]]
+      if(is.na(table(RN_2$rowname == toupper(RN_2$rowname))[3])[[1]]) {
+        uppered <- 0
+      }
+      if(uppered/length(RN_2$rowname) < 0.7) {
+        RN_2$species <- "mouse"
+      } else {
+        RN_2$species <- "human"
+      }
+      
     }
     if(species != RN_2$species ) { # convert background species to your species (internal only)
       
