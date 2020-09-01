@@ -43,6 +43,7 @@ get_signature_matrices <- function(type = "all") {
   
   RankValueSignature <- "" # empty for cran
   OddsRatioSignature <- "" # 
+  celltypeLabels <- "" # 
   
   if(type == "all") {
     
