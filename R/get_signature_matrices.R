@@ -36,7 +36,7 @@
 
 get_signature_matrices <- function(type = "all") {
 
-  type_check <- !all(is.character(type),length(type) == 1, type %in% c("both", "pVal", "OR", "label"))
+  type_check <- !all(is.character(type),length(type) == 1, type %in% c("all", "pVal", "OR", "label"))
   if(type_check[1]) {
     stop("the 'type' variable must be a character, specifically 'all', 'pVal', 'OR', or 'label'")
   }
