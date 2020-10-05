@@ -157,8 +157,8 @@ two_method_pathway_enrichment <- function(DEGs, theSpecies, scMappR_vals, backgr
     names(rank_CT) <- rownames(scMappR_vals_CT)
     names(rank_DEGs) <- DEGs$gene_name
     
-    rank_CT <- rank_CT[intersect(names(rank_CT),names(rank_DEGs) )]
-    rank_DEGs <- rank_DEGs[intersect(names(rank_CT),names(rank_DEGs) )]
+    rank_CT <- rank_CT[names(rank_DEGs) ]
+    rank_DEGs <- rank_DEGs[names(rank_DEGs) ]
     rank_change <- rank_CT - rank_DEGs
     ranks <- as.data.frame(cbind(rank_CT, rank_DEGs, rank_change))
     ranks <- ranks[order(ranks$rank_change),]  
