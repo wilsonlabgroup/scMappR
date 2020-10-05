@@ -150,7 +150,8 @@ two_method_pathway_enrichment <- function(DEGs, theSpecies, scMappR_vals, backgr
     
     # generating the DF containing the rank order difference between cwFold-changes and DE genes
     scMappR_vals_CT <- scMappR_vals[order(abs(scMappR_vals[,i]), decreasing = TRUE),]
-
+    DEGs <- DEGs[order(abs(DEGs$log2FC), decreasing = TRUE)] 
+    
     rank_CT <- 1:length(rownames(scMappR_vals_CT))
     rank_DEGs <- 1:length(DEGs$gene_name)
     names(rank_CT) <- rownames(scMappR_vals_CT)
