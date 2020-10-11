@@ -42,6 +42,7 @@
 #' @importFrom pcaMethods prep pca R2cum
 #' @importFrom limSolve lsei
 #' @importFrom pbapply pblapply
+#' @importFrom ADAPTS estCellPercent
 #'
 #' @examples 
 #' \donttest{

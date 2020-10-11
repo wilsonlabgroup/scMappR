@@ -30,6 +30,8 @@
 #' @param rda_path If downloaded, path to where data from scMappR_data is stored. 
 #' @param newGprofiler Whether to use gProfileR or gprofiler2 (T/F).
 #' @param path If toSave == TRUE, path to the directory where files will be saved.
+#' @param deconMethod Which RNA-seq deconvolution method to use to estimate cell-type proporitons. Options are "WGCNA", "DCQ", or "DeconRNAseq"
+#' 
 #' 
 #' @return List with the following elements:
 #' \item{cellWeighted_Foldchanges}{Cellweighted Fold-changes for all differentially expressed genes.}
@@ -50,6 +52,7 @@
 #' @importFrom pcaMethods prep pca R2cum
 #' @importFrom limSolve lsei
 #' @importFrom pbapply pblapply
+#' @importFrom ADAPTS estCellPercent
 #'
 #' @examples 
 #' 
@@ -74,7 +77,7 @@
 #' 
 #' @export
 #' 
-scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list, case_grep, control_grep, rda_path = "", max_proportion_change = -9, print_plots=T, plot_names="scMappR",theSpecies = "human", output_directory = "scMappR_analysis",sig_matrix_size = 3000, drop_unknown_celltype = TRUE, internet = TRUE, up_and_downregulated = FALSE, gene_label_size = 0.4, number_genes = -9, toSave=FALSE, newGprofiler = FALSE, path = NULL) {
+scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list, case_grep, control_grep, rda_path = "", max_proportion_change = -9, print_plots=T, plot_names="scMappR",theSpecies = "human", output_directory = "scMappR_analysis",sig_matrix_size = 3000, drop_unknown_celltype = TRUE, internet = TRUE, up_and_downregulated = FALSE, gene_label_size = 0.4, number_genes = -9, toSave=FALSE, newGprofiler = FALSE, path = NULL, deconMethod = "DeconRNASeq") {
   
   
   
@@ -161,7 +164,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
       stop("species_name is not 'human' 'mouse' or '-9' (case sensitive), please try again with this filled.")
     }
   }
-
+  
   if(!is.character(rda_path)) {
     stop("rda_path must be of class list.")
   }
@@ -189,18 +192,18 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     stop("number_genes must be of class numeric.")
   }
   if(all(is.logical(print_plots),is.logical(drop_unknown_celltype),is.logical(internet),is.logical(up_and_downregulated),is.logical(toSave),is.logical(newGprofiler) ) == FALSE) {
-   stop("print_plots, drop_unknown_celltype, internet, up_and_down_regulatedtoSave, newGprofiler: must all be class logical.") 
+    stop("print_plots, drop_unknown_celltype, internet, up_and_down_regulatedtoSave, newGprofiler: must all be class logical.") 
   }
-
+  
   if(toSave == TRUE) {
-      if(is.null(path)) {
-        stop("scMappR is given write permission by setting toSave = TRUE but no directory has been selected (path = NULL). Pick a directory or set path to './' for current working directory")
-      }
-      if(!dir.exists(path)) {
-        stop("The selected directory does not seem to exist, please check set path.")
+    if(is.null(path)) {
+      stop("scMappR is given write permission by setting toSave = TRUE but no directory has been selected (path = NULL). Pick a directory or set path to './' for current working directory")
+    }
+    if(!dir.exists(path)) {
+      stop("The selected directory does not seem to exist, please check set path.")
     }
   }
-
+  
   theSpecies <- tolower(theSpecies)
   
   if(is.character(count_file)) {
@@ -269,7 +272,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     if(internal_species != theSpecies) {
       warning(paste0("the species from the signature matrix, ", internal_species, ", does not equal the initially inputted species, ", theSpecies, ". Converting gene symbols of 1-1 orthologs"))
       RN <- rownames(signature_matrix) # gene symbols
-
+      
       thefiles <- list.files(path = rda_path, "bioMart_ortholog_human_mouse.rda")
       
       
@@ -321,8 +324,8 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     colnames(signature_matrix) <- paste0(colnames(signature_matrix), "_", 1:ncol(signature_matrix))
   }
   
-  cellWeighted_Foldchanges <- deconvolute_and_contextualize(count_file, signature_matrix, DEG_list, case_grep , control_grep, max_proportion_change = max_proportion_change, print_plots = print_plots, plot_names = plot_names, theSpecies = theSpecies, sig_matrix_size = sig_matrix_size, drop_unknown_celltype = drop_unknown_celltype, toSave = toSave, path = path)
-
+  cellWeighted_Foldchanges <- deconvolute_and_contextualize1(count_file, signature_matrix, DEG_list, case_grep , control_grep, max_proportion_change = max_proportion_change, print_plots = print_plots, plot_names = plot_names, theSpecies = theSpecies, sig_matrix_size = sig_matrix_size, drop_unknown_celltype = drop_unknown_celltype, toSave = toSave, path = path, deconMethod = deconMethod)
+  
   # Computing t-test for changes in cell-type proportion
   ttest_decon <- function(x) {
     # This function takes the cell-type proporitons of cases and controls and completes t-tests to see if there are significant changes.  
@@ -375,7 +378,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     warning("You only have 1 DEG, no heatmaps can be made. Returning cellWeighted_Foldchange")
     message("You only have 1 DEG, no heatmaps can be made. Returning cellWeighted_Foldchange")
     return(scMappR_vals)
-    }
+  }
   myheatcol <- grDevices::colorRampPalette(c("lightblue", "white", "orange"))(256)
   
   # generate heatmaps for DEGs
@@ -388,23 +391,23 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   
   #Absolute value plotting of scMappR vals
   if(length(inter) > 3) {
-  scMappR_intersect <- scMappR_vals[inter,]
-  scMappR_pref <- scMappR_vals[inter,]
-  
-  
-  grDevices::pdf(paste0(path,"/",output_directory,"/",plot_names,"_cwFC_absoluteVals_signature_overlap.pdf")) 
-  pl_abs <- pheatmap::pheatmap(abs(as.matrix(scMappR_intersect)), color = myheatcol, scale = "row", fontsize_row = cex, fontsize_col = 10)
-  dev.off()
-  
-  grDevices::pdf(paste0(path,"/",output_directory,"/",plot_names,"cwFC_absoluteVals_all.pdf"))
-  pheatmap::pheatmap(abs(as.matrix(scMappR_vals[,pl_abs$tree_col$order])), color = myheatcol, scale = "row", fontsize_row = cex, fontsize_col = 10, cluster_cols = FALSE)
-  dev.off()
-  
-  grDevices::pdf(paste0(path,"/",output_directory,"/",plot_names,"_DEG_preferences_heatmap.pdf")) 
-  pheatmap::pheatmap(as.matrix(scMappR_pref[pl_abs$tree_row$order,pl_abs$tree_col$order]), color = myheatcol, scale = "row", fontsize_row = cex, fontsize_col = 10, cluster_rows = FALSE, cluster_cols = FALSE)
-  dev.off()
-  
-
+    scMappR_intersect <- scMappR_vals[inter,]
+    scMappR_pref <- scMappR_vals[inter,]
+    
+    
+    grDevices::pdf(paste0(path,"/",output_directory,"/",plot_names,"_cwFC_absoluteVals_signature_overlap.pdf")) 
+    pl_abs <- pheatmap::pheatmap(abs(as.matrix(scMappR_intersect)), color = myheatcol, scale = "row", fontsize_row = cex, fontsize_col = 10)
+    dev.off()
+    
+    grDevices::pdf(paste0(path,"/",output_directory,"/",plot_names,"cwFC_absoluteVals_all.pdf"))
+    pheatmap::pheatmap(abs(as.matrix(scMappR_vals[,pl_abs$tree_col$order])), color = myheatcol, scale = "row", fontsize_row = cex, fontsize_col = 10, cluster_cols = FALSE)
+    dev.off()
+    
+    grDevices::pdf(paste0(path,"/",output_directory,"/",plot_names,"_DEG_preferences_heatmap.pdf")) 
+    pheatmap::pheatmap(as.matrix(scMappR_pref[pl_abs$tree_row$order,pl_abs$tree_col$order]), color = myheatcol, scale = "row", fontsize_row = cex, fontsize_col = 10, cluster_rows = FALSE, cluster_cols = FALSE)
+    dev.off()
+    
+    
   }
   
   scMappR_vals_up <- as.matrix(scMappR_vals[apply(scMappR_vals,1, sum) > 0,])
@@ -429,11 +432,11 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   message("Number of cell-types: ")
   message(ncol(scMappR_vals_down))
   if((nrow(scMappR_vals_down) > 2 & ncol(scMappR_vals_down) > 2)[1]) {
-  grDevices::pdf(paste0(path,"/",output_directory, "/", plot_names,"_cellWeighted_Foldchanges_downregulated_DEGs_heatmap.pdf"))
-  #gplots::heatmap.2(as.matrix(abs(scMappR_vals_down)), Rowv = TRUE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
-  pheatmap::pheatmap(as.matrix(abs(scMappR_vals_down)), color = myheatcol, scale = "row", fontsize_row = cex, fontsize_col = 10)
-  
-  grDevices::dev.off()
+    grDevices::pdf(paste0(path,"/",output_directory, "/", plot_names,"_cellWeighted_Foldchanges_downregulated_DEGs_heatmap.pdf"))
+    #gplots::heatmap.2(as.matrix(abs(scMappR_vals_down)), Rowv = TRUE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+    pheatmap::pheatmap(as.matrix(abs(scMappR_vals_down)), color = myheatcol, scale = "row", fontsize_row = cex, fontsize_col = 10)
+    
+    grDevices::dev.off()
   } else {
     warning("There were fewer than two downregulated DEGs, therefore a heatmap could not be made.")
     message("There were fewer than two downregulated DEGs, therefore a heatmap could not be made.")
@@ -453,14 +456,14 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     message("Fewer than 3 genes are both De and in the signature matrix. Therefore, these heatmaps will not be generated. Furthermore, there is insufficient re-ranking of genes for different pathway analyses to be neccesary. Therefore, here, cellWeighted_Foldchanges are more representative of a scaling factor for each cell-type.")
     
     return(list(cellWeighted_Foldchanges = cellWeighted_Foldchanges))
-
+    
   } else {
     
     # generating the heatmaps for cellWeighted_Foldchanges and signature matrix odds ratios that overlap with one another
     up_signature <- intersect(rownames(scMappR_vals_up), celltype_preferred_degs)
     down_signature <- intersect(rownames(scMappR_vals_down), celltype_preferred_degs)
     
-
+    
     
     
     
@@ -468,22 +471,22 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     signature_mat_down <- as.matrix(signature_mat[down_signature,])
     scMappR_vals_up1 <- as.matrix(scMappR_vals_up[up_signature,])
     scMappR_vals_down1 <- as.matrix(scMappR_vals_down[down_signature,])
-
+    
     # Upregulated DEG Heatmap
     if(nrow(signature_mat_up) > 2 & ncol(signature_mat_up) > 2) {
-    grDevices::pdf(paste0(path,"/",output_directory, "/",plot_names,"_celltype_specific_upregulated_cwFoldChange_heatmap.pdf"))
-    #pl <- gplots::heatmap.2(as.matrix(signature_mat_up), Rowv = TRUE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
-    pl <- pheatmap::pheatmap(as.matrix(scMappR_vals_up1), color = myheatcol, scale = "row", fontsize_row = cex, fontsize_col = 10)
-    
-    #message(pl)
-    grDevices::dev.off()
-    
-    
-    grDevices::pdf(paste0(path,"/",output_directory, "/", plot_names,"celltype_specific_preferences_upregulated_DEGs_heatmap.pdf"))
-    #gplots::heatmap.2(as.matrix(scMappR_vals_up1[rev(colnames(pl$carpet)),pl$colInd]),Colv=F, Rowv = FALSE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
-    tst <- pheatmap::pheatmap(as.matrix(signature_mat_up)[pl$tree_row$order,pl$tree_col$order], color = myheatcol, scale = "row", fontsize_row = cex, fontsize_col = 10, cluster_cols = FALSE, cluster_rows = FALSE)
-    
-    grDevices::dev.off()
+      grDevices::pdf(paste0(path,"/",output_directory, "/",plot_names,"_celltype_specific_upregulated_cwFoldChange_heatmap.pdf"))
+      #pl <- gplots::heatmap.2(as.matrix(signature_mat_up), Rowv = TRUE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+      pl <- pheatmap::pheatmap(as.matrix(scMappR_vals_up1), color = myheatcol, scale = "row", fontsize_row = cex, fontsize_col = 10)
+      
+      #message(pl)
+      grDevices::dev.off()
+      
+      
+      grDevices::pdf(paste0(path,"/",output_directory, "/", plot_names,"celltype_specific_preferences_upregulated_DEGs_heatmap.pdf"))
+      #gplots::heatmap.2(as.matrix(scMappR_vals_up1[rev(colnames(pl$carpet)),pl$colInd]),Colv=F, Rowv = FALSE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+      tst <- pheatmap::pheatmap(as.matrix(signature_mat_up)[pl$tree_row$order,pl$tree_col$order], color = myheatcol, scale = "row", fontsize_row = cex, fontsize_col = 10, cluster_cols = FALSE, cluster_rows = FALSE)
+      
+      grDevices::dev.off()
     } else {
       warning("There were fewer than two cell-type specific, upregulated DEGs, therefore a heatmap could not be made.")
       message("There were fewer than two cell-type specific, upregulated DEGs, therefore a heatmap could not be made.")
@@ -493,16 +496,16 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     # Downregulated DEG Heatmap
     
     if((nrow(signature_mat_down) > 2 & ncol(signature_mat_down) > 2)[1]) {
-    grDevices::pdf(paste0(path,"/",output_directory, "/",plot_names,"_celltype_specific_cellWeighted_Foldchanges_downregulated_heatmap.pdf"))
-    pl2 <- pheatmap::pheatmap(as.matrix(scMappR_vals_down1), color = myheatcol, scale = "row", fontsize_row = cex, fontsize_col = 10)
-    grDevices::dev.off()
-    
-    
-    grDevices::pdf(paste0(path,"/",output_directory, "/", plot_names,"_celltype_specific_preferences_downregulated_DEGs_heatmap.pdf"))
-    #gplots::heatmap.2(as.matrix(abs(scMappR_vals_down1[rev(colnames(pl2$carpet)),pl2$colInd])),Colv=F, Rowv = FALSE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
-    tst <- pheatmap::pheatmap(as.matrix(signature_mat_down)[pl2$tree_row$order,pl2$tree_col$order], color = myheatcol, scale = "row", fontsize_row = cex, fontsize_col = 10, cluster_cols = FALSE, cluster_rows = FALSE)
-    
-    grDevices::dev.off()
+      grDevices::pdf(paste0(path,"/",output_directory, "/",plot_names,"_celltype_specific_cellWeighted_Foldchanges_downregulated_heatmap.pdf"))
+      pl2 <- pheatmap::pheatmap(as.matrix(scMappR_vals_down1), color = myheatcol, scale = "row", fontsize_row = cex, fontsize_col = 10)
+      grDevices::dev.off()
+      
+      
+      grDevices::pdf(paste0(path,"/",output_directory, "/", plot_names,"_celltype_specific_preferences_downregulated_DEGs_heatmap.pdf"))
+      #gplots::heatmap.2(as.matrix(abs(scMappR_vals_down1[rev(colnames(pl2$carpet)),pl2$colInd])),Colv=F, Rowv = FALSE, dendrogram = "column", col = myheatcol, scale = "row", trace = "none", margins = c(7,7),cexRow = cex, cexCol = 0.3 )
+      tst <- pheatmap::pheatmap(as.matrix(signature_mat_down)[pl2$tree_row$order,pl2$tree_col$order], color = myheatcol, scale = "row", fontsize_row = cex, fontsize_col = 10, cluster_cols = FALSE, cluster_rows = FALSE)
+      
+      grDevices::dev.off()
     }  else {
       warning("There were fewer than two cell-type specific, downregulated DEGs, therefore a heatmap could not be made.")
       message("There were fewer than two cell-type specific, downregulated DEGs, therefore a heatmap could not be made.")
@@ -513,35 +516,35 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     warning("There is not a reported stable internet (WIFI = FALSE) and therefore pathway analysis with g:Prof")
     return("Done!")
   }
-
+  
   up_and_down_together <- pathway_enrich_internal(  DEGs, theSpecies, scMappR_vals, background_genes, output_directory, plot_names, number_genes = number_genes, toSave=TRUE,path=path, newGprofiler = newGprofiler)
   if(up_and_downregulated == TRUE)  {
     message("Splitting genes by up- and down-regulated and then repeating analysis")
     rownames(DEGs) <- DEGs$gene_name
     upGenes <- DEGs$gene_name[DEGs$log2fc > 0]
     downGenes <- DEGs$gene_name[DEGs$log2fc < 0]
-
-
+    
+    
     
     upDEGs <- DEGs[upGenes,]
     downDEGs <- DEGs[downGenes,]
     
     if(length(upGenes) > 2) {
-    upDir <- paste0(output_directory,"/upregulated") 
-    dir.create(paste0(path,"/",upDir))
-    message("Pathway analysis of upregulated genes")
-    upcellWeighted_Foldchanges <- scMappR_vals[upGenes,]
-    up_only <- pathway_enrich_internal(  upDEGs, theSpecies, upcellWeighted_Foldchanges, background_genes, upDir, plot_names, number_genes = number_genes, toSave=TRUE, path = path, newGprofiler = newGprofiler)
+      upDir <- paste0(output_directory,"/upregulated") 
+      dir.create(paste0(path,"/",upDir))
+      message("Pathway analysis of upregulated genes")
+      upcellWeighted_Foldchanges <- scMappR_vals[upGenes,]
+      up_only <- pathway_enrich_internal(  upDEGs, theSpecies, upcellWeighted_Foldchanges, background_genes, upDir, plot_names, number_genes = number_genes, toSave=TRUE, path = path, newGprofiler = newGprofiler)
     } else {
       warning("There are fewer than three upregulated DEGs.")
     }
     message("Pathway analysis of downregulated genes")
     if(length(downGenes) > 2) {
-    downDir <- paste0(output_directory, "/downregulated")
+      downDir <- paste0(output_directory, "/downregulated")
       
-    dir.create(paste0(path,"/",downDir))
-    DowncellWeighted_Foldchanges <- scMappR_vals[downGenes,]
-    down_only <- pathway_enrich_internal(  downDEGs, theSpecies, DowncellWeighted_Foldchanges, background_genes, downDir, plot_names, number_genes = number_genes, toSave=TRUE, path = path, newGprofiler = newGprofiler)    
+      dir.create(paste0(path,"/",downDir))
+      DowncellWeighted_Foldchanges <- scMappR_vals[downGenes,]
+      down_only <- pathway_enrich_internal(  downDEGs, theSpecies, DowncellWeighted_Foldchanges, background_genes, downDir, plot_names, number_genes = number_genes, toSave=TRUE, path = path, newGprofiler = newGprofiler)    
     } else {
       warning("There are fewer than three downregulated DEGs.")
       

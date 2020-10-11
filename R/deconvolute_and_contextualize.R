@@ -33,6 +33,7 @@
 #' @param drop_unknown_celltype Whether or not to remove "unknown" cell-types from the signature matrix (T/F).
 #' @param toSave Allow scMappR to write files in the current directory (T/F).
 #' @param path If toSave == TRUE, path to the directory where files will be saved.
+#' @param deconMethod Which RNA-seq deconvolution method to use to estimate cell-type proporitons. Options are "WGCNA", "DCQ", or "DeconRNAseq"
 #' 
 #' @return List with the following elements:
 #' \item{cellWeighted_Foldchange}{data frame of cellweightedFold changes for each gene.}
@@ -54,6 +55,7 @@
 #' @importFrom pcaMethods prep pca R2cum
 #' @importFrom limSolve lsei
 #' @importFrom pbapply pblapply
+#' @importFrom ADAPTS estCellPercent
 #' 
 #' @examples 
 #' \donttest{
@@ -75,7 +77,7 @@
 #' }                                      
 #' @export
 #' 
-deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list, case_grep, control_grep, max_proportion_change = -9, print_plots=T, plot_names="scMappR",theSpecies = "human", make_scale = FALSE, FC_coef = T, sig_matrix_size = 3000, sig_distort = 1, drop_unknown_celltype = TRUE, toSave = FALSE, path = NULL) {
+deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list, case_grep, control_grep, max_proportion_change = -9, print_plots=T, plot_names="scMappR",theSpecies = "human", make_scale = FALSE, FC_coef = T, sig_matrix_size = 3000, sig_distort = 1, drop_unknown_celltype = TRUE, toSave = FALSE, path = NULL, deconMethod = "DeconRNASeq") {
   # This function completes the cell-type contextualization in scMappR -- reranking every DEG based on their fold change, likelihood the gene is in each detected cell type, average cell-type proportion, and ratio of cell-type proportion between case and control.
   # such that if a gene is upregulated, then it is being controlled by control/case, otherwise it is case/control
   # This function expects that the genes within the count file, signature matrix, and DEG_list are have the same logos
@@ -123,7 +125,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   #optional: boxplots of estimated CT proportions for each gene using a leave-one-out method
   
   # load required packages
-
+  
   count_class <- class(count_file)[1] %in% c("character", "data.frame", "matrix")
   if((count_class[1] == FALSE )[1]) {
     stop("count_file must be of class character, data.frame, or matrix.")
@@ -145,15 +147,15 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   if((control_grep_class == FALSE)[1]) {
     stop("control_grep must be of class character (as a single character designating controls in column names) or of class numeric (integer matrix giving indeces of controls).")
   }
-
-
+  
+  
   if((all(is.numeric(sig_distort), is.numeric(max_proportion_change), is.numeric(sig_matrix_size))[1] == FALSE)[1]) {
     stop("sig_distort, max_proportion_change, and sig_matrix_size must all be of class numeric" )
   }
   if((all(is.logical(print_plots), is.logical(make_scale), is.logical(FC_coef), is.logical(drop_unknown_celltype), is.logical(toSave))[1] == FALSE)[1]) {
     stop("print_plots, make_scale, FC_coef, drop_unknown_celltype, toSave must all be of class logical." )
   }
-     
+  
   if(is.character(plot_names)[1] == FALSE) {
     stop("plot_names must be of class character.")
   }
@@ -171,7 +173,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
       stop("The selected directory does not seem to exist, please check set path.")
     }
   }
-    
+  
   rowVars <- function(x) return(apply(x, 1, stats::var)) # get variance of rows, used later
   colMedians <- function(x) return(apply(x, 2, stats::median)) # medians of cols, used later
   colVars <- function(x) return(apply(x, 2 , stats::var))
@@ -197,7 +199,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   } else {
     DEGs <- as.data.frame(DEG_list)
   }
-
+  
   colnames(DEGs) <- c("gene_name", "padj", "log2fc")
   sm <- wilcoxon_rank_mat_or
   
@@ -251,13 +253,30 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
     colnames(wilcox_or_signature) <- paste0(colnames(wilcox_or_signature), "_", 1:ncol(wilcox_or_signature))
   }
   if(is.matrix(norm_counts_i)) norm_counts_i <- as.data.frame(norm_counts_i)
-
+  
   cVar_wilcox <- colVars(wilcox_or_signature)
   wilcox_or_signature <-   wilcox_or_signature[,cVar_wilcox > 0]
   # cell-type deconvolution with all genes included
-  all_genes_in <- DeconRNAseq_CRAN(norm_counts_i, wilcox_or_signature)
   
-  proportions <- all_genes_in$out.all
+  if(deconMethod == "DCQ") {
+    all_genes_in <- t(ADAPTS::estCellPercent(wilcox_or_signature,norm_counts_i, method = "DCQ") / 100)
+    all_genes_in <- all_genes_in[,colnames(all_genes_in) != "others"]
+    
+  }
+  if(deconMethod == "DeconRNASeq") {
+    all_genes_in <- DeconRNAseq_CRAN(as.data.frame(norm_counts_i),as.data.frame(wilcox_or_signature))$out.all
+    
+  }
+  if(deconMethod == "WGCNA") {
+    all_genes_in <- t(ADAPTS::estCellPercent(wilcox_or_signature,norm_counts_i, method = "proportionsInAdmixture") / 100)
+    all_genes_in <- all_genes_in[,colnames(all_genes_in) != "others"]
+    
+  }
+  #Decon <- ADAPTS::estCellPercent(bulk_normalized,odds_ratio_in, method = "DeconRNASeq")
+  
+  #all_genes_in <- DeconRNAseq_CRAN(norm_counts_i, wilcox_or_signature)
+  
+  proportions <- all_genes_in
   
   rownames(proportions) <- colnames(norm_counts_i)
   
@@ -286,10 +305,16 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   
   if(!is.data.frame(bulk_in)) bulk_in <- as.data.frame(bulk_in)
   if(!is.data.frame(wilcox_or)) wilcox_or <- as.data.frame(wilcox_or)
-  
+  max_bulk <- max(bulk_in)
+  if(max_bulk < 50) {
+    warning("You most highly expressed gene is < 50 suggesting your counts are log2 normalized. Removing log2 transformation")
+    message("You most highly expressed gene is < 50 suggesting your counts are log2 normalized. Removing log2 transformation. We suggest you input non-log transformed count data.")
+    bulk_in <- 2^bulk_in
+    
+  }
   
   deconvolute_gene_removed <- function(x, bulk = bulk_in, signature = wilcox_or_signature) {
-    #Internal: Given an inputted gene, this function will complete DeconRNAseq witith that gene removed from the bulk and signature matrices
+    #Internal: Given an inputted gene, this function will complete DeconRNASeq witith that gene removed from the bulk and signature matrices
     # Args:
     # x: the gene symbol to be removed
     # bulk: the bulk RNA-seq dataset
@@ -315,10 +340,25 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
       signature_rem <- signature
     }
     
+    ##
+    if(deconMethod == "DCQ") {
+      proportions <- t(ADAPTS::estCellPercent(signature_rem,bulk_rem, method = "DCQ") / 100)
+      proportions <- proportions[,colnames(proportions) != "others"]
+      
+    }
+    if(deconMethod == "DeconRNASeq") {
+      proportions <- DeconRNAseq_CRAN(bulk_rem,signature_rem)$out.all
+      
+    }
+    if(deconMethod == "WGCNA") {
+      proportions <- t(ADAPTS::estCellPercent(signature_rem,bulk_rem, method = "proportionsInAdmixture") / 100)
+      proportions <- proportions[,colnames(proportions) != "others"]
+      
+    }
+    ##
+    #testMine <- DeconRNAseq_CRAN(bulk_rem, signature_rem)
     
-    testMine <- DeconRNAseq_CRAN(bulk_rem, signature_rem)
-    
-    proportions <- testMine$out.all # get proprotions
+    #proportions <- testMine$out.all # get proprotions
     
     #message(x)
     return(proportions)
@@ -334,7 +374,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
     # tester: a lis of cell-type proporitons for each leave one out for each gene
     # Returns: 
     # cell-type proportions for ever gene given case/control and their odds ratio
-
+    
     rownames(tester) <- colnames(bulk_in)
     cases <- grep(case_grep, rownames(tester))
     control <- grep(control_grep, rownames(tester))
@@ -500,7 +540,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
         g <- ggplot2::ggplot(cm_one, ggplot2::aes(factor(cell_type), proportion)) + ggplot2::geom_boxplot() + ggplot2::geom_text(ggplot2::aes(label=label),hjust=-0.2) + ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 0, hjust = 1, size = 12))
         
         grDevices::pdf(paste0(path,"/","deconvolute_generemov_quantseq_", i,"_",names,".pdf"))
-                # generate barplot for one cell-type at a time
+        # generate barplot for one cell-type at a time
         print(g)
         grDevices::dev.off()
         message(i)

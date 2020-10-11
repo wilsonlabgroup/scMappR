@@ -24,7 +24,8 @@ scMappR_and_pathway_analysis(
   number_genes = -9,
   toSave = FALSE,
   newGprofiler = FALSE,
-  path = NULL
+  path = NULL,
+  deconMethod = "DeconRNASeq"
 )
 }
 \arguments{
@@ -67,6 +68,8 @@ scMappR_and_pathway_analysis(
 \item{newGprofiler}{Whether to use gProfileR or gprofiler2 (T/F).}
 
 \item{path}{If toSave == TRUE, path to the directory where files will be saved.}
+
+\item{deconMethod}{Which RNA-seq deconvolution method to use to estimate cell-type proporitons. Options are "WGCNA", "DCQ", or "DeconRNAseq"}
 }
 \value{
 List with the following elements:

@@ -20,7 +20,8 @@ deconvolute_and_contextualize(
   sig_distort = 1,
   drop_unknown_celltype = TRUE,
   toSave = FALSE,
-  path = NULL
+  path = NULL,
+  deconMethod = "DeconRNASeq"
 )
 }
 \arguments{
@@ -55,6 +56,8 @@ deconvolute_and_contextualize(
 \item{toSave}{Allow scMappR to write files in the current directory (T/F).}
 
 \item{path}{If toSave == TRUE, path to the directory where files will be saved.}
+
+\item{deconMethod}{Which RNA-seq deconvolution method to use to estimate cell-type proporitons. Options are "WGCNA", "DCQ", or "DeconRNAseq"}
 }
 \value{
 List with the following elements:
