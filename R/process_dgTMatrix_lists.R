@@ -37,7 +37,7 @@
 #' @importFrom graphics barplot plot
 #' @importFrom Seurat AverageExpression CreateSeuratObject PercentageFeatureSet SCTransform SelectIntegrationFeatures PrepSCTIntegration FindIntegrationAnchors IntegrateData DefaultAssay RunPCA RunUMAP FindNeighbors FindClusters ScaleData FindMarkers
 #' @importFrom GSVA gsva
-#' @importFrom stats fisher.test median p.adjust reorder t.test sd var complete.cases
+#' @importFrom stats fisher.test median p.adjust reorder t.test sd var complete.cases ks.test
 #' @importFrom utils combn read.table write.table head tail
 #' @importFrom downloader download
 #' @importFrom grDevices pdf dev.off colorRampPalette
@@ -47,6 +47,7 @@
 #' @importFrom limSolve lsei
 #' @importFrom pbapply pblapply
 #' @importFrom ADAPTS estCellPercent
+#' @importFrom reshape melt
 #'
 #' @examples 
 #' \donttest{
