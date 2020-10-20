@@ -17,8 +17,8 @@
 #' @rdname deconvolute_and_contextualize
 #' @name deconvolute_and_contextualize
 #'
-#' @param count_file Normalized deconvolute_and_contextualize. RNA-seq count matrix where rows are gene symbols and columns are individuals. Either the object tself of the path of a .tsv file.
-#' @param signature_matrix Signature matrix (recommended odds ratios) of cell-type specificity of genes. Either the object itself or a pathway to a .RData file containing an object named "wilcoxon_rank_mat_or" - generally internal.
+#' @param count_file Normalized (CPM, TPM, RPKM) RNA-seq count matrix where rows are gene symbols and columns are individuals. Either the object tself of the path of a .tsv file.
+#' @param signature_matrix Signature matrix (odds ratios) of cell-type specificity of genes. Either the object itself or a pathway to a .RData file containing an object named "wilcoxon_rank_mat_or" - generally internal.
 #' @param DEG_list An object with the first column as gene symbols within the bulk dataset (doesn't have to be in signature matrix), second column is the adjusted P-value, and the third the log2FC. Path to a tsv file containing this info is also acceptable.
 #' @param case_grep Tag in the column name for cases (i.e. samples representing upregulated) OR an index of cases.
 #' @param control_grep Tag in the column name for control (i.e. samples representing downregulated) OR an index of cases.
