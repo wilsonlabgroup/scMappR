@@ -41,7 +41,9 @@
 #' data(PBMC_example)
 #' norm_counts <- PBMC_example$bulk_normalized
 #' signature <- PBMC_example$odds_ratio_in
-#' tst <- compare_deconvolution_methods(norm_counts, signature, FALSE, order_celltype = c("I_mono", "C_mono", "CD8_CM", "CD8_TE", "B_SM", "B_NSM", "B_naive"))
+#' tst <- compare_deconvolution_methods(norm_counts, signature, FALSE,
+#'  order_celltype = c("I_mono", "C_mono", "CD8_CM", "CD8_TE", 
+#'  "B_SM", "B_NSM", "B_naive"))
 #' }
 #'  
 #' @export
@@ -101,7 +103,7 @@ compare_deconvolution_methods <- function(count_file, signature_matrix, print_pl
   }
   CellType <- forBarplot$CellType
   avgProportion <- forBarplot$avgProportion
-  avgProportion <- forBarplot$DeconvolutionMethod
+  DeconvolutionMethod <- forBarplot$DeconvolutionMethod
   
   p <- ggplot2::ggplot(forBarplot, ggplot2::aes(x = CellType, y = avgProportion, fill = DeconvolutionMethod, group=DeconvolutionMethod)) + 
     ggplot2::geom_bar(position = "dodge", stat = "identity") + ggplot2::theme_classic() + ggplot2::xlab("cell-type") + ggplot2::ylab("average cell-type proportion") +
