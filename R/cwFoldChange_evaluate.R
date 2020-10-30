@@ -86,6 +86,7 @@ cwFoldChange_evaluate <- function(cwFC, celltype_prop, DEG_list, gene_cutoff = N
   DEGs$padj <- toNum(DEGs$padj)
   DEGs$log2fc <- toNum(DEGs$log2fc)
   rownames(DEGs) <- DEGs$gene_name
+  DEGs$FoldChange <- 2^DEGs$log2fc * sign(DEGs$log2fc)
   
   # Checking cell-type proportions and cwFC's are inputted correctly.
   cwFC_class <- class(cwFC)[1] %in% c("matrix", "data.frame")
@@ -172,7 +173,7 @@ cwFoldChange_evaluate <- function(cwFC, celltype_prop, DEG_list, gene_cutoff = N
     
     rank_CT <- 1:length(rownames(abscwFC))
     names(rank_CT) <- rownames(abscwFC)
-    DEGs$abs <- abs(DEGs$log2FoldChange)
+    DEGs$abs <- abs(DEGs$log2fc)
     DEGs1 <- DEGs[order(DEGs$abs, decreasing = TRUE),]
     
     rank_DEGs <- 1:length(DEGs1$gene_name)
