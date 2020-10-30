@@ -23,6 +23,14 @@ cwFoldChange_evaluate(
 
 \item{sd_cutoff}{Number of standard deviations or median absolute deviations to calculate outliers.}
 }
+\value{
+List with the following elements:
+\item{gene_level_investigation}{data frame of genes showing the euclidian distances between cwFold-change and null vector as well as if cwFold-changes are distributed.}
+\item{celltype_level_investigation}{data frame of Spearman's and Pearson's correlation between bulk DEGs and cwFold-changes.}
+\item{cwFoldchange_vs_bulk_rank_change}{data frame of the change in rank of DEG between the bulk fold-change and cwFold-change.}
+\item{cwFoldChange_normalized}{cwFold-change normalized such that each gene sums to 1.}
+\item{cwFoldchange_gene_assigned}{List of cell-types where genes are designated to cell-type specific differential expression.}
+}
 \description{
 This function normalizes cwFold-changes by each gene to help visualize the cell-type specificity of DEGs. It then tests if a cell-type has a large change in correlation from bulk DEGs. Finally, it identifies genes that may be specific to each cell-type.
 }
@@ -32,4 +40,26 @@ At the level of the cell-type, cwFold-changes are correlated to bulk DEGs. The d
 At the level of the gene, cwFold-changes are re-normalized so that each gene sums to 1. Normalization of their distributions are tested with a Shapiro test. 
 Then, outlier cell-types for each gene are measured by testing for `sd_cutoff`'s mad or sd's greater than the median or mean depending on if the cwFold-change is non-normally or normally distributed respectively.
 Cell-types considered outliers are then further filtered so their normalized cwFold-changes are greater than the cell-type proportions of that gene and `gene_cutoff` if the user sets it.
+}
+\examples{
+
+data(PBMC_example)
+bulk_DE_cors <- PBMC_example$bulk_DE_cors
+bulk_normalized <- PBMC_example$bulk_normalized
+odds_ratio_in <- PBMC_example$odds_ratio_in
+case_grep <- "_female"
+control_grep <- "_male"
+max_proportion_change <- 10
+print_plots <- FALSE
+theSpecies <- "human"
+toOut <- scMappR_and_pathway_analysis(bulk_normalized, odds_ratio_in, 
+                                      bulk_DE_cors, case_grep = case_grep,
+                                      control_grep = control_grep, rda_path = "", 
+                                      max_proportion_change = 10, print_plots = TRUE, 
+                                       plot_names = "tst1", theSpecies = "human", 
+                                       output_directory = "tester",
+                                       sig_matrix_size = 3000, up_and_downregulated = FALSE, 
+                                       internet = FALSE)
+
+
 }

@@ -21,7 +21,11 @@ compare_deconvolution_methods(
 \item{order_celltype}{Specify the order that cell-type are placed on the barplot. NULL = alphabetical, otherwise a character vector of cell-type labels (i.e. column names of the signature matrix).}
 }
 \value{
-\code{toNum} Returns a numeric vector. \cr
+List with the following elements:
+\item{cellWeighted_Foldchange}{data frame of cellweightedFold changes for each gene.}
+\item{cellType_Proportions}{data frame of cell-type proportions from DeconRNA-seq.}
+\item{leave_one_out_proportions}{data frame of average cell-type proportions for case and control when gene is removed.}
+\item{processed_signature_matrix}{signature matrix used in final analysis.}
 }
 \description{
 This function calculates cell-type proprotions of an inputted bulk sample using DeconRNA-seq, WGCNA, and DCQ methods. Outputted cell-type proportions are then compared.
