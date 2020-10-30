@@ -5,7 +5,7 @@
 \title{two_method_pathway_enrichment}
 \usage{
 two_method_pathway_enrichment(
-  DEGs,
+  DEG_list,
   theSpecies,
   scMappR_vals,
   background_genes = NULL,
@@ -18,7 +18,7 @@ two_method_pathway_enrichment(
 )
 }
 \arguments{
-\item{DEGs}{Differentially expressed genes (gene_name, padj, log2fc).}
+\item{DEG_list}{Differentially expressed genes (gene_name, padj, log2fc).}
 
 \item{theSpecies}{Human, mouse, or a charcter that is compatible with gProfileR.}
 

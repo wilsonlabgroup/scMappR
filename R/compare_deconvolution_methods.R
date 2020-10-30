@@ -99,6 +99,10 @@ compare_deconvolution_methods <- function(count_file, signature_matrix, print_pl
     forBarplot$CellType <- factor(forBarplot$CellType,levels = order_celltype)
     
   }
+  CellType <- forBarplot$CellType
+  avgProportion <- forBarplot$avgProportion
+  avgProportion <- forBarplot$DeconvolutionMethod
+  
   p <- ggplot2::ggplot(forBarplot, ggplot2::aes(x = CellType, y = avgProportion, fill = DeconvolutionMethod, group=DeconvolutionMethod)) + 
     ggplot2::geom_bar(position = "dodge", stat = "identity") + ggplot2::theme_classic() + ggplot2::xlab("cell-type") + ggplot2::ylab("average cell-type proportion") +
     ggplot2::scale_fill_manual("DeconvolutionMethod", values = c("DCQ" = "black", "WGCNA" = "grey", "DeconRNAseq" = "darkblue")) + ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, hjust = 1), panel.border = ggplot2::element_blank(), panel.grid.major = ggplot2::element_blank(), panel.grid.minor = ggplot2::element_blank(), axis.line = ggplot2::element_line(colour = "black"))
