@@ -20,6 +20,8 @@ Imports:
 	limSolve,
 	gprofiler2,
 	pbapply,
+	ADAPTS,
+	reshape,
 License: GPL-3
 URL: 
 Encoding: UTF-8

@@ -60,6 +60,10 @@ toOut <- scMappR_and_pathway_analysis(bulk_normalized, odds_ratio_in,
                                        output_directory = "tester",
                                        sig_matrix_size = 3000, up_and_downregulated = FALSE, 
                                        internet = FALSE)
-
+                                       
+cwFC1 <- toOut$cellWeighted_Foldchange
+prop1 <- toOut$cellType_Proportions
+DE <- bulk_DE_cors
+eval_test <- cwFoldChange_evaluate(cwFC1, prop1, DE)
 
 }
