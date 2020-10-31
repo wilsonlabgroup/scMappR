@@ -1,6 +1,6 @@
 #' To Character.
 #'
-#' This function checks if your vector is not a character and if not, will  convert it to a character.
+#' This function checks if your vector is not a character and if not, will convert it to a character.
 #'
 #'
 #' @rdname tochr

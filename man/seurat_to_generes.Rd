@@ -9,16 +9,16 @@ seurat_to_generes(pbmc, test = "wilcox")
 \arguments{
 \item{pbmc}{Processed Seurat object.}
 
-\item{test}{statistical test for calling CT markers -- must be in Seurat}
+\item{test}{statistical test for calling CT markers -- must be in Seurat.}
 }
 \value{
 \code{seurat_to_generes} A list of genes where their over-representation in the i'th cell-type is computed. Each element contains the gene name, adjusted p-value, and the log2Fold-Change of each gene being present in that cell-type. \cr
 }
 \description{
-Takes processed Seurat matrix and identifies cell-type markers with FindMarkers.
+Takes processed Seurat matrix and identifies cell-type markers with FindMarkers in Seurat.
 }
 \details{
-Internal: This function runs the FindMarkers function from seurat in a loop, will use the Seurat v2 or Seurat v3 object after identifying which Seurat object is inputted. 
+Internal: This function runs the FindMarkers function from Seurat in a loop, will use the Seurat v2 or Seurat v3 object after identifying which Seurat object is inputted. 
 It then takes the output of the FindMarkers and puts it in a list, returning it.
 }
 \examples{

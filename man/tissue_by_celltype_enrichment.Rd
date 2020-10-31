@@ -27,7 +27,7 @@ tissue_by_celltype_enrichment(
 
 \item{isect_size}{Number of genes in your list and the cell-type.}
 
-\item{return_gmt}{Return .gmt file -- reccomended if downloading from online as it may have updated (T/F).}
+\item{return_gmt}{Return .gmt file -- recommended if downloading from online as it may have updated (T/F).}
 }
 \value{
 List with the following elements:
@@ -38,7 +38,7 @@ List with the following elements:
 This function uses a Fisher's-exact-test to rank gene-set enrichment.
 }
 \details{
-Complete a Fisher's exact test of an input list of genes against one of the two curated tissue by cell-type marker datasets from scMappR.
+Complete a Fisher's-exact test of an input list of genes against one of the two curated tissue by cell-type marker datasets from scMappR.
 }
 \examples{
 \donttest{

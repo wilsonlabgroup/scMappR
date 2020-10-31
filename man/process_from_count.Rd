@@ -19,9 +19,9 @@ process_from_count(
 )
 }
 \arguments{
-\item{countmat_list}{A list of count matrices that will be be integrated using the IntegrationAnchors features they should have the same rownames.}
+\item{countmat_list}{A list of count matrices that will be integrated using the IntegrationAnchors features they should have the same rownames. A dgCMatrix or matrix object is also acceptable, and no samples will be integrated.}
 
-\item{name}{The output of the normalzied and fused Suerat object if you choose to keep it.}
+\item{name}{The output of the normalized and fused Seurat object if you choose to keep it.}
 
 \item{theSpecies}{Gene symbols for human, mouse, or -9 if internal. If your species is not human or mouse gene symbols, make sure that you have "MT-" before your mitochondrial gene names then pick "human".}
 
@@ -42,15 +42,15 @@ process_from_count(
 \item{genes_include}{TRUE or FALSE -- include 2000 genes in signature matrix or all matrix.}
 }
 \value{
-\code{process_from_count} A processed and integrated Seurat object that has been scaled and clustered. It can be returned as an internal object or also stored as an RData object if neccesary. \cr
+\code{process_from_count} A processed and integrated Seurat object that has been scaled and clustered. It can be returned as an internal object or also stored as an RData object if necessary. \cr
 }
 \description{
 This function processes a list of count matrices (same species/gene symbols in each list) and converts them to a Seurat object.
 }
 \details{
-This function takes a list of count matrices and returns a Seurat object of the count matrices integrated using Seurat v3 (with sctransform and IntegrationAnchors).
+This function takes a list of count matrices and returns a Seurat object of the count matrices integrated using Seurat v3 (and IntegrationAnchors feature). Different normalization features such as the SCTransform pipeline are also available in this function.
 Different options are used when the function is being ran internally (i.e. reprocessing count matrices from PanglaoDB) or if it is running from custom scRNA-seq data.
-For larger scRNA-seq datasets (~20k + cells), it is likely that this function will be required to run on an hpc.
+Larger scRNA-seq datasets can take considerable amounts of memory and run-time. See Seurat for details.
 }
 \examples{
 \donttest{

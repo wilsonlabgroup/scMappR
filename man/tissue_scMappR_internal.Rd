@@ -29,7 +29,7 @@ tissue_scMappR_internal(
 
 \item{rda_path}{Path to the .rda file containing all of the signature matrices.}
 
-\item{cluster}{'Pval' or 'OR' depending on if you wantto cluster odds ratios or pvalues of CT preferences.}
+\item{cluster}{'Pval' or 'OR' depending on if you want to cluster odds ratios or p-values of cell-type preferences.}
 
 \item{genecex}{The size of the gene names of the rows in the heatmap.}
 
@@ -53,7 +53,7 @@ This function loops through every signature matrix in a particular tissue and ge
 }
 \details{
 This function takes a list of genes and a tissue that is contained in current signature matrices before and generating heatmaps of cell-type preferences.
-It then completes cell-type enrichment of each individual cell-type, then, if more than two cell-types are signficiantly enriched, co-enrichemnt 
+It then completes cell-type enrichment of each individual cell-type, then, if more than two cell-types are significantly enriched, co-enrichment.
 of those enriched cell-types is then computed.
 }
 \examples{

@@ -5,18 +5,18 @@
 #' This function is a one line wrapper to process count matrices into a signature matrix.
 #' It combines process_from_count, two methods of identifying cell-type identities (GSVA and Fisher's test).
 #' Then, it takes the output of cell-type markers and converts it into a signature matrix of p-value ranks and odds ratios.
-#' Along the way, it saves the Seurat object (if chosen with saveSCObject), cell-type identites from GSVA (its own obect), and the signature matrices.
-#' Cell-type marker outputs are also saved in the generes.RData list. Names of the generes objects and the signature matrices are kept.
+#' It saves the Seurat object (if chosen with saveSCObject), cell-type identities from GSVA (its own object), and the signature matrices.
+#' Cell-type marker outputs are also saved in the generes .RData list. This is a list of cell-types containing all of the cell-type markers found with the FindMarkers function. Names of the generes lists and the signature matrices are kept.
 #'
 #' @rdname process_dgTMatrix_lists
 #' @name process_dgTMatrix_lists
 #'
 #' @param dgTMatrix_list A list of matrices in the class of dgTMatrix object -- sparce object -- compatible with Seurat rownames should be of the same species for each.
-#' @param name The name of the outputted signature matrices, cell-type preferences, and seurat objects if you choose to save them.
-#' @param species_name Mouse or human symbols, -9 if internal as panglao objects have gene symbol and ensembl strapped together.
-#' @param naming_preference For cell-type naming, see if cell-types given the inputted tissues are more likely to be named within one of the categories of get_naming_preference_options().
+#' @param name The name of the outputted signature matrices, cell-type preferences, and Seurat objects if you choose to save them.
+#' @param species_name Mouse or human symbols, -9 if internal as Panglao objects have gene symbol and ensembl combined.
+#' @param naming_preference For cell-type naming, see if cell-types given the inputted tissues are more likely to be named within one of the categories. These categories are: "brain", "epithelial", "endothelial", "blood", "connective","eye", "epidermis", "Digestive", "Immune", "pancreas", "liver", "reproductive", "kidney", "respiratory".
 #' @param panglao_set If the inputted matrices are from Panglao (i.e. if they're internal).
-#' @param haveUMAP Save the UMAPs -- only use if the package is downloaded with pip.
+#' @param haveUMAP Save the UMAPs - requires additional packages (see Seurat for details).
 #' @param saveSCObject Save the Seurat object as an RData object (T/F).
 #' @param use_sctransform If you should use sctransform or the Normalize/VariableFeatures/ScaleData pipeline (T/F).
 #' @param test_ctname statistical test for calling CT markers -- must be in Seurat
@@ -24,7 +24,7 @@
 #' @param toSave Allow scMappR to write files in the current directory (T/F)
 #' @param rda_path If saved, directory to where data from scMappR_data is downloaded.
 #' @param path If toSave == TRUE, path to the directory where files will be saved.
-#' @param genes_integrate The number of genes to include in the integration anchors feature when combining datasets -- passed into process_from_count
+#' @param genes_integrate The number of genes to include in the integration anchors feature when combining datasets.
 #' @param genes_include TRUE or FALSE -- include 2000 genes in signature matrix or all matrix.
 #' 
 #' @return List with the following elements:
@@ -32,6 +32,7 @@
 #' \item{wilcoxon_rank_mat_or}{A dataframe containing the signature matrix of odds-ratios.}
 #' \item{generes}{All cell-type markers for each cell-type with p-value and fold changes.} 
 #'
+#' 
 #' @importFrom ggplot2 ggplot aes geom_boxplot geom_text theme coord_flip labs element_text geom_bar theme_classic xlab ylab scale_fill_manual element_line
 #' @importFrom pheatmap pheatmap
 #' @importFrom graphics barplot plot

@@ -20,11 +20,11 @@ two_method_pathway_enrichment(
 \arguments{
 \item{DEG_list}{Differentially expressed genes (gene_name, padj, log2fc).}
 
-\item{theSpecies}{Human, mouse, or a charcter that is compatible with gProfileR.}
+\item{theSpecies}{Human, mouse, or a character that is compatible with g:ProfileR.}
 
 \item{scMappR_vals}{cell weighted Fold-changes of differentially expressed genes.}
 
-\item{background_genes}{A list of background genes to test against. NULL assumes all genes in gprofiler gene set databases.}
+\item{background_genes}{A list of background genes to test against. NULL assumes all genes in g:profileR gene set databases.}
 
 \item{output_directory}{Path to the directory where files will be saved.}
 
@@ -32,7 +32,7 @@ two_method_pathway_enrichment(
 
 \item{number_genes}{Number of genes to if there are many, many DEGs.}
 
-\item{newGprofiler}{Whether to use gProfileR or gprofiler2 (T/F).}
+\item{newGprofiler}{Whether to use g:ProfileR or gprofiler2 (T/F).}
 
 \item{toSave}{Allow scMappR to write files in the current directory (T/F).}
 
@@ -40,14 +40,14 @@ two_method_pathway_enrichment(
 }
 \value{
 List with the following elements:
-\item{rank_increase}{A list containing the degree of rank change between bulk DE genes and cwFold-changes. Pathway enrichment and tf enrichment of these reranked genes.}
+\item{rank_increase}{A list containing the degree of rank change between bulk DE genes and cwFold-changes. Pathway enrichment and TF enrichment of these reranked genes.}
 \item{non_rank_increase}{list of DFs containing the pathway and TF enrichment of cwFold-changes.}
 }
 \description{
 Pathway analysis of each cell-type based on cell-type specificity and rank improvement by scMappR.
 }
 \details{
-This function re-ranks cwFoldChanges based on their absolute ct specificity scores (per-celltype) as well as their rank increase in cell-type specificity before completing an ordered pathway analysis. In the second method, only genes with a rank increase in cell-type specificity were included
+This function re-ranks cwFoldChanges based on their absolute cell-type specificity scores (per-celltype) as well as their rank increase in cell-type specificity before completing an ordered pathway analysis. In the second method, only genes with a rank increase in cell-type specificity were included.
 }
 \examples{
 \donttest{

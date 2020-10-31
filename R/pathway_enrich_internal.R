@@ -1,4 +1,4 @@
-#' Pathway enrichment for cellWeighted_Foldchange's and bulk gene list
+#' Internal - Pathway enrichment for cellWeighted_Foldchanges and bulk gene list
 #' 
 #' This function completes pathway enrichment of cellWeighted_Foldchanges and bulk gene list.
 #'
@@ -9,20 +9,20 @@
 #' @name pathway_enrich_internal
 #' 
 #' @param DEGs Differentially expressed genes (gene_name, padj, log2fc).
-#' @param theSpecies Human, mouse, or a charcter that is compatible with gProfileR.
+#' @param theSpecies Human, mouse, or a character that is compatible with g:ProfileR.
 #' @param scMappR_vals cell weighted Fold-changes of differentially expressed genes.
 #' @param background_genes A list of background genes to test against.
 #' @param output_directory Path to the directory where files will be saved.
 #' @param plot_names Names of output.
 #' @param number_genes Number of genes to if there are many, many DEGs.
-#' @param newGprofiler Whether to use gProfileR or gprofiler2 (T/F).
+#' @param newGprofiler Whether to use g:ProfileR or gprofiler2 (T/F).
 #' @param toSave Allow scMappR to write files in the current directory (T/F).
 #' @param path If toSave == TRUE, path to the directory where files will be saved.
 #' 
 #' @return List with the following elements:
 #' \item{BPs}{Enriched biological pathways for each cell-type.}
 #' \item{TFs}{Enriched transcription factors for each cell-type.}
-#' 
+#'
 #' @importFrom ggplot2 ggplot aes geom_boxplot geom_text theme coord_flip labs element_text geom_bar theme_classic xlab ylab scale_fill_manual element_line
 #' @importFrom pheatmap pheatmap
 #' @importFrom graphics barplot plot

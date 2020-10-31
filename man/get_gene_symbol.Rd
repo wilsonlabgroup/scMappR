@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_gene_symbol.R
 \name{get_gene_symbol}
 \alias{get_gene_symbol}
-\title{Internal -- get gene symbol from Panglao.db matrix.}
+\title{Internal -- get gene symbol from Panglao.db assigned gene-names (symbol-ensembl).}
 \usage{
 get_gene_symbol(wilcoxon_rank_mat_t)
 }

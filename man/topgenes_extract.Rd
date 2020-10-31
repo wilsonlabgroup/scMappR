@@ -7,7 +7,7 @@
 topgenes_extract(generes, padj = 0.05, FC = 1.5, topNum = 30)
 }
 \arguments{
-\item{generes}{A list of cell-tpe markers with fold-changes and p-vlaues (FindMarkers output in Seurat).}
+\item{generes}{A list of cell-type markers with fold-changes and p-values (FindMarkers output in Seurat).}
 
 \item{padj}{The p-value (FDR) cutoff.}
 

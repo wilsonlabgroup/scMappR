@@ -15,7 +15,7 @@ gProfiler_cellWeighted_Foldchange(
 \arguments{
 \item{cellWeighted_Foldchange_matrix}{Matrix of cell weighted Fold changes from the deconvolute_and_contextualize functions.}
 
-\item{species}{Human, mouse, or a charcter that is compatible with gProfileR.}
+\item{species}{Human, mouse, or a name that is compatible with gProfileR (e.g. "mmusculus").}
 
 \item{background}{A list of background genes to test against.}
 

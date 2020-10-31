@@ -25,17 +25,17 @@ process_dgTMatrix_lists(
 \arguments{
 \item{dgTMatrix_list}{A list of matrices in the class of dgTMatrix object -- sparce object -- compatible with Seurat rownames should be of the same species for each.}
 
-\item{name}{The name of the outputted signature matrices, cell-type preferences, and seurat objects if you choose to save them.}
+\item{name}{The name of the outputted signature matrices, cell-type preferences, and Seurat objects if you choose to save them.}
 
-\item{species_name}{Mouse or human symbols, -9 if internal as panglao objects have gene symbol and ensembl strapped together.}
+\item{species_name}{Mouse or human symbols, -9 if internal as Panglao objects have gene symbol and ensembl combined.}
 
-\item{naming_preference}{For cell-type naming, see if cell-types given the inputted tissues are more likely to be named within one of the categories of get_naming_preference_options().}
+\item{naming_preference}{For cell-type naming, see if cell-types given the inputted tissues are more likely to be named within one of the categories. These categories are: "brain", "epithelial", "endothelial", "blood", "connective","eye", "epidermis", "Digestive", "Immune", "pancreas", "liver", "reproductive", "kidney", "respiratory".}
 
 \item{rda_path}{If saved, directory to where data from scMappR_data is downloaded.}
 
 \item{panglao_set}{If the inputted matrices are from Panglao (i.e. if they're internal).}
 
-\item{haveUMAP}{Save the UMAPs -- only use if the package is downloaded with pip.}
+\item{haveUMAP}{Save the UMAPs - requires additional packages (see Seurat for details).}
 
 \item{saveSCObject}{Save the Seurat object as an RData object (T/F).}
 
@@ -49,7 +49,7 @@ process_dgTMatrix_lists(
 
 \item{test_ctname}{statistical test for calling CT markers -- must be in Seurat}
 
-\item{genes_integrate}{The number of genes to include in the integration anchors feature when combining datasets -- passed into process_from_count}
+\item{genes_integrate}{The number of genes to include in the integration anchors feature when combining datasets.}
 
 \item{genes_include}{TRUE or FALSE -- include 2000 genes in signature matrix or all matrix.}
 }
@@ -66,8 +66,8 @@ This function takes a list of count matrices, processes them, calls cell-types, 
 This function is a one line wrapper to process count matrices into a signature matrix.
 It combines process_from_count, two methods of identifying cell-type identities (GSVA and Fisher's test).
 Then, it takes the output of cell-type markers and converts it into a signature matrix of p-value ranks and odds ratios.
-Along the way, it saves the Seurat object (if chosen with saveSCObject), cell-type identites from GSVA (its own obect), and the signature matrices.
-Cell-type marker outputs are also saved in the generes.RData list. Names of the generes objects and the signature matrices are kept.
+It saves the Seurat object (if chosen with saveSCObject), cell-type identities from GSVA (its own object), and the signature matrices.
+Cell-type marker outputs are also saved in the generes .RData list. This is a list of cell-types containing all of the cell-type markers found with the FindMarkers function. Names of the generes lists and the signature matrices are kept.
 }
 \examples{
 \donttest{

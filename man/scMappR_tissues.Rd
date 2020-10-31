@@ -13,10 +13,10 @@ A vector of tissue names available for tissue_scMappR_internal or to download an
 data(scMappR_tissues)
 }
 \description{
-Tissues available in scMappR as of February 2020.
+Tissues available in scMappR.
 }
 \details{
-A vector of tissues available in scMappR as of February 2020.
+A vector of tissues available in scMappR.
 }
 \examples{
 data(scMappR_tissues)

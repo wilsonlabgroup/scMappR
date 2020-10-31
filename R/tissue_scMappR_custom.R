@@ -11,10 +11,10 @@
 #' @name tissue_scMappR_custom
 #'
 #' @param gene_list A list of gene symbols matching that of the signature_matrix. Any gene symbol is acceptable.
-#' @param signature_matrix Pre=computed signature matrix with matching gene names.
+#' @param signature_matrix Pre-computed signature matrix with matching gene names.
 #' @param output_directory Directory made containing output of functions.
 #' @param gene_cutoff Value cut-off (generally rank := log10(Padj)) for a gene to be considered a marker.
-#' @param is_pvalue If signature matrix is p-value before rank is applied (not recommended ) (T/F).
+#' @param is_pvalue If signature matrix is p-value before rank is applied (not recommended) (T/F).
 #' @param toSave Allow scMappR to write files in the current directory (T/F).
 #' @param path If toSave == TRUE, path to the directory where files will be saved.
 #'

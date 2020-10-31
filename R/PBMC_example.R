@@ -1,8 +1,8 @@
 #' PBMC_scMappR
 #' 
-#' Data for scMappR_and_pathway_analysis example.
+#' Toy example of data where cell-weighted fold-changes and related downsteam analyses can be completed.
 #'
-#' A named list called "PBMC_example" containing the count data, signature matrix, and DEGs. The count data and signature matrix are shortened to fit the size of the package and do not reflect the paper.
+#' A named list called "PBMC_example" containing the count data, signature matrix, and DEGs. The count data and signature matrix are shortened to fit the size of the package and do not reflect biologically relevant data.
 #'
 #' @rdname PBMC_example
 #' @name PBMC_example

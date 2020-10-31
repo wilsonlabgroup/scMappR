@@ -4,7 +4,7 @@
 \alias{sm}
 \title{single_cell_process}
 \format{
-A 752 x 236 matrix of class dgCMatrix where rows are genes and columns are cells. Data matrix is filled with counts detected from scRNAseq
+A 752 x 236 matrix of class dgCMatrix where rows are genes and columns are cells. Data matrix is filled with counts detected from scRNAseq.
 \describe{
   \item{TCTCTAACACAGGCCT}{ Barcode of one of the sequenced cells present. Each column is the count from a scRNA-seq dataset reprocessed by PanglaoDB.}
 }

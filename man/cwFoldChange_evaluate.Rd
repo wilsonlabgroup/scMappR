@@ -25,7 +25,7 @@ cwFoldChange_evaluate(
 }
 \value{
 List with the following elements:
-\item{gene_level_investigation}{data frame of genes showing the euclidian distances between cwFold-change and null vector as well as if cwFold-changes are distributed.}
+\item{gene_level_investigation}{data frame of genes showing the Euclidian distances between cwFold-change and null vector as well as if cwFold-changes are distributed.}
 \item{celltype_level_investigation}{data frame of Spearman's and Pearson's correlation between bulk DEGs and cwFold-changes.}
 \item{cwFoldchange_vs_bulk_rank_change}{data frame of the change in rank of DEG between the bulk fold-change and cwFold-change.}
 \item{cwFoldChange_normalized}{cwFold-change normalized such that each gene sums to 1.}

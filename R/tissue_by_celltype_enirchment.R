@@ -2,7 +2,7 @@
 #'
 #' This function uses a Fisher's-exact-test to rank gene-set enrichment.
 #' 
-#' Complete a Fisher's exact test of an input list of genes against one of the two curated tissue by cell-type marker datasets from scMappR.
+#' Complete a Fisher's-exact test of an input list of genes against one of the two curated tissue by cell-type marker datasets from scMappR.
 #'
 #' @rdname tissue_by_celltype_enrichment
 #' @name tissue_by_celltype_enrichment
@@ -12,7 +12,7 @@
 #' @param p_thresh The Fisher's test cut-off for a cell-marker to be enriched.
 #' @param rda_path Path to a .rda file containing an object called "gmt". Either human or mouse cell-type markers split by experiment. If the correct file isn't present they will be downloaded from https://github.com/wilsonlabgroup/scMappR_Data.
 #' @param isect_size Number of genes in your list and the cell-type.
-#' @param return_gmt Return .gmt file -- reccomended if downloading from online as it may have updated (T/F).
+#' @param return_gmt Return .gmt file -- recommended if downloading from online as it may have updated (T/F).
 #' @param name Name of the pdf to be printed.
 #' 
 #' @return List with the following elements:

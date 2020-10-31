@@ -1,40 +1,37 @@
 #' Generate cell weighted Fold-Changes (cwFold-changes)
 #' 
-#' This function takes a count matrix, signature matrix, and differentially expressed genes (DEGs) before generating cwFold-chagnes for each cell-type.
+#' This function takes a count matrix, signature matrix, and differentially expressed genes (DEGs) before generating cwFold-changes for each cell-type.
 #'
-#' This function completes the cell-type contextualization in scMappR -- reranking every DEG based on their fold change, likelihood the gene is in each detected cell-type, average cell-type proportion, and ratio of cell-type proportion between case and control.
-#' If a gene is upregulated then it is being controlled by control/case, otherwise it is case/control.
-#' cwFold-change's are generated for genes that are in both the count matrix and in the list of DEGs. It does not have to also be in the signature matrix.
+#' This function completes the pre-processing, normalization, and scaling steps in the scMappR algorithm before calculating cwFold-changes. cwFold-changes scales bulk fold-changes by the cell-type specificity of the gene, cell-type gene-normalized cell-type proportions, and the reciprocal ratio of cell-type proportions between the two conditions.
+#' cwFold-changes are generated for genes that are in both the count matrix and in the list of DEGs. It does not have to also be in the signature matrix.
 #' First, this function will estimate cell-type proportions with all genes included before estimating changes in cell-type proportion between case/control using a t-test.
 #' Then, it takes a leave-one-out approach to cell-type deconvolution such that estimated cell-type proportions are computed for every inputted DEG.
-#' Optionally, the differences between cell-type proprtion before and after a gene is removed is plotted in boxplots.
-#' Then, for every gene, cwFold-change's are computed with the following formula (the example for upreguatled genes)
-#' val <- cell-preferences * cell-type_proprtion * cell-type_proportion_fold-change * sign*2^abs(gene_DE$log2fc).
-#' A matrix of cwFold-change's for all DEGs are returned.
+#' Optionally, the differences between cell-type proportions before and after a gene is removed is plotted in boxplots.
+#' Then, for every gene, cwFold-changes are computed with the following formula (the example for upreguatled genes)
+#' val <- cell-preferences * cell-type_proportion * cell-type_proportion_fold-change * sign*2^abs(gene_DE$log2fc).
+#' A matrix of cwFold-changes for all DEGs are returned.
 #'
 #'
 #'
 #' @rdname deconvolute_and_contextualize
 #' @name deconvolute_and_contextualize
 #'
-#' @param count_file Normalized (CPM, TPM, RPKM) RNA-seq count matrix where rows are gene symbols and columns are individuals. Either the object tself of the path of a .tsv file.
-#' @param signature_matrix Signature matrix (odds ratios) of cell-type specificity of genes. Either the object itself or a pathway to a .RData file containing an object named "wilcoxon_rank_mat_or" - generally internal.
-#' @param DEG_list An object with the first column as gene symbols within the bulk dataset (doesn't have to be in signature matrix), second column is the adjusted P-value, and the third the log2FC. Path to a tsv file containing this info is also acceptable.
+#' @param count_file Normalized (e.g. CPM, TPM, RPKM) RNA-seq count matrix where rows are gene symbols and columns are individuals. Either the matrix itself of class "matrix" or data.frame" or a path to a tsv file containing these DEGs. The gene symbols in the count file, signature matrix, and DEG list must match.
+#' @param signature_matrix Signature matrix (fold-change ratios) of cell-type specificity of genes. Either the object itself or a pathway to an .RData file containing an object named "wilcoxon_rank_mat_or". We strongly recommend inputting the signature matrix directly.
+#' @param DEG_list An object with the first column as gene symbols within the bulk dataset (doesn't have to be in signature matrix), second column is the adjusted P-value, and the third the log2FC. Path to a tsv file containing this info is also acceptable. 
 #' @param case_grep Tag in the column name for cases (i.e. samples representing upregulated) OR an index of cases.
 #' @param control_grep Tag in the column name for control (i.e. samples representing downregulated) OR an index of cases.
-#' @param max_proportion_change Maximum cell-type proportion change. May be useful if there are many rare cell-types.
+#' @param max_proportion_change Maximum cell-type proportion change. May be useful if a cell-type does not exist in one condition, thus preventing infinite values.
 #' @param print_plots Whether boxplots of the estimated CT proportion for the leave-one-out method of CT deconvolution should be printed (T/F).
 #' @param plot_names If plots are being printed, the pre-fix of their .pdf files.
-#' @param theSpecies -9 if using a precomputed count matrix from scMappR, human otherwise. Removes ensembl symbols if appended.
-#' @param make_scale Convert the lowest odds ratio to 1 and scales accordingly -- strongly not recommended and will produce warning if used.
+#' @param theSpecies internal species designation to be passed from `scMappR_and_pathway_analysis`. It only impacts this function if data are taken directly from the PanglaoDB database (i.e. not reprocessed by scMappR or the user).
 #' @param FC_coef Making cwFold-changes based on fold-change (TRUE) or rank := (-log10(Pval)) (FALSE) rank. After testing, we strongly recommend to keep true (T/F).
 #' @param sig_matrix_size Number of genes in signature matrix for cell-type deconvolution.
-#' @param sig_distort Exponential change of odds ratios. Strongly not recomended and will produce warnings if changed from default.
 #' @param drop_unknown_celltype Whether or not to remove "unknown" cell-types from the signature matrix (T/F).
 #' @param toSave Allow scMappR to write files in the current directory (T/F).
 #' @param path If toSave == TRUE, path to the directory where files will be saved.
 #' @param deconMethod Which RNA-seq deconvolution method to use to estimate cell-type proporitons. Options are "WGCNA", "DCQ", or "DeconRNAseq"
-#' 
+#'
 #' @return List with the following elements:
 #' \item{cellWeighted_Foldchange}{data frame of cellweightedFold changes for each gene.}
 #' \item{cellType_Proportions}{data frame of cell-type proportions from DeconRNA-seq.}
@@ -78,7 +75,7 @@
 #' }                                      
 #' @export
 #' 
-deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list, case_grep, control_grep, max_proportion_change = -9, print_plots=T, plot_names="scMappR",theSpecies = "human", make_scale = FALSE, FC_coef = T, sig_matrix_size = 3000, sig_distort = 1, drop_unknown_celltype = TRUE, toSave = FALSE, path = NULL, deconMethod = "DeconRNASeq") {
+deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list, case_grep, control_grep, max_proportion_change = -9, print_plots=T, plot_names="scMappR",theSpecies = "human", FC_coef = T, sig_matrix_size = 3000, drop_unknown_celltype = TRUE, toSave = FALSE, path = NULL, deconMethod = "DeconRNASeq") {
   # This function completes the cell-type contextualization in scMappR -- reranking every DEG based on their fold change, likelihood the gene is in each detected cell type, average cell-type proportion, and ratio of cell-type proportion between case and control.
   # such that if a gene is upregulated, then it is being controlled by control/case, otherwise it is case/control
   # This function expects that the genes within the count file, signature matrix, and DEG_list are have the same logos
@@ -117,8 +114,6 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   # making cell weighted fold-changes cwFold-change's based on rank (-log10(Pval)) instead of fold change
   #sig_matrix_size 
   # number of genes in signature matrix for cell-type deconvolution
-  #sig_distort
-  # exponential change of odds ratios. not reccomended and will produce warnings if changed from default
   # drop_unknown_celltype
   # whether or not to remove "unknown" cell-types from the signature matrix
   # Returns:
@@ -150,11 +145,11 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   }
   
   
-  if((all(is.numeric(sig_distort), is.numeric(max_proportion_change), is.numeric(sig_matrix_size))[1] == FALSE)[1]) {
-    stop("sig_distort, max_proportion_change, and sig_matrix_size must all be of class numeric" )
+  if((all(is.numeric(max_proportion_change), is.numeric(sig_matrix_size))[1] == FALSE)[1]) {
+    stop(" max_proportion_change, and sig_matrix_size must all be of class numeric" )
   }
-  if((all(is.logical(print_plots), is.logical(make_scale), is.logical(FC_coef), is.logical(drop_unknown_celltype), is.logical(toSave))[1] == FALSE)[1]) {
-    stop("print_plots, make_scale, FC_coef, drop_unknown_celltype, toSave must all be of class logical." )
+  if((all(is.logical(print_plots),  is.logical(FC_coef), is.logical(drop_unknown_celltype), is.logical(toSave))[1] == FALSE)[1]) {
+    stop("print_plots, FC_coef, drop_unknown_celltype, toSave must all be of class logical." )
   }
   
   if(is.character(plot_names)[1] == FALSE) {
@@ -245,10 +240,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   } else {
     wilcox_or_signature <- wilcox_or
   }
-  if(sig_distort != 1) {
-    warning("Changed signature matrix distortion from 1 which is not reccomended.")
-    wilcox_or_signature <- wilcox_or_signature^sig_distort
-  }
+
   if((length(unique(colnames(wilcox_or_signature))) < length(colnames(wilcox_or_signature)))[1]) {
     warning("cell-type naming is not unique, appending unique identifier (1:ncol(signature))")
     colnames(wilcox_or_signature) <- paste0(colnames(wilcox_or_signature), "_", 1:ncol(wilcox_or_signature))
@@ -426,14 +418,9 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   } else {
     colnames(fold_changes) <- colnames(wilcox_or) <- colnames(means) <- colnames(cmeaned_stacked) <- n
   }
-  if(make_scale == TRUE) { 
-    warning("Scaling all odds ratios to the minimum odds ratio -- not reccomended")
-    scaled <- min(wilcox_or[wilcox_or != 0])
-    
-    scaled_odds_ratio <- wilcox_or/scaled
-  } else {
-    scaled_odds_ratio <- wilcox_or
-  }
+
+  scaled_odds_ratio <- wilcox_or
+  
   # remove duplicated DEGs
   dup_gene_names <- which(duplicated(DEGs$gene_name))
   if((length(dup_gene_names) > 0)[1]) {

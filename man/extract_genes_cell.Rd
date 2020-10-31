@@ -17,7 +17,7 @@ extract_genes_cell(
 
 \item{cellTypes}{The cell-types that you're interested in extracting. They need to be colnames (not case sensitive).}
 
-\item{val}{How associated a gene is with a particualr cell type to include in your list - default is slightly associated.}
+\item{val}{How associated a gene is with a particular cell type to include in your list - default is slightly associated.}
 
 \item{isMax}{If you are taking the single best CT marker (T/F) -- TRUE not recommended.}
 

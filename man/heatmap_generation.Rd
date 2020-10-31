@@ -35,9 +35,9 @@ heatmap_generation(
 
 \item{pVal}{The level of association a gene has within a cell type (passed to extract_genes_cell).}
 
-\item{isPval}{If the signature matrix is raw p-value (T/F) -- TRUE not reccomended.}
+\item{isPval}{If the signature matrix is raw p-value (T/F) -- TRUE not recommended}
 
-\item{isMax}{If you are taking the single best CT marker (T/F) -- TRUE not reccomended.}
+\item{isMax}{If you are taking the single best CT marker (T/F) -- TRUE not recommended}
 
 \item{isBackground}{If the heatmap is from the entire signature matrix or just the inputted gene list (T/F). isBackground == TRUE is used for internal.}
 

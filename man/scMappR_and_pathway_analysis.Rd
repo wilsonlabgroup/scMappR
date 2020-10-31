@@ -2,7 +2,7 @@
 % Please edit documentation in R/scMappR_and_pathway_analysis.R
 \name{scMappR_and_pathway_analysis}
 \alias{scMappR_and_pathway_analysis}
-\title{Generate cellWeighted_Foldchange, visualize, and enrich.}
+\title{Generate cellWeighted_Foldchanges, visualize, and enrich.}
 \usage{
 scMappR_and_pathway_analysis(
   count_file,
@@ -29,29 +29,29 @@ scMappR_and_pathway_analysis(
 )
 }
 \arguments{
-\item{count_file}{Normalized RNA-seq count matrix where rows are gene symbols and columns are individuals. Either the object tself of the path of a .tsv file.}
+\item{count_file}{Normalized (i.e. TPM, RPKM, CPM) RNA-seq count matrix where rows are gene symbols and columns are individuals. Inputted data should be a data.frame or matrix. A character vector to a tsv file where this data can be loaded is also acceptable. Gene symbols from the count file, signature matrix, and DEG list should all match (case sensitive, gene symbol or ensembl, etc.)}
 
-\item{signature_matrix}{Signature matrix (recommended odds ratios) of cell-type specificity of genes. Either the object itself or a pathway to a .RData file containing an object named "wilcoxon_rank_mat_or" -- generally internal.}
+\item{signature_matrix}{Signature matrix: a gene by cell-type matrix populated with the fold-change of gene expression in cell-type marker "i" vs all other cell-types. Object should be a data.frame or matrix.}
 
 \item{DEG_list}{An object with the first column as gene symbols within the bulk dataset (doesn't have to be in signature matrix), second column is the adjusted p-value, and the third the log2FC path to a .tsv file containing this info is also acceptable.}
 
-\item{case_grep}{Tag in the column name for cases (i.e. samples representing upregulated) OR an index of cases.}
+\item{case_grep}{A character representing what designates the "cases" (i.e. upregulated is 'case' biased) in the columns of the count file. A numeric vector of the index of "cases" is also acceptable.  Tag in the column name for cases (i.e. samples representing upregulated) OR an index of cases.}
 
-\item{control_grep}{Tag in the column name for controls (i.e. samples representing downregulated OR an index of controls).}
+\item{control_grep}{A character representing what designates the "control" (i.e. downregulated is 'control biased) in the columns of the count file. A numeric vector of the index of "control" is also acceptable.  Tag in the column name for cases (i.e. samples representing upregulated) OR an index of cases.}
 
 \item{rda_path}{If downloaded, path to where data from scMappR_data is stored.}
 
-\item{max_proportion_change}{Maximum cell-type proportion change -- may be useful if there are many rare cell-types.}
+\item{max_proportion_change}{Maximum cell-type proportion change -- may be useful if there are many rare cell-type. Alternatively, if a cell-type is only present in one condition but not the other, it will prevent possible infinite or 0 cwFold-changes.}
 
 \item{print_plots}{Whether boxplots of the estimated CT proportion for the leave-one-out method of CT deconvolution should be printed. The same name of the plots will be completed for top pathways.}
 
 \item{plot_names}{The prefix of plot pdf files.}
 
-\item{theSpecies}{-9 if using a pre-computed count matrix from scMappR, human, mouse, or a specied directly compatible with gProfileR. Removes Ensembl symbols if appended.}
+\item{theSpecies}{human, mouse, or a species directly compatible with gProfileR (i.e. g:ProfileR).}
 
 \item{output_directory}{The name of the directory that will contain output of the analysis.}
 
-\item{sig_matrix_size}{Number of genes in signature matrix for cell-type deconvolution.}
+\item{sig_matrix_size}{Maximum number of genes in signature matrix for cell-type deconvolution.}
 
 \item{drop_unknown_celltype}{Whether or not to remove "unknown" cell-types from the signature matrix.}
 
@@ -75,16 +75,16 @@ scMappR_and_pathway_analysis(
 List with the following elements:
 \item{cellWeighted_Foldchanges}{Cellweighted Fold-changes for all differentially expressed genes.}
 \item{paths}{Enriched biological pathways for each cell-type.}
-\item{TFs}{Enirched TFs for each cell-type.}
+\item{TFs}{Enriched TFs for each cell-type.}
 }
 \description{
-This function generates cell weighted Fold-changes (cellWeighted_Foldchange), visualizes them in a heatmap, and completes pathway enrichment of cellWeighted_Foldchanges and bulk gene list.
+This function generates cell weighted Fold-changes (cellWeighted_Foldchange), visualizes them in a heatmap, and completes pathway enrichment of cellWeighted_Foldchanges and the bulk gene list using g:ProfileR.
 }
 \details{
-This function generates cellWeighted_Foldchanges for every cell-type (see deconvolute_and_contextualize), as well as the relative cell-type proportions (which will be reutrned and pushed through).
+This function generates cellWeighted_Foldchanges for every cell-type (see deconvolute_and_contextualize), as well as accompanying data such as cell-type proportions with the DeconRNA-seq, WGCNA, or DCQ methods.
 Then, it generates heatmaps of all cellWeighted_Foldchanges, cellWeighted_Foldchanges overlapping with the signature matrix, the entire signature matrix, the cell-type preference values from the signature matrix that overlap with inputted differentially expressed genes.
-Then, if you have Wifi, it will complete gProfileR of the reordered cellWeighted_Foldchanges as well as a the ordered list of genes.
-This function is a wrapper for deconvolute_and_contextualize and pathway_enrich_internal.
+Then, assuming there is available internet, it will complete gProfileR of the reordered cellWeighted_Foldchanges as well as a the ordered list of genes.
+This function is a wrapper for deconvolute_and_contextualize and pathway_enrich_internal and the primary function within the package.
 }
 \examples{
 

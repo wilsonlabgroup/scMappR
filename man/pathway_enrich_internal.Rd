@@ -2,7 +2,7 @@
 % Please edit documentation in R/pathway_enrich_internal.R
 \name{pathway_enrich_internal}
 \alias{pathway_enrich_internal}
-\title{Pathway enrichment for cellWeighted_Foldchange's and bulk gene list}
+\title{Internal - Pathway enrichment for cellWeighted_Foldchanges and bulk gene list}
 \usage{
 pathway_enrich_internal(
   DEGs,
@@ -20,7 +20,7 @@ pathway_enrich_internal(
 \arguments{
 \item{DEGs}{Differentially expressed genes (gene_name, padj, log2fc).}
 
-\item{theSpecies}{Human, mouse, or a charcter that is compatible with gProfileR.}
+\item{theSpecies}{Human, mouse, or a character that is compatible with g:ProfileR.}
 
 \item{scMappR_vals}{cell weighted Fold-changes of differentially expressed genes.}
 
@@ -32,7 +32,7 @@ pathway_enrich_internal(
 
 \item{number_genes}{Number of genes to if there are many, many DEGs.}
 
-\item{newGprofiler}{Whether to use gProfileR or gprofiler2 (T/F).}
+\item{newGprofiler}{Whether to use g:ProfileR or gprofiler2 (T/F).}
 
 \item{toSave}{Allow scMappR to write files in the current directory (T/F).}
 

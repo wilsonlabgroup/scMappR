@@ -1,8 +1,8 @@
 #' scMappR_tissues
 #' 
-#' Tissues available in scMappR as of February 2020.
+#' Tissues available in scMappR.
 #'
-#' A vector of tissues available in scMappR as of February 2020.
+#' A vector of tissues available in scMappR.
 #'
 #' @rdname scMappR_tissues
 #' @name scMappR_tissues

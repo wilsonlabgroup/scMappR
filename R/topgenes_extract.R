@@ -10,7 +10,7 @@
 #' @rdname topgenes_extract
 #' @name topgenes_extract
 #'
-#' @param generes A list of cell-tpe markers with fold-changes and p-vlaues (FindMarkers output in Seurat).
+#' @param generes A list of cell-type markers with fold-changes and p-values (FindMarkers output in Seurat).
 #' @param padj The p-value (FDR) cutoff.
 #' @param FC The fold-change cutoff.
 #' @param topNum The number of genes to extract.

@@ -12,8 +12,8 @@
 #' @param comp The name of the comparison.
 #' @param cex The size of the genes in the column label for the heatmap.
 #' @param rd_path The directory to RData files -- if they are not in this directory, then the files will be downloaded.
-#' @param isMax If you are taking the single best CT marker (T/F) -- TRUE not reccomended.
-#' @param isPval If the signature matrix is raw p-value (T/F) -- TRUE not reccomended.
+#' @param isMax If you are taking the single best CT marker (T/F) -- TRUE not recommended
+#' @param isPval If the signature matrix is raw p-value (T/F) -- TRUE not recommended
 #' @param cellTypes Colnames of the cell-types you will extract (passed to extract_genes_cell).
 #' @param pVal The level of association a gene has within a cell type (passed to extract_genes_cell).
 #' @param isBackground If the heatmap is from the entire signature matrix or just the inputted gene list (T/F). isBackground == TRUE is used for internal.

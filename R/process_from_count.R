@@ -2,15 +2,15 @@
 #'
 #' This function processes a list of count matrices (same species/gene symbols in each list) and converts them to a Seurat object.
 #' 
-#' This function takes a list of count matrices and returns a Seurat object of the count matrices integrated using Seurat v3 (with sctransform and IntegrationAnchors).
+#' This function takes a list of count matrices and returns a Seurat object of the count matrices integrated using Seurat v3 (and IntegrationAnchors feature). Different normalization features such as the SCTransform pipeline are also available in this function.
 #' Different options are used when the function is being ran internally (i.e. reprocessing count matrices from PanglaoDB) or if it is running from custom scRNA-seq data.
-#' For larger scRNA-seq datasets (~20k + cells), it is likely that this function will be required to run on an hpc.
+#' Larger scRNA-seq datasets can take considerable amounts of memory and run-time. See Seurat for details.
 #'
 #' @rdname process_from_count
 #' @name process_from_count
 #'
-#' @param countmat_list A list of count matrices that will be be integrated using the IntegrationAnchors features they should have the same rownames.
-#' @param name The output of the normalzied and fused Suerat object if you choose to keep it.
+#' @param countmat_list A list of count matrices that will be integrated using the IntegrationAnchors features they should have the same rownames. A dgCMatrix or matrix object is also acceptable, and no samples will be integrated.
+#' @param name The output of the normalized and fused Seurat object if you choose to keep it.
 #' @param theSpecies Gene symbols for human, mouse, or -9 if internal. If your species is not human or mouse gene symbols, make sure that you have "MT-" before your mitochondrial gene names then pick "human".
 #' @param haveUmap Write a UMAP (T/F).
 #' @param saveALL Save the Seurat object generated (T/F).
@@ -21,7 +21,7 @@
 #' @param genes_integrate The number of genes to include in the integration anchors feature when combining datasets
 #' @param genes_include TRUE or FALSE -- include 2000 genes in signature matrix or all matrix.
 #' 
-#' @return \code{process_from_count} A processed and integrated Seurat object that has been scaled and clustered. It can be returned as an internal object or also stored as an RData object if neccesary. \cr
+#' @return \code{process_from_count} A processed and integrated Seurat object that has been scaled and clustered. It can be returned as an internal object or also stored as an RData object if necessary. \cr
 #'
 #' @importFrom ggplot2 ggplot aes geom_boxplot geom_text theme coord_flip labs element_text geom_bar theme_classic xlab ylab scale_fill_manual element_line
 #' @importFrom pheatmap pheatmap

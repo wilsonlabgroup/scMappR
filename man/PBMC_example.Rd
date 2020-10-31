@@ -15,10 +15,10 @@ A list containing three data frames, normalized count data, a signature matrix, 
 data(PBMC_example)
 }
 \description{
-Data for scMappR_and_pathway_analysis example.
+Toy example of data where cell-weighted fold-changes and related downsteam analyses can be completed.
 }
 \details{
-A named list called "PBMC_example" containing the count data, signature matrix, and DEGs. The count data and signature matrix are shortened to fit the size of the package and do not reflect the paper.
+A named list called "PBMC_example" containing the count data, signature matrix, and DEGs. The count data and signature matrix are shortened to fit the size of the package and do not reflect biologically relevant data.
 }
 \examples{
 data(PBMC_example)

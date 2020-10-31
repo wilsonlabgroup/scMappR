@@ -13,11 +13,11 @@ gsva_cellIdentify(
 )
 }
 \arguments{
-\item{pbmc}{Processed seurat object without named cells.}
+\item{pbmc}{Processed Seurat object without named cells.}
 
-\item{theSpecies}{"human" or "mouse" -- it will determine which CT marker database to use -- there are some differences.}
+\item{theSpecies}{"human" or "mouse" -- it will determine which species cell-type markers will originate from.}
 
-\item{naming_preference}{Once top CT markers are identified, naming_preferences will then extract CT markers within a more appropriate tissue type.}
+\item{naming_preference}{Once top cell-type markers are identified, naming_preferences will then extract CT markers within a more appropriate tissue type.}
 
 \item{rda_path}{Path to pre-computed cell-type .gmt files (rda objects).}
 
@@ -25,8 +25,8 @@ gsva_cellIdentify(
 }
 \value{
 List with the following elements:
-\item{cellMarker}{Most likely cell-types predicted from cellMarker database.}
-\item{panglao}{Most likely cell-types predicted from panglao database.}
+\item{cellMarker}{Most likely cell-types predicted from CellMarker database.}
+\item{panglao}{Most likely cell-types predicted from Panglao database.}
 \item{avg_expression}{Average expression of each gene in each cell-type.}
 }
 \description{

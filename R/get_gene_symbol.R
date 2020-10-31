@@ -1,4 +1,4 @@
-#' Internal -- get gene symbol from Panglao.db matrix.
+#' Internal -- get gene symbol from Panglao.db assigned gene-names (symbol-ensembl).
 #'
 #' Internal -- removes Ensembl signature appended to signature matrix from Panglao and figure out species by pre-fix Ensembl of the Ensembl ID that is appended to gene names.
 #'

@@ -7,7 +7,7 @@
 #' @rdname generes_to_heatmap
 #' @name generes_to_heatmap
 #'
-#' @param generes A list of cell-tpe markers with fold-changes and p-vlaues (FindMarkers output in Seurat).
+#' @param generes A list of cell-type markers with fold-changes and p-values (FindMarkers output in Seurat).
 #' @param species The species of gene symbols, if not internal, "human" or "mouse".
 #' @param naming_preference Likely cell-types given tissues (to be passed into human_mouse_ct_marker_enrich).
 #' @param make_names Identify names of cell-type markers using the Fisher's exact test method (T/F).

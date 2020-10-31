@@ -9,7 +9,7 @@
 #' @name gProfiler_cellWeighted_Foldchange
 #'
 #' @param cellWeighted_Foldchange_matrix Matrix of cell weighted Fold changes from the deconvolute_and_contextualize functions.
-#' @param species Human, mouse, or a charcter that is compatible with gProfileR.
+#' @param species Human, mouse, or a name that is compatible with gProfileR (e.g. "mmusculus").
 #' @param background A list of background genes to test against.
 #' @param gene_cut The top number of genes in pathway analysis.
 #' @param newGprofiler Using gProfileR or gprofiler2, (T/F).

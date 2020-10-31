@@ -1,4 +1,4 @@
-##' DeconRNASeq CRAN compatible
+#' DeconRNASeq CRAN compatible
 #' 
 #' This function runs DeconRNAseq with default parameters such that it is compatible with CRAN and scMappR
 #'

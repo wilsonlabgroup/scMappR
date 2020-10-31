@@ -3,7 +3,7 @@
 #' This function loops through every signature matrix in a particular tissue and generates heatmaps, cell-type preferences, and co-enrichment.
 #' 
 #' This function takes a list of genes and a tissue that is contained in current signature matrices before and generating heatmaps of cell-type preferences.
-#' It then completes cell-type enrichment of each individual cell-type, then, if more than two cell-types are signficiantly enriched, co-enrichemnt 
+#' It then completes cell-type enrichment of each individual cell-type, then, if more than two cell-types are significantly enriched, co-enrichment.
 #' of those enriched cell-types is then computed.
 #'
 #'
@@ -13,7 +13,7 @@
 #' @param gene_list A list of gene symbols, mouse or human.
 #' @param species "mouse", "human" or "-9" if using a precomputed signature matrix.
 #' @param tissue  Name of the tissue in "get_tissues".
-#' @param cluster 'Pval' or 'OR' depending on if you wantto cluster odds ratios or pvalues of CT preferences.
+#' @param cluster 'Pval' or 'OR' depending on if you want to cluster odds ratios or p-values of cell-type preferences.
 #' @param genecex The size of the gene names of the rows in the heatmap.
 #' @param raw_pval  If the inputted signature matrix are raw (untransformed) p-values -- recommended to generate rank first (T/F).
 #' @param rda_path Path to the .rda file containing all of the signature matrices.

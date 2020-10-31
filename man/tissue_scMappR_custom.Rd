@@ -17,7 +17,7 @@ tissue_scMappR_custom(
 \arguments{
 \item{gene_list}{A list of gene symbols matching that of the signature_matrix. Any gene symbol is acceptable.}
 
-\item{signature_matrix}{Pre=computed signature matrix with matching gene names.}
+\item{signature_matrix}{Pre-computed signature matrix with matching gene names.}
 
 \item{output_directory}{Directory made containing output of functions.}
 
@@ -27,7 +27,7 @@ tissue_scMappR_custom(
 
 \item{gene_cutoff}{Value cut-off (generally rank := log10(Padj)) for a gene to be considered a marker.}
 
-\item{is_pvalue}{If signature matrix is p-value before rank is applied (not recommended ) (T/F).}
+\item{is_pvalue}{If signature matrix is p-value before rank is applied (not recommended) (T/F).}
 }
 \value{
 List with the following elements:

@@ -12,23 +12,23 @@ compare_deconvolution_methods(
 )
 }
 \arguments{
-\item{count_file}{Normalized (CPM, TPM, RPKM) RNA-seq count matrix where rows are gene symbols and columns are individuals. Either the object tself of the path of a .tsv file.}
+\item{count_file}{Normalized (CPM, TPM, RPKM) RNA-seq count matrix where rows are gene symbols and columns are individuals. Either the object itself of the path of a .tsv file.}
 
-\item{signature_matrix}{Signature matrix (odds ratios) of cell-type specificity of genes. Either the object itself or a pathway to a .RData file containing an object named "wilcoxon_rank_mat_or" - generally internal.}
+\item{signature_matrix}{Signature matrix (odds ratios) of cell-type specificity of genes. Either the object itself or a pathway to an .RData file containing an object named "wilcoxon_rank_mat_or" - generally internal.}
 
-\item{print_plot}{print the barplot of estimated cell-type propotions from each method into the R console (logical: TRUE/FALSE)}
+\item{print_plot}{print the barplot of estimated cell-type proportions from each method into the R console (logical: TRUE/FALSE)}
 
 \item{order_celltype}{Specify the order that cell-type are placed on the barplot. NULL = alphabetical, otherwise a character vector of cell-type labels (i.e. column names of the signature matrix).}
 }
 \value{
 List with the following elements:
-\item{cellWeighted_Foldchange}{data frame of cellweightedFold changes for each gene.}
+\item{cellWeighted_Foldchange}{data frame of cellweightedFold-changes for each gene.}
 \item{cellType_Proportions}{data frame of cell-type proportions from DeconRNA-seq.}
 \item{leave_one_out_proportions}{data frame of average cell-type proportions for case and control when gene is removed.}
 \item{processed_signature_matrix}{signature matrix used in final analysis.}
 }
 \description{
-This function calculates cell-type proprotions of an inputted bulk sample using DeconRNA-seq, WGCNA, and DCQ methods. Outputted cell-type proportions are then compared.
+This function calculates cell-type proportions of an inputted bulk sample using DeconRNA-seq, WGCNA, and DCQ methods. Outputted cell-type proportions are then compared.
 }
 \examples{
 \donttest{

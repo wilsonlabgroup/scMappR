@@ -1,6 +1,6 @@
 #' Get signature matrices.
 #'
-#' This function downloads and returns signature matrices and associated cel-type labels from the scMappR_data repo.
+#' This function downloads and returns signature matrices and associated cell-type labels from the scMappR_data repo.
 #'
 #'
 #' @rdname get_signature_matrices

@@ -14,7 +14,7 @@ generes_to_heatmap(
 )
 }
 \arguments{
-\item{generes}{A list of cell-tpe markers with fold-changes and p-vlaues (FindMarkers output in Seurat).}
+\item{generes}{A list of cell-type markers with fold-changes and p-values (FindMarkers output in Seurat).}
 
 \item{species}{The species of gene symbols, if not internal, "human" or "mouse".}
 
