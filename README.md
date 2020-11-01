@@ -14,15 +14,20 @@
 The function `scMappR_and_pathway_analysis` reranks DEGs to generate cell-type specificity scores called cell-weighted fold-changes (cwFold-change). cwFold-changes are the original fold-changes identifiend with bulk differntial analysis that are then scaled by the cell-type specificity of the DEG and the cell-type proportion of the inputted samples.
 
 ### Running scMappR_and_pathway_analysis
-Users input a list of DEGs, read-depth normalized counts (e.g. TPM, RFPKM, CPM etc.), and a signature matrix into this function. Normalized counts should not be log2 adjusted. scMappR then re-weights bulk DEGs by cell-type specific expression from the signature matrix, cell-type proportions from RNA-seq deconvolution and the ratio of cell-type proportions between the two conditions to account for changes gene expression driven by cell-type proportion. 
+Users input a list of DEGs (gene name, fdr adjusted p-value, log2(fold-change)), read-depth normalized counts (e.g. TPM, RFPKM, CPM etc.), and a signature matrix (a gene by cell-type matrix populated with the fold-changes of cell-type specificity) into this function. Counts do not need to be log2 adjusted. scMappR then re-weights bulk DEGs by cell-type specific expression from the signature matrix, cell-type proportions from RNA-seq deconvolution and the ratio of cell-type proportions between the two conditions to account for changes gene expression driven by cell-type proportion. 
 
 
 ### Cell-type specific pathway enrichment
 With cwFold-changes calculated, scMappR uses two approaches to utilize cwFold-changes to complete cell-type specific pathway analysis. The `two_method_pathway_enrichment` re-ranks DEGs for each cell-type based on their cwFold-change as well as the rank-order change between cwFold-change and bulk fold-changes. The function then uses g:Profiler to test for pathway enrichment after the DEGs were re-ordered.
 
+### Identifying cell-type specific differentially expressed genes.
+With cwFold-changes calculated, scMappR further identifies genes that are differentially expressed in each cell-type. These differences in expression are due to gene expression and not cell-type proportion. The `cwFoldChange_evaluate` function evaluates the cell-type specificty of cwFold-changes at the gene and cell-type levels. 
+
+At the level of the gene, cwFold-changes are scored so that they sum to 1. For each gene, cell-types whose cwFold-change are greater than the cell-type proportion while accounting for an abnormally high proportion of the fold change (+ 3 median absolute deviations from median cell-type specificity) are considered cell-type specific. At the level of the cell-type, bulk DEGs and cwFold-changes for each cell-type are correlated. The difference in the rank of DEG is also measured.
+
 ### Secondary scMappR functionalities
 #### processing scRNA-seq count data
-The `process_dgTMatrix_lists` function in the scMappR package contains an automated scRNA-seq processing pipeline where users input scRNA-seq count data, which is made compatible for scMappR and other R packages that analyze scRNA-seq data. scRNA-seq counts are normalized and processed using the Seurat R package (scTransform or Seurat V3 as options). We then identify cell-types markers and cell-type lavels using Seurat using gene set enrichment methods Fisher's exact-test and GSVA using gene set markers databases from CellMarker and PanglaoDB. Finally, custom scripts convert cell-type markers into signature matrices.
+The `process_dgTMatrix_lists` function in the scMappR package contains an automated scRNA-seq processing pipeline where users input scRNA-seq count data. These data are processed, clustered, and eventually converted into a signature matrix. scRNA-seq counts are normalized and processed using the Seurat R package (scTransform or Seurat V3 as options). We then identify cell-types markers and cell-type lavels using Seurat using gene set enrichment methods Fisher's exact-test and GSVA using gene set markers databases from CellMarker and PanglaoDB. Finally, custom scripts convert cell-type markers into signature matrices.
 
 This function can be applied to any scRNA-seq count data, however it can only label cell-types containing human or mouse gene symbols. We we apply this pipeline to the scRNA-seq datasets stored in the panglaoDB database every 3 months, allowing us to store hundreds of pre-computed signature matrices for users to apply to their own data. 
 
@@ -32,7 +37,7 @@ The functions `tissue_by_celltype_enrichment`, `tissue_scMappR_internal`, and `t
 
 ## Installation
 
-Currently, there is only  a development version. scMappR relies on the following dependencies which should be downlaoded/updated with scMappR automatically. Please ensure that these packages are not open when installing scMappR. 
+ scMappR relies on the following dependencies which should be downlaoded/updated with scMappR automatically. Please ensure that these packages are not open when installing scMappR. 
 
   * ggplot2 - CRAN
   * pheatmap - CRAN
@@ -46,6 +51,8 @@ Currently, there is only  a development version. scMappR relies on the following
   * grDevices - CRAN
   * gProfileR - CRAN
   * limSolve - CRAN 
+  * ADAPTS - CRAN
+  * reshape - CRAN
   
 Install GSVA and pcaMethods from bioconductor first, as `devtools::install_github()` will automatically install CRAN dependencies. 
 
@@ -112,10 +119,10 @@ signature_matrix_download <- get_signature_matrices("all") # get all matrices an
 
 ## Most commonly used functions in scMappR.
 
-Below describes the primary ways scMappR can contextualize gene lists and process data. It is strongly reccomended to set `toSave = TRUE` in functions and, when appropraite, `internet = TRUE`. Otherwise scMappR will not print files/directories and many of the results will not be printed.
+Below describes the primary ways scMappR can measure cell-type specificity within a gene list as well as process scRNA-seq data. It is strongly reccomended to set `toSave = TRUE` in functions and, when appropraite, `internet = TRUE`. Otherwise scMappR will not print files/directories and many of the results will not be printed.
 
 
-* `scMappR_and_pathway_analysis()`: This function generates scMappR Transformed Variables (STVs), visualies them in a heatmap, and completes pathway enrichment of STVs and bulk gene list.
+* `scMappR_and_pathway_analysis()`: This function generates cell-weighted Fold-changes (cwFold-changes), visualies them in a heatmap, and completes pathway enrichment of cwFold-changes and bulk gene list.
 * `process_dgTMatrix_lists()`: This function takes a list of count matrices, processes them, calls cell-types, and genreates signature matrices.
 * `tissue_scMappR_custom()`: This function visualizes signature matrix, clusters subsetted genes, completes enrichment of individual cell-types and co-enrichment. 
 * `tissue_scMappR_internal()`: This function loops through every signature matrix in a particular tissue and generates heatmaps, cell-type preferences, and co-enrichment.
@@ -123,9 +130,9 @@ Below describes the primary ways scMappR can contextualize gene lists and proces
 
 ### Scaling and visualizing Differentially Expressed Genes from bulk RNA-seq data 
 
-This function requires a normalized count matrix from RNA-seq, a signature matrix such that there are fewer cell-types than there are samples, and a list of differentially expressed genes (with log2Fold-Change and adjusted P-value). 
+This function requires a normalized count matrix from RNA-seq (e.g. CPM, TPM, RPKM), a signature matrix such that there are fewer cell-types than there are samples, and a list of differentially expressed genes (with log2Fold-Change and adjusted P-value). 
 
-Then, it will calculate scMappR Transformed Values (STVs) before estimating if there are changes in cell-type proportion between samples. If `toSave = TRUE` then STV's will be visualized. Additionally, if `internet = TRUE`, scMappR will iteratively re-order DEGs based on their STV's and complete pathway analysis with g:ProfileR or gprofiler2.
+Then, it will calculate cwFold-changes before estimating if there are changes in cell-type proportion between samples. If `toSave = TRUE` then STV's will be visualized. Additionally, if `internet = TRUE`, scMappR will iteratively re-order DEGs based on their STV's and complete pathway analysis with g:ProfileR or gprofiler2.
 
 ```{r scMappR_and_pathway_analysis, eval=FALSE}
 
@@ -151,7 +158,7 @@ toOut <- scMappR_and_pathway_analysis(bulk_normalized, odds_ratio_in,
 
 ### Generating a signature matrix and processing scRNA-seq count data
 
-A matrix, dgTMatrix, or list of these matrices are inputted where the rows are genes and the columns are indiviudal cells. The gene names must be human or mouse gene symbols. If the dataset is being processed from PanglaoDB, then the rownames are GeneSymbol-ENSMBL, here, set `species_name = -9`. 
+A matrix, dgGMatrix, or list of these matrices are inputted where the rows are genes and the columns are indiviudal cells. The gene names must be human or mouse gene symbols. If the dataset is being processed from PanglaoDB, then the rownames are GeneSymbol-ENSMBL, here, set `species_name = -9`. 
 
 This function returns the signature matrix and cell-type labels. If `toSave = TRUE` signature matrices, all cell-type markers, the average expression of genes from each cell-type, and cell-type labels from gsva are stored as files in the working directory. Additionally, if `saveSCObject = TRUE`, then the Seurat object is also saved in the working directory.
 
