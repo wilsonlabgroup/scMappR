@@ -182,8 +182,8 @@ pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_g
   grDevices::dev.off()
 
   
-  save(ordered_back_all, file = paste0(path,"/",output_directory, "/",plot_names,"_bulk_pathways.RData"))
-  save(ordered_back_all_tf, file = paste0(path,"/",output_directory, "/",plot_names,"_bulk_transcription_factors.RData"))
+  #save(ordered_back_all, file = paste0(path,"/",output_directory, "/",plot_names,"_bulk_pathways.RData"))
+  #save(ordered_back_all_tf, file = paste0(path,"/",output_directory, "/",plot_names,"_bulk_transcription_factors.RData"))
   
   }
   message("Compelting pathway analysis of cellWeighted_Foldchanges.")

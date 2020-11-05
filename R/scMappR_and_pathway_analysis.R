@@ -368,7 +368,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
   save(cell_proportions_all, file = paste0(path,"/",output_directory, "/",plot_names, "_celltype_proportions.RData"))
   
   leave_one_out_proportions <- cellWeighted_Foldchanges$leave_one_out_proportions # leave one out avg CT proportions
-  save(cell_proportions_all, file = paste0(path,"/",output_directory, "/",plot_names, "_leaveOneOut_gene_proportions.RData"))
+  save(leave_one_out_proportions, file = paste0(path,"/",output_directory, "/",plot_names, "_leaveOneOut_gene_proportions.RData"))
   
   signature_mat <- cellWeighted_Foldchanges$processed_signature_matrix # processed_signaure_matrix
   sigmat_row <- apply(signature_mat, 1, stats::var)
