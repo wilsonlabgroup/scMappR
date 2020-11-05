@@ -219,11 +219,8 @@ An important aspect of scMappR is to calculate which DEGs from bulk differential
 
 In this example, we are extending the output from the `scMappR_and_pathway_analysis` function above.
 
-```{r two_method_pathway, eval=FALSE}
+```{r cwFoldChange_evaluate, eval=FALSE}
 
-twoOutFiles <- two_method_pathway_enrichment(bulk_DE_cors, "human",
-scMappR_vals = toOut$cellWeighted_Foldchange, background_genes = rownames(bulk_normalized), 
-output_directory = "newfun_test",plot_names = "nonreranked_", toSave = FALSE)
 
 evaluated <- cwFoldChange_evaluate(toOut$cellWeighted_Foldchange, toOut$cellType_Proportions, bulk_DE_cors)
 
