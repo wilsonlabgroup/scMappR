@@ -149,11 +149,18 @@ toOut <- scMappR_and_pathway_analysis(bulk_normalized, odds_ratio_in,
 
 ### Saved outputs
 
-
 Assuming `toSave = T` and `up_and_downregulated = T`, `scMappR_and_pathway_analysis()` will also generate a folder in your current directory with a considerable amount of data/figures.
 
 
 Here, we will walk through the output of the above example sorting by name and working downwards.
+  * BP_barplot: a directory with pdf's of the top 10 pathways of DEGs that have been re-normlaized by their cwFold-change.
+  * Downregulated: a directory with pdf's and Rdata files of pathway and TF enrichment of downregulated DEGs re-normalized by their cwFold-change.
+    * TF_barplot: a directory with pdf's of the top 10 TFs of DEGs that have been re-normlaized by their cwFold-change.
+  * Upregulated: a directory with pdf's and Rdata files of pathway and TF enrichment of upregulated DEGs re-normalized by their cwFold-change.
+  * bulk_pathway_enrichment: png and Rdata file of traditional g:ProfilR analysis of GO:BP, REAC, and KEGG databases.
+   * bulk_TF_enrichment: png and Rdata file of traditional g:ProfilR analysis of TF database.
+   
+
   * scMappR_vignette_celltype_specific_cellWeighted_Foldchanges_upregulated_heatmap.pdf: Row-normalized cellWeighted_Foldchanges of upregulated genes that are also cell-type specific (in the signature matrix).
   * scMappR_vignette_celltype_specific_cellWeighted_Foldchanges_downregulated_heatmap.pdf: Row-normalized cellWeighted_Foldchanges of downregulated genes that are also cell-type specific (in the signature matrix).
   * scMappR_vignette__cellWeighted_Foldchanges_upregulated_DEGs_heatmap.pdf: row-normalized cellWeighted_Foldchanges of upregulated genes.
