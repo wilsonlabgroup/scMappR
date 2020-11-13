@@ -21,7 +21,7 @@ Users input a list of DEGs (gene name, fdr adjusted p-value, log2(fold-change)),
 With cwFold-changes calculated, scMappR uses two approaches to utilize cwFold-changes to complete cell-type specific pathway analysis. The `two_method_pathway_enrichment` re-ranks DEGs for each cell-type based on their cwFold-change as well as the rank-order change between cwFold-change and bulk fold-changes. The function then uses g:Profiler to test for pathway enrichment after the DEGs were re-ordered.
 
 ### Identifying cell-type specific differentially expressed genes.
-With cwFold-changes calculated, scMappR further identifies genes that are differentially expressed in each cell-type. These differences in expression are due to gene expression and not cell-type proportion. The `cwFoldChange_evaluate` function evaluates the cell-type specificty of cwFold-changes at the gene and cell-type levels. 
+With cwFold-changes calculated, scMappR further identifies genes that are differentially expressed in each cell-type. These differences in expression are due to gene expression and not cell-type proportion. The `cwFoldChange_evaluate` function evaluates the cell-type specificity of cwFold-changes at the gene and cell-type levels. 
 
 At the level of the gene, cwFold-changes are scored so that they sum to 1. For each gene, cell-types whose cwFold-change are greater than the cell-type proportion while accounting for an abnormally high proportion of the fold change (+ 3 median absolute deviations from median cell-type specificity) are considered cell-type specific. At the level of the cell-type, bulk DEGs and cwFold-changes for each cell-type are correlated. The difference in the rank of DEG is also measured.
 
