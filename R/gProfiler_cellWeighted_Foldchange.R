@@ -86,13 +86,8 @@ gProfiler_cellWeighted_Foldchange <- function(cellWeighted_Foldchange_matrix, sp
   if(!(is.logical(newGprofiler))) {
     stop("newGprofiler must be logical (TRUE/FALSE)")
   }
-  
-  if(!(species %in% c("human", "mouse"))) {
-    if(species != -9) {
-      stop("species is not 'human' 'mouse' or '-9' (case sensitive), please try again with this filled.")
-    }
-  }
-  
+  if(!is.character(species)) stop("species is not human, mouse, -9, or a species name compatible with g:ProfileR.")
+
   
   if(species == "human") {
     message("Assuming species = Human")
