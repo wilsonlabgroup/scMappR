@@ -160,7 +160,7 @@ scMappR_and_pathway_analysis <- function(  count_file,signature_matrix, DEG_list
     stop("control_grep must be of class character (as a single character designating controls in column names) or of class numeric (integer matrix giving indeces of controls).")
   }
   
-  if(!is.character(species)) stop("species is not human, mouse, -9, or a species name compatible with g:ProfileR.")
+  if(!is.character(theSpecies)) stop("species is not human, mouse, -9, or a species name compatible with g:ProfileR.")
   
   
   if(!is.character(rda_path)) {
