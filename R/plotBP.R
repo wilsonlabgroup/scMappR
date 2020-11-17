@@ -123,6 +123,6 @@ plotBP <- function(ordered_back_all, top_bp = 10) {
                                             size=12, angle=0), 
                  axis.title= ggplot2::element_text(size=16, color = "black"))
   y <- y + ggplot2::theme_classic()
-  print(y)
+  #print(y)
   return(y)
 }

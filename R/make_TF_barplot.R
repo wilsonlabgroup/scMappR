@@ -122,6 +122,6 @@ make_TF_barplot <- function(ordered_back_all_tf, top_tf = 5) {
                                                               size=12, angle=0), 
                           axis.title=ggplot2::element_text(size=16, color = "black"))
   y <- y + ggplot2::theme_classic()
-  print(y)
+  #print(y)
   return(y)
 }
