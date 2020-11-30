@@ -15,7 +15,7 @@ cwFoldChange_evaluate(
 \arguments{
 \item{cwFC}{A matrix or data frame of cell-weighted fold-changes of DEGs. Rows are DEGs and columns are cell-types.}
 
-\item{celltype_prop}{A matrix or data frame of cell-type proportions. Rows are different cell-types and columns are different samples.}
+\item{celltype_prop}{A matrix or data frame of cell-type proportions. Rows are different cell-types and columns are different samples. These cell-type proportions can come from any source (not just scMappR).}
 
 \item{DEG_list}{An object with the first column as gene symbols within the bulk dataset (doesn't have to be in signature matrix), second column is the adjusted p-value, and the third the log2FC path to a .tsv file containing this info is also acceptable.}
 

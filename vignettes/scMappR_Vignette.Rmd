@@ -157,7 +157,7 @@ Here, we will walk through the output of the above example sorting by name and w
   * Downregulated: a directory with pdf's and Rdata files of pathway and TF enrichment of downregulated DEGs re-normalized by their cwFold-change.
   * TF_barplot: a directory with pdf's of the top 10 TFs of DEGs that have been re-normlaized by their cwFold-change.
   * Upregulated: a directory with pdf's and Rdata files of pathway and TF enrichment of upregulated DEGs re-normalized by their cwFold-change.
-  * bulk_pathway_enrichment: png and Rdata file of traditional g:ProfilR analysis of GO:BP, REAC, and KEGG databases.
+  * bulk_pathway_enrichment: png and Rdata file of traditional g:ProfilR analysis of GOBP, REAC, and KEGG databases.
   * bulk_TF_enrichment: png and Rdata file of traditional g:ProfilR analysis of TF database.
   * scMappR_vignette_cell_proportion_changes_summary: t-tests looking at difference in estimated cell-type proporitons between conditions.
   * scMappR_vignette_celltype_proportions: Estimated cell-type proportions of all inputted samples.
@@ -408,6 +408,10 @@ Here, the following objects are saved.
   * testProcess_pval_heatmap.Rdata: signature matrix of ranks named from Fisher's exact test.
   * testProcess_custom.Rdata: Processed (and integrated if necessary) Seurat object.
   * testProcess_gsva_cellname_avg_expression.Rdata: list of cell-type markers from CelllMarker and Panglao using the GSVA method as well as the average expression of each gene in each cell-type.
+  
+### Processing scRNA-seq count data from a different species.
+
+Please continue to use the `process_from_count` function. The only species specific information required in this function is the mitochondrial gene symbol to regress out mitochondria. In each of your count matrices, make sure that your michondial genes have a "MT-" preface. Then select "human" as the species. This can also be done with an "mt-" preface and selecting mouse. 
   
 ### Processing scRNA-seq count data when cell-types are already named.
 

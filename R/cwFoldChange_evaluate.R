@@ -12,7 +12,7 @@
 #' @name cwFoldChange_evaluate
 #' 
 #' @param cwFC A matrix or data frame of cell-weighted fold-changes of DEGs. Rows are DEGs and columns are cell-types. 
-#' @param celltype_prop A matrix or data frame of cell-type proportions. Rows are different cell-types and columns are different samples.
+#' @param celltype_prop A matrix or data frame of cell-type proportions. Rows are different cell-types and columns are different samples. These cell-type proportions can come from any source (not just scMappR).
 #' @param DEG_list An object with the first column as gene symbols within the bulk dataset (doesn't have to be in signature matrix), second column is the adjusted p-value, and the third the log2FC path to a .tsv file containing this info is also acceptable.
 #' @param gene_cutoff Additional cut-off of normalized cwFold-change to see if a gene is cut-off.
 #' @param sd_cutoff Number of standard deviations or median absolute deviations to calculate outliers.
@@ -97,7 +97,7 @@ cwFoldChange_evaluate <- function(cwFC, celltype_prop, DEG_list, gene_cutoff = N
   celltype_prop_class <- class(celltype_prop)[1] %in% c("matrix", "data.frame")
   allGood <- all(cwFC_class, celltype_prop_class)
   if(!allGood) stop("Both celltype_prop and cwFC_class must be of class 'matrix' or 'data.frame'.")
-  
+
   # Overlapping genes and cell-types.
   inters <- intersect(rownames(cwFC), rownames(DEGs))
   intDEG <- any(length(inters) < nrow(DEGs), length(inters) < nrow(cwFC))
