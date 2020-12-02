@@ -153,9 +153,10 @@ two_method_pathway_enrichment <- function(DEG_list, theSpecies, scMappR_vals, ba
   ##
   ##
   
-  
+  species_bulk <- theSpecies
   if(theSpecies == "human") species_bulk <- "hsapiens"
   if(theSpecies == "mouse") species_bulk <- "mmusculus"
+
   # Interrogating the pathway enrichment of the rank-increase in cell-type specificity
   celltype_path <- list() 
   for(i in 1:ncol(scMappR_vals)) {
