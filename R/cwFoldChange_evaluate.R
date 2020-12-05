@@ -23,7 +23,7 @@
 #' \item{cwFoldchange_vs_bulk_rank_change}{data frame of the change in rank of DEG between the bulk fold-change and cwFold-change.}
 #' \item{cwFoldChange_normalized}{cwFold-change normalized such that each gene sums to 1.}
 #' \item{cwFoldchange_gene_assigned}{List of cell-types where genes are designated to cell-type specific differential expression.}
-#' 
+#' \item{cwFoldchange_gene_flagged_FP}{Mapped cwFoldchanges that are flagged as false-positives. These are genes that are driven by the reciprical ratio of cell-type proportions between case and control. These genes may be DE in a non-cell-type specific manner but are falsely assigned to cell-types with very large differences in proportion between condition.} 
 #' 
 #' @importFrom ggplot2 ggplot aes geom_boxplot geom_text theme coord_flip labs element_text geom_bar theme_classic xlab ylab scale_fill_manual element_line
 #' @importFrom pheatmap pheatmap
@@ -218,7 +218,6 @@ cwFoldChange_evaluate <- function(cwFC, celltype_prop, DEG_list, gene_cutoff = N
   
   # outliers for normal DEGs
   getOutliersMean <- function(outlierName) {
-    print(outlierName)
     outlierTest <- abs_cwFC_norm[outlierName,]
     lower_bound <- mean(outlierTest) - sd_cutoff * stats::sd(outlierTest)
     upper_bound <- mean(outlierTest) + sd_cutoff * stats::sd(outlierTest)
@@ -276,7 +275,35 @@ cwFoldChange_evaluate <- function(cwFC, celltype_prop, DEG_list, gene_cutoff = N
         
       }
     }
+    cwFoldchange_gene_assigned <- list()
+    cwFoldchange_gene_flagged_FP <- list()
+    for(p in names(positiveList)) {
+      g1 <- positiveList[[p]]
+      g1Abs <- abs(g1)
+      nonPerfect <- g1[g1Abs > 0 & g1Abs < 0.999]
+      Perfect <- g1[ g1Abs > 0.999 ]
+      nonP_sorted <- sort(table(nonPerfect),decreasing=TRUE)
+      if(!unname(is.na(nonP_sorted[2]))) {
+        if(unname(nonP_sorted[1]) > (unname(nonP_sorted[2])*5)) {
+          nonPerfect1 <- nonPerfect[round(nonPerfect,5) == round(as.numeric(names(nonP_sorted)[1]),5)]
+          nonPerfect2 <- nonPerfect[round(nonPerfect,5) != round(as.numeric(names(nonP_sorted)[1]),5)] 
+          if(length(Perfect) > 0) {
+            nonPerfect2 <- c(Perfect, nonPerfect2)
+          }
+          cwFoldchange_gene_assigned[[p]] <- nonPerfect2
+          cwFoldchange_gene_flagged_FP[[p]] <- nonPerfect1
+        } else {
+          cwFoldchange_gene_assigned[[p]] <- g1
+          cwFoldchange_gene_flagged_FP[[p]] <- numeric(0)
+        }
+        
+      }
+      
+    }
+    
+    
+    
   }
-  
-  return(list(gene_level_investigation = gene_level_investigation, celltype_level_investigation = celltype_level_investigation, cwFoldchange_vs_bulk_rank_change= cwFoldchange_vs_bulk_rank_change, cwFoldChange_normalized = cwFoldChange_normalized, cwFoldchange_gene_assigned = positiveList)) 
+
+  return(list(gene_level_investigation = gene_level_investigation, celltype_level_investigation = celltype_level_investigation, cwFoldchange_vs_bulk_rank_change= cwFoldchange_vs_bulk_rank_change, cwFoldChange_normalized = cwFoldChange_normalized, cwFoldchange_gene_assigned = cwFoldchange_gene_assigned, cwFoldchange_gene_flagged_FP=cwFoldchange_gene_flagged_FP)) 
 }

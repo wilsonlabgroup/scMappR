@@ -30,6 +30,7 @@ List with the following elements:
 \item{cwFoldchange_vs_bulk_rank_change}{data frame of the change in rank of DEG between the bulk fold-change and cwFold-change.}
 \item{cwFoldChange_normalized}{cwFold-change normalized such that each gene sums to 1.}
 \item{cwFoldchange_gene_assigned}{List of cell-types where genes are designated to cell-type specific differential expression.}
+\item{cwFoldchange_gene_flagged_FP}{Mapped cwFoldchanges that are flagged as false-positives. These are genes that are driven by the reciprical ratio of cell-type proportions between case and control. These genes may be DE in a non-cell-type specific manner but are falsely assigned to cell-types with very large differences in proportion between condition.}
 }
 \description{
 This function normalizes cwFold-changes by each gene to help visualize the cell-type specificity of DEGs. It then tests if a cell-type has a large change in correlation from bulk DEGs. Finally, it identifies genes that may be specific to each cell-type.
