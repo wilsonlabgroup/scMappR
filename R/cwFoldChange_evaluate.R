@@ -254,7 +254,7 @@ cwFoldChange_evaluate <- function(cwFC, celltype_prop, DEG_list, gene_cutoff = N
   if(length(outlier) == 0) {
     positiveList <- vector("list", length(names(props)))
     names(positiveList) <- names(props)
-    
+    cwFoldchange_gene_assigned <- cwFoldchange_gene_flagged_FP <- list()
   } else {
     if(is.null(gene_cutoff)) {
       gene_cutoff <- 1/ncol(cwFC_norm)
