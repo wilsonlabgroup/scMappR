@@ -165,8 +165,17 @@ cwFoldChange_evaluate <- function(cwFC, celltype_prop, DEG_list, gene_cutoff = N
     p_pear <- unname(pear$p.value)
     return(c(rho, p_spear, R_squared, p_pear))
   }
-  df_col <- apply(cwFC, 2, column_tests)
-  rownames(df_col) <- c("rho", "p_spear", "R_squared", "p_pear")
+  if(nrow(cwFC) > 3) {
+    df_col <- apply(cwFC, 2, column_tests)
+    rownames(df_col) <- c("rho", "p_spear", "R_squared", "p_pear")
+    
+  } else {
+    message("There are fewer than 3 DEGs, column tests cannot be computed.")
+    warning("There are fewer than 3 DEGs, column tests cannot be computed.")
+    df_col <- matrix(NA, 4, ncol(cwFC))
+    rownames(df_col) <- c("rho", "p_spear", "R_squared", "p_pear")
+    colnames(df_col) <- colnames(cwFC)
+  }
   ###### Looking at the rank order change in DEG
   rank_change_list <- list()
   abscwFC <- abs(cwFC)
