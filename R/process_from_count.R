@@ -210,7 +210,7 @@ process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = 
       pbmc <- Seurat::FindVariableFeatures(object = pbmc, mean.function = Seurat::ExpMean, dispersion.function = Seurat::LogVMR,
                                            x.low.cutoff = 0.0125, x.high.cutoff = 3, y.cutoff = 0.5, do.plot = FALSE)
       
-      pbmc <- Seurat::ScaleData(pbmc, vars.to.regress = "percent.mt.adj")
+      pbmc <- Seurat::ScaleData(pbmc, vars.to.regress = "percent.mt.adj", features = rownames(pbmc))
     } else {
       
       pbmc <- Seurat::NormalizeData(object = pbmc, normalization.method = "LogNormalize",
@@ -218,7 +218,7 @@ process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = 
       pbmc <- Seurat::FindVariableFeatures(object = pbmc, mean.function = Seurat::ExpMean, dispersion.function = Seurat::LogVMR,
                                            x.low.cutoff = 0.0125, x.high.cutoff = 3, y.cutoff = 0.5, do.plot = FALSE)
       
-      pbmc <- Seurat::ScaleData(pbmc)
+      pbmc <- Seurat::ScaleData(pbmc, features = rownames(pbmc))
       
     }
 
@@ -292,7 +292,7 @@ process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = 
       
       pancreas.anchors <- Seurat::FindIntegrationAnchors(object.list = each_sra, dims = 1:20, anchor.features = genes_integrate)
       pancreas.integrated <- Seurat::IntegrateData(anchorset = pancreas.anchors, dims = 1:20, features.to.integrate = inter_rownames)
-      pancreas.integrated <- Seurat::ScaleData(pancreas.integrated, verbose = FALSE)
+      pancreas.integrated <- Seurat::ScaleData(pancreas.integrated, verbose = FALSE, features = rownames(pancreas.integrated))
       pbmc <- pancreas.integrated
       
       
@@ -311,7 +311,7 @@ process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = 
     # Save the seurat object before scaling
     save(pbmc, file = paste0(path,"/",name, "_custom.Rdata"))
   }
-  pbmc <- try(Seurat::ScaleData(object = pbmc)) # scale data
+  pbmc <- try(Seurat::ScaleData(object = pbmc, features = rownames(pbmc))) # scale data
   if(class(pbmc)[1] == "try-error") {
     stop("Data scaling did not finish, this can often be due to a memory error (as of November 2019). 
         the Seurat object up to this point has been saved.
