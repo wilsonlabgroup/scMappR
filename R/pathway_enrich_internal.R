@@ -128,7 +128,7 @@ pathway_enrich_internal <- function(DEGs, theSpecies, scMappR_vals, background_g
   DEG_Names <- rownames(DEGs)[order(DEGs$padj)]
   if(theSpecies == "human") species_bulk <- "hsapiens"
   if(theSpecies == "mouse") species_bulk <- "mmusculus"
-  
+  if(!(theSpecies %in% c("human", "mouse"))) species_bulk <- theSpecies
   ### We could theoretically split this into it's own function if we wanted
   # Pathway enrichment 
 
