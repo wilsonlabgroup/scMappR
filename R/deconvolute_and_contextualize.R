@@ -157,7 +157,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   }
   if((!(theSpecies %in% c("human", "mouse")))[1]) {
     if((theSpecies != -9)) {
-      stop("species_name is not 'human' 'mouse' or '-9' (case sensitive), please try again with this filled.")
+      warning("species_name is not 'human' 'mouse' or '-9' (case sensitive). If you are also completing pathway enrichment, please use a species name compatible with the gProfileR and gprofiler2 packages.")
     }
   }
   
