@@ -133,6 +133,12 @@ generes_to_heatmap <- function(generes,
     }
   }
   
+  if(is.null(generes[[1]]$avg_logFC)) {
+    message("Seurat V4 or later was used to identify cell-type markers, adding 'avg_logFC' column. It has the same data as avg_log2FC but is compatible with downstream functions in scMappR.")
+    for(z in 1:length(generes))
+      generes[[z]]$avg_logFC <- generes[[z]]$avg_log2FC
+  }
+  
   # generating the signature matrix developed by the rank of p-vlaues
   scmappr <- matrix(0, nrow = length(genes_uni), ncol = length(names(generes))) 
   rownames(scmappr) <- genes_uni
