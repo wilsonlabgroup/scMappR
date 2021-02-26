@@ -27,13 +27,13 @@ At the level of the gene, cwFold-changes are scored so that they sum to 1. For e
 
 ### Secondary scMappR functionalities
 #### processing scRNA-seq count data
-The `process_dgTMatrix_lists` function in the scMappR package contains an automated scRNA-seq processing pipeline where users input scRNA-seq count data. These data are processed, clustered, and eventually converted into a signature matrix. scRNA-seq counts are normalized and processed using the Seurat R package (scTransform or Seurat V3 as options). We then identify cell-types markers and cell-type lavels using Seurat using gene set enrichment methods Fisher's exact-test and GSVA using gene set markers databases from CellMarker and PanglaoDB. Finally, custom scripts convert cell-type markers into signature matrices.
+The `process_dgTMatrix_lists` function in the scMappR package contains an automated scRNA-seq processing pipeline where users input scRNA-seq count data. These data are processed, clustered, and eventually converted into a signature matrix. scRNA-seq counts are normalized and processed using the Seurat R package (scTransform or Seurat V4 as options). We then identify cell-types markers and cell-type lavels using Seurat using gene set enrichment methods Fisher's exact-test and GSVA using gene set markers databases from CellMarker and PanglaoDB. Finally, custom scripts convert cell-type markers into signature matrices.
 
 This function can be applied to any scRNA-seq count data, however it can only label cell-types containing human or mouse gene symbols. We we apply this pipeline to the scRNA-seq datasets stored in the panglaoDB database every 3 months, allowing us to store hundreds of pre-computed signature matrices for users to apply to their own data. 
 
 #### Cell-type enrichment of a generic list of genes.
 
-The functions `tissue_by_celltype_enrichment`, `tissue_scMappR_internal`, and `tissue_scMappR_custom` combine these consistently processed scRNAseq count data with gene-set enrichment tools to allow for cell-type marker enrichment of a generic gene list (e.g. GWAS hits). Reference: Sokolowski,D.J., Faykoo-Martinez,M., Erdman,L., Hou,H., Chan,C., Zhu,H., Holmes,M.M., Goldenberg,A. and Wilson,M.D. (2020) Single-cell mapper (scMappR): using scRNA-seq to infer cell-type specificities of differentially expressed genes. BioRxiv, 10.1101/2020.08.24.265298.
+The functions `tissue_by_celltype_enrichment`, `tissue_scMappR_internal`, and `tissue_scMappR_custom` combine these consistently processed scRNAseq count data with gene-set enrichment tools to allow for cell-type marker enrichment of a generic gene list (e.g. GWAS hits). Reference: Sokolowski,D.J., Faykoo-Martinez,M., Erdman,L., Hou,H., Chan,C., Zhu,H., Holmes,M.M., Goldenberg,A. and Wilson,M.D. (2021) Single-cell mapper (scMappR): using scRNA-seq to infer cell-type specificities of differentially expressed genes. NAR Genomics and Bioinformatics. 3(1). Iqab011. doi 10.1093/nargab/lqab011
 
 ## Installation
 

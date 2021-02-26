@@ -384,7 +384,7 @@ species = "mouse",p_thresh = 0.05, isect_size = 3)
   
 ## Processing scRNA-seq count data into a signature matrix.
 
-scMappR inputs a list of count matrices (of class list, dCGMatrix, or matrix) and re-processes it using the standard Seurat V3 vignette (+ removal of cells with > 2 standard deviations of mt contamination than mean). Then, it finds cell-type markers and identifies potential cell-type names using the GSVA and Fisher's exact methods on the CellMarker and Panglao databases. Finally, it creates a signature matrix of odds ratios and ranks. There are options to save the Seurat object, GSVA cell-type identities and list of cell-type markers. To identify what naming-preferences options described here: "brain", "epithelial", "endothelial", "blood", "connective","eye", "epidermis", "Digestive", "Immune", "pancreas", "liver", "reproductive", "kidney", "respiratory"
+scMappR inputs a list of count matrices (of class list, dCGMatrix, or matrix) and re-processes it using the standard Seurat V4 vignette (+ removal of cells with > 2 standard deviations of mt contamination than mean). Then, it finds cell-type markers and identifies potential cell-type names using the GSVA and Fisher's exact methods on the CellMarker and Panglao databases. Finally, it creates a signature matrix of odds ratios and ranks. There are options to save the Seurat object, GSVA cell-type identities and list of cell-type markers. To identify what naming-preferences options described here: "brain", "epithelial", "endothelial", "blood", "connective","eye", "epidermis", "Digestive", "Immune", "pancreas", "liver", "reproductive", "kidney", "respiratory"
 
 ```{r process_scRNAseq_count, eval = FALSE}
 
