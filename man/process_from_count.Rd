@@ -48,7 +48,7 @@ process_from_count(
 This function processes a list of count matrices (same species/gene symbols in each list) and converts them to a Seurat object.
 }
 \details{
-This function takes a list of count matrices and returns a Seurat object of the count matrices integrated using Seurat v3 (and IntegrationAnchors feature). Different normalization features such as the SCTransform pipeline are also available in this function.
+This function takes a list of count matrices and returns a Seurat object of the count matrices integrated using Seurat v4 (and IntegrationAnchors feature). Different normalization features such as the SCTransform pipeline are also available in this function.
 Different options are used when the function is being ran internally (i.e. reprocessing count matrices from PanglaoDB) or if it is running from custom scRNA-seq data.
 Larger scRNA-seq datasets can take considerable amounts of memory and run-time. See Seurat for details.
 }
