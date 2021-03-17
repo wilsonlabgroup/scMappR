@@ -22,7 +22,6 @@ Imports:
 	pbapply,
 	ADAPTS,
 	reshape,
-	spatstat.utils
 License: GPL-3
 URL: 
 Encoding: UTF-8

@@ -3,7 +3,7 @@
 
 ### Dustin Sokolowski: dustin-dot-sokolowski-at-sickkids-dot-ca
 
-### Date: 03/15/2021
+### Date: 03/17/2021
 
 
 ## Description
@@ -55,6 +55,20 @@ The functions `tissue_by_celltype_enrichment`, `tissue_scMappR_internal`, and `t
   * reshape - CRAN
   
 Install GSVA and pcaMethods from bioconductor first, as `devtools::install_github()` will automatically install CRAN dependencies. 
+
+## Temporary Extra Installation Step:
+
+We rely on the Seurat package which relies on the recently split up (for size reasons) spatstat package. Seurat has updated to deal with the new spatstat package on github, but this change has yet to move to CRAN. Until this change is made, please first install Seurat from github before installing scMappR.
+
+```{r install_seurat, eval=FALSE}
+
+install.packages('remotes')
+remotes::install_github(repo = 'satijalab/seurat', ref = 'develop')
+library(Seurat)
+
+```
+
+## Installation
 
 1. Github (Development Version)
 
