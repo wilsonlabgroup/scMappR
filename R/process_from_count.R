@@ -131,7 +131,7 @@ process_from_count <- function(countmat_list, name, theSpecies = -9, haveUmap = 
     ####################################
     ####################################
     
-    if(theSpecies == -9 | panglao_set == TRUE) { # if internal and we want to shave ENSEMBL symbols from rownames
+    if(theSpecies == -9 & panglao_set == TRUE) { # if internal and we want to shave ENSEMBL symbols from rownames
       sym <- get_gene_symbol(sm)
       RN_2 <- sym$rowname
       theSpecies <- sym$species
