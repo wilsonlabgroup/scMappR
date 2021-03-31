@@ -392,7 +392,7 @@ data(sm)
 
 toProcess <- list(example = sm)
 
-tst1 <- process_dgTMatrix_lists(toProcess, name = "testPropcess", species_name = "mouse",
+tst1 <- process_dgTMatrix_lists(toProcess, name = "testProcess", species_name = "mouse",
 naming_preference = "eye", rda_path = "", 
 toSave = TRUE, saveSCObject = TRUE, path = tempdir())
 
@@ -435,7 +435,7 @@ toProcess <- list()
 for(i in 1:2) {
   toProcess[[paste0("example",i)]] <- combined_counts[,grep(paste0(".",i), colnames(combined_counts))]
 }
-tst1 <- process_dgTMatrix_lists(toProcess, name = "testPropcess", species_name = "mouse",
+tst1 <- process_dgTMatrix_lists(toProcess, name = "testProcess", species_name = "mouse",
 naming_preference = "eye", rda_path = "", 
 toSave = TRUE, saveSCObject = TRUE, path = tempdir())
 
@@ -447,7 +447,7 @@ If you do not want to use the integration anchors feature and process the scRNA-
 
 ```{r combine_nobatch, eval=FALSE}
 
-tst1 <- process_dgTMatrix_lists(combined_counts, name = "testPropcess", species_name = "mouse",
+tst1 <- process_dgTMatrix_lists(combined_counts, name = "testProcess", species_name = "mouse",
 naming_preference = "eye", rda_path = "", 
 toSave = TRUE, saveSCObject = TRUE, path = tempdir())
 
