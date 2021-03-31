@@ -3,7 +3,7 @@
 
 ### Dustin Sokolowski: dustin-dot-sokolowski-at-sickkids-dot-ca
 
-### Date: 03/17/2021
+### Date: 03/31/2021
 
 
 ## Description
@@ -161,7 +161,7 @@ toOut <- scMappR_and_pathway_analysis(bulk_normalized, odds_ratio_in,
 
 ### Generating a signature matrix and processing scRNA-seq count data
 
-A matrix, dgGMatrix, or list of these matrices are inputted where the rows are genes and the columns are indiviudal cells. The gene names must be human or mouse gene symbols. If the dataset is being processed from PanglaoDB, then the rownames are GeneSymbol-ENSMBL, here, set `species_name = -9`. 
+A matrix, dgGMatrix, or list of these matrices are inputted where the rows are genes and the columns are indiviudal cells. The gene names must be human or mouse gene symbols. 
 
 This function returns the signature matrix and cell-type labels. If `toSave = TRUE` signature matrices, all cell-type markers, the average expression of genes from each cell-type, and cell-type labels from gsva are stored as files in the working directory. Additionally, if `saveSCObject = TRUE`, then the Seurat object is also saved in the working directory.
 
@@ -169,11 +169,17 @@ This function returns the signature matrix and cell-type labels. If `toSave = TR
 
 data(sm)
 toProcess <- list(example = sm)
-tst1 <- process_dgTMatrix_lists(toProcess, name = "testPropcess", species_name = -9, naming_preference = "eye",
-rda_path = "~/scMappR/data", panglao_set = "TRUE", toSave = TRUE, saveSCObject = TRUE)
+tst1 <- process_dgTMatrix_lists(toProcess, name = "testPropcess", species_name = "mouse", naming_preference = "eye",
+rda_path = "~/scMappR/data", toSave = TRUE, saveSCObject = TRUE)
 
 
 ```
+
+#### Generating a signature matrix with multiple scRNA-seq samples.
+
+If there are multiple scRNA-seq runs, the `process_dgTMatrix_lists` function will integrate these data with the integration anchors feature in seurat. To complete this task, each scRNA-seq run should be a differnt element in the `dgTMatrix_list` variable.
+
+This is covered in the "Processing scRNA-seq data with multiple scRNA-seq runs." portion of the vignette.
 
 
 ### Cell-type markers in a list of genes.

@@ -392,7 +392,7 @@ data(sm)
 
 toProcess <- list(example = sm)
 
-tst1 <- process_dgTMatrix_lists(toProcess, name = "testPropcess", species_name = -9,
+tst1 <- process_dgTMatrix_lists(toProcess, name = "testPropcess", species_name = "mouse",
 naming_preference = "eye", rda_path = "", 
 toSave = TRUE, saveSCObject = TRUE, path = tempdir())
 
@@ -409,6 +409,54 @@ Here, the following objects are saved.
   * testProcess_pval_heatmap.Rdata: signature matrix of ranks named from Fisher's exact test.
   * testProcess_custom.Rdata: Processed (and integrated if necessary) Seurat object.
   * testProcess_gsva_cellname_avg_expression.Rdata: list of cell-type markers from CelllMarker and Panglao using the GSVA method as well as the average expression of each gene in each cell-type.
+  
+### Processing scRNA-seq data with multiple scRNA-seq runs.
+
+When there are multiple scRNA-seq runs, we use the integration anchors feature to combine runs. Here, each run is a different element of the `dgTMatrix_list` parameter.
+
+Making multiple run scRNA-seq data. As seen in many cases, the first dataset is identified with ".1" and the second with ".2"
+
+```{r make_multi_scRNAseq, eval = FALSE}
+
+# generating scRNA-seq data with multiple runs.
+data(sm)
+
+sm1 <- sm2 <- sm
+colnames(sm1) <- paste0(colnames(sm1), ".1")
+colnames(sm2) <- paste0(colnames(sm2),".2")
+combined_counts <- cbind(sm1,sm2)
+
+```
+
+Combining datasets with the integration anchors batch correction
+
+```{r combine_int_anchors, eval=FALSE}
+toProcess <- list()
+for(i in 1:2) {
+  toProcess[[paste0("example",i)]] <- combined_counts[,grep(paste0(".",i), colnames(combined_counts))]
+}
+tst1 <- process_dgTMatrix_lists(toProcess, name = "testPropcess", species_name = "mouse",
+naming_preference = "eye", rda_path = "", 
+toSave = TRUE, saveSCObject = TRUE, path = tempdir())
+
+
+```
+
+If you do not want to use the integration anchors feature and process the scRNA-seq data as if it were one run, then keep all of these data in the same dgCMatrix matrix.
+
+
+```{r combine_nobatch, eval=FALSE}
+
+tst1 <- process_dgTMatrix_lists(combined_counts, name = "testPropcess", species_name = "mouse",
+naming_preference = "eye", rda_path = "", 
+toSave = TRUE, saveSCObject = TRUE, path = tempdir())
+
+
+```
+
+
+
+
   
 ### Processing scRNA-seq count data from a different species.
 
@@ -437,7 +485,7 @@ data(sm)
 
 toProcess <- list(sm = sm)
 
-seurat_example <- process_from_count(toProcess, "test_vignette",theSpecies  = -9)
+seurat_example <- process_from_count(toProcess, "test_vignette",theSpecies  = "mouse")
 
 levels(seurat_example@active.ident) <- c("Myoblast", "Neutrophil", "cardiomyoblast", "Mesothelial")
 
