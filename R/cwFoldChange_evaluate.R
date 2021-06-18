@@ -254,9 +254,10 @@ cwFoldChange_evaluate <- function(cwFC, celltype_prop, DEG_list, gene_cutoff = N
   }
   if(length(normal_genes) == 0 & length(abnormal_genes) > 0 ) {
     message("All DEGs are not normally distributed, suggesting very consistent cell-type specificity across genes.")
-    meanOutlier <- lapply(normal_genes, getOutliersMean)
-    names(meanOutlier) <- normal_genes
-    outlier <- c(meanOutlier)
+    medianOutlier <- lapply(abnormal_genes, getOutliersMedian)
+    
+    names(medianOutlier) <- abnormal_genes
+    outlier <- c(medianOutlier)
   }
   
   outlier <- outlier[lengths(outlier) >0 ]
