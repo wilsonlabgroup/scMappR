@@ -310,7 +310,7 @@ cwFoldChange_evaluate <- function(cwFC, celltype_prop, DEG_list, gene_cutoff = N
         
       }
       
-      if((length(Perfect) > 0 & length(nonPerfect) == 0)[1]) {
+      if((length(Perfect) > 0 & length(nonPerfect) < 3)[1]) {
         cwFoldchange_gene_assigned[[p]] <- g1 
       }
       
