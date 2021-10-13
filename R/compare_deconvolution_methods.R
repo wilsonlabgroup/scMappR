@@ -34,6 +34,7 @@
 #' @importFrom pbapply pblapply
 #' @importFrom ADAPTS estCellPercent
 #' @importFrom reshape melt
+#' @importFrom WGCNA proportionsInAdmixture
 #'
 #' @examples
 #' \donttest{
