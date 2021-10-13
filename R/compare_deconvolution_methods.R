@@ -10,7 +10,7 @@
 #' @param signature_matrix Signature matrix (odds ratios) of cell-type specificity of genes. Either the object itself or a pathway to an .RData file containing an object named "wilcoxon_rank_mat_or" - generally internal.
 #' @param print_plot print the barplot of estimated cell-type proportions from each method into the R console (logical: TRUE/FALSE)
 #' @param order_celltype Specify the order that cell-type are placed on the barplot. NULL = alphabetical, otherwise a character vector of cell-type labels (i.e. column names of the signature matrix).
-#' @param useWGCNA specify if WGCNA is installed = TRUE/FALSE
+#' @param useWGCNA specify if WGCNA is installed = TRUE/FALSE.
 #'
 #' @return List with the following elements:
 #' \item{cellWeighted_Foldchange}{data frame of cellweightedFold-changes for each gene.}

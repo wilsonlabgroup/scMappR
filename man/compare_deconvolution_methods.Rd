@@ -21,7 +21,7 @@ compare_deconvolution_methods(
 
 \item{order_celltype}{Specify the order that cell-type are placed on the barplot. NULL = alphabetical, otherwise a character vector of cell-type labels (i.e. column names of the signature matrix).}
 
-\item{useWGCNA}{specify if WGCNA is installed = TRUE/FALSE}
+\item{useWGCNA}{specify if WGCNA is installed = TRUE/FALSE.}
 }
 \value{
 List with the following elements:
