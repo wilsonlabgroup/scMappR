@@ -10,7 +10,7 @@
 #' @param signature_matrix Signature matrix (odds ratios) of cell-type specificity of genes. Either the object itself or a pathway to an .RData file containing an object named "wilcoxon_rank_mat_or" - generally internal.
 #' @param print_plot print the barplot of estimated cell-type proportions from each method into the R console (logical: TRUE/FALSE)
 #' @param order_celltype Specify the order that cell-type are placed on the barplot. NULL = alphabetical, otherwise a character vector of cell-type labels (i.e. column names of the signature matrix).
-#'
+#' @param useWGCNA specify if WGCNA is installed = TRUE/FALSE
 #'
 #' @return List with the following elements:
 #' \item{cellWeighted_Foldchange}{data frame of cellweightedFold-changes for each gene.}
@@ -34,7 +34,6 @@
 #' @importFrom pbapply pblapply
 #' @importFrom ADAPTS estCellPercent
 #' @importFrom reshape melt
-#' @importFrom WGCNA proportionsInAdmixture
 #'
 #' @examples
 #' \donttest{
@@ -44,23 +43,30 @@
 #' signature <- PBMC_example$odds_ratio_in
 #' tst <- compare_deconvolution_methods(norm_counts, signature, FALSE,
 #'  order_celltype = c("I_mono", "C_mono", "CD8_CM", "CD8_TE", 
-#'  "B_SM", "B_NSM", "B_naive"))
+#'  "B_SM", "B_NSM", "B_naive"), useWGCNA = TRUE)
 #' }
 #'  
 #' @export
 #' 
 
 
-compare_deconvolution_methods <- function(count_file, signature_matrix, print_plot = FALSE, order_celltype = NULL) {
+compare_deconvolution_methods <- function(count_file, signature_matrix, print_plot = FALSE, order_celltype = NULL, useWGCNA = TRUE) {
   norm_counts_i <- count_file
   wilcox_or_signature <- signature_matrix
   
   # Identify clel-type proporitons with all genes
   Decon <- DeconRNAseq_CRAN(as.data.frame(norm_counts_i),as.data.frame(wilcox_or_signature))$out.all
-  WGCNA <- t(ADAPTS::estCellPercent(wilcox_or_signature,norm_counts_i, method = "proportionsInAdmixture") / 100)
-  WGCNA <- WGCNA[,colnames(WGCNA) != "others"]
   DCQ <- t(ADAPTS::estCellPercent(wilcox_or_signature,norm_counts_i, method = "DCQ") / 100)
   DCQ <-DCQ[,colnames(DCQ) != "others"]
+  
+  if(useWGCNA) {  
+    
+    message("useWGCNA is set to TRUE. Therefore we assume the WGCNA R package is installed and loaded with library.")
+
+  WGCNA <- t(ADAPTS::estCellPercent(wilcox_or_signature,norm_counts_i, method = "proportionsInAdmixture") / 100)
+  WGCNA <- WGCNA[,colnames(WGCNA) != "others"]
+
+
   
   # store them
   proportions <- list(DeconRNAseq = Decon, WGCNA = WGCNA, DCQ = DCQ)
@@ -112,5 +118,49 @@ compare_deconvolution_methods <- function(count_file, signature_matrix, print_pl
   if(print_plot) {
     print(p)
   }
+  
   return(list(KS_test_avg_expression = lD,Pearson_cor_avg_espression = lC, cellType_proportions = proportions,average_celltype_proportions = l, barplot_to_print = p))
+  
+  } else {
+    
+    message("useWGCNA is set to FALSE. Therefore we assume the WGCNA R package is installed and loaded with library.")
+    
+    
+    proportions <- list(DeconRNAseq = Decon, DCQ = DCQ)
+    
+    Decon_Mean <- colMeans(Decon)
+    DCQ_Mean <- colMeans(DCQ)
+    
+    # store them 
+    l <- list(DeconRNAseq_avgExpression = Decon_Mean, DCQ_avgExpression = DCQ_Mean)
+    l1 <- l
+    names(l1) <- c("DeconRNAseq", "DCQ")
+    Decon_DCQ_distribution <- stats::ks.test(Decon_Mean, DCQ_Mean)  
+    Decon_DCQ_cor <- stats::cor.test(Decon_Mean, DCQ_Mean)  
+    
+    lD <- Decon_DCQ_distribution
+    
+    lC <- Decon_DCQ_cor
+    
+    # Plot est. cell-type proporitons in bar plots.
+    forBarplot <- reshape::melt(t(do.call("rbind", l1)))
+    colnames(forBarplot) <- c("CellType", "DeconvolutionMethod", "avgProportion")
+    if(!is.null(order_celltype)) {
+      forBarplot$CellType <- factor(forBarplot$CellType,levels = order_celltype)
+      
+    }
+    CellType <- forBarplot$CellType
+    avgProportion <- forBarplot$avgProportion
+    DeconvolutionMethod <- forBarplot$DeconvolutionMethod
+    
+    p <- ggplot2::ggplot(forBarplot, ggplot2::aes(x = CellType, y = avgProportion, fill = DeconvolutionMethod, group=DeconvolutionMethod)) + 
+      ggplot2::geom_bar(position = "dodge", stat = "identity") + ggplot2::theme_classic() + ggplot2::xlab("cell-type") + ggplot2::ylab("average cell-type proportion") +
+      ggplot2::scale_fill_manual("DeconvolutionMethod", values = c("DCQ" = "black", "DeconRNAseq" = "darkblue")) + ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, hjust = 1), panel.border = ggplot2::element_blank(), panel.grid.major = ggplot2::element_blank(), panel.grid.minor = ggplot2::element_blank(), axis.line = ggplot2::element_line(colour = "black"))
+    if(print_plot) {
+      print(p)
+    }
+    
+    return(list(KS_test_avg_expression = lD,Pearson_cor_avg_espression = lC, cellType_proportions = proportions,average_celltype_proportions = l, barplot_to_print = p))
+    
+  }
 }
