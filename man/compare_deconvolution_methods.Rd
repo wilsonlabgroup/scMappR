@@ -8,7 +8,8 @@ compare_deconvolution_methods(
   count_file,
   signature_matrix,
   print_plot = FALSE,
-  order_celltype = NULL
+  order_celltype = NULL,
+  useWGCNA = TRUE
 )
 }
 \arguments{
@@ -19,6 +20,8 @@ compare_deconvolution_methods(
 \item{print_plot}{print the barplot of estimated cell-type proportions from each method into the R console (logical: TRUE/FALSE)}
 
 \item{order_celltype}{Specify the order that cell-type are placed on the barplot. NULL = alphabetical, otherwise a character vector of cell-type labels (i.e. column names of the signature matrix).}
+
+\item{useWGCNA}{specify if WGCNA is installed = TRUE/FALSE}
 }
 \value{
 List with the following elements:
@@ -38,7 +41,7 @@ norm_counts <- PBMC_example$bulk_normalized
 signature <- PBMC_example$odds_ratio_in
 tst <- compare_deconvolution_methods(norm_counts, signature, FALSE,
  order_celltype = c("I_mono", "C_mono", "CD8_CM", "CD8_TE", 
- "B_SM", "B_NSM", "B_naive"))
+ "B_SM", "B_NSM", "B_naive"), useWGCNA = TRUE)
 }
  
 }
