@@ -57,7 +57,8 @@ process_dgTMatrix_lists(
 List with the following elements:
 \item{wilcoxon_rank_mat_t}{A dataframe containing the signature matrix of ranks (-log10(Padj) * sign(fold-change)).}
 \item{wilcoxon_rank_mat_or}{A dataframe containing the signature matrix of odds-ratios.}
-\item{generes}{All cell-type markers for each cell-type with p-value and fold changes.}
+\item{generes}{All cell-type markers for each cell-type with p-value and fold changes.} 
+\item{cellLabel}{matrix where each row is a cluster and each column provides information on the cell-type. Columns provide info on the cluster from seurat, the cell-type label from CellMarker and Panglao using the fisher's exact test and GSVA, and the top 30 markers per cluser.}
 }
 \description{
 This function takes a list of count matrices, processes them, calls cell-types, and generates signature matrices.

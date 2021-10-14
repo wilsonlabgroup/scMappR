@@ -409,6 +409,12 @@ Here, the following objects are saved.
   * testProcess_pval_heatmap.Rdata: signature matrix of ranks named from Fisher's exact test.
   * testProcess_custom.Rdata: Processed (and integrated if necessary) Seurat object.
   * testProcess_gsva_cellname_avg_expression.Rdata: list of cell-type markers from CelllMarker and Panglao using the GSVA method as well as the average expression of each gene in each cell-type.
+  * testProcess_cellLabelInfo.Rdata: matrix where each row is a cluster and each column provides information on the cell-type. Columns provide info on the cluster from seurat, the cell-type label from CellMarker and Panglao using the fisher's exact test and GSVA, and the top 30 markers per cluser.
+  
+#### Interpreting the signature matrix.
+* Each row is a cell-type marker.
+* Each column is a different cell-type. Assuming that `process_dgTMatrix_lists` was used and cell-types were predicted within scMappR, Each cell-type is labelled as followed. 
+  * cluster X. "cell-type predicted by Cellmarker" and_or "cell-type predicted by panglao".
   
 ### Processing scRNA-seq data with multiple scRNA-seq runs.
 

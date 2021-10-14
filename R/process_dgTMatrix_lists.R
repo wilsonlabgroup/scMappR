@@ -31,7 +31,7 @@
 #' \item{wilcoxon_rank_mat_t}{A dataframe containing the signature matrix of ranks (-log10(Padj) * sign(fold-change)).}
 #' \item{wilcoxon_rank_mat_or}{A dataframe containing the signature matrix of odds-ratios.}
 #' \item{generes}{All cell-type markers for each cell-type with p-value and fold changes.} 
-#'
+#' \item{cellLabel}{matrix where each row is a cluster and each column provides information on the cell-type. Columns provide info on the cluster from seurat, the cell-type label from CellMarker and Panglao using the fisher's exact test and GSVA, and the top 30 markers per cluser.}
 #' 
 #' @importFrom ggplot2 ggplot aes geom_boxplot geom_text theme coord_flip labs element_text geom_bar theme_classic xlab ylab scale_fill_manual element_line
 #' @importFrom pheatmap pheatmap
@@ -207,6 +207,7 @@ process_dgTMatrix_lists <- function(dgTMatrix_list, name, species_name, naming_p
     name_together <-  cbind(cluster_num, OR_split_mat,cellmarker,panglao,topGenes_paste)
     colnames(name_together) <- c("clusterNum", "CellMarkerFisher", "PanglaoFisher", "CellMarkerGSVA", "PanglaoGSVA", "TopGenes")
     
+    colnames(wilcoxon_rank_mat_t) <- colnames(wilcoxon_rank_mat_or) <- paste0("cluster",name_together[,"clusterNum"],".",name_together[,"CellMarkerFisher"]," and_or ",name_together[,"PanglaoFisher"])
   ##
   
   if(toSave == TRUE) {
