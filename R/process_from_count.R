@@ -45,7 +45,8 @@
 #' 
 #' data(sm)
 #' toProcess <- list(example = sm)
-#' tst1 <- process_from_count(countmat_list = toProcess, name = "testProcess", theSpecies = "mouse")
+#' tst1 <- process_from_count(countmat_list = toProcess, name = "testProcess", 
+#'                            theSpecies = "mouse")
 #' }
 #' 
 #' @export

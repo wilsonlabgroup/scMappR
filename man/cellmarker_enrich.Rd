@@ -51,7 +51,8 @@ rowname <- get_gene_symbol(Signature)
 rownames(Signature) <- rowname$rowname
 genes <- rownames(Signature)[1:100]
 data(gmt)
-enriched <- cellmarker_enrich(gene_list = genes, p_thresh = 0.05, gmt = gmt)
+enriched <- cellmarker_enrich(gene_list = genes, 
+                              p_thresh = 0.05, gmt = gmt)
 
  
 }

@@ -56,7 +56,8 @@
 #' rda_path1 = "" # data directory (if it exists)
 #' 
 #' # set toSave = TRUE and path = output directory of your choice
-#' internal <- tissue_scMappR_internal(gene_list = genes, species = "mouse", output_directory = "scMappR_TesInternal",
+#' internal <- tissue_scMappR_internal(gene_list = genes, species = "mouse",
+#'                                    output_directory = "scMappR_TesInternal",
 #'                                    tissue = "hypothalamus", toSave = FALSE) 
 #' 
 #'  }

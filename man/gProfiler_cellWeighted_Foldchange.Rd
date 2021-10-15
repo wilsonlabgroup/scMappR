@@ -56,8 +56,10 @@ norm <- deconvolute_and_contextualize(count_file = bulk_normalized, signature_ma
                                        print_plots = print_plots,
                                        theSpecies = theSpecies)
 background = rownames(bulk_normalized)
-STVs <- gProfiler_cellWeighted_Foldchange(cellWeighted_Foldchange_matrix = norm$cellWeighted_Foldchange, species = theSpecies,
- background = background, gene_cut = -9, newGprofiler = FALSE)
+STVs <- gProfiler_cellWeighted_Foldchange(
+ cellWeighted_Foldchange_matrix = norm$cellWeighted_Foldchange,
+ species = theSpecies, background = background, gene_cut = -9,
+ newGprofiler = FALSE)
 
  }
  
