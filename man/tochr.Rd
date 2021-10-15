@@ -21,6 +21,6 @@ This function checks if your vector is not a character and if not, will convert 
  # vector of factors
  fact <- factor(c("a", "b", "c", "d"))
  # convert to character
- char <- tochr(fact)
+ char <- tochr(x = fact)
  
 }

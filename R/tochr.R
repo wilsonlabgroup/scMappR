@@ -33,7 +33,7 @@
 #'  # vector of factors
 #'  fact <- factor(c("a", "b", "c", "d"))
 #'  # convert to character
-#'  char <- tochr(fact)
+#'  char <- tochr(x = fact)
 #'  
 #' @export
 

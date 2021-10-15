@@ -36,8 +36,8 @@
 #'  
 #' data(sm)
 #' toProcess <- list(example = sm)
-#' tst1 <- process_from_count(toProcess, "testProcess", theSpecies = "mouse")
-#' generes <- seurat_to_generes(tst1)
+#' tst1 <- process_from_count(countmat_list = toProcess,name = "testProcess", theSpecies = "mouse")
+#' generes <- seurat_to_generes(pbmc = tst1)
 #' }
 #' 
 #' @export

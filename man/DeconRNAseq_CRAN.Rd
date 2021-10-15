@@ -45,7 +45,7 @@ data(PBMC_example)
 bulk_DE_cors <- PBMC_example$bulk_DE_cors
 bulk_normalized <- PBMC_example$bulk_normalized
 odds_ratio_in <- PBMC_example$odds_ratio_in
-out <- DeconRNAseq_CRAN(as.data.frame(bulk_normalized), as.data.frame(odds_ratio_in))
+out <- DeconRNAseq_CRAN(datasets = as.data.frame(bulk_normalized),signatures = as.data.frame(odds_ratio_in))
 }
                                       
 }

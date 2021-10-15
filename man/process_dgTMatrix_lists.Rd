@@ -74,7 +74,7 @@ Cell-type marker outputs are also saved in the generes .RData list. This is a li
 \donttest{
 data(sm)
 toProcess <- list(example = sm)
-tst1 <- process_dgTMatrix_lists(toProcess, name = "testPropcess", species_name = "mouse",
+tst1 <- process_dgTMatrix_lists(dgTMatrix_list = toProcess, name = "testPropcess", species_name = "mouse",
  naming_preference = "eye", rda_path = "")
 
 }

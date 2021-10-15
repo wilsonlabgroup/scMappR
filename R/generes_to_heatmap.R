@@ -47,7 +47,7 @@
 #' 
 #' @export
 #' 
-generes_to_heatmap <- function(generes,  
+generes_to_heatmap <- function(generes = generes,  
                                species = "human",  
                                naming_preference = -9, 
                                rda_path = "", 

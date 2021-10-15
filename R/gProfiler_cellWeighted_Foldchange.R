@@ -49,15 +49,15 @@
 #' max_proportion_change <- 10
 #' print_plots <- FALSE
 #' theSpecies <- "human"
-#' norm <- deconvolute_and_contextualize(bulk_normalized, odds_ratio_in,
-#'                                       bulk_DE_cors, case_grep = case_grep, 
+#' norm <- deconvolute_and_contextualize(count_file = bulk_normalized, signature_matrix = odds_ratio_in,
+#'                                       DEG_list = bulk_DE_cors, case_grep = case_grep, 
 #'                                       control_grep = control_grep,
 #'                                        max_proportion_change = max_proportion_change,
 #'                                        print_plots = print_plots,
 #'                                        theSpecies = theSpecies)
 #' background = rownames(bulk_normalized)
-#' STVs <- gProfiler_cellWeighted_Foldchange(norm$cellWeighted_Foldchange, theSpecies,
-#'  background, gene_cut = -9, newGprofiler = FALSE)
+#' STVs <- gProfiler_cellWeighted_Foldchange(cellWeighted_Foldchange_matrix = norm$cellWeighted_Foldchange, species = theSpecies,
+#'  background = background, gene_cut = -9, newGprofiler = FALSE)
 #' 
 #'  }
 #'  

@@ -57,7 +57,7 @@ Larger scRNA-seq datasets can take considerable amounts of memory and run-time. 
 
 data(sm)
 toProcess <- list(example = sm)
-tst1 <- process_from_count(toProcess, "testProcess", theSpecies = "mouse")
+tst1 <- process_from_count(countmat_list = toProcess, name = "testProcess", theSpecies = "mouse")
 }
 
 }

@@ -32,7 +32,7 @@ fold-change designated by avg_logFC and p-val by p_val_adj.
  
  # load generes object
  data(POA_example)
- topGenes <- topgenes_extract(POA_example$POA_generes)
+ topGenes <- topgenes_extract(generes = POA_example$POA_generes)
 
 
 }

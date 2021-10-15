@@ -56,8 +56,8 @@
 #' theSpecies <- "human"
 #' 
 #' # calculate cwFold-changes
-#' toOut <- scMappR_and_pathway_analysis(bulk_normalized, odds_ratio_in, 
-#'                                       bulk_DE_cors, case_grep = case_grep,
+#' toOut <- scMappR_and_pathway_analysis(count_file = bulk_normalized, signature_matrix = odds_ratio_in, 
+#'                                       DEG_list = bulk_DE_cors, case_grep = case_grep,
 #'                                       control_grep = control_grep, rda_path = "", 
 #'                                       max_proportion_change = 10, print_plots = TRUE, 
 #'                                       plot_names = "tst1", theSpecies = "human", 
@@ -66,7 +66,7 @@
 #'                                       internet = FALSE)
 #' 
 #' # complete pathway enrichment using both methods
-#' twoOutFiles <- two_method_pathway_enrichment(bulk_DE_cors, "human",
+#' twoOutFiles <- two_method_pathway_enrichment(DEG_list = bulk_DE_cors,theSpecies = "human",
 #' scMappR_vals = toOut$cellWeighted_Foldchange, background_genes = rownames(bulk_normalized), 
 #' output_directory = "newfun_test",plot_names = "nonreranked_", toSave = FALSE)
 #' 

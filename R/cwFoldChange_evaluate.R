@@ -53,8 +53,8 @@
 #' max_proportion_change <- 10
 #' print_plots <- FALSE
 #' theSpecies <- "human"
-#' toOut <- scMappR_and_pathway_analysis(bulk_normalized, odds_ratio_in, 
-#'                                       bulk_DE_cors, case_grep = case_grep,
+#' toOut <- scMappR_and_pathway_analysis(count_file = bulk_normalized, signature_matrix = odds_ratio_in, 
+#'                                       DEG_list = bulk_DE_cors, case_grep = case_grep,
 #'                                       control_grep = control_grep, rda_path = "", 
 #'                                       max_proportion_change = 10, print_plots = TRUE, 
 #'                                        plot_names = "tst1", theSpecies = "human", 
@@ -65,7 +65,7 @@
 #' cwFC1 <- toOut$cellWeighted_Foldchange
 #' prop1 <- toOut$cellType_Proportions
 #' DE <- bulk_DE_cors
-#' eval_test <- cwFoldChange_evaluate(cwFC1, prop1, DE)
+#' eval_test <- cwFoldChange_evaluate(cwFC = cwFC1, celltype_prop = prop1, DEG_list = DE)
 #' 
 #' @export
 #' 

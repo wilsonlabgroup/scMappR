@@ -5,7 +5,7 @@
 \title{Generate signature matrix}
 \usage{
 generes_to_heatmap(
-  generes,
+  generes = generes,
   species = "human",
   naming_preference = -9,
   rda_path = "",

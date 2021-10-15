@@ -56,8 +56,8 @@
 #' & ordered_back_all_tf$term_size < 5000 & ordered_back_all_tf$intersection_size > 2,]
 #' TF = ordered_back_all_tf
 #' BP <- ordered_back_all
-#' bp <- plotBP(BP)
-#' tf <- make_TF_barplot(TF)
+#' bp <- plotBP(ordered_back_all = BP)
+#' tf <- make_TF_barplot(ordered_back_all_tf = TF)
 #' 
 #'  }
 #' @export

@@ -21,6 +21,6 @@ This function checks if your vector is not a character and if it is, then conver
  # vector of factors
 fact <- factor(c("1", "2", "3", "4"))
 # convert to numeric
-num <- toNum(fact)
+num <- toNum(x = fact)
  
 }

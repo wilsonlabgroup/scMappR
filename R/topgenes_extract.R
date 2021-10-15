@@ -39,7 +39,7 @@
 #'  
 #'  # load generes object
 #'  data(POA_example)
-#'  topGenes <- topgenes_extract(POA_example$POA_generes)
+#'  topGenes <- topgenes_extract(generes = POA_example$POA_generes)
 #' 
 #' 
 #' @export
