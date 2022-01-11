@@ -285,6 +285,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   wilcox_or <- wilcox_or[,colnames(proportions)]
   wilcox_or_df <- as.data.frame(wilcox_or)
   wilcox_or_signature <- as.data.frame(wilcox_or_signature[,colnames(proportions)])
+  wilcox_or_signature <- wilcox_or_signature[apply(wilcox_or_signature, 1, var) > 0,]
   bulk_in <- norm_counts_i
   
   DEGs <- DEGs[stats::complete.cases(DEGs),]
