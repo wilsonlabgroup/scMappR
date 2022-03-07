@@ -153,6 +153,7 @@ Assuming `toSave = T` and `up_and_downregulated = T`, `scMappR_and_pathway_analy
 
 
 Here, we will walk through the output of the above example sorting by name and working downwards.
+
   * BP_barplot: a directory with pdf's of the top 10 pathways of DEGs that have been re-normlaized by their cwFold-change.
   * Downregulated: a directory with pdf's and Rdata files of pathway and TF enrichment of downregulated DEGs re-normalized by their cwFold-change.
   * TF_barplot: a directory with pdf's of the top 10 TFs of DEGs that have been re-normlaized by their cwFold-change.
