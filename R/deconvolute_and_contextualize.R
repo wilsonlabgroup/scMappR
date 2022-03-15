@@ -31,6 +31,7 @@
 #' @param toSave Allow scMappR to write files in the current directory (T/F).
 #' @param path If toSave == TRUE, path to the directory where files will be saved.
 #' @param deconMethod Which RNA-seq deconvolution method to use to estimate cell-type proporitons. Options are "WGCNA", "DCQ", or "DeconRNAseq"
+#' @param rareCT_filter option to keep cell-types rarer than 0.1% of the population (T/F). Setting to FALSE may lead to false-positives.
 #'
 #' @return List with the following elements:
 #' \item{cellWeighted_Foldchange}{data frame of cellweightedFold changes for each gene.}
@@ -76,7 +77,7 @@
 #' }                                      
 #' @export
 #' 
-deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list, case_grep, control_grep, max_proportion_change = -9, print_plots=T, plot_names="scMappR",theSpecies = "human", FC_coef = T, sig_matrix_size = 3000, drop_unknown_celltype = TRUE, toSave = FALSE, path = NULL, deconMethod = "DeconRNASeq") {
+deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list, case_grep, control_grep, max_proportion_change = -9, print_plots=T, plot_names="scMappR",theSpecies = "human", FC_coef = T, sig_matrix_size = 3000, drop_unknown_celltype = TRUE, toSave = FALSE, path = NULL, deconMethod = "DeconRNASeq", rareCT_filter = TRUE) {
   # This function completes the cell-type contextualization in scMappR -- reranking every DEG based on their fold change, likelihood the gene is in each detected cell type, average cell-type proportion, and ratio of cell-type proportion between case and control.
   # such that if a gene is upregulated, then it is being controlled by control/case, otherwise it is case/control
   # This function expects that the genes within the count file, signature matrix, and DEG_list are have the same logos
@@ -277,9 +278,17 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   propmeans <- colMeans(proportions)
   
   # keep cell-type of genes with > 0.1% of the population
+  if(rareCT_filter) {
   proportions <- proportions[,colMeans(proportions) > 0.001]
   
-  message("your bulk data contains the following cell types")
+  message("your bulk data contains the following cell types (> 0.1% on average)")
+  } else {
+    warning("You are not removing cell-types rarer than 0.1% of the population. Rarer cell-types will have issues with false positives.")
+    proportions <- proportions[,colMeans(proportions) > 0]
+    message("your bulk data contains the following cell types (> 0% on average)")
+  }
+  
+  
   message(paste(colnames(proportions), " "))
   #convert to correct datatypes for downstream analysis
   wilcox_or <- wilcox_or[,colnames(proportions)]

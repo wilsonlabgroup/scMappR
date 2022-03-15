@@ -19,7 +19,8 @@ deconvolute_and_contextualize(
   drop_unknown_celltype = TRUE,
   toSave = FALSE,
   path = NULL,
-  deconMethod = "DeconRNASeq"
+  deconMethod = "DeconRNASeq",
+  rareCT_filter = TRUE
 )
 }
 \arguments{
@@ -52,6 +53,8 @@ deconvolute_and_contextualize(
 \item{path}{If toSave == TRUE, path to the directory where files will be saved.}
 
 \item{deconMethod}{Which RNA-seq deconvolution method to use to estimate cell-type proporitons. Options are "WGCNA", "DCQ", or "DeconRNAseq"}
+
+\item{rareCT_filter}{option to keep cell-types rarer than 0.1% of the population (T/F). Setting to FALSE may lead to false-positives.}
 }
 \value{
 List with the following elements:
