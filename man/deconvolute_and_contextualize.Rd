@@ -54,7 +54,7 @@ deconvolute_and_contextualize(
 
 \item{deconMethod}{Which RNA-seq deconvolution method to use to estimate cell-type proporitons. Options are "WGCNA", "DCQ", or "DeconRNAseq"}
 
-\item{rareCT_filter}{option to keep cell-types rarer than 0.1% of the population (T/F). Setting to FALSE may lead to false-positives.}
+\item{rareCT_filter}{option to keep cell-types rarer than 0.1 percent of the population (T/F). Setting to FALSE may lead to false-positives.}
 }
 \value{
 List with the following elements:

@@ -31,7 +31,7 @@
 #' @param toSave Allow scMappR to write files in the current directory (T/F).
 #' @param path If toSave == TRUE, path to the directory where files will be saved.
 #' @param deconMethod Which RNA-seq deconvolution method to use to estimate cell-type proporitons. Options are "WGCNA", "DCQ", or "DeconRNAseq"
-#' @param rareCT_filter option to keep cell-types rarer than 0.1% of the population (T/F). Setting to FALSE may lead to false-positives.
+#' @param rareCT_filter option to keep cell-types rarer than 0.1 percent of the population (T/F). Setting to FALSE may lead to false-positives.
 #'
 #' @return List with the following elements:
 #' \item{cellWeighted_Foldchange}{data frame of cellweightedFold changes for each gene.}
@@ -277,7 +277,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   
   propmeans <- colMeans(proportions)
   
-  # keep cell-type of genes with > 0.1% of the population
+  # keep cell-type of genes with > 0.1percent of the population
   if(rareCT_filter) {
   proportions <- proportions[,colMeans(proportions) > 0.001]
   

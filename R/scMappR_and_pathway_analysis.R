@@ -31,7 +31,7 @@
 #' @param newGprofiler Whether to use gProfileR or gprofiler2 (T/F).
 #' @param path If toSave == TRUE, path to the directory where files will be saved.
 #' @param deconMethod Which RNA-seq deconvolution method to use to estimate cell-type proporitons. Options are "WGCNA", "DCQ", or "DeconRNAseq"
-#' @param rareCT_filter option to keep cell-types rarer than 0.1% of the population (T/F). Setting to FALSE may lead to false-positives.
+#' @param rareCT_filter option to keep cell-types rarer than 0.1 percent of the population (T/F). Setting to FALSE may lead to false-positives.
 #' 
 #' 
 #' @return List with the following elements:
