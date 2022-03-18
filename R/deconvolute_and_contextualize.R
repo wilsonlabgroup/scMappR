@@ -199,6 +199,11 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
   }
   
   colnames(DEGs) <- c("gene_name", "padj", "log2fc")
+  
+  DEGs$gene_name <- scMappR::tochr(DEGs$gene_name)
+  DEGs$padj <- scMappR::toNum(DEGs$padj)
+  DEGs$log2fc <- scMappR::toNum(DEGs$log2fc)
+  
   sm <- wilcoxon_rank_mat_or
   
   # If internal, get gene name and species
