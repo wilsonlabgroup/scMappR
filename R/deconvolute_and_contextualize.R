@@ -77,7 +77,7 @@
 #' }                                      
 #' @export
 #' 
-deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list, case_grep, control_grep, max_proportion_change = -9, print_plots=T, plot_names="scMappR",theSpecies = "human", FC_coef = T, sig_matrix_size = 3000, drop_unknown_celltype = TRUE, toSave = FALSE, path = NULL, deconMethod = "DeconRNASeq", rareCT_filter = TRUE) {
+deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list, case_grep, control_grep, max_proportion_change = -9, print_plots=TRUE, plot_names="scMappR",theSpecies = "human", FC_coef = TRUE, sig_matrix_size = 3000, drop_unknown_celltype = TRUE, toSave = FALSE, path = NULL, deconMethod = "DeconRNASeq", rareCT_filter = TRUE) {
   # This function completes the cell-type contextualization in scMappR -- reranking every DEG based on their fold change, likelihood the gene is in each detected cell type, average cell-type proportion, and ratio of cell-type proportion between case and control.
   # such that if a gene is upregulated, then it is being controlled by control/case, otherwise it is case/control
   # This function expects that the genes within the count file, signature matrix, and DEG_list are have the same logos
@@ -467,7 +467,7 @@ deconvolute_and_contextualize <- function(count_file,signature_matrix, DEG_list,
     prop_fc <- fold_changes[gene, ] # relative ratio of case/control in gene
     up <- gene_DE$log2fc > 0 # if gene is upregualted 
     sign <- -1
-    if((up == T)[1]) { # if it's upregulated 
+    if((up == TRUE)[1]) { # if it's upregulated 
       prop_fc <- 1/prop_fc # flip so the ratio is control/case
       sign <- 1
     } 
