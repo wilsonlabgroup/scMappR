@@ -80,8 +80,8 @@ BiocManager::install("GSVA")
 
 # For R Version >= 4.2 individuals have reported needing 
 # to also install preprocessCore from bioconductor
-BiocManager::install("preprocessCore")
-devtools::install_github("wilsonlabgroup/scMappR")
+if (!requireNamespace("preprocessCore", quietly = TRUE))
+    BiocManager::install("preprocessCore")
 
 devtools::install_github("wilsonlabgroup/scMappR")
 
@@ -108,8 +108,8 @@ BiocManager::install("GSVA")
 
 # For R Version >= 4.2 individuals have reported needing 
 # to also install preprocessCore from bioconductor
-BiocManager::install("preprocessCore")
-devtools::install_github("wilsonlabgroup/scMappR")
+if (!requireNamespace("preprocessCore", quietly = TRUE))
+    BiocManager::install("preprocessCore")
 
 install.packages("scMappR")
 
