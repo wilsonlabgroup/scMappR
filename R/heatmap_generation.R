@@ -47,7 +47,7 @@
 #'
 #' @examples
 #' 
-#' 
+#' \donttest{
 #' # load in signature matrices
 #' data(POA_example)
 #' POA_generes <- POA_example$POA_generes
@@ -59,6 +59,8 @@
 #' genes <- rownames(Signature)[1:100]
 #' heatmap_test <- heatmap_generation(genesIn = genes, "scMappR_test",
 #'                                    reference = Signature, which_species = "mouse")
+#'
+#'  }
 #'
 #' @export
 #' 
