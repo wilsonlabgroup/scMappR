@@ -57,7 +57,7 @@
 #' @importFrom reshape melt
 #'
 #' @examples 
-#' 
+#' \donttest{
 #' data(PBMC_example)
 #' bulk_DE_cors <- PBMC_example$bulk_DE_cors
 #' bulk_normalized <- PBMC_example$bulk_normalized
@@ -78,6 +78,7 @@
 #'                                       up_and_downregulated = FALSE, 
 #'                                       internet = FALSE)
 #' 
+#' }
 #' 
 #' @export
 #' 

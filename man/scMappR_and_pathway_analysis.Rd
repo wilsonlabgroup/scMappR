@@ -90,7 +90,7 @@ Then, assuming there is available internet, it will complete gProfileR of the re
 This function is a wrapper for deconvolute_and_contextualize and pathway_enrich_internal and the primary function within the package.
 }
 \examples{
-
+\donttest{
 data(PBMC_example)
 bulk_DE_cors <- PBMC_example$bulk_DE_cors
 bulk_normalized <- PBMC_example$bulk_normalized
@@ -111,5 +111,6 @@ toOut <- scMappR_and_pathway_analysis(count_file = bulk_normalized,
                                       up_and_downregulated = FALSE, 
                                       internet = FALSE)
 
+}
 
 }
