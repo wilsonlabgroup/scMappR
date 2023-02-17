@@ -78,6 +78,11 @@ BiocManager::install("pcaMethods")
 if (!requireNamespace("GSVA", quietly = TRUE))
 BiocManager::install("GSVA")
 
+# For R Version >= 4.2 individuals have reported needing 
+# to also install preprocessCore from bioconductor
+BiocManager::install("preprocessCore")
+devtools::install_github("wilsonlabgroup/scMappR")
+
 devtools::install_github("wilsonlabgroup/scMappR")
 
 
@@ -100,6 +105,11 @@ BiocManager::install("pcaMethods")
 
 if (!requireNamespace("GSVA", quietly = TRUE))
 BiocManager::install("GSVA")
+
+# For R Version >= 4.2 individuals have reported needing 
+# to also install preprocessCore from bioconductor
+BiocManager::install("preprocessCore")
+devtools::install_github("wilsonlabgroup/scMappR")
 
 install.packages("scMappR")
 
