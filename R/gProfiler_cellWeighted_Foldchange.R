@@ -135,7 +135,7 @@ gProfiler_cellWeighted_Foldchange <- function(cellWeighted_Foldchange_matrix, sp
     ordered_back_all_tf$term_name <- ordered_back_all_tf$term.name
     ordered_back_all_tf$p_value <- ordered_back_all_tf$p.value
     } else {
-    ordered_back_all <- gprofiler2::gost(query = cellWeighted_Foldchange_matrix1, organism = theSpecies1, ordered_query = TRUE, significant = TRUE, exclude_iea = FALSE, multi_query = FALSE, measure_underrepresentation = FALSE, evcodes = FALSE, user_threshold = 0.05, correction_method = "fdr",  custom_bg =background_genes, numeric_ns = "", sources = c("GO:BP", "KEGG", "REAC"))  
+    ordered_back_all <- gprofiler2::gost(query = cellWeighted_Foldchange_matrix1, organism = theSpecies1, ordered_query = TRUE, significant = TRUE, exclude_iea = FALSE, multi_query = FALSE, measure_underrepresentation = FALSE, evcodes = TRUE, user_threshold = 0.05, correction_method = "fdr",  custom_bg =background_genes, numeric_ns = "", sources = c("GO:BP", "KEGG", "REAC"))  
     if(is.null(ordered_back_all)) { #if nothing is significant, gost returns null. making compatible with plotBP and make_TF_barplot
       ordered_back_all <- as.data.frame(matrix(c(1," "),nrow = 1))
       colnames(ordered_back_all) <- c("p_value", "term_name")
