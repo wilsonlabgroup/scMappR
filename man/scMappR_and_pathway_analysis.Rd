@@ -23,7 +23,7 @@ scMappR_and_pathway_analysis(
   gene_label_size = 0.4,
   number_genes = -9,
   toSave = FALSE,
-  newGprofiler = FALSE,
+  newGprofiler = TRUE,
   path = NULL,
   deconMethod = "DeconRNASeq",
   rareCT_filter = TRUE

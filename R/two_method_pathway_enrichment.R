@@ -77,7 +77,7 @@
 #' @export
 #' 
 
-two_method_pathway_enrichment <- function(DEG_list, theSpecies, scMappR_vals, background_genes = NULL, output_directory = "output", plot_names = "reweighted", number_genes = -9,  newGprofiler = FALSE, toSave = FALSE, path = NULL) {
+two_method_pathway_enrichment <- function(DEG_list, theSpecies, scMappR_vals, background_genes = NULL, output_directory = "output", plot_names = "reweighted", number_genes = -9,  newGprofiler = TRUE, toSave = FALSE, path = NULL) {
 
   if(is.character(DEG_list)) {
     DEGs <- utils::read.table(DEG_list, header = FALSE, as.is = TRUE, sep = "\t")

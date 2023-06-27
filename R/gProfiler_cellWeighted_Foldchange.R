@@ -60,7 +60,7 @@
 #' STVs <- gProfiler_cellWeighted_Foldchange(
 #'  cellWeighted_Foldchange_matrix = norm$cellWeighted_Foldchange,
 #'  species = theSpecies, background = background, gene_cut = -9,
-#'  newGprofiler = FALSE)
+#'  newGprofiler = TRUE)
 #' 
 #'  }
 #'  

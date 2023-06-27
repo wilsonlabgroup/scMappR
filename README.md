@@ -3,7 +3,7 @@
 
 ### Dustin Sokolowski: dustin-dot-sokolowski-at-sickkids-dot-ca
 
-### Date: 06/18/2021
+### Date: 06/27/2023
 
 
 ## Description
@@ -52,7 +52,8 @@ Sokolowski,D.J., Faykoo-Martinez,M., Erdman,L., Hou,H., Chan,C., Zhu,H., Holmes,
   * downloader - CRAN
   * pcaMethods - Bioconductor
   * grDevices - CRAN
-  * gProfileR - CRAN
+  * gProfileR - CRAN # As of June 2023 the servers are down
+  * gprofiler2 - CRAN # Default enrichment tool
   * limSolve - CRAN 
   * ADAPTS - CRAN
   * reshape - CRAN

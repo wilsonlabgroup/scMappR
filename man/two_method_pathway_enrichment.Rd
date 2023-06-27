@@ -12,7 +12,7 @@ two_method_pathway_enrichment(
   output_directory = "output",
   plot_names = "reweighted",
   number_genes = -9,
-  newGprofiler = FALSE,
+  newGprofiler = TRUE,
   toSave = FALSE,
   path = NULL
 )
