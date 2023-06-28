@@ -144,7 +144,7 @@ gProfiler_cellWeighted_Foldchange <- function(cellWeighted_Foldchange_matrix, sp
       ordered_back_all <- ordered_back_all$result
       ordered_back_all <- ordered_back_all[ordered_back_all$term_size > 15 & ordered_back_all$term_size < 2000 & ordered_back_all$intersection_size > 2,]
     }
-    ordered_back_all_tf <- gprofiler2::gost(query = cellWeighted_Foldchange_matrix1, organism = theSpecies1, ordered_query = TRUE, significant = TRUE, exclude_iea = FALSE, multi_query = FALSE, measure_underrepresentation = FALSE, evcodes = FALSE, user_threshold = 0.05, correction_method = "fdr",  custom_bg =background_genes, numeric_ns = "", sources = c("TF"))  
+    ordered_back_all_tf <- gprofiler2::gost(query = cellWeighted_Foldchange_matrix1, organism = theSpecies1, ordered_query = TRUE, significant = TRUE, exclude_iea = FALSE, multi_query = FALSE, measure_underrepresentation = FALSE, evcodes = TRUE, user_threshold = 0.05, correction_method = "fdr",  custom_bg =background_genes, numeric_ns = "", sources = c("TF"))  
     if(is.null(ordered_back_all_tf)) {
       ordered_back_all_tf <- as.data.frame(matrix(c(1," "),nrow = 1))
       colnames(ordered_back_all_tf) <- c("p_value", "term_name")
